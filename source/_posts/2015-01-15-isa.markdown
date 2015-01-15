@@ -1,0 +1,16 @@
+---
+layout: post
+title: "이사"
+date: 2015-01-15 17:58:18 +0900
+comments: true
+categories: 
+- 잡담
+---
+
+RIP 20140404 https://leoh0.wordpress.com    
+RIP 20150115 http://leoh0.blogspot.kr    
+
+예전 wordpress에서 blogspot으로 옮겨온 이유는 순전히 구글 검색에 빨리 노출된다 였다.   
+하지만 부족한 템플릿과 플러그인.. 그리고 마지막으로 소스 코드 삽입시 html 코드를 작성해야하는데 이게 너무 지저분 할 수 밖에 없었다..    
+
+그래서 결국 소스 코드를 가장 이쁘게 보여 줄 수 있는 octopress로..   

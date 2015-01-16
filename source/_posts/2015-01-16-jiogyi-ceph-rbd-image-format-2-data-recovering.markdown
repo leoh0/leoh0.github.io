@@ -11,31 +11,35 @@ categories:
 
 ## ceph: pg incomplete is worst nightmare
 
-{% img right http://a1.res.cloudinary.com/hqq9ey1mh/image/upload/c_limit,w_793/v1414983220/z3vn1zndif6v7q2u08w1.png 360 360 "2014 open user survey block storage" %} 
-2014년 유저 서베이에서 찾을 수 있듯이 **ceph**은 openstack의 block storage의 de facto standard라고 감히말할 수 있다.   
-출처: http://superuser.openstack.org/articles/openstack-user-survey-insights-november-2014
+{% img http://a1.res.cloudinary.com/hqq9ey1mh/image/upload/c_limit,w_793/v1414983220/z3vn1zndif6v7q2u08w1.png 500 500 "2014 open user survey block storage" %}
 
-여태 ceph을 사용한지 조금 되었지만 큰 문제가 한번도 없어서 일명 **믿음의 ceph**이라고 부르고 있었다.   
+[2014년 유저 서베이](http://superuser.openstack.org/articles/openstack-user-survey-insights-november-2014)에서 찾을 수 있듯이 **ceph**은 openstack의 block storage의 de facto standard 라고 말할 수 있다.   
+
+여태 ceph을 사용한지 조금 되었지만 큰 문제가 한번도 없어서 일명 *믿음의 ceph*이라고 부르고 있었다.   
 또한 문제가 없으니 내부구조도 심각하게 본적없이 블랙박스로 두고 그냥 툴로만 잘 쓰고 있었었다.
 
-하지만 급작스런 몇가지 문제로 ceph의 placement group(pg) 들이 `incomplete` 상태로 떨어졌고..
-
+하지만 급작스런 몇가지 문제로 ceph의 placement group(pg) 들이 `incomplete` 상태로 떨어졌고..   
 말그대로 절망했다.
 
-우선 `incomplete`의 정의를 살펴보면 ceph의 [pg-states](http://ceph.com/docs/master/rados/operations/pg-states/)에서 찾아볼 수 있다.
+그렇다면 `incomplete`를 잠깐 이해해야 할것 같다.   
+우선 `incomplete`의 정의를 살펴보면 ceph documents의 [pg-states](http://ceph.com/docs/master/rados/operations/pg-states/)에서 찾아볼 수 있다.
 
 > Ceph detects that a placement group is missing a necessary period of history from its log. 
 > If you see this state, report a bug, and try to start any failed OSDs that may contain the needed information.
 
-pg가 `incomplete` 상태로 떨어졌을때 `peering`을 할 수 있는 상태로 돌아오지 못한다는 것은 이미 복구 불가능한 pg가 생겼고
-이는 복구 불가능한 조각이 생겼다는 것을 의미한다.
+즉, 해당 pg 가 log에서 특정 부분 히스토리를 잃어 버렸을때 발생하는 것이고, 만약 이 일이 일어나면 `report a bug`와 함께 해당 정보를 가지고 있을만한 실패한 OSD들을 시작하라고 설명이 되어 있다.    
+이 `incomplete` 상태는 OSD를 중지했을때도 잠깐 발생할 수 있는데 여기서 말하는 `incomplete`는 그런게 아니라 무슨짓을 해도 incomplete로 돌아오는 상태를 말한다..
+
+이 의미를 조금 더 이해할 수 있게 해석하면 pg가 `incomplete` 상태로 떨어졌을때 `peering`을 할 수 있는 상태로 돌아오지 못한다는 것은 이미 복구 불가능한 pg가 생겼고 이는 복구 불가능한 조각이 생겼다는 것을 의미한다.   
+그러므로 전체 파일중 특정 조각이 문제가 되고 이 파일을 접근하는 모든 client request는 hang이 걸리게 된다.   
+볼륨같은 큰 데이터(많은 조각을 갖는 데이터)는 몇 개의 pg만 `incomplete`로 떨어져도 결국 모든 client의 request가 hang이 걸리게 된다.
+
+그러므로 `incomplete` 된 pg가 있으면 pool 전체를 사용할 수 가 없다.(pool을 초기화 하기 전까지..)   
+온갖 메일링 리스트와 구글에서 검색한 방법을 사용했지만 효과는 없었고   
+다음에 이 상태로 빠지지 않을 수 있는 교훈만 얻을 수 있었다.   
 
 이 글을 보면 이게 얼마나 간단하지 않은 일인지 알게 된다..   
 [Ceph PG Incomplete = Cluster unusable](https://www.mail-archive.com/ceph-users@lists.ceph.com/msg15916.html)
-
-그리고 또한 한 조각의 `incomplete` 된 pg가 있으면 pool 전체를 사용할 수 가 없다.(pool을 초기화 하기 전까지..)   
-온갖 메일링 리스트와 구글에서 검색한 방법을 사용했지만 효과는 없었고   
-다음에 이 상태로 빠지지 않을 수 있는 교훈만 얻을 수 있었다.   
 
 현재로서는 여기 [feature 요청](http://tracker.ceph.com/issues/10098) 같이 데이터를 포기하더라도 pg를 재생성할 수 있는 기능이 추가되기를 기대해야 하는 상황이다.   
 (현재는 `ceph pg force_create_pg`를 사용해도 `creating` 상태에서 `incomplete` 상태로 되돌아 온다..)   

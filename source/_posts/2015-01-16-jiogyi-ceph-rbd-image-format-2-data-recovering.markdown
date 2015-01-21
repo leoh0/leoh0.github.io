@@ -38,7 +38,11 @@ ceph을 사용한지 조금 되었지만 큰 문제가 한번도 없어서 일�
 그러므로 전체 파일중 특정 조각이 문제가 되고 이 파일을 접근하는 모든 client request는 hang이 걸리게 된다.   
 볼륨같은 큰 데이터(많은 조각을 갖는 데이터)는 몇 개의 pg만 `incomplete`로 떨어져도 결국 모든 client의 request가 hang이 걸리게 된다.
 
+{% img /images/ceph.png 1688 264 "ceph logical flow" %}
+
 그러므로 `incomplete` 된 pg가 있으면 pool 전체를 사용할 수 가 없다.(pool을 초기화 하기 전까지..)   
+왜냐하면 어떠한 rbd object는 rados object로 분할되고 rados object들은 해당 pool에 분할 되어져서 들어간다.   
+해당 pool은 pg 들로 이루어 지는데 그중 한 pg 조각만 문제가 있어도 그 pg 조각에 들어간 한 rados object에 접근이 안되고 그렇기 때문에 rbd object 자체를 쓸수가 없게 되기 때문에 해당 pool을 쓸 수 없게 된다.   
 온갖 메일링 리스트와 구글에서 검색한 방법을 사용했지만 효과는 없었고   
 다음에 이 상태로 빠지지 않을 수 있는 교훈만 얻을 수 있었다.   
 

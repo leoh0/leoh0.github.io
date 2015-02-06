@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "chef 12: feature or bug?"
+title: "chef 12: node attribute style problem - feature or bug?"
 date: 2015-02-05 17:21:56 +0900
 comments: true
 categories: 
@@ -54,7 +54,7 @@ bb
 ```
 
 옛날 부터 [foodcritic에서도 둘중에 한 포맷으로 정해서 사용하라는 룰](http://www.foodcritic.io/#FC019)이 있었지만 정리를 안했더니 이런 일이 생긴건가 라고 반성을 하면서..
-(사실 현재도 안돌리고 있긴한.. 안돌리다 돌리려니 너무 고칠게 많아서 차라리 리팩토링 하고 돌려야지 하다보니.. ㅠㅠ)
+(사실 현재도 안돌리고 있긴한.. 안돌리다 돌리려니 너무 고칠게 많아서 차라리 리팩토링 하고 돌려야지 하다보니..... ㅠㅠ)
 
 그렇다면 어느쪽으로 style을 모는게 좋을까...??
 

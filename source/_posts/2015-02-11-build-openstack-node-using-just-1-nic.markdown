@@ -43,3 +43,5 @@ ip link add br0-veth type veth peer name br-eth0-veth
 ovs-vsctl add-port br0 br0-veth
 ovs-vsctl add-port br-eth0 br-eth0-veth
 ```
+
+만약 network node 라면 br-eth0 대신 br-ex 를 사용하고 추가적으로 nat 를 사용하기 위한 ip 하나만 할당하면 된다.

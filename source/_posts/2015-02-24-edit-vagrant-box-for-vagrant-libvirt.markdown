@@ -15,13 +15,13 @@ trusty64_vagrant_box_image.img: QEMU QCOW Image (unknown version)
 ```
 
 # init
-```
+``` bash
 apt-get install -qqy lvm2
 modprobe nbd
 ```
 
 # attach
-```
+``` bash
 cd /var/lib/libvirt/images
 qemu-nbd -c /dev/nbd0 `pwd`/trusty64_vagrant_box_image.img
 vgscan
@@ -30,7 +30,7 @@ mount /dev/mapper/vagrant--vg-root /mnt
 ```
 
 # detach
-```
+``` bash
 cd /
 umount /mnt
 vgchange -an vagrant-vg

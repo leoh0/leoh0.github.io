@@ -3,7 +3,7 @@
 {% unless year == this_year %}
 	{% assign year = this_year %}
 	{% unless forloop.first %}
-		</section>
+	</section>
 	{% endunless %}
 	<section class="archives"><h1 class="year">{{ date | date: "%Y" }}</h1>
 {% endunless %}
@@ -17,6 +17,6 @@
 	    {% endif %}
 	</div>
 </article>
-	{% if forloop.last %}
-	</section>
-	{% endif %}
+{% if forloop.last %}
+</section>
+{% endif %}

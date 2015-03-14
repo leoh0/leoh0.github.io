@@ -29,7 +29,10 @@ umount /mnt
 qemu-nbd -d /dev/nbd0p1
 ```
 
-selinux를 살펴 봤을때 아래 같이 selinux가 세팅되어 있을 수 있다.   
+하지만 이상하게도 저런 수정을 했을때 아예 접속이 불가능한 경우들이 생긴다. sshd config가 잘못되었는지 고치기 시작하면 아예 ssh 조차도 뜨질 못한다.   
+그이유는 아래와 같이 selinux의 보안 설정으로 위변조된 파일 사용시 차단되는 보안이 설정되어 있기 때문이다.
+
+즉, selinux를 살펴 봤을때 아래 같이 selinux가 세팅되어 있을 수 있다.   
 그렇다면 위와 같이 edit 했을때 관련 키, 계정들을 접근 못하게 된다.   
 
 ``` bash /etc/selinux/config

@@ -11,6 +11,7 @@ categories:
 - selinux
 ---
 
+
 우선은 nbd로 attach 하여 mount 해서 접근 가능하다.   
 이후에 아래와 같이 key를 추가해도 되고 각 os 버전에 맞게 패스워드를 새로 해슁하여 `/etc/shadow` 를 변경해도 된다.   
 물론 마지막에 dettach 를 꼭 신경써서 해줘야 한다.
@@ -45,6 +46,7 @@ SELINUXTYPE=targeted
 ```
 
 그렇기 때문에 이런 케이스는 아래와 같이 `selinux`를 *disable* 해줘야 한다.
+
 ``` bash
 # attach disk
 qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/10794bbb-7856-4ed6-ab39-32afbc01156a/disk
@@ -52,7 +54,6 @@ mount /dev/nbd0p1 /mnt
 
 # insert a new key to target user
 echo '''NEWKEY''' >> /mnt/home/USER/.ssh/authorized_keys
-
 
 # disable selinux
 sed -i 's/^SELINUX=.*$/SELINUX=disabled/g' /mnt/etc/selinux/config

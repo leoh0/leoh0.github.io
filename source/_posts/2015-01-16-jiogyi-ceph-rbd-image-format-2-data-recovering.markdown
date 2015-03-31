@@ -1,12 +1,14 @@
 ---
 layout: post
-title: "지옥의 ceph: rbd image-format 2 data recovery"
+title: "ceph pg incomplete: rbd image-format 2 data recovery"
 date: 2015-01-16 00:54:53 +0900
 comments: true
 categories: 
 - openstack
 - block storage
 - ceph
+- pg
+- incomplete
 ---
 
 ## ceph: pg incomplete is worst nightmare

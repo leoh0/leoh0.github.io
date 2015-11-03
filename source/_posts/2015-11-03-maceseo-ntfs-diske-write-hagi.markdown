@@ -8,4 +8,4 @@ categories:
 - ntfs
 ---
 
-% gist d07787e9dc635136de6a %}
+{% gist d07787e9dc635136de6a %}

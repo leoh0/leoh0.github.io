@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: mac | > /dev/null]]></title>
+  <link href="http://leoh0.github.io/blog/categories/mac/atom.xml" rel="self"/>
+  <link href="http://leoh0.github.io/"/>
+  <updated>2016-04-27T02:12:59+09:00</updated>
+  <id>http://leoh0.github.io/</id>
+  <author>
+    <name><![CDATA[leoh0]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[mac에서 ntfs disk에 write 하기]]></title>
+    <link href="http://leoh0.github.io/blog/2015/11/03/maceseo-ntfs-diske-write-hagi/"/>
+    <updated>2015-11-03T09:38:22+09:00</updated>
+    <id>http://leoh0.github.io/blog/2015/11/03/maceseo-ntfs-diske-write-hagi</id>
+    <content type="html"><![CDATA[<p>GPT 일때 가능</p>
+
+<p><div><script src='https://gist.github.com/d07787e9dc635136de6a.js?file=ntfs_mount.sh'></script>
+<noscript><pre><code>#!/usr/bin/env bash
+
+if mount | grep -q &#39;ntfs&#39; ; then
+  if ! mount | grep -q &#39;read-only&#39; ; then
+    echo -e &quot;\033[01;36mExist already in /etc/fstab.\033[00m&quot;
+    VOLUME=$(mount | grep &quot;(ntfs, &quot; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(.*\) (ntfs,.*$|\1|g&#39;)
+    open &quot;$VOLUME&quot;
+    exit
+  fi
+
+  DISK=$(mount | grep &#39;read-only&#39; | awk &#39;{print $1}&#39;)
+  UUID=$(diskutil info $DISK | grep UUID | awk &#39;{print $3}&#39;)
+  echo -e &quot;\033[01;36mRegistry into /etc/fstab.\033[00m&quot;
+  echo &quot;UUID=$UUID none ntfs rw,auto,nobrowse&quot; | sudo tee -a /etc/fstab &gt; /dev/null
+  diskutil umount $DISK
+  diskutil mount $DISK
+  VOLUME=$(mount | grep &quot;(ntfs, &quot; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(.*\) (ntfs,.*$|\1|g&#39;)
+  open &quot;$VOLUME&quot;
+else
+  echo -e &quot;\033[01;36mThere is no ntfs disk in here.\033[00m&quot;
+fi
+</code></pre></noscript></div>
+</p>
+]]></content>
+  </entry>
+  
+</feed>

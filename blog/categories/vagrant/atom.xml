@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: vagrant | > /dev/null]]></title>
+  <link href="http://leoh0.github.io/blog/categories/vagrant/atom.xml" rel="self"/>
+  <link href="http://leoh0.github.io/"/>
+  <updated>2016-04-27T02:12:59+09:00</updated>
+  <id>http://leoh0.github.io/</id>
+  <author>
+    <name><![CDATA[leoh0]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[edit vagrant box for vagrant-libvirt]]></title>
+    <link href="http://leoh0.github.io/blog/2015/02/24/edit-vagrant-box-for-vagrant-libvirt/"/>
+    <updated>2015-02-24T13:22:36+09:00</updated>
+    <id>http://leoh0.github.io/blog/2015/02/24/edit-vagrant-box-for-vagrant-libvirt</id>
+    <content type="html"><![CDATA[<h1>check file</h1>
+
+<pre><code class="bash">$ file trusty64_vagrant_box_image.img
+trusty64_vagrant_box_image.img: QEMU QCOW Image (unknown version)
+</code></pre>
+
+<h1>init</h1>
+
+<pre><code class="bash">apt-get install -qqy lvm2
+modprobe nbd
+</code></pre>
+
+<h1>attach</h1>
+
+<pre><code class="bash">cd /var/lib/libvirt/images
+qemu-nbd -c /dev/nbd0 `pwd`/trusty64_vagrant_box_image.img
+vgscan
+vgchange -ay
+mount /dev/mapper/vagrant--vg-root /mnt
+</code></pre>
+
+<h1>detach</h1>
+
+<pre><code class="bash">cd /
+umount /mnt
+vgchange -an vagrant-vg
+qemu-nbd -d /dev/nbd0
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ip | > /dev/null]]></title>
+  <link href="http://leoh0.github.io/blog/categories/ip/atom.xml" rel="self"/>
+  <link href="http://leoh0.github.io/"/>
+  <updated>2016-04-27T02:12:59+09:00</updated>
+  <id>http://leoh0.github.io/</id>
+  <author>
+    <name><![CDATA[leoh0]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[가장 변태적인 linux command]]></title>
+    <link href="http://leoh0.github.io/blog/2015/04/24/gajang-byeontaejeogin-linux-command/"/>
+    <updated>2015-04-24T00:28:38+09:00</updated>
+    <id>http://leoh0.github.io/blog/2015/04/24/gajang-byeontaejeogin-linux-command</id>
+    <content type="html"><![CDATA[<p>ip command 는 linux network 쪽을 위해 굉장히 많이 사용되는 커맨드 이다.
+<code>bash
+Usage: ip [ OPTIONS ] OBJECT { COMMAND | help }
+       ip [ -force ] -batch filename
+where  OBJECT := { link | addr | addrlabel | route | rule | neigh | ntable |
+                   tunnel | tuntap | maddr | mroute | mrule | monitor | xfrm |
+                   netns | l2tp | tcp_metrics | token }
+       OPTIONS := { -V[ersion] | -s[tatistics] | -d[etails] | -r[esolve] |
+                    -f[amily] { inet | inet6 | ipx | dnet | bridge | link } |
+                    -4 | -6 | -I | -D | -B | -0 |
+                    -l[oops] { maximum-addr-flush-attempts } |
+                    -o[neline] | -t[imestamp] | -b[atch] [filename] |
+                    -rc[vbuf] [size]}
+</code></p>
+
+<p>이 커맨드의 가장 변태적이라고 생각한 부분은 다음이다..</p>
+
+<pre><code class="bash">ip a
+</code></pre>
+
+<pre><code class="bash">ip ad
+</code></pre>
+
+<pre><code class="bash">ip add
+</code></pre>
+
+<pre><code class="bash">ip addr
+</code></pre>
+
+<pre><code class="bash">ip addre
+</code></pre>
+
+<pre><code class="bash">ip addres
+</code></pre>
+
+<pre><code class="bash">ip address
+</code></pre>
+
+<p>전부 동일한 결과가&hellip;</p>
+
+<p><code>link</code>, <code>route</code> 등도 다 저렇게 되있다고 보면된다.</p>
+
+<p>별건 아닌데 참 <code>괴상한</code> <code>친절한</code> 커맨드라는 생각이 들어서 ㅋㅋ</p>
+]]></content>
+  </entry>
+  
+</feed>

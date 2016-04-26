@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: openstack | > /dev/null]]></title>
+  <link href="http://leoh0.github.io/blog/categories/openstack/atom.xml" rel="self"/>
+  <link href="http://leoh0.github.io/"/>
+  <updated>2016-04-27T02:12:59+09:00</updated>
+  <id>http://leoh0.github.io/</id>
+  <author>
+    <name><![CDATA[leoh0]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[keystone에서 token backend로 사용하는 memcached가 unbalanced되었다..]]></title>
+    <link href="http://leoh0.github.io/blog/2016/04/27/keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossdamyeon-dot/"/>
+    <updated>2016-04-27T00:00:45+09:00</updated>
+    <id>http://leoh0.github.io/blog/2016/04/27/keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossdamyeon-dot</id>
+    <content type="html"><![CDATA[<p>해당 클러스터는 kilo 버전으로 구성 되었었고 token 을 memcached 에 저장하고 있었다.  <br/>
+또한 kilo 부터 dogpile.cache 는 거의 고정으로 들어가 있가 있어서 해당 모듈을 사용했다.  <br/>
+이런 상황을 디버깅 했던 경험을 정리해 본다.</p>
+
+<p>아래는 문제가 되었던 memcached host의 in/out bound 그래프이다.  <br/>
+수치는 가려서 스케일만 감으로 볼 수 있게 남겼다.</p>
+
+<p><strong>A 서버</strong>
+<img src="/images/2016-04-26_23-50-30.png" width="508" height="122" title="A 서버" ></p>
+
+<p><strong>B 서버</strong>
+<img src="/images/2016-04-26_23-50-41.png" width="499" height="122" title="B 서버" ></p>
+
+<p>최초엔 keystone과 memcached connection 이 unbalance 할것이라고 생각했으나 그런 정황은 없었다.    (connection 개수가 일정) 그리고 특별히 keystone 로그에도 별다른 문제가 보이지 않았다.  <br/>
+memcache key 개수는 심지어 <strong>A 서버</strong>가 많았다.</p>
+
+<p>이 외에도 온갖 삽질을 했지만 관련이 없었다.  <br/>
+그 후 결국 아래와 같은 방법으로 디버깅 할 수 있었다.</p>
+
+<p>각 호스트에서 아래 같이 memcache slab id 별로 dump를 떠보니 <code>bf81985d70a6416897edbade7a8bfc0a5a579af4</code> 와 같이 유독 큰 (578966 b) 키가 <strong>B 서버</strong>에만 존재 하고 있었다.</p>
+
+<p>대부분의 token 데이터는 <code>3f786850e387550fdab836ed7e6dc881de23001b</code> 정도와 같이 PKI가 아닌 UUID token data여서 10000 b 정도를 구성하고 있었기 때문에 <code>크기</code>가 더 눈에 띈다.</p>
+
+<pre><code>$ for i in $(echo 'stats items' | nc localhost 11211 | cut -d':' -f2 | sort -u | grep -v END); do
+    echo "stats cachedump $i 1" | nc localhost 11211
+done
+...
+ITEM 3f786850e387550fdab836ed7e6dc881de23001b [11651 b; 1461686308 s]
+END
+ITEM 6e49b86a7502dae881f3b9466ecbdfa4743c7eb9 [578966 b; 1461688011 s]
+END
+...
+</code></pre>
+
+<p>그렇다면 이 키를 열어 보면 아래와 같다.  <br/>
+( 참고로 아래 커맨드를 쓰기위해선 <code>dogpile.cache</code> 가 인스톨 되어 있어야 한다. )</p>
+
+<pre><code>$ echo get 6e49b86a7502dae881f3b9466ecbdfa4743c7eb9 | nc localhost 11211 | python -c '
+import sys
+import cPickle
+import json
+try:
+    data=cPickle.load(sys.stdin)
+    print json.dumps(data)
+except (cPickle.UnpicklingError, EOFError):
+    print ""
+' | python -mjson.tool
+[
+    [
+        [
+            "386c0e0a01bb4069904d9c11771516a2",
+            "2016-04-26T15:41:25.000000Z"
+        ],
+        [
+            "9ba06233d0894aa4a06d4302800035c1",
+            "2016-04-26T15:41:24.000000Z"
+        ],
+        [
+            "1510940842f943b798f4bb9f7964aa67",
+            "2016-04-26T15:41:24.000000Z"
+        ],
+
+        ...
+
+        [
+            "d57b2946174c4a4391496a7f9af7e0c5",
+            "2016-04-26T16:41:18.000000Z"
+        ]
+    ],
+    {
+        "ct": 1461685284.976144,
+        "v": 1
+    }
+]
+</code></pre>
+
+<p>위와 같이 되어 있고 알고 보면 특정 토큰들과 그 토큰이 issue 된 시간이 적혀 있는 <a href="https://github.com/openstack/keystone/blob/stable/kilo/keystone/token/persistence/backends/kvs.py#L155-L188">리스트</a> 이다.  <br/>
+이 키의 리스트는 유저별로 token의 expire time을 관리하는 값으로 해당 user에게 token이 발급 되거나 expire 될때마다 해당 리스트를 memcache로 부터 가져와서(<code>get</code>) 다시 업로드(<code>set</code>) 한다.  <br/>
+그렇기 때문에 해당 키값이 결국 유저와 관계 있다는 것을 추측할 수 있었다.</p>
+
+<p>예를 들어 아래 처럼 특정 유저를 본다면 아래 처럼 <code>id</code>를 갖고 있을 것이다.</p>
+
+<pre><code>$ openstack user show ceilometer
++----------+----------------------------------+
+| Field    | Value                            |
++----------+----------------------------------+
+| enabled  | True                             |
+| id       | eef939600bc111e69aeb57d4fa849231 |
+| name     | ceilometer                       |
+| username | ceilometer                       |
++----------+----------------------------------+
+</code></pre>
+
+<p>eef939600bc111e69aeb57d4fa849231 이값은 아래와 같이 prefix가 붙고 hash 되서 key 값으로 사용된다.</p>
+
+<pre><code class="">$ echo -n 'usertokens-eef939600bc111e69aeb57d4fa849231' | sha1sum
+6e49b86a7502dae881f3b9466ecbdfa4743c7eb9  -
+</code></pre>
+
+<p>즉, <code>6e49b86a7502dae881f3b9466ecbdfa4743c7eb9</code>은 가 key이 기때문에 위의 토큰 리스트는 ceilometer의 토큰 리스트인걸 알 수 있다.</p>
+
+<p>마지막으로 아래와 같이 계산해 보면 어떤 멤캐쉬에 들어갈 지 알수 있다. (<a href="https://github.com/linsomniac/python-memcached/blob/master/memcache.py#L63-L66">cmemcache_hash</a> 참고)  <br/>
+여기에서는 <code>3065</code> 가 나왔기 때문에 멤캐쉬 서버가 두대이면 두번째(<code>3016%2=1</code>) 서버로 들어가게 된다.</p>
+
+<pre><code class="">$ echo -n '6e49b86a7502dae881f3b9466ecbdfa4743c7eb9' | python -c '
+import sys,binascii
+print (
+    (((binascii.crc32(sys.stdin.read()) &amp; 0xffffffff)
+       &gt;&gt; 16) &amp; 0x7fff) or 1)
+'
+3065
+</code></pre>
+
+<p>나의 케이스는 불운 하게도 이런 많은 토큰을 같은 유저(ceilometer, neutron, nova 등)가 전부 해쉬값이 홀수가 나와서 한 memcached host에 할당되었고, 이때문에 한쪽으로 skew 가 있었다.</p>
+
+<p>이런걸 피할려면 결국 memcached 개수를 늘이던가 토큰이 많은 유저의 uuid를 분배시킬 수 있도록 해야 할것같다.
+물론 저런 거대한 토큰 리스트를 관리 안하는 것이 더 나아 보이지만 이 코드는 현재 master(mitaka 이후)까지도 유지되어 있는 상태이다.</p>
+
+<p>우리도 ceilometer 를 쓰기 전까지는 이런 문제가 없었으나 ceilometer를 추가하면서 문제가 발생하기 시작했다.  <br/>
+아무래도 ceilometer 상위 버전쪽에서는 토큰의 재활용을 높이는 부분들이 있어야 할것이다.</p>
+
+<p>사족으로 토큰이 어떤 내용을 담고 있는지는 아래 같은 스크립트로 찾으면 편하다.</p>
+
+<pre><code>MEMCACHES='serverA serverB'
+for h in $MEMCACHES; do
+  echo $h
+  sha=$(echo -n "token-$1" | sha1sum | cut -d' ' -f1)
+  echo get $sha | nc $h 11211 | python -c '
+import sys
+import cPickle
+import json
+try:
+    data=cPickle.load(sys.stdin)
+    data[0]["expires"] = data[0]["expires"].strftime("%Y-%m-%d %H:%M:%S")
+    print json.dumps(data[0])
+except (cPickle.UnpicklingError, EOFError):
+    print ''
+' | python -mjson.tool
+done
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[containerize openstack]]></title>
+    <link href="http://leoh0.github.io/blog/2015/04/24/containerize-openstack/"/>
+    <updated>2015-04-24T01:08:16+09:00</updated>
+    <id>http://leoh0.github.io/blog/2015/04/24/containerize-openstack</id>
+    <content type="html"><![CDATA[<p>docker 바깥으로 process를 낼 수 있는 방법들로 kvm 프로세스를 docker 바깥 host os 에 배치시키는 방법이 가능하네요.  <br/>
+실질적으로 docker안에 kvm이 들어가게 된다면 docker process에 vm이 종속적이게 되어 불안정한 구성이 될테지만  <br/>
+이런 방식으로 피해 갈 수도 있는 것을 확인했습니다.</p>
+
+<p><img src="/images/containerize-openstack.png" width="1440" height="829" title="containerize-openstack" ></p>
+
+<p>아무튼 사진과 같이 기묘한 형태로 (실제 host os 에는 없는 바이너리가 parent 1 을 물고 process 로 뜨게되는) 관리가 가능합니다.  <br/>
+물론 보안 적인 결함에 대해서야 아직 끝도없이 이야기할 주제이겠지만 앞으로의 provisioning의 새로운 가능성에 대해서 관심이 가는건 사실인것 같습니다.</p>
+
+<p>아무튼 열심히 삽질하다보니 kolla에서 이미 하고 있었어서 libvirt 를 containerize 하는데 도움을 받았습니다.</p>
+
+<p><a href="https://github.com/stackforge/kolla">https://github.com/stackforge/kolla</a></p>
+
+<p>우선 저는 ubuntu로 kolla 소스가 아니라 따로 구성해서 실험했습니다.  <br/>
+fedora와 ubuntu의 미묘한 차이가 있어서 ubuntu로 구성하려면 약간의 차이가 필요한것 같습니다.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[draw openstack L2 network architecture automatically]]></title>
+    <link href="http://leoh0.github.io/blog/2015/04/03/draw-openstack-l2-network-architecture-automatically/"/>
+    <updated>2015-04-03T02:29:52+09:00</updated>
+    <id>http://leoh0.github.io/blog/2015/04/03/draw-openstack-l2-network-architecture-automatically</id>
+    <content type="html"><![CDATA[<p>iptables를 좀 보기 편하게 할 수 없는가를 이야기하다가 <a href="http://atoato88.hatenablog.com/entry/2014/01/25/133852">여기</a>사이트를 보게되었다. <br/>
+그래서 감동을 받아서 이에 뭔가 남기고자 삽질을 했다. (어짜피 요새 deploy 테스트 하다보면 남는게 시간이다 보니..) <br/>
+대략 openstack neutron의 L2 architecture 에 구성요소들을 좀 보기 편하게 그린것이다. <br/>
+지금 tunnel architecture를 가진건 없어서 br-tun 쪽은 그리려고 테스트 하진 않았다. 다만 ovs 나 bridge 모드에서 대략적인 그림은 맘에 들게 그려지는 것 같다.</p>
+
+<p>ascii 로 그린 architecture 들이다.</p>
+
+<h1>bridge-vlan</h1>
+
+<p><img src="/images/draw-bridge-vlan.png" width="1312" height="544" title="bridge-vlan" ></p>
+
+<h1>openvswitch-flat</h1>
+
+<p><img src="/images/draw-ovs-flat.png" width="2526" height="780" title="openvswitch-flat" ></p>
+
+<h1>openvswitch-vlan</h1>
+
+<p><img src="/images/draw-ovs-vlan.png" width="2752" height="544" title="openvswitch-vlan" ></p>
+
+<p>이걸 graphviz 로 그리면 다음과 같다.</p>
+
+<h1>bridge-vlan</h1>
+
+<p><img src="/images/draw-bridge-vlan-g.png" width="757" height="131" title="bridge-vlan" ></p>
+
+<h1>openvswitch-flat</h1>
+
+<p><img src="/images/draw-ovs-flat-g.png" width="1101" height="491" title="openvswitch-flat" ></p>
+
+<h1>openvswitch-vlan</h1>
+
+<p><img src="/images/draw-ovs-vlan-g.png" width="1594" height="131" title="openvswitch-vlan" ></p>
+
+<p>이걸 3D 로 그리면 다음과 같다.</p>
+
+<h1>bridge-vlan</h1>
+
+<p><img src="/images/draw-bridge-vlan-3d.png" width="2716" height="1564" title="bridge-vlan" ></p>
+
+<h1>openvswitch-flat</h1>
+
+<p><img src="/images/draw-ovs-flat-3d.png" width="2844" height="1668" title="openvswitch-flat" ></p>
+
+<h1>openvswitch-vlan</h1>
+
+<p><img src="/images/draw-ovs-vlan-3d.png" width="2844" height="2032" title="openvswitch-vlan" ></p>
+
+<p>는 사실 그냥 이전에 그려논 그림이다..</p>
+
+<p>아무튼 해당 그림을 그리기 위해 제작한 스크립트 이다. <br/>
+아래 스크립트를 컴퓨트 노드에서 돌리면 해당 정보를 수집해서 그리게 된다. (물론 네트워크 노드도 가능..) <br/>
+귀찮아서 하드코딩한 부분들은 편하게 고쳐쓰시길..</p>
+
+<p><div><script src='https://gist.github.com/8499b653f479766378d8.js'></script>
+<noscript><pre><code>#!/bin/bash
+
+sudo apt-get install -qqy ethtool libgraph-easy-perl graphviz &gt; /dev/null
+
+EXCEPT=/tmp/exceptlist
+echo &#39;&#39; &gt; $EXCEPT
+result=&quot;&quot;
+
+function on_exit() {
+  rm -f $EXCEPT
+}
+
+trap &quot;on_exit&quot; EXIT
+
+# find ovs br &lt;-&gt; port
+if [ &quot;x$(which ovs-vsctl)&quot; != &quot;x&quot; ]; then
+  for br in $(sudo ovs-vsctl list-br); do
+    for port in $(sudo ovs-vsctl list-ports $br); do
+      result=$(echo &quot;$result [$port]----&gt;[$br] [$br]----&gt;[$port] &quot;)
+    done
+  done
+fi
+
+# find br &lt;-&gt; port
+for br in $(brctl show | sed &#39;1d&#39; | grep &#39;^[a-z]&#39; | awk &#39;{print $1}&#39;); do
+  for port in $(brctl show $br | sed &#39;1d&#39; | sed &#39;s/.*\t.*\t.*\t\(.*\)/\1/g&#39;); do
+    result=$(echo &quot;$result [$port]----&gt;[$br] [$br]----&gt;[$port] &quot;)
+  done
+done
+
+# ip namespace veth
+for ns in $(ip netns); do
+  for interface in $(ip netns exec $ns ip a | cut -d&#39;:&#39; -f-2 | grep ^[1-9]); do
+    index=$(ip netns exec $ns ethtool -S $interface 2&gt; /dev/null | grep peer_ifindex | awk &#39;{print $2}&#39;)
+    ifname=$(ip netns exec $ns ip a | grep &quot;^$index:&quot; | awk &#39;{print $2}&#39; | cut -d&#39;:&#39; -f1)
+    if [ &quot;x$ifname&quot; == &quot;x&quot; ]; then
+      ifname=$(ip a | grep &quot;^$index:&quot; | awk &#39;{print $2}&#39; | cut -d&#39;:&#39; -f1)
+      if [ &quot;x$ifname&quot; != &quot;x&quot; ]; then
+        echo $ifname &gt;&gt; $EXCEPT
+        result=$(echo &quot;$result [$interface]----&gt;[$ifname] [$ifname]----&gt;[$interface] &quot;)
+      fi
+    fi
+  done
+done
+
+# ip veth
+for interface in $(ip a | cut -d&#39;:&#39; -f-2 | grep ^[1-9]); do
+  if cat $EXCEPT | grep -q &quot;^$interface$&quot; ; then continue ; fi
+  index=$(ethtool -S $interface 2&gt; /dev/null | grep peer_ifindex | awk &#39;{print $2}&#39;)
+  ifname=$(ip a | grep &quot;^$index:&quot; | awk &#39;{print $2}&#39; | cut -d&#39;:&#39; -f1)
+  if [ &quot;x$ifname&quot; != &quot;x&quot; ]; then
+    echo $ifname &gt;&gt; $EXCEPT
+    result=$(echo &quot;$result [$interface]----&gt;[$ifname] [$ifname]----&gt;[$interface] &quot;)
+  fi
+done
+
+# vm tap
+for tap in $(ip a | cut -d&#39;:&#39; -f-2 | grep ^[1-9]  | cut -d&#39; &#39; -f2 | grep &#39;^tap&#39;); do
+  vmuuid=$(grep -rl &quot;$tap&quot; /var/lib/nova/instances/*/libvirt.xml | cut -d&#39;/&#39; -f6)
+  if [ &quot;x$vmuuid&quot; != &quot;x&quot; ]; then
+    result=$(echo &quot;$result [$tap]----&gt;[VM-$vmuuid] [VM-$vmuuid]----&gt;[$tap] &quot;)
+  fi
+done
+
+rm -f $EXCEPT
+
+echo $result | graph-easy
+echo $result | graph-easy -as dot | dot -Tpng -o l2path.png
+</code></pre></noscript></div>
+</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ping openstack vms in specific host]]></title>
+    <link href="http://leoh0.github.io/blog/2015/03/31/ping-openstack-vms-in-specific-host/"/>
+    <updated>2015-03-31T09:36:44+09:00</updated>
+    <id>http://leoh0.github.io/blog/2015/03/31/ping-openstack-vms-in-specific-host</id>
+    <content type="html"><![CDATA[<p><div><script src='https://gist.github.com/261cc772f9bc5ab916b5.js'></script>
+<noscript><pre><code>#!/usr/bin/env bash
+
+declare -A vm_ip
+declare -A vm_id
+declare -A vm_status
+
+while read -r _ id _ name _ ip _ ; do
+  ip=$(echo $ip|cut -d&#39;=&#39; -f2)
+  vm_ip[$name]=$ip
+  vm_id[$name]=$id
+  vm_status[$name]=&quot;S&quot;
+  ping -c1 -i0.1 -t1 -W100 $ip &gt; /dev/null
+  if [ &quot;x$?&quot; == &quot;x2&quot; ]; then
+    vm_status[$name]=&quot;N&quot;
+  fi
+done&lt; &lt;(nova list --all-tenants --fields name,networks --host $1 | grep &quot;=&quot;)
+
+while read -r _ net_id _ id _ _ _ _ ip _ ; do
+  ip=$(echo $ip|cut -d&#39;&quot;&#39; -f2)
+  net_id_prefix=${net_id:0:11}
+  name=&quot;_DHCP_&quot;$net_id_prefix
+  vm_ip[$name]=$ip
+  vm_id[$name]=$id
+  vm_status[$name]=&quot;S&quot;
+  ping -c1 -i0.1 -t1 -W100 $ip &gt; /dev/null
+  if [ &quot;x$?&quot; == &quot;x2&quot; ]; then
+    vm_status[$name]=&quot;N&quot;
+  fi
+done&lt; &lt;(neutron port-list --device-owner=network:dhcp --binding:host_id $1 -c network_id -c id -c fixed_ips | sed &#39;2d&#39; | grep &#39;|&#39;)
+
+c=${#vm_ip[@]}
+if [ &quot;x$c&quot; == &quot;x0&quot; ] ; then
+  echo &quot;there is no vm or dhcp servers.. exit!!&quot;
+  exit
+fi
+
+while true; do
+  for h in ${!vm_ip[@]}; do
+    ping -c1 -i0.1 -t1 -W100 ${vm_ip[$h]} &gt; /dev/null
+    if [ &quot;x$?&quot; == &quot;x2&quot; ]; then
+      if [ &quot;x${vm_status[$h]}&quot; != &quot;xN&quot; ] ; then
+        vm_status[$h]=&quot;F&quot;
+      fi
+    else
+      vm_status[$h]=&quot;S&quot;
+    fi
+  done
+  for h in ${!vm_ip[@]}; do
+    case ${vm_status[$h]} in
+      S)
+        status=&quot;\033[01;32mOK\033[00m&quot; ;;
+      F)
+        status=&quot;\033[01;31mFAIL\033[00m&quot; ;;
+      N)
+        status=&quot;\033[01;33mNOCON\033[00m&quot; ;;
+    esac
+    pre=$(printf &quot;%-30s  %-15s %-32s %s\n&quot; &quot;${h::30}&quot; &quot;${vm_ip[$h]}&quot; &quot;${vm_id[$h]}&quot; &quot;$status&quot;)
+    echo -en &quot;\033[K&quot;
+    echo -en &quot;$pre\n&quot;
+  done
+  sleep 1
+  echo -en &quot;\033[${c}A&quot;
+done
+</code></pre></noscript></div>
+</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[만약 사용자가 ssh password나 key등을 잃어 버려서 도저히 vm instance에 접속할 수 없을때..]]></title>
+    <link href="http://leoh0.github.io/blog/2015/03/14/if-you-forget-your-password-or-key/"/>
+    <updated>2015-03-14T22:00:57+09:00</updated>
+    <id>http://leoh0.github.io/blog/2015/03/14/if-you-forget-your-password-or-key</id>
+    <content type="html"><![CDATA[<p>우선은 nbd로 attach 하여 mount 해서 접근 가능하다. <br/>
+이후에 아래와 같이 key를 추가해도 되고 각 os 버전에 맞게 패스워드를 새로 해슁하여 <code>/etc/shadow</code> 를 변경해도 된다. <br/>
+물론 마지막에 dettach 를 꼭 신경써서 해줘야 한다.</p>
+
+<pre><code class="bash"># attach disk
+qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/10794bbb-7856-4ed6-ab39-32afbc01156a/disk
+mount /dev/nbd0p1 /mnt
+
+# insert a new key to target user
+echo '''NEWKEY''' &gt;&gt; /mnt/home/USER/.ssh/authorized_keys
+
+# dettach disk
+umount /mnt
+qemu-nbd -d /dev/nbd0p1
+</code></pre>
+
+<p>하지만 이상하게도 저런 수정을 했을때 아예 접속이 불가능한 경우들이 생긴다. sshd config가 잘못되었는지 고치기 시작하면 아예 ssh 조차도 뜨질 못한다. <br/>
+그이유는 아래와 같이 selinux의 보안 설정으로 위변조된 파일 사용시 차단되는 보안이 설정되어 있기 때문이다.</p>
+
+<p>즉, selinux를 살펴 봤을때 아래 같이 selinux가 세팅되어 있을 수 있다. <br/>
+그렇다면 위와 같이 edit 했을때 관련 키, 계정들을 접근 못하게 된다.</p>
+
+<pre><code class="bash /etc/selinux/config"># This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=enforcing
+# SELINUXTYPE= can take one of these two values:
+#     targeted - Targeted processes are protected,
+#     mls - Multi Level Security protection.
+SELINUXTYPE=targeted
+</code></pre>
+
+<p>그렇기 때문에 이런 케이스는 아래와 같이 <code>selinux</code>를 <em>disable</em> 해줘야 한다.</p>
+
+<pre><code class="bash"># attach disk
+qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/10794bbb-7856-4ed6-ab39-32afbc01156a/disk
+mount /dev/nbd0p1 /mnt
+
+# insert a new key to target user
+echo '''NEWKEY''' &gt;&gt; /mnt/home/USER/.ssh/authorized_keys
+
+# disable selinux
+sed -i 's/^SELINUX=.*$/SELINUX=disabled/g' /mnt/etc/selinux/config
+
+# dettach disk
+umount /mnt
+qemu-nbd -d /dev/nbd0p1
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

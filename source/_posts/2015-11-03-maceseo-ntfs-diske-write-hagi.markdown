@@ -7,5 +7,6 @@ categories:
 - mac
 - ntfs
 ---
+GPT 일때 가능
 
 {% gist d07787e9dc635136de6a ntfs_mount.sh %}

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://leoh0.github.io/blog/2016/05/10/management-multiple-openstack-cluster-with-automatic-openstack-rc-file-loader-script/</loc>
+<lastmod>2016-05-10T01:08:56+09:00</lastmod>
+</url>
+<url>
 <loc>http://leoh0.github.io/blog/2016/04/27/keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossdamyeon-dot/</loc>
 <lastmod>2016-04-27T00:00:45+09:00</lastmod>
 </url>
@@ -203,6 +207,18 @@
 </url>
 <url>
 <loc>http://leoh0.github.io/blog/categories/skew/</loc>
+</url>
+<url>
+<loc>http://leoh0.github.io/blog/categories/rc/</loc>
+</url>
+<url>
+<loc>http://leoh0.github.io/blog/categories/openrc/</loc>
+</url>
+<url>
+<loc>http://leoh0.github.io/blog/categories/automatic/</loc>
+</url>
+<url>
+<loc>http://leoh0.github.io/blog/categories/multiple-cluster/</loc>
 </url>
 <url>
 <loc>http://leoh0.github.io/posts/2/</loc>

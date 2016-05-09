@@ -4,7 +4,7 @@
   <title><![CDATA[Category: rc | > /dev/null]]></title>
   <link href="http://leoh0.github.io/blog/categories/rc/atom.xml" rel="self"/>
   <link href="http://leoh0.github.io/"/>
-  <updated>2016-05-10T03:20:11+09:00</updated>
+  <updated>2016-05-10T03:42:42+09:00</updated>
   <id>http://leoh0.github.io/</id>
   <author>
     <name><![CDATA[leoh0]]></name>
@@ -18,7 +18,9 @@
     <link href="http://leoh0.github.io/blog/2016/05/10/management-multiple-openstack-cluster-with-automatic-openstack-rc-file-loader-script/"/>
     <updated>2016-05-10T01:08:56+09:00</updated>
     <id>http://leoh0.github.io/blog/2016/05/10/management-multiple-openstack-cluster-with-automatic-openstack-rc-file-loader-script</id>
-    <content type="html"><![CDATA[<h2>openstack rc file</h2>
+    <content type="html"><![CDATA[<p><img src="/images/2016-05-10_03-40-27.jpg" width="368" height="272"></p>
+
+<h2>openstack rc file</h2>
 
 <p>여러 openstack 클러스터를 관리하려면 <a href="http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html">openstack rc file</a>(이하 openrc file)을 잘 관리해야한다.  <br/>
 이런 관리를 위해서 <a href="http://supernova.readthedocs.io/en/latest/">supernova</a> 와 같은 rc file 관리해주는 툴들을 사용하게 된다.  <br/>

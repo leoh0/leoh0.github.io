@@ -7,12 +7,7 @@
 	<meta name="author" content="leoh0">
 
 	
-	<meta name="description" content="check file 1
-2
-$ file trusty64_vagrant_box_image.img
-trusty64_vagrant_box_image.img: QEMU QCOW Image (unknown version) init 1
-2
-apt-get install -qqy &hellip;">
+	<meta name="description" content="chef server ssl verification 때문에 그냥 domain 인증서를 제대로 적용하려고 했는데 엄청 삽질했다. 아마 chef 11 에서 chef 12 로 올라가면서 config 위치가 변경된거 같다. 여기에서 관련 정보를 얻을 수 있었는데 차이점은 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -83,6 +78,83 @@ apt-get install -qqy &hellip;">
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/02/24/custom-url-for-chef-server-12/">
+		
+			Custom URL for Chef Server 12</a>
+	</h2>
+	<div class="entry-content">
+		<p>chef server ssl verification 때문에 그냥 domain 인증서를 제대로 적용하려고 했는데 엄청 삽질했다. 아마 chef 11 에서 chef 12 로 올라가면서 config 위치가 변경된거 같다.</p>
+
+<p><a href="http://www.bitlancer.com/2014/10/custom-chef-server-url/">여기</a>에서 관련 정보를 얻을 수 있었는데 차이점은 /etc/chef-server/chef-server.rb 가 아닌 /etc/opscode/chef-server.rb 파일을 수정해서 적용 가능했다.</p>
+
+<p>아래 처럼 해당 파일을 수정한다.</p>
+
+<figure class='code'><figcaption><span>/etc/opscode/chef-server.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="n">server_name</span> <span class="o">=</span> <span class="s2">&quot;chef.yourdomain.com&quot;</span>
+</span><span class='line'><span class="n">api_fqdn</span> <span class="o">=</span> <span class="n">server_name</span>
+</span><span class='line'><span class="n">bookshelf</span><span class="o">[</span><span class="s1">&#39;vip&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="n">server_name</span>
+</span><span class='line'><span class="n">nginx</span><span class="o">[</span><span class="s1">&#39;url&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;https://</span><span class="si">#{</span><span class="n">server_name</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="n">nginx</span><span class="o">[</span><span class="s1">&#39;server_name&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="n">server_name</span>
+</span><span class='line'><span class="n">nginx</span><span class="o">[</span><span class="s1">&#39;ssl_certificate&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;/var/opt/chef-server/nginx/ca/</span><span class="si">#{</span><span class="n">server_name</span><span class="si">}</span><span class="s2">.crt&quot;</span>
+</span><span class='line'><span class="n">nginx</span><span class="o">[</span><span class="s1">&#39;ssl_certificate_key&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;/var/opt/chef-server/nginx/ca/</span><span class="si">#{</span><span class="n">server_name</span><span class="si">}</span><span class="s2">.key&quot;</span>
+</span><span class='line'><span class="n">lb</span><span class="o">[</span><span class="s1">&#39;fqdn&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="n">server_name</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>이후에 해당 컨피그 내용으로 적용한다.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>chef-server-ctl reconfigure
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>이후 테스트해보면 끝.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-02-24T23:29:19+09:00" pubdate data-updated="true"></time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/chef/'>chef</a>, <a class='category' href='/blog/categories/chef-server-12/'>chef server 12</a>
+
+
+</div>
+	
+	<div class="comments"><a href="/blog/2015/02/24/custom-url-for-chef-server-12/#disqus_thread">Comments</a></div>
+	
+</div>
+</article>
 
 
     <article class="post">

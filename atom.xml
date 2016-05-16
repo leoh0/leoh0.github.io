@@ -4,7 +4,7 @@
   <title><![CDATA[> /dev/null]]></title>
   <link href="http://leoh0.github.io/atom.xml" rel="self"/>
   <link href="http://leoh0.github.io/"/>
-  <updated>2016-05-17T03:18:22+09:00</updated>
+  <updated>2016-05-17T03:29:28+09:00</updated>
   <id>http://leoh0.github.io/</id>
   <author>
     <name><![CDATA[leoh0]]></name>
@@ -18,7 +18,9 @@
     <link href="http://leoh0.github.io/blog/2016/05/17/mac-os-x-nslookup/"/>
     <updated>2016-05-17T02:24:09+09:00</updated>
     <id>http://leoh0.github.io/blog/2016/05/17/mac-os-x-nslookup</id>
-    <content type="html"><![CDATA[<p>Mac os x 는 linux와 다른 resolving을 제공한다.</p>
+    <content type="html"><![CDATA[<p><img src="http://leoh0.github.io/images/2016-05-17_03-24-13.jpg" width="650" height="167"></p>
+
+<p>Mac os x 는 linux와 다른 resolving을 제공한다.</p>
 
 <p>간단하게만 이야기 하면 /etc/resolv.conf 외에도 /etc/resolver/* 에 원하는 dns명을 기록해 놓으면 해당 domain name을 갖을시 해당하는 nameserver로 쿼리를 할 수가 있다.</p>
 
@@ -230,7 +232,8 @@
 </span><span class='line'>sudo killall -INFO mDNSResponder</span></code></pre></td></tr></table></div></figure>
 
 
-
+<p>졸려서 두서없이 정리함..
+나중에 다시 좀더 자세하게 정리를..</p>
 ]]></content>
   </entry>
   

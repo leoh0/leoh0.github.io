@@ -7,7 +7,9 @@
 	<meta name="author" content="leoh0">
 
 	
-	<meta name="description" content="chef server ssl verification 때문에 그냥 domain 인증서를 제대로 적용하려고 했는데 엄청 삽질했다. 아마 chef 11 에서 chef 12 로 올라가면서 config 위치가 변경된거 같다. 여기에서 관련 정보를 얻을 수 있었는데 차이점은 &hellip;">
+	<meta name="description" content="#!/usr/bin/env bash declare -A vm_ip
+declare -A vm_id
+declare -A vm_status while read -r _ id _ name _ ip _ ; do ip=$(echo $ip|cut -d&#39;=&#39; -f2 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -78,6 +80,244 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/03/31/ping-openstack-vms-in-specific-host/">
+		
+			Ping Openstack Vms in Specific Host</a>
+	</h2>
+	<div class="entry-content">
+		<div><script src='https://gist.github.com/261cc772f9bc5ab916b5.js'></script>
+<noscript><pre><code>#!/usr/bin/env bash
+
+declare -A vm_ip
+declare -A vm_id
+declare -A vm_status
+
+while read -r _ id _ name _ ip _ ; do
+  ip=$(echo $ip|cut -d&#39;=&#39; -f2)
+  vm_ip[$name]=$ip
+  vm_id[$name]=$id
+  vm_status[$name]=&quot;S&quot;
+  ping -c1 -i0.1 -t1 -W100 $ip &gt; /dev/null
+  if [ &quot;x$?&quot; == &quot;x2&quot; ]; then
+    vm_status[$name]=&quot;N&quot;
+  fi
+done&lt; &lt;(nova list --all-tenants --fields name,networks --host $1 | grep &quot;=&quot;)
+
+while read -r _ net_id _ id _ _ _ _ ip _ ; do
+  ip=$(echo $ip|cut -d&#39;&quot;&#39; -f2)
+  net_id_prefix=${net_id:0:11}
+  name=&quot;_DHCP_&quot;$net_id_prefix
+  vm_ip[$name]=$ip
+  vm_id[$name]=$id
+  vm_status[$name]=&quot;S&quot;
+  ping -c1 -i0.1 -t1 -W100 $ip &gt; /dev/null
+  if [ &quot;x$?&quot; == &quot;x2&quot; ]; then
+    vm_status[$name]=&quot;N&quot;
+  fi
+done&lt; &lt;(neutron port-list --device-owner=network:dhcp --binding:host_id $1 -c network_id -c id -c fixed_ips | sed &#39;2d&#39; | grep &#39;|&#39;)
+
+c=${#vm_ip[@]}
+if [ &quot;x$c&quot; == &quot;x0&quot; ] ; then
+  echo &quot;there is no vm or dhcp servers.. exit!!&quot;
+  exit
+fi
+
+while true; do
+  for h in ${!vm_ip[@]}; do
+    ping -c1 -i0.1 -t1 -W100 ${vm_ip[$h]} &gt; /dev/null
+    if [ &quot;x$?&quot; == &quot;x2&quot; ]; then
+      if [ &quot;x${vm_status[$h]}&quot; != &quot;xN&quot; ] ; then
+        vm_status[$h]=&quot;F&quot;
+      fi
+    else
+      vm_status[$h]=&quot;S&quot;
+    fi
+  done
+  for h in ${!vm_ip[@]}; do
+    case ${vm_status[$h]} in
+      S)
+        status=&quot;\033[01;32mOK\033[00m&quot; ;;
+      F)
+        status=&quot;\033[01;31mFAIL\033[00m&quot; ;;
+      N)
+        status=&quot;\033[01;33mNOCON\033[00m&quot; ;;
+    esac
+    pre=$(printf &quot;%-30s  %-15s %-32s %s\n&quot; &quot;${h::30}&quot; &quot;${vm_ip[$h]}&quot; &quot;${vm_id[$h]}&quot; &quot;$status&quot;)
+    echo -en &quot;\033[K&quot;
+    echo -en &quot;$pre\n&quot;
+  done
+  sleep 1
+  echo -en &quot;\033[${c}A&quot;
+done
+</code></pre></noscript></div>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-31T09:36:44+09:00" pubdate data-updated="true"></time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/host/'>host</a>, <a class='category' href='/blog/categories/openstack/'>openstack</a>, <a class='category' href='/blog/categories/ping/'>ping</a>
+
+
+</div>
+	
+	<div class="comments"><a href="/blog/2015/03/31/ping-openstack-vms-in-specific-host/#disqus_thread">Comments</a></div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/03/14/if-you-forget-your-password-or-key/">
+		
+			만약 사용자가 Ssh Password나 Key등을 잃어 버려서 도저히 Vm Instance에 접속할 수 없을때..</a>
+	</h2>
+	<div class="entry-content">
+		<p>우선은 nbd로 attach 하여 mount 해서 접근 가능하다. <br/>
+이후에 아래와 같이 key를 추가해도 되고 각 os 버전에 맞게 패스워드를 새로 해슁하여 <code>/etc/shadow</code> 를 변경해도 된다. <br/>
+물론 마지막에 dettach 를 꼭 신경써서 해줘야 한다.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># attach disk</span>
+</span><span class='line'>qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/10794bbb-7856-4ed6-ab39-32afbc01156a/disk
+</span><span class='line'>mount /dev/nbd0p1 /mnt
+</span><span class='line'>
+</span><span class='line'><span class="c"># insert a new key to target user</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s1">&#39;&#39;&#39;NEWKEY&#39;&#39;&#39;</span> &gt;&gt; /mnt/home/USER/.ssh/authorized_keys
+</span><span class='line'>
+</span><span class='line'><span class="c"># dettach disk</span>
+</span><span class='line'>umount /mnt
+</span><span class='line'>qemu-nbd -d /dev/nbd0p1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>하지만 이상하게도 저런 수정을 했을때 아예 접속이 불가능한 경우들이 생긴다. sshd config가 잘못되었는지 고치기 시작하면 아예 ssh 조차도 뜨질 못한다. <br/>
+그이유는 아래와 같이 selinux의 보안 설정으로 위변조된 파일 사용시 차단되는 보안이 설정되어 있기 때문이다.</p>
+
+<p>즉, selinux를 살펴 봤을때 아래 같이 selinux가 세팅되어 있을 수 있다. <br/>
+그렇다면 위와 같이 edit 했을때 관련 키, 계정들을 접근 못하게 된다.</p>
+
+<figure class='code'><figcaption><span>/etc/selinux/config</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># This file controls the state of SELinux on the system.</span>
+</span><span class='line'><span class="c"># SELINUX= can take one of these three values:</span>
+</span><span class='line'><span class="c">#     enforcing - SELinux security policy is enforced.</span>
+</span><span class='line'><span class="c">#     permissive - SELinux prints warnings instead of enforcing.</span>
+</span><span class='line'><span class="c">#     disabled - No SELinux policy is loaded.</span>
+</span><span class='line'><span class="nv">SELINUX</span><span class="o">=</span>enforcing
+</span><span class='line'><span class="c"># SELINUXTYPE= can take one of these two values:</span>
+</span><span class='line'><span class="c">#     targeted - Targeted processes are protected,</span>
+</span><span class='line'><span class="c">#     mls - Multi Level Security protection.</span>
+</span><span class='line'><span class="nv">SELINUXTYPE</span><span class="o">=</span>targeted
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>그렇기 때문에 이런 케이스는 아래와 같이 <code>selinux</code>를 <em>disable</em> 해줘야 한다.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># attach disk</span>
+</span><span class='line'>qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/10794bbb-7856-4ed6-ab39-32afbc01156a/disk
+</span><span class='line'>mount /dev/nbd0p1 /mnt
+</span><span class='line'>
+</span><span class='line'><span class="c"># insert a new key to target user</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s1">&#39;&#39;&#39;NEWKEY&#39;&#39;&#39;</span> &gt;&gt; /mnt/home/USER/.ssh/authorized_keys
+</span><span class='line'>
+</span><span class='line'><span class="c"># disable selinux</span>
+</span><span class='line'>sed -i <span class="s1">&#39;s/^SELINUX=.*$/SELINUX=disabled/g&#39;</span> /mnt/etc/selinux/config
+</span><span class='line'>
+</span><span class='line'><span class="c"># dettach disk</span>
+</span><span class='line'>umount /mnt
+</span><span class='line'>qemu-nbd -d /dev/nbd0p1
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-14T22:00:57+09:00" pubdate data-updated="true"></time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/nova/'>nova</a>, <a class='category' href='/blog/categories/openstack/'>openstack</a>, <a class='category' href='/blog/categories/selinux/'>selinux</a>, <a class='category' href='/blog/categories/ssh-login-fail/'>ssh login fail</a>, <a class='category' href='/blog/categories/ssh-password-lost/'>ssh password lost</a>
+
+
+</div>
+	
+	<div class="comments"><a href="/blog/2015/03/14/if-you-forget-your-password-or-key/#disqus_thread">Comments</a></div>
+	
+</div>
+</article>
 
 
     <article class="post">

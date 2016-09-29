@@ -4,7 +4,7 @@
   <title><![CDATA[> /dev/null]]></title>
   <link href="http://leoh0.github.io/atom.xml" rel="self"/>
   <link href="http://leoh0.github.io/"/>
-  <updated>2016-05-17T03:29:28+09:00</updated>
+  <updated>2016-09-29T23:49:48+09:00</updated>
   <id>http://leoh0.github.io/</id>
   <author>
     <name><![CDATA[leoh0]]></name>
@@ -12,6 +12,130 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[추가 - edit vagrant box for vagrant-libvirt]]></title>
+    <link href="http://leoh0.github.io/blog/2016/09/29/cuga-edit-vagrant-box-for-vagrant-libvirt/"/>
+    <updated>2016-09-29T23:39:00+09:00</updated>
+    <id>http://leoh0.github.io/blog/2016/09/29/cuga-edit-vagrant-box-for-vagrant-libvirt</id>
+    <content type="html"><![CDATA[<h1>copy image and files</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mkdir -p images
+</span><span class='line'>cp ~/.vagrant.d/boxes/<span class="k">${</span><span class="nv">TARGETIMAGE</span><span class="k">}</span>/0/libvirt/* images/
+</span><span class='line'><span class="nb">cd </span>images
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>init</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>apt-get install -qqy lvm2
+</span><span class='line'>modprobe nbd
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>attach</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>qemu-nbd -c /dev/nbd0 <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>/box.img
+</span><span class='line'>vgscan
+</span><span class='line'>vgchange -ay
+</span><span class='line'>mount /dev/mapper/vagrant--vg-root /mnt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>bind</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">binds</span><span class="o">=</span><span class="s2">&quot;/dev /dev/pts /proc /sys /run&quot;</span>
+</span><span class='line'><span class="k">for</span> d in <span class="nv">$binds</span><span class="p">;</span> <span class="k">do</span>
+</span><span class='line'>  mkdir -p /mnt<span class="k">${</span><span class="nv">d</span><span class="k">}</span>
+</span><span class='line'>  mount --bind <span class="k">${</span><span class="nv">d</span><span class="k">}</span> /mnt<span class="k">${</span><span class="nv">d</span><span class="k">}</span>
+</span><span class='line'><span class="k">done</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>work</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>chroot /mnt bash
+</span><span class='line'><span class="c"># blah blah blah</span>
+</span><span class='line'><span class="nb">exit</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>unbind and detach</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /
+</span><span class='line'><span class="k">for</span> d in <span class="k">$(</span>mount <span class="p">|</span> awk <span class="s1">&#39;/\/mnt/{print $3}&#39;</span> <span class="p">|</span> sort -r<span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+</span><span class='line'>  umount <span class="nv">$d</span>
+</span><span class='line'><span class="k">done</span>
+</span><span class='line'>vgchange -an vagrant-vg
+</span><span class='line'>qemu-nbd -d /dev/nbd0
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[추가 - Keystone에서 Token Backend로 사용하는 Memcached가 Unbalanced되었다..]]></title>
+    <link href="http://leoh0.github.io/blog/2016/09/29/cuga-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossda-dot/"/>
+    <updated>2016-09-29T23:30:20+09:00</updated>
+    <id>http://leoh0.github.io/blog/2016/09/29/cuga-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossda-dot</id>
+    <content type="html"><![CDATA[<p>예전에 아래글을 그냥 balancing 을 위해 id 를 잘 분배하자 라는식으로 결론 냈지만.</p>
+
+<p><a href="http://leoh0.github.io/blog/2016/04/27/keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossdamyeon-dot/">Keystone에서 Token Backend로 사용하는 Memcached가 Unbalanced되었다..</a></p>
+
+<p>user의 token리스트를 관리하지 않으면 부담은 훨씬 줄어든다.</p>
+
+<p>물론 user의 password 변경 등으로 기존 모든 token을 revoke 시키는 경우때문에 이런 user 단위로 token리스트를 관리해야 하지만  <br/>
+그걸 포기하면 그냥 코드 몇줄 추가로 간단하게 정리할 수 있다.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'><span class="gh">diff --git a/keystone/token/persistence/backends/memcache.py b/keystone/token/persistence/backends/memcache.py</span>
+</span><span class='line'><span class="gh">index e6b0fca..3f0de68 100644</span>
+</span><span class='line'><span class="gd">--- a/keystone/token/persistence/backends/memcache.py</span>
+</span><span class='line'><span class="gi">+++ b/keystone/token/persistence/backends/memcache.py</span>
+</span><span class='line'><span class="gu">@@ -37,3 +37,6 @@ class Token(kvs.Token):</span>
+</span><span class='line'>         kwargs[&#39;memcached_expire_time&#39;] = CONF.token.expiration
+</span><span class='line'>         kwargs[&#39;url&#39;] = CONF.memcache.servers
+</span><span class='line'>         super(Token, self).__init__(*args, **kwargs)
+</span><span class='line'><span class="gi">+</span>
+</span><span class='line'><span class="gi">+    def _update_user_token_list(self, user_key, token_id, expires_isotime_str):</span>
+</span><span class='line'><span class="gi">+        return []</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mac os x - nslookup, host, dig works with /etc/resolv.conf, but ping, ssh doesnt work]]></title>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: openstack | > /dev/null]]></title>
   <link href="http://leoh0.github.io/blog/categories/openstack/atom.xml" rel="self"/>
   <link href="http://leoh0.github.io/"/>
-  <updated>2016-05-17T03:29:28+09:00</updated>
+  <updated>2016-09-29T23:49:48+09:00</updated>
   <id>http://leoh0.github.io/</id>
   <author>
     <name><![CDATA[leoh0]]></name>
@@ -12,6 +12,35 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[추가 - Keystone에서 Token Backend로 사용하는 Memcached가 Unbalanced되었다..]]></title>
+    <link href="http://leoh0.github.io/blog/2016/09/29/cuga-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossda-dot/"/>
+    <updated>2016-09-29T23:30:20+09:00</updated>
+    <id>http://leoh0.github.io/blog/2016/09/29/cuga-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossda-dot</id>
+    <content type="html"><![CDATA[<p>예전에 아래글을 그냥 balancing 을 위해 id 를 잘 분배하자 라는식으로 결론 냈지만.</p>
+
+<p><a href="http://leoh0.github.io/blog/2016/04/27/keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossdamyeon-dot/">Keystone에서 Token Backend로 사용하는 Memcached가 Unbalanced되었다..</a></p>
+
+<p>user의 token리스트를 관리하지 않으면 부담은 훨씬 줄어든다.</p>
+
+<p>물론 user의 password 변경 등으로 기존 모든 token을 revoke 시키는 경우때문에 이런 user 단위로 token리스트를 관리해야 하지만  <br/>
+그걸 포기하면 그냥 코드 몇줄 추가로 간단하게 정리할 수 있다.</p>
+
+<pre><code class="diff">diff --git a/keystone/token/persistence/backends/memcache.py b/keystone/token/persistence/backends/memcache.py
+index e6b0fca..3f0de68 100644
+--- a/keystone/token/persistence/backends/memcache.py
++++ b/keystone/token/persistence/backends/memcache.py
+@@ -37,3 +37,6 @@ class Token(kvs.Token):
+         kwargs['memcached_expire_time'] = CONF.token.expiration
+         kwargs['url'] = CONF.memcache.servers
+         super(Token, self).__init__(*args, **kwargs)
++
++    def _update_user_token_list(self, user_key, token_id, expires_isotime_str):
++        return []
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Management multiple openstack cluster with automatic openstack rc file loader script]]></title>
@@ -539,80 +568,6 @@ rm -f $EXCEPT
 
 echo $result | graph-easy
 echo $result | graph-easy -as dot | dot -Tpng -o l2path.png
-</code></pre></noscript></div>
-</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ping openstack vms in specific host]]></title>
-    <link href="http://leoh0.github.io/blog/2015/03/31/ping-openstack-vms-in-specific-host/"/>
-    <updated>2015-03-31T09:36:44+09:00</updated>
-    <id>http://leoh0.github.io/blog/2015/03/31/ping-openstack-vms-in-specific-host</id>
-    <content type="html"><![CDATA[<p><div><script src='https://gist.github.com/261cc772f9bc5ab916b5.js'></script>
-<noscript><pre><code>#!/usr/bin/env bash
-
-declare -A vm_ip
-declare -A vm_id
-declare -A vm_status
-
-while read -r _ id _ name _ ip _ ; do
-  ip=$(echo $ip|cut -d&#39;=&#39; -f2)
-  vm_ip[$name]=$ip
-  vm_id[$name]=$id
-  vm_status[$name]=&quot;S&quot;
-  ping -c1 -i0.1 -t1 -W100 $ip &gt; /dev/null
-  if [ &quot;x$?&quot; == &quot;x2&quot; ]; then
-    vm_status[$name]=&quot;N&quot;
-  fi
-done&lt; &lt;(nova list --all-tenants --fields name,networks --host $1 | grep &quot;=&quot;)
-
-while read -r _ net_id _ id _ _ _ _ ip _ ; do
-  ip=$(echo $ip|cut -d&#39;&quot;&#39; -f2)
-  net_id_prefix=${net_id:0:11}
-  name=&quot;_DHCP_&quot;$net_id_prefix
-  vm_ip[$name]=$ip
-  vm_id[$name]=$id
-  vm_status[$name]=&quot;S&quot;
-  ping -c1 -i0.1 -t1 -W100 $ip &gt; /dev/null
-  if [ &quot;x$?&quot; == &quot;x2&quot; ]; then
-    vm_status[$name]=&quot;N&quot;
-  fi
-done&lt; &lt;(neutron port-list --device-owner=network:dhcp --binding:host_id $1 -c network_id -c id -c fixed_ips | sed &#39;2d&#39; | grep &#39;|&#39;)
-
-c=${#vm_ip[@]}
-if [ &quot;x$c&quot; == &quot;x0&quot; ] ; then
-  echo &quot;there is no vm or dhcp servers.. exit!!&quot;
-  exit
-fi
-
-while true; do
-  for h in ${!vm_ip[@]}; do
-    ping -c1 -i0.1 -t1 -W100 ${vm_ip[$h]} &gt; /dev/null
-    if [ &quot;x$?&quot; == &quot;x2&quot; ]; then
-      if [ &quot;x${vm_status[$h]}&quot; != &quot;xN&quot; ] ; then
-        vm_status[$h]=&quot;F&quot;
-      fi
-    else
-      vm_status[$h]=&quot;S&quot;
-    fi
-  done
-  for h in ${!vm_ip[@]}; do
-    case ${vm_status[$h]} in
-      S)
-        status=&quot;\033[01;32mOK\033[00m&quot; ;;
-      F)
-        status=&quot;\033[01;31mFAIL\033[00m&quot; ;;
-      N)
-        status=&quot;\033[01;33mNOCON\033[00m&quot; ;;
-    esac
-    pre=$(printf &quot;%-30s  %-15s %-32s %s\n&quot; &quot;${h::30}&quot; &quot;${vm_ip[$h]}&quot; &quot;${vm_id[$h]}&quot; &quot;$status&quot;)
-    echo -en &quot;\033[K&quot;
-    echo -en &quot;$pre\n&quot;
-  done
-  sleep 1
-  echo -en &quot;\033[${c}A&quot;
-done
 </code></pre></noscript></div>
 </p>
 ]]></content>

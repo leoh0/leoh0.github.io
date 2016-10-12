@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://leoh0.github.io/blog/2016/10/13/install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/</loc>
+<lastmod>2016-10-13T00:02:06+09:00</lastmod>
+</url>
+<url>
 <loc>http://leoh0.github.io/blog/2016/09/29/cuga-edit-vagrant-box-for-vagrant-libvirt/</loc>
 <lastmod>2016-09-29T23:39:00+09:00</lastmod>
 </url>
@@ -254,6 +258,24 @@
 <loc>http://leoh0.github.io/blog/categories/junos-pulse/</loc>
 </url>
 <url>
-<loc>http://leoh0.github.io/posts/2/</loc>
+<loc>http://leoh0.github.io/blog/categories/mitaka/</loc>
+</url>
+<url>
+<loc>http://leoh0.github.io/blog/categories/install-openstack/</loc>
+</url>
+<url>
+<loc>http://leoh0.github.io/blog/categories/kolla-kubernetes/</loc>
+</url>
+<url>
+<loc>http://leoh0.github.io/blog/categories/kubernetes/</loc>
+</url>
+<url>
+<loc>http://leoh0.github.io/blog/categories/macos/</loc>
+</url>
+<url>
+<loc>http://leoh0.github.io/blog/categories/sierra/</loc>
+</url>
+<url>
+<loc>http://leoh0.github.io/blog/categories/container/</loc>
 </url>
 </urlset>

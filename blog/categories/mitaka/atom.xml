@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mitaka | > /dev/null]]></title>
   <link href="http://leoh0.github.io/blog/categories/mitaka/atom.xml" rel="self"/>
   <link href="http://leoh0.github.io/"/>
-  <updated>2016-10-13T00:18:27+09:00</updated>
+  <updated>2016-10-13T00:21:09+09:00</updated>
   <id>http://leoh0.github.io/</id>
   <author>
     <name><![CDATA[leoh0]]></name>
@@ -18,12 +18,12 @@
     <link href="http://leoh0.github.io/blog/2016/10/13/install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/"/>
     <updated>2016-10-13T00:02:06+09:00</updated>
     <id>http://leoh0.github.io/blog/2016/10/13/install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve</id>
-    <content type="html"><![CDATA[<p><code>kubernetes</code> 로 <code>openstack mitaka</code>를 설치해 봤습니다.</p>
-
-<p>아래 로그 및 시연을 만들어 봤습니다. 클릭하면 전과정을 보실 수 있습니다. 참고하시면 좋을 것 같습니다.</p>
-
-<p><a href="http://showterm.io/404f651b005c52298bc9f"><img src="/images/2016-10-13_00-04-57.jpg" width="924" height="533"></a>
+    <content type="html"><![CDATA[<p><a href="http://showterm.io/404f651b005c52298bc9f"><img src="/images/2016-10-13_00-04-57.jpg" width="924" height="533"></a>
 <a href="http://showterm.io/404f651b005c52298bc9f">클릭해서 과정 보기</a></p>
+
+<p><code>kubernetes</code> 로 <code>openstack mitaka</code>를 설치해 봤습니다.</p>
+
+<p>위의 이미지를 클릭하면 전과정을 보실 수 있습니다. 참고하시면 좋을 것 같습니다.</p>
 
 <p>대략 31분 정도 걸려서 minikube 구성 부터 전체 셋업 및 vm 2개 띄워서 로그인 테스트 합니다.</p>
 

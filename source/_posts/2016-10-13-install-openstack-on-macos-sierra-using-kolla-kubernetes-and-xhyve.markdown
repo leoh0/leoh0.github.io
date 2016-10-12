@@ -16,12 +16,12 @@ categories:
 - container
 ---
 
-`kubernetes` 로 `openstack mitaka`를 설치해 봤습니다.
-
-아래 로그 및 시연을 만들어 봤습니다. 클릭하면 전과정을 보실 수 있습니다. 참고하시면 좋을 것 같습니다.
-
 <a href="http://showterm.io/404f651b005c52298bc9f">{% img /images/2016-10-13_00-04-57.jpg 924 533 %}</a>
 [클릭해서 과정 보기](http://showterm.io/404f651b005c52298bc9f)
+
+`kubernetes` 로 `openstack mitaka`를 설치해 봤습니다.
+
+위의 이미지를 클릭하면 전과정을 보실 수 있습니다. 참고하시면 좋을 것 같습니다.
 
 대략 31분 정도 걸려서 minikube 구성 부터 전체 셋업 및 vm 2개 띄워서 로그인 테스트 합니다.
 

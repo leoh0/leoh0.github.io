@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 잡담 | > /dev/null]]></title>
+  <link href="http://leoh0.github.io/blog/categories/jabdam/atom.xml" rel="self"/>
+  <link href="http://leoh0.github.io/"/>
+  <updated>2017-07-27T01:54:23+09:00</updated>
+  <id>http://leoh0.github.io/</id>
+  <author>
+    <name><![CDATA[leoh0]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[이사]]></title>
+    <link href="http://leoh0.github.io/blog/2015/01/15/isa/"/>
+    <updated>2015-01-15T17:58:18+09:00</updated>
+    <id>http://leoh0.github.io/blog/2015/01/15/isa</id>
+    <content type="html"><![CDATA[<p><del><strong>RIP</strong> 20140404 <a href="https://leoh0.wordpress.com">https://leoh0.wordpress.com</a></del> <br/>
+<del><strong>RIP</strong> 20150115 <a href="http://leoh0.blogspot.kr">http://leoh0.blogspot.kr</a></del></p>
+
+<p>제일 처음 wordpress 블로그를 썼을때 다 만족스러웠지만 왠지 구글 검색에 노출되는 시간이 오래 걸리는 기분이 있었다.. <br/>
+그래서 blogspot 으로 옮겨 갔으나.. <br/>
+하지만 부족한 템플릿과 플러그인.. <br/>
+그리고 소스 코드 삽입시 html 코드를 작성해야하는데 이게 너무 지저분해서 맘에 들지 않았다.</p>
+
+<p>그래서 결국 소스 코드를 가장 이쁘게 보여 줄 수 있는 <a href="octopress.org">octopress</a>로..</p>
+]]></content>
+  </entry>
+  
+</feed>

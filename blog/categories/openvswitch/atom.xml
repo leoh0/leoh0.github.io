@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: openvswitch | > /dev/null]]></title>
+  <link href="http://leoh0.github.io/blog/categories/openvswitch/atom.xml" rel="self"/>
+  <link href="http://leoh0.github.io/"/>
+  <updated>2017-07-27T01:54:23+09:00</updated>
+  <id>http://leoh0.github.io/</id>
+  <author>
+    <name><![CDATA[leoh0]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[draw openstack L2 network architecture automatically]]></title>
+    <link href="http://leoh0.github.io/blog/2015/04/03/draw-openstack-l2-network-architecture-automatically/"/>
+    <updated>2015-04-03T02:29:52+09:00</updated>
+    <id>http://leoh0.github.io/blog/2015/04/03/draw-openstack-l2-network-architecture-automatically</id>
+    <content type="html"><![CDATA[<p>iptables를 좀 보기 편하게 할 수 없는가를 이야기하다가 <a href="http://atoato88.hatenablog.com/entry/2014/01/25/133852">여기</a>사이트를 보게되었다. <br/>
+그래서 감동을 받아서 이에 뭔가 남기고자 삽질을 했다. (어짜피 요새 deploy 테스트 하다보면 남는게 시간이다 보니..) <br/>
+대략 openstack neutron의 L2 architecture 에 구성요소들을 좀 보기 편하게 그린것이다. <br/>
+지금 tunnel architecture를 가진건 없어서 br-tun 쪽은 그리려고 테스트 하진 않았다. 다만 ovs 나 bridge 모드에서 대략적인 그림은 맘에 들게 그려지는 것 같다.</p>
+
+<p>ascii 로 그린 architecture 들이다.</p>
+
+<h1>bridge-vlan</h1>
+
+<p><img src="/images/draw-bridge-vlan.png" width="1312" height="544" title="bridge-vlan" ></p>
+
+<h1>openvswitch-flat</h1>
+
+<p><img src="/images/draw-ovs-flat.png" width="2526" height="780" title="openvswitch-flat" ></p>
+
+<h1>openvswitch-vlan</h1>
+
+<p><img src="/images/draw-ovs-vlan.png" width="2752" height="544" title="openvswitch-vlan" ></p>
+
+<p>이걸 graphviz 로 그리면 다음과 같다.</p>
+
+<h1>bridge-vlan</h1>
+
+<p><img src="/images/draw-bridge-vlan-g.png" width="757" height="131" title="bridge-vlan" ></p>
+
+<h1>openvswitch-flat</h1>
+
+<p><img src="/images/draw-ovs-flat-g.png" width="1101" height="491" title="openvswitch-flat" ></p>
+
+<h1>openvswitch-vlan</h1>
+
+<p><img src="/images/draw-ovs-vlan-g.png" width="1594" height="131" title="openvswitch-vlan" ></p>
+
+<p>이걸 3D 로 그리면 다음과 같다.</p>
+
+<h1>bridge-vlan</h1>
+
+<p><img src="/images/draw-bridge-vlan-3d.png" width="2716" height="1564" title="bridge-vlan" ></p>
+
+<h1>openvswitch-flat</h1>
+
+<p><img src="/images/draw-ovs-flat-3d.png" width="2844" height="1668" title="openvswitch-flat" ></p>
+
+<h1>openvswitch-vlan</h1>
+
+<p><img src="/images/draw-ovs-vlan-3d.png" width="2844" height="2032" title="openvswitch-vlan" ></p>
+
+<p>는 사실 그냥 이전에 그려논 그림이다..</p>
+
+<p>아무튼 해당 그림을 그리기 위해 제작한 스크립트 이다. <br/>
+아래 스크립트를 컴퓨트 노드에서 돌리면 해당 정보를 수집해서 그리게 된다. (물론 네트워크 노드도 가능..) <br/>
+귀찮아서 하드코딩한 부분들은 편하게 고쳐쓰시길..</p>
+
+<p><div><script src='https://gist.github.com/8499b653f479766378d8.js'></script>
+<noscript><pre><code>#!/bin/bash
+
+sudo apt-get install -qqy ethtool libgraph-easy-perl graphviz &gt; /dev/null
+
+EXCEPT=/tmp/exceptlist
+echo &#39;&#39; &gt; $EXCEPT
+result=&quot;&quot;
+
+function on_exit() {
+  rm -f $EXCEPT
+}
+
+trap &quot;on_exit&quot; EXIT
+
+# find ovs br &lt;-&gt; port
+if [ &quot;x$(which ovs-vsctl)&quot; != &quot;x&quot; ]; then
+  for br in $(sudo ovs-vsctl list-br); do
+    for port in $(sudo ovs-vsctl list-ports $br); do
+      result=$(echo &quot;$result [$port]----&gt;[$br] [$br]----&gt;[$port] &quot;)
+    done
+  done
+fi
+
+# find br &lt;-&gt; port
+for br in $(brctl show | sed &#39;1d&#39; | grep &#39;^[a-z]&#39; | awk &#39;{print $1}&#39;); do
+  for port in $(brctl show $br | sed &#39;1d&#39; | sed &#39;s/.*\t.*\t.*\t\(.*\)/\1/g&#39;); do
+    result=$(echo &quot;$result [$port]----&gt;[$br] [$br]----&gt;[$port] &quot;)
+  done
+done
+
+# ip namespace veth
+for ns in $(ip netns); do
+  for interface in $(ip netns exec $ns ip a | cut -d&#39;:&#39; -f-2 | grep ^[1-9]); do
+    index=$(ip netns exec $ns ethtool -S $interface 2&gt; /dev/null | grep peer_ifindex | awk &#39;{print $2}&#39;)
+    ifname=$(ip netns exec $ns ip a | grep &quot;^$index:&quot; | awk &#39;{print $2}&#39; | cut -d&#39;:&#39; -f1)
+    if [ &quot;x$ifname&quot; == &quot;x&quot; ]; then
+      ifname=$(ip a | grep &quot;^$index:&quot; | awk &#39;{print $2}&#39; | cut -d&#39;:&#39; -f1)
+      if [ &quot;x$ifname&quot; != &quot;x&quot; ]; then
+        echo $ifname &gt;&gt; $EXCEPT
+        result=$(echo &quot;$result [$interface]----&gt;[$ifname] [$ifname]----&gt;[$interface] &quot;)
+      fi
+    fi
+  done
+done
+
+# ip veth
+for interface in $(ip a | cut -d&#39;:&#39; -f-2 | grep ^[1-9]); do
+  if cat $EXCEPT | grep -q &quot;^$interface$&quot; ; then continue ; fi
+  index=$(ethtool -S $interface 2&gt; /dev/null | grep peer_ifindex | awk &#39;{print $2}&#39;)
+  ifname=$(ip a | grep &quot;^$index:&quot; | awk &#39;{print $2}&#39; | cut -d&#39;:&#39; -f1)
+  if [ &quot;x$ifname&quot; != &quot;x&quot; ]; then
+    echo $ifname &gt;&gt; $EXCEPT
+    result=$(echo &quot;$result [$interface]----&gt;[$ifname] [$ifname]----&gt;[$interface] &quot;)
+  fi
+done
+
+# vm tap
+for tap in $(ip a | cut -d&#39;:&#39; -f-2 | grep ^[1-9]  | cut -d&#39; &#39; -f2 | grep &#39;^tap&#39;); do
+  vmuuid=$(grep -rl &quot;$tap&quot; /var/lib/nova/instances/*/libvirt.xml | cut -d&#39;/&#39; -f6)
+  if [ &quot;x$vmuuid&quot; != &quot;x&quot; ]; then
+    result=$(echo &quot;$result [$tap]----&gt;[VM-$vmuuid] [VM-$vmuuid]----&gt;[$tap] &quot;)
+  fi
+done
+
+rm -f $EXCEPT
+
+echo $result | graph-easy
+echo $result | graph-easy -as dot | dot -Tpng -o l2path.png
+</code></pre></noscript></div>
+</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[NIC 1개로 compute node를 vlan type으로 neutron을 사용하여 구성하기 위한 팁]]></title>
+    <link href="http://leoh0.github.io/blog/2015/02/11/build-openstack-node-using-just-1-nic/"/>
+    <updated>2015-02-11T17:12:39+09:00</updated>
+    <id>http://leoh0.github.io/blog/2015/02/11/build-openstack-node-using-just-1-nic</id>
+    <content type="html"><![CDATA[<p>gre 같은 tunnel 을 사용한다면 NIC 하나로 구성 할 수 있겠지만 그게 아니라면 일반적으로는 management 용 NIC 한개와 service 용 NIC 한개가 필요하다.</p>
+
+<p>우선 아래와 같은 상태가 2 NIC을 사용하는 일반적인 구성이다.</p>
+
+<p>그림 처럼 eth0은 management를 위한 ip로 이용되며 eth1을 guest interface(vlan 이라면 0.0.0.0)로 사용할 수 있다.</p>
+
+<p><img src="/images/1nic-neutron-1.png" width="449" height="487"></p>
+
+<p>단도직입적으로 ethernet 한개로는 아래와 같이 구성하면 된다.</p>
+
+<p>우선 eth0은 0.0.0.0 으로 ip를 사용안하는 대신 br0 부분에서 기존의 management용 ip를 가져간다.</p>
+
+<p><img src="/images/1nic-neutron-2.png" width="449" height="487"></p>
+
+<p>아래와 같은 흐름으로 진행하면 된다.</p>
+
+<pre><code class="bash"># br0 switch 추가 (자동으로 br0 switch 에는 br0 interface가 달려있는 상태로 생성됨)
+ovs-vsctl add-br br0
+# br0 switch 에 eth0 interface를 추가 시켜줌
+ovs-vsctl add-port br0 eth0
+# ip 및 route 세팅
+/sbin/ifconfig eth0 0.0.0.0 up
+/sbin/ifconfig br0 x.x.x.x/xx up
+
+# br-eth0 인터페이스를 생성 (br-ex 도 비슷)
+ovs-vsctl add-br br-eth0
+# br0 switch와 br-eth0 을 연결 시킬 veth 생성
+ip link add br0-veth type veth peer name br-eth0-veth
+ovs-vsctl add-port br0 br0-veth
+ovs-vsctl add-port br-eth0 br-eth0-veth
+</code></pre>
+
+<p>만약 network node 라면 br-eth0 대신 br-ex 를 사용하고 추가적으로 nat 를 사용하기 위한 ip 하나만 할당하면 된다.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[make l2 network for vm without neutron]]></title>
+    <link href="http://leoh0.github.io/blog/2015/02/02/make-l2-network-for-vm-without-neutron/"/>
+    <updated>2015-02-02T09:20:23+09:00</updated>
+    <id>http://leoh0.github.io/blog/2015/02/02/make-l2-network-for-vm-without-neutron</id>
+    <content type="html"><![CDATA[<p>우선 아래와 같은 컨피그를 이용할때..</p>
+
+<h2>nova</h2>
+
+<ul>
+<li>linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver</li>
+</ul>
+
+
+<h2>neutron</h2>
+
+<ul>
+<li>type_drivers = vlan</li>
+<li>mechanism_drivers = openvswitch</li>
+<li>firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</li>
+</ul>
+
+
+<h2>1. 기본 상태:</h2>
+
+<p>우선 실제 물리 머신에 아래와 같이 vm을 위한 ethernet인 eth1이 존재한다.</p>
+
+<p><img src="/images/neutron-nova-network-1.jpg" width="497" height="395"></p>
+
+<h3>변수 생성</h3>
+
+<pre><code class="bash">vmuuid=9ee8db25-6a13-4ca8-8a4e-495db24492ca
+vlan=2001
+localvlan=1
+ip=$(nova show $vmuuid | grep ' network' | awk '{print $5}')
+interfaceid=$(neutron port-list | grep "\"$ip\"" | awk '{print $2}')
+mac=$(neutron port-list | grep "\"$ip\"" | awk '{print $5}')
+ovsid=${interfaceid:0:11}
+</code></pre>
+
+<h2>2. 유저 생성 단계:</h2>
+
+<p>eth1에 연결된 br-eth1 bridge를 생성한다.
+또한 gre, vlan등의 다양한 type들의 네트워크를 연결시켜 줄 수 있는 br-int bridge를 생성한다.</p>
+
+<p><img src="/images/neutron-nova-network-2.jpg" width="497" height="395"></p>
+
+<h3>user가 생성 필요</h3>
+
+<pre><code class="bash">ovs-vsctl --timeout=10 -- --may-exist add-br br-eth1
+ovs-vsctl --timeout=10 -- --may-exist add-port br-eth1 eth1
+</code></pre>
+
+<h2>3. neutron openvswitch plugin 시작:</h2>
+
+<p>br-eth1과 br-int간의 bridge 연결을 위한 port를 생성하며 veth로 해당 port를 연결하고 해당 bridge에 기본적인 flow를 추가해 준다.</p>
+
+<p><img src="/images/neutron-nova-network-3.jpg" width="497" height="395"></p>
+
+<h3>neutron - br-int setup</h3>
+
+<pre><code class="bash">ovs-vsctl --timeout=10 -- --may-exist add-br br-int
+ovs-vsctl --timeout=10 -- set-fail-mode br-int secure
+ovs-vsctl --timeout=10 -- --if-exists del-port br-int patch-tun
+ovs-ofctl del-flows br-int
+ovs-ofctl add-flow br-int hard_timeout=0,idle_timeout=0,priority=1,actions=normal
+ovs-ofctl add-flow br-int hard_timeout=0,idle_timeout=0,priority=0,table=22,actions=drop
+</code></pre>
+
+<h3>neutron - physical bridge setup</h3>
+
+<pre><code class="bash">ovs-ofctl del-flows br-eth1
+ovs-ofctl add-flow br-eth1 hard_timeout=0,idle_timeout=0,priority=1,actions=normal
+</code></pre>
+
+<h3>neutron - int <-> phy setup</h3>
+
+<pre><code class="bash">ovs-vsctl --timeout=10 -- --if-exists del-port br-int int-br-eth1
+ovs-vsctl --timeout=10 -- --if-exists del-port br-eth1 phy-br-eth1
+ip link delete int-br-eth1
+ip link delete phy-br-eth1
+udevadm settle --timeout=10
+ip link add int-br-eth1 type veth peer name phy-br-eth1
+ovs-vsctl --timeout=10 -- --may-exist add-port br-int int-br-eth1
+ovs-vsctl --timeout=10 -- --may-exist add-port br-eth1 phy-br-eth1
+intport=$(ovs-ofctl show br-int | grep int-br-eth1 | awk '{print $1}' | cut -d'(' -f1)
+phyport=$(ovs-ofctl show br-eth1 | grep phy-br-eth1 | awk '{print $1}' | cut -d'(' -f1)
+ovs-ofctl add-flow br-int hard_timeout=0,idle_timeout=0,priority=2,in_port=${intport},actions=drop
+ovs-ofctl add-flow br-eth1 hard_timeout=0,idle_timeout=0,priority=2,in_port=${phyport},actions=drop
+ip link set int-br-eth1 up
+ip link set phy-br-eth1 up
+</code></pre>
+
+<h2>4. nova에서 인스턴스 생성:</h2>
+
+<p>nova에서는 qbr bridge를 생성하며 해당 bridge에 qvb port를 생성하고 br-int에 qvo port를 생성하여 두 port를 veth로 연결한다.(xml에 관련해서 여기에서 생성된다.)</p>
+
+<p><img src="/images/neutron-nova-network-4.jpg" width="497" height="395"></p>
+
+<h3>nova - instance up</h3>
+
+<pre><code class="bash">brctl addbr qbr${ovsid}
+brctl setfd qbr${ovsid} 0
+brctl stp qbr${ovsid} off
+echo '0' &gt; /sys/class/net/qbr${ovsid}/bridge/multicast_snooping
+
+ip link add qvb${ovsid} type veth peer name qvo${ovsid}
+ip link set qvb${ovsid} up
+ip link set qvb${ovsid} promisc on
+ip link set qvo${ovsid} up
+ip link set qvo${ovsid} promisc on
+
+ip link set qbr${ovsid} up
+brctl addif qbr${ovsid} qvb${ovsid}
+ovs-vsctl --timeout=120 -- --if-exists del-port qvo${ovsid} -- add-port br-int qvo${ovsid} -- set Interface qvo${ovsid} external-ids:iface-id=${interfaceid} external-ids:iface-status=active external-ids:attached-mac=${mac} external-ids:vm-uuid=${vmuuid}
+</code></pre>
+
+<h2>5. neutron openvswitch plugin에서 ovsdb-client monitoring을 통한 풀링:</h2>
+
+<p>br-int의 변화를 감지하여 해당 qvo port를 위한 vlan tagging을 해주며 이를 위한 flow를 br-int와 br-eth1에 추가한다.</p>
+
+<p><img src="/images/neutron-nova-network-5.jpg" width="497" height="395"></p>
+
+<h3>neutron - instance up</h3>
+
+<pre><code class="bash">ovs-ofctl add-flow br-int hard_timeout=0,idle_timeout=0,priority=3,in_port=${intport},dl_vlan=${vlan},actions=mod_vlan_vid:${localvlan},normal
+ovs-ofctl add-flow br-eth1 hard_timeout=0,idle_timeout=0,priority=4,in_port=${phyport},dl_vlan=${localvlan},actions=mod_vlan_vid:${vlan},normal
+
+ovs-vsctl --timeout=10 set Port qvo${ovsid} tag=${localvlan}
+</code></pre>
+
+<h2>6. vm 부팅:</h2>
+
+<p>vm이 시작하면서  libvirt의 xml파일안에 정의 되어 있는 qbr bridge에 tap port가 생성되어서 vm까지 네트워크가 완성된다.(이 xml은 이미 4번 단계에서 완성되어 있다.)</p>
+
+<p><img src="/images/neutron-nova-network-6.jpg" width="497" height="395"></p>
+]]></content>
+  </entry>
+  
+</feed>

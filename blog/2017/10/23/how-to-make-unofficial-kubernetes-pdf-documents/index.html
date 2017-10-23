@@ -1,0 +1,369 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>how to make unofficial kubernetes pdf documents - > /dev/null</title>
+	<meta name="author" content="leoh0">
+
+	
+	<meta name="description" content="download pdf 왜? 밖에서 심심할때 종이로 출력해서 문서를 좀 더 봐야겠다는 생각에 pdf 버전을 구해보려고 했으나. 우선 k8s webpage를 관리하는 website프로젝트에서 아래와 같이 지원을 안한다고 딱잘라서 이야기 하는것을 찾았다. &hellip &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="> /dev/null&#8221; type=&#8221;application/atom+xml&#8221;>
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script async="true" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">> /dev/null</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="https://www.google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:leoh0.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		<a class="google" href="https://plus.google.com/104543023220946300714?rel=author" title="Google+">Google+</a>
+		
+		
+		
+		<a class="github" href="https://github.com/leoh0" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+    
+	</div>
+	<form class="search" action="https://www.google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:leoh0.github.io">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">How to Make Unofficial Kubernetes Pdf Documents</h2>
+	<div class="entry-content"><p><img src="/images/kubernetes-production-grade-container-orchestration.png" alt="kubernetes" /></p>
+
+<h3><a href="/images/kubernetes-documents.pdf">download pdf</a></h3>
+
+<hr />
+
+<h3>왜?</h3>
+
+<p>밖에서 심심할때 종이로 출력해서 문서를 좀 더 봐야겠다는 생각에 <code>pdf</code> 버전을 구해보려고 했으나. 우선 k8s webpage를 관리하는 <a href="https://github.com/kubernetes/website">website</a>프로젝트에서 아래와 같이 <a href="https://github.com/kubernetes/website/issues/666#issuecomment-271741289">지원을 안한다고 딱잘라서 이야기</a> 하는것을 찾았다.</p>
+
+<blockquote><p>&hellip; we don&rsquo;t plan to make PDFs available.</p></blockquote>
+
+<p>그리고 마땅히 검색했을때 방법이 없기에 만들어야 겠다고 생각했다.</p>
+
+<h3>어떻게 할까?</h3>
+
+<p>외부의 웹사이트를 pdf 로 출력하는 방법들은 여러가지가 있다 그냥 웹 주소를 넣으면 바로 pdf 로 변환해 주는 솔루션이나 사이트들도 많다.(물론 단일 페이지만 렌더링 한다.)</p>
+
+<p>하지만 이럴 경우 footer 와 같이 pdf 로 볼때 불 필요한 부분들이 너무 많아서 좋지 않다. 그래서 이번에 진행할때는 그냥 실제 코드에서 필요없는 부분들을 제거해서 렌더링 시키는 방법으로 하기로 했다.</p>
+
+<p><em>물론 web client를 패치하는 방법이나 adblock 등으로 특정 구문들을 제거하는 방법들도 있으나 지금 방법보다 더 손이 많이 갈것 같았다..</em></p>
+
+<h3>준비 환경</h3>
+
+<p>우선 레포지토리를 받아서 stable중 가장 최신인 1.8버전으로 체크아웃 한다.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git clone https://github.com/kubernetes/website
+</span><span class='line'>$ cd website
+</span><span class='line'>$ git checkout release-1.8</span></code></pre></td></tr></table></div></figure>
+
+
+<p>jekyll project이니 Gemfile로 디펜던시를 인스톨한다.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ bundle install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>이후 build 해서 md 파일들을 html 로 빌드 한다.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ make build</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>어떤 페이지들을 pdf로 출력할까?</h3>
+
+<p>아래와 같이 왼쪽 도큐먼트 리스트들 기준으로 출력하고자 해당 페이지만 아래와 같은 스크립트로 추출했다.
+여기에 아무래도 api spec과 같은 양이 많은 reference 를 제외하고, 또 포맷이 안맞는 외부링크 제외한 페이지를 필터링 했다.</p>
+
+<p><img src="/images/k8sdocstoc.png" alt="image" /></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cd _site/docs/
+</span><span class='line'>$ cat home/index.html setup/index.html concepts/index.html \
+</span><span class='line'>tasks/index.html tutorials/index.html | \
+</span><span class='line'>grep 'a class="item"' | grep 'href="/docs' | \
+</span><span class='line'>uniq | cut -d'"' -f6
+</span><span class='line'>/docs/home/
+</span><span class='line'>/docs/tasks/debug-application-cluster/troubleshooting/
+</span><span class='line'>/docs/home/contribute/create-pull-request/
+</span><span class='line'>/docs/home/contribute/write-new-topic/
+</span><span class='line'>/docs/home/contribute/stage-documentation-changes/
+</span><span class='line'>/docs/home/contribute/page-templates/
+</span><span class='line'>/docs/home/contribute/review-issues/
+</span><span class='line'>/docs/home/contribute/style-guide/
+</span><span class='line'>/docs/setup/
+</span><span class='line'>/docs/setup/pick-right-solution/
+</span><span class='line'>/docs/getting-started-guides/minikube/
+</span><span class='line'>/docs/setup/independent/install-kubeadm/
+</span><span class='line'>/docs/setup/independent/create-cluster-kubeadm/
+</span><span class='line'>/docs/getting-started-guides/scratch/
+</span><span class='line'>...</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>출력시키지 않을 부분들을 지우기</h3>
+
+<p>아래와 같이 layout에서 출력시키기 싫은 부분들을 다 지웠다. 기존코드와 비교해 보면 한눈에 알 수 있을 것이다.</p>
+
+<p><a href="https://github.com/leoh0/website/commit/6bde83fce7174f106eb63bbf98af6aacf2a2b0c4">변경된 코드</a></p>
+
+<p>물론 이후에 다시 빌드 한다.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ make build</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>여기에 웹페이지 들을 pdf 화 하기</h3>
+
+<p>우선 출력을 위해서 서버를 띄운다.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ make serve
+</span><span class='line'>bundle exec jekyll serve
+</span><span class='line'>Configuration file: /Users/al/Projects/k8s/website/_config.yml
+</span><span class='line'>Configuration file: /Users/al/Projects/k8s/website/_config.yml
+</span><span class='line'>            Source: /Users/al/Projects/k8s/website
+</span><span class='line'>       Destination: /Users/al/Projects/k8s/website/_site
+</span><span class='line'> Incremental build: enabled
+</span><span class='line'>      Generating...
+</span><span class='line'>                    done in 7.797 seconds.
+</span><span class='line'> Auto-regeneration: enabled for '/Users/al/Projects/k8s/website'
+</span><span class='line'>Configuration file: /Users/al/Projects/k8s/website/_config.yml
+</span><span class='line'>    Server address: http://127.0.0.1:4000/
+</span><span class='line'>  Server running... press ctrl-c to stop.
+</span><span class='line'>...</span></code></pre></td></tr></table></div></figure>
+
+
+<p>그리고 여러가지 방법이 있겠지만 chrome이 깔려있으면 가장 간단할 headless로 pdf 로 출력 시킨다. 아래의 list는 위의 url들 리스트 이다.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+</span><span class='line'>
+</span><span class='line'>$ for url in $(cat list); do
+</span><span class='line'>  echo $url
+</span><span class='line'>  # url로 파일이름을 만듬
+</span><span class='line'>  file=$(echo $url.pdf | sed 's|/docs/||g;s|/|-|g')
+</span><span class='line'>  chrome --headless --disable-gpu --print-to-pdf=$file http://localhost:4000$url
+</span><span class='line'>done
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>위와 같이하면 각 항목들의 url들이 pdf 화 된다.</p>
+
+<h3>pdf 는 어떻게 합치지?</h3>
+
+<p>py27 기준으로 pdfmerge 를 쓰면 간편하다.
+아래와 같이 커맨드로 합치면 된다.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ pip install pdfmerge
+</span><span class='line'>$ pdfmerge -o output.pdf home-.pdf \
+</span><span class='line'>tasks-debug-application-cluster-troubleshooting-.pdf \
+</span><span class='line'>home-contribute-create-pull-request-.pdf \
+</span><span class='line'>...</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>결론</h3>
+
+<p>이 과정을 거쳐서 pdf를 만들어 보면 왜 pdf를 지원하지 않는지 알게된다.</p>
+
+<p>왜냐하면 나온결과가 1818 페이지의 pdf 이기 때문이다.</p>
+
+<p>그래서 결론적으로 그냥 website에서 보는게 나은 것 같다.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2017-10-23T21:21:47+09:00" pubdate data-updated="true"></time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/1-dot-8/'>1.8</a>, <a class='category' href='/blog/categories/chrome/'>chrome</a>, <a class='category' href='/blog/categories/document/'>document</a>, <a class='category' href='/blog/categories/headless/'>headless</a>, <a class='category' href='/blog/categories/jekyll/'>jekyll</a>, <a class='category' href='/blog/categories/k8s/'>k8s</a>, <a class='category' href='/blog/categories/kubernetes/'>kubernetes</a>, <a class='category' href='/blog/categories/pdf/'>pdf</a>, <a class='category' href='/blog/categories/pdfmerge/'>pdfmerge</a>, <a class='category' href='/blog/categories/unofficial/'>unofficial</a>
+
+
+</div>
+	
+	<div class="comments"><a href="#disqus_thread">Comments</a></div>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+		
+		<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+		
+		
+		<a class="addthis_button_tweet"></a>
+		
+		
+		
+	</div>
+	
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2017
+
+    leoh0
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leoh0githubio';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://leoh0.github.io/blog/2017/10/23/how-to-make-unofficial-kubernetes-pdf-documents/';
+        var disqus_url = 'http://leoh0.github.io/blog/2017/10/23/how-to-make-unofficial-kubernetes-pdf-documents/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//go.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-46519012-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

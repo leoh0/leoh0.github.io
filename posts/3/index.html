@@ -7,7 +7,8 @@
 	<meta name="author" content="leoh0">
 
 	
-	<meta name="description" content="ceph: pg incomplete is worst nightmare 2014년 유저 설문조사에서 찾을 수 있듯이 ceph은 openstack의 block storage의 de facto standard 라고 말할 수 있다. ceph을 사용한지 조금 되었지만 큰 &hellip;">
+	<meta name="description" content="우선 아래와 같은 컨피그를 이용할때.. nova linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver neutron type_drivers = vlan
+mechanism_drivers &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -78,6 +79,235 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/02/02/make-l2-network-for-vm-without-neutron/">
+		
+			Make L2 Network for Vm Without Neutron</a>
+	</h2>
+	<div class="entry-content">
+		<p>우선 아래와 같은 컨피그를 이용할때..</p>
+
+<h2>nova</h2>
+
+<ul>
+<li>linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver</li>
+</ul>
+
+
+<h2>neutron</h2>
+
+<ul>
+<li>type_drivers = vlan</li>
+<li>mechanism_drivers = openvswitch</li>
+<li>firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</li>
+</ul>
+
+
+<h2>1. 기본 상태:</h2>
+
+<p>우선 실제 물리 머신에 아래와 같이 vm을 위한 ethernet인 eth1이 존재한다.</p>
+
+<p><img src="/images/neutron-nova-network-1.jpg" width="497" height="395"></p>
+
+<h3>변수 생성</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">vmuuid</span><span class="o">=</span>9ee8db25-6a13-4ca8-8a4e-495db24492ca
+</span><span class='line'><span class="nv">vlan</span><span class="o">=</span>2001
+</span><span class='line'><span class="nv">localvlan</span><span class="o">=</span>1
+</span><span class='line'><span class="nv">ip</span><span class="o">=</span><span class="k">$(</span>nova show <span class="nv">$vmuuid</span> <span class="p">|</span> grep <span class="s1">&#39; network&#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $5}&#39;</span><span class="k">)</span>
+</span><span class='line'><span class="nv">interfaceid</span><span class="o">=</span><span class="k">$(</span>neutron port-list <span class="p">|</span> grep <span class="s2">&quot;\&quot;$ip\&quot;&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
+</span><span class='line'><span class="nv">mac</span><span class="o">=</span><span class="k">$(</span>neutron port-list <span class="p">|</span> grep <span class="s2">&quot;\&quot;$ip\&quot;&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $5}&#39;</span><span class="k">)</span>
+</span><span class='line'><span class="nv">ovsid</span><span class="o">=</span><span class="k">${</span><span class="nv">interfaceid</span><span class="p">:</span><span class="nv">0</span><span class="p">:</span><span class="nv">11</span><span class="k">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. 유저 생성 단계:</h2>
+
+<p>eth1에 연결된 br-eth1 bridge를 생성한다.
+또한 gre, vlan등의 다양한 type들의 네트워크를 연결시켜 줄 수 있는 br-int bridge를 생성한다.</p>
+
+<p><img src="/images/neutron-nova-network-2.jpg" width="497" height="395"></p>
+
+<h3>user가 생성 필요</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ovs-vsctl --timeout<span class="o">=</span><span class="m">10</span> -- --may-exist add-br br-eth1
+</span><span class='line'>ovs-vsctl --timeout<span class="o">=</span><span class="m">10</span> -- --may-exist add-port br-eth1 eth1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. neutron openvswitch plugin 시작:</h2>
+
+<p>br-eth1과 br-int간의 bridge 연결을 위한 port를 생성하며 veth로 해당 port를 연결하고 해당 bridge에 기본적인 flow를 추가해 준다.</p>
+
+<p><img src="/images/neutron-nova-network-3.jpg" width="497" height="395"></p>
+
+<h3>neutron - br-int setup</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ovs-vsctl --timeout<span class="o">=</span><span class="m">10</span> -- --may-exist add-br br-int
+</span><span class='line'>ovs-vsctl --timeout<span class="o">=</span><span class="m">10</span> -- <span class="nb">set</span>-fail-mode br-int secure
+</span><span class='line'>ovs-vsctl --timeout<span class="o">=</span><span class="m">10</span> -- --if-exists del-port br-int patch-tun
+</span><span class='line'>ovs-ofctl del-flows br-int
+</span><span class='line'>ovs-ofctl add-flow br-int <span class="nv">hard_timeout</span><span class="o">=</span>0,idle_timeout<span class="o">=</span>0,priority<span class="o">=</span>1,actions<span class="o">=</span>normal
+</span><span class='line'>ovs-ofctl add-flow br-int <span class="nv">hard_timeout</span><span class="o">=</span>0,idle_timeout<span class="o">=</span>0,priority<span class="o">=</span>0,table<span class="o">=</span>22,actions<span class="o">=</span>drop
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>neutron - physical bridge setup</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ovs-ofctl del-flows br-eth1
+</span><span class='line'>ovs-ofctl add-flow br-eth1 <span class="nv">hard_timeout</span><span class="o">=</span>0,idle_timeout<span class="o">=</span>0,priority<span class="o">=</span>1,actions<span class="o">=</span>normal
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>neutron - int <-> phy setup</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ovs-vsctl --timeout<span class="o">=</span><span class="m">10</span> -- --if-exists del-port br-int int-br-eth1
+</span><span class='line'>ovs-vsctl --timeout<span class="o">=</span><span class="m">10</span> -- --if-exists del-port br-eth1 phy-br-eth1
+</span><span class='line'>ip link delete int-br-eth1
+</span><span class='line'>ip link delete phy-br-eth1
+</span><span class='line'>udevadm settle --timeout<span class="o">=</span>10
+</span><span class='line'>ip link add int-br-eth1 <span class="nb">type </span>veth peer name phy-br-eth1
+</span><span class='line'>ovs-vsctl --timeout<span class="o">=</span><span class="m">10</span> -- --may-exist add-port br-int int-br-eth1
+</span><span class='line'>ovs-vsctl --timeout<span class="o">=</span><span class="m">10</span> -- --may-exist add-port br-eth1 phy-br-eth1
+</span><span class='line'><span class="nv">intport</span><span class="o">=</span><span class="k">$(</span>ovs-ofctl show br-int <span class="p">|</span> grep int-br-eth1 <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> <span class="p">|</span> cut -d<span class="s1">&#39;(&#39;</span> -f1<span class="k">)</span>
+</span><span class='line'><span class="nv">phyport</span><span class="o">=</span><span class="k">$(</span>ovs-ofctl show br-eth1 <span class="p">|</span> grep phy-br-eth1 <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> <span class="p">|</span> cut -d<span class="s1">&#39;(&#39;</span> -f1<span class="k">)</span>
+</span><span class='line'>ovs-ofctl add-flow br-int <span class="nv">hard_timeout</span><span class="o">=</span>0,idle_timeout<span class="o">=</span>0,priority<span class="o">=</span>2,in_port<span class="o">=</span><span class="k">${</span><span class="nv">intport</span><span class="k">}</span>,actions<span class="o">=</span>drop
+</span><span class='line'>ovs-ofctl add-flow br-eth1 <span class="nv">hard_timeout</span><span class="o">=</span>0,idle_timeout<span class="o">=</span>0,priority<span class="o">=</span>2,in_port<span class="o">=</span><span class="k">${</span><span class="nv">phyport</span><span class="k">}</span>,actions<span class="o">=</span>drop
+</span><span class='line'>ip link <span class="nb">set </span>int-br-eth1 up
+</span><span class='line'>ip link <span class="nb">set </span>phy-br-eth1 up
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>4. nova에서 인스턴스 생성:</h2>
+
+<p>nova에서는 qbr bridge를 생성하며 해당 bridge에 qvb port를 생성하고 br-int에 qvo port를 생성하여 두 port를 veth로 연결한다.(xml에 관련해서 여기에서 생성된다.)</p>
+
+<p><img src="/images/neutron-nova-network-4.jpg" width="497" height="395"></p>
+
+<h3>nova - instance up</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brctl addbr qbr<span class="k">${</span><span class="nv">ovsid</span><span class="k">}</span>
+</span><span class='line'>brctl setfd qbr<span class="k">${</span><span class="nv">ovsid</span><span class="k">}</span> 0
+</span><span class='line'>brctl stp qbr<span class="k">${</span><span class="nv">ovsid</span><span class="k">}</span> off
+</span><span class='line'><span class="nb">echo</span> <span class="s1">&#39;0&#39;</span> &gt; /sys/class/net/qbr<span class="k">${</span><span class="nv">ovsid</span><span class="k">}</span>/bridge/multicast_snooping
+</span><span class='line'>
+</span><span class='line'>ip link add qvb<span class="k">${</span><span class="nv">ovsid</span><span class="k">}</span> <span class="nb">type </span>veth peer name qvo<span class="k">${</span><span class="nv">ovsid</span><span class="k">}</span>
+</span><span class='line'>ip link <span class="nb">set </span>qvb<span class="k">${</span><span class="nv">ovsid</span><span class="k">}</span> up
+</span><span class='line'>ip link <span class="nb">set </span>qvb<span class="k">${</span><span class="nv">ovsid</span><span class="k">}</span> promisc on
+</span><span class='line'>ip link <span class="nb">set </span>qvo<span class="k">${</span><span class="nv">ovsid</span><span class="k">}</span> up
+</span><span class='line'>ip link <span class="nb">set </span>qvo<span class="k">${</span><span class="nv">ovsid</span><span class="k">}</span> promisc on
+</span><span class='line'>
+</span><span class='line'>ip link <span class="nb">set </span>qbr<span class="k">${</span><span class="nv">ovsid</span><span class="k">}</span> up
+</span><span class='line'>brctl addif qbr<span class="k">${</span><span class="nv">ovsid</span><span class="k">}</span> qvb<span class="k">${</span><span class="nv">ovsid</span><span class="k">}</span>
+</span><span class='line'>ovs-vsctl --timeout<span class="o">=</span><span class="m">120</span> -- --if-exists del-port qvo<span class="k">${</span><span class="nv">ovsid</span><span class="k">}</span> -- add-port br-int qvo<span class="k">${</span><span class="nv">ovsid</span><span class="k">}</span> -- <span class="nb">set </span>Interface qvo<span class="k">${</span><span class="nv">ovsid</span><span class="k">}</span> external-ids:iface-id<span class="o">=</span><span class="k">${</span><span class="nv">interfaceid</span><span class="k">}</span> external-ids:iface-status<span class="o">=</span>active external-ids:attached-mac<span class="o">=</span><span class="k">${</span><span class="nv">mac</span><span class="k">}</span> external-ids:vm-uuid<span class="o">=</span><span class="k">${</span><span class="nv">vmuuid</span><span class="k">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>5. neutron openvswitch plugin에서 ovsdb-client monitoring을 통한 풀링:</h2>
+
+<p>br-int의 변화를 감지하여 해당 qvo port를 위한 vlan tagging을 해주며 이를 위한 flow를 br-int와 br-eth1에 추가한다.</p>
+
+<p><img src="/images/neutron-nova-network-5.jpg" width="497" height="395"></p>
+
+<h3>neutron - instance up</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ovs-ofctl add-flow br-int <span class="nv">hard_timeout</span><span class="o">=</span>0,idle_timeout<span class="o">=</span>0,priority<span class="o">=</span>3,in_port<span class="o">=</span><span class="k">${</span><span class="nv">intport</span><span class="k">}</span>,dl_vlan<span class="o">=</span><span class="k">${</span><span class="nv">vlan</span><span class="k">}</span>,actions<span class="o">=</span>mod_vlan_vid:<span class="k">${</span><span class="nv">localvlan</span><span class="k">}</span>,normal
+</span><span class='line'>ovs-ofctl add-flow br-eth1 <span class="nv">hard_timeout</span><span class="o">=</span>0,idle_timeout<span class="o">=</span>0,priority<span class="o">=</span>4,in_port<span class="o">=</span><span class="k">${</span><span class="nv">phyport</span><span class="k">}</span>,dl_vlan<span class="o">=</span><span class="k">${</span><span class="nv">localvlan</span><span class="k">}</span>,actions<span class="o">=</span>mod_vlan_vid:<span class="k">${</span><span class="nv">vlan</span><span class="k">}</span>,normal
+</span><span class='line'>
+</span><span class='line'>ovs-vsctl --timeout<span class="o">=</span><span class="m">10</span> <span class="nb">set </span>Port qvo<span class="k">${</span><span class="nv">ovsid</span><span class="k">}</span> <span class="nv">tag</span><span class="o">=</span><span class="k">${</span><span class="nv">localvlan</span><span class="k">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>6. vm 부팅:</h2>
+
+<p>vm이 시작하면서  libvirt의 xml파일안에 정의 되어 있는 qbr bridge에 tap port가 생성되어서 vm까지 네트워크가 완성된다.(이 xml은 이미 4번 단계에서 완성되어 있다.)</p>
+
+<p><img src="/images/neutron-nova-network-6.jpg" width="497" height="395"></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-02-02T09:20:23+09:00" pubdate data-updated="true"></time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/neutron/'>neutron</a>, <a class='category' href='/blog/categories/openstack/'>openstack</a>, <a class='category' href='/blog/categories/openvswitch/'>openvswitch</a>, <a class='category' href='/blog/categories/ovs/'>ovs</a>
+
+
+</div>
+	
+	<div class="comments"><a href="/blog/2015/02/02/make-l2-network-for-vm-without-neutron/#disqus_thread">Comments</a></div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -901,7 +1131,7 @@ pg 35.9f6e4c67 는 35번 풀의 9f6e4c67 해쉬 값을 갖는 데이터를 말�
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav>
 </div>
-	<footer id="footer" class="inner">Copyright &copy; 2017
+	<footer id="footer" class="inner">Copyright &copy; 2018
 
     leoh0
 

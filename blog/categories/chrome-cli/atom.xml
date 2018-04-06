@@ -4,7 +4,7 @@
   <title><![CDATA[Category: chrome-cli | > /dev/null]]></title>
   <link href="http://leoh0.github.io/blog/categories/chrome-cli/atom.xml" rel="self"/>
   <link href="http://leoh0.github.io/"/>
-  <updated>2018-04-07T01:11:19+09:00</updated>
+  <updated>2018-04-07T01:46:43+09:00</updated>
   <id>http://leoh0.github.io/</id>
   <author>
     <name><![CDATA[leoh0]]></name>
@@ -22,7 +22,7 @@
 
 <p>그런데 이런 음악을 찾기 귀찮아서 mp3 파일로 다운로드 해두고 싶은일이 생긴다.</p>
 
-<p>{% img /images/unsun-whispers.png 452 239 unsun - whispers %}</p>
+<p><img src="/images/unsun-whispers.png" width="452" height="239" title="unsun - whispers" ></p>
 
 <p><a href="https://www.youtube.com/watch?v=LapknbGS7Os">UNSUN - Whispers Youtube</a></p>
 

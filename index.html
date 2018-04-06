@@ -7,7 +7,8 @@
 	<meta name="author" content="leoh0">
 
 	
-	<meta name="description" content="download pdf 왜? 밖에서 심심할때 종이로 출력해서 문서를 좀 더 봐야겠다는 생각에 pdf 버전을 구해보려고 했으나. 우선 k8s webpage를 관리하는 website프로젝트에서 아래와 같이 지원을 안한다고 딱잘라서 이야기 하는것을 찾았다. &hellip &hellip;">
+	<meta name="description" content="download k8s 1.10 pdf 이전 포스팅과 뭐가 다른가? 이전에 해보고 더이상 안할거라 생각했다가 우연히 다시 포스팅을 읽었다가 너무 복잡한거 같아서 docker로 제작했다. 아래와 같이 사용할시 pdf를 뽑아 낼 수 있다. 1
+docker run -ti &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -78,6 +79,267 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2018/04/07/how-to-make-unofficial-kubernetes-pdf-documents-2/">
+		
+			How to Make Unofficial Kubernetes Pdf Documents 2</a>
+	</h2>
+	<div class="entry-content">
+		<p><img src="/images/kubernetes-production-grade-container-orchestration.png" alt="kubernetes" /></p>
+
+<h3><a href="/images/kubernetes-documents-1.10.pdf">download k8s 1.10 pdf</a></h3>
+
+<hr />
+
+<h3>이전 포스팅과 뭐가 다른가?</h3>
+
+<p>이전에 해보고 더이상 안할거라 생각했다가 우연히 다시 포스팅을 읽었다가 너무 복잡한거 같아서 docker로 제작했다.</p>
+
+<p>아래와 같이 사용할시 pdf를 뽑아 낼 수 있다.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>docker run -ti -v $PWD:/out3 leoh0/k8s-website-to-pdf</span></code></pre></td></tr></table></div></figure>
+
+
+<p>아니면 아래 dockerfile로 새로 제작해서 뽑아내면 된다. <a href="https://github.com/leoh0/k8s-website-to-pdf">참고</a></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>docker build -t k8s-website-to-pdf .
+</span><span class='line'>docker run -ti -v $PWD:/out3 k8s-website-to-pdf</span></code></pre></td></tr></table></div></figure>
+
+
+<p>우선 전체 dockerfile은 아래와 같다.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># 참고 https://github.com/leoh0/k8s-website-to-pdf/blob/master/Dockerfile
+</span><span class='line'>FROM alpine/git as source
+</span><span class='line'>
+</span><span class='line'>ARG BRANCH=master
+</span><span class='line'>WORKDIR /app
+</span><span class='line'>
+</span><span class='line'>RUN git clone https://github.com/kubernetes/website && cd website && git checkout ${BRANCH}
+</span><span class='line'>
+</span><span class='line'>RUN sed -i '/{% include header.html %}/d;/{% include_cached footer.html %}/d;/{% include footer-scripts.html %}/d;/^&lt;!--  HERO  --&gt;/,/^&lt;\/section&gt;/d;s/&lt;div id="docsToc"&gt;/&lt;div id="docsToc" style="display: none;"&gt;/g;/editPageButton/d;s/&lt;div id="docsContent"&gt;/&lt;div id="docsContent" style="width: 100%;"&gt;/g;/&lt;p&gt;&lt;a href=""&gt;&lt;img src="https:\/\/kubernetes-site/,/{% endif %}/d' /app/website/_layouts/docwithnav.html
+</span><span class='line'>
+</span><span class='line'>FROM jekyll/jekyll as build
+</span><span class='line'>
+</span><span class='line'>COPY --from=source /app/website /srv/jekyll
+</span><span class='line'>
+</span><span class='line'>ARG TARGET=/build
+</span><span class='line'>
+</span><span class='line'>RUN mkdir -p ${TARGET} && chown jekyll.jekyll ${TARGET}
+</span><span class='line'>
+</span><span class='line'>RUN jekyll build --destination ${TARGET}/_site && cat ${TARGET}/_site/docs/home/index.html ${TARGET}/_site/docs/setup/index.html ${TARGET}/_site/docs/concepts/index.html \
+</span><span class='line'>  ${TARGET}/_site/docs/tasks/index.html ${TARGET}/_site/docs/tutorials/index.html | \
+</span><span class='line'>  grep 'a class="item"' | grep 'href="/docs' | \
+</span><span class='line'>  uniq | cut -d'"' -f6 &gt; ${TARGET}/_site/list
+</span><span class='line'>
+</span><span class='line'>FROM madnight/docker-alpine-wkhtmltopdf as pdfs
+</span><span class='line'>
+</span><span class='line'>ARG TARGET=/build
+</span><span class='line'>
+</span><span class='line'>COPY --from=build ${TARGET}/_site /_site
+</span><span class='line'>
+</span><span class='line'>WORKDIR /_site
+</span><span class='line'>
+</span><span class='line'>RUN mkdir -p /out /out2 && apk add --no-cache ghostscript
+</span><span class='line'>
+</span><span class='line'>RUN count=1 ; for l in $(cat list); do sed -i 's|/css/|/_site/css/|g;s|/js/|/_site/js/|g;s|/images/|/_site/images/|g' /_site${l}index.html || : ; wkhtmltopdf /_site${l}index.html /out/$(printf "%03d" $count)-$(echo $l | sed 's/^.\(.*\).$/\1/;s|/|-|g').pdf || : ; count=$((count+1)) ; done
+</span><span class='line'>
+</span><span class='line'>WORKDIR /out
+</span><span class='line'>
+</span><span class='line'>RUN gs -q -sPAPERSIZE=letter -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=/out2/out.pdf $(ls /out)
+</span><span class='line'>
+</span><span class='line'>VOLUME /out3
+</span><span class='line'>
+</span><span class='line'>ENTRYPOINT ["sh"]
+</span><span class='line'>
+</span><span class='line'>CMD ["-c", "cp /out2/out.pdf /out3/"]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>위의 파일을 크게 2가지로 분류해서 보면 다음과 같다.</p>
+
+<p>우선 아래까지는 이전에도 설명한것과 비슷하게 website repository를 가져와서 필요없는 부분을 적당히 제거하고 jekyll로 빌드하고 빌드할 document의 list를 제작한다.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># 참고 https://github.com/leoh0/k8s-website-to-pdf/blob/master/Dockerfile
+</span><span class='line'>FROM alpine/git as source
+</span><span class='line'>
+</span><span class='line'>ARG BRANCH=master
+</span><span class='line'>WORKDIR /app
+</span><span class='line'>
+</span><span class='line'>RUN git clone https://github.com/kubernetes/website && cd website && git checkout ${BRANCH}
+</span><span class='line'>
+</span><span class='line'>RUN sed -i '/{% include header.html %}/d;/{% include_cached footer.html %}/d;/{% include footer-scripts.html %}/d;/^&lt;!--  HERO  --&gt;/,/^&lt;\/section&gt;/d;s/&lt;div id="docsToc"&gt;/&lt;div id="docsToc" style="display: none;"&gt;/g;/editPageButton/d;s/&lt;div id="docsContent"&gt;/&lt;div id="docsContent" style="width: 100%;"&gt;/g;/&lt;p&gt;&lt;a href=""&gt;&lt;img src="https:\/\/kubernetes-site/,/{% endif %}/d' /app/website/_layouts/docwithnav.html
+</span><span class='line'>
+</span><span class='line'>FROM jekyll/jekyll as build
+</span><span class='line'>
+</span><span class='line'>COPY --from=source /app/website /srv/jekyll
+</span><span class='line'>
+</span><span class='line'>ARG TARGET=/build
+</span><span class='line'>
+</span><span class='line'>RUN mkdir -p ${TARGET} && chown jekyll.jekyll ${TARGET}
+</span><span class='line'>
+</span><span class='line'>RUN jekyll build --destination ${TARGET}/_site && cat ${TARGET}/_site/docs/home/index.html ${TARGET}/_site/docs/setup/index.html ${TARGET}/_site/docs/concepts/index.html \
+</span><span class='line'>  ${TARGET}/_site/docs/tasks/index.html ${TARGET}/_site/docs/tutorials/index.html | \
+</span><span class='line'>  grep 'a class="item"' | grep 'href="/docs' | \
+</span><span class='line'>  uniq | cut -d'"' -f6 &gt; ${TARGET}/_site/list</span></code></pre></td></tr></table></div></figure>
+
+
+<p>이후엔 각 index.html이 web 기준이므로 로컬 파일 css, js를 참고 할 수 있게 경로 변경하고 wkhtmltopdf 로 pdf 생성한다.</p>
+
+<p>다만 순서를 정렬하기 위해 앞에 숫자를 붙여서 제작한다.</p>
+
+<p>이후에 ghostscript를 이용해서 letter size로 모든 pdf를 합친다. 나중에 합친 결과물 pdf를 뽑아내기 위해 커맨드를 세팅한다.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>FROM madnight/docker-alpine-wkhtmltopdf as pdfs
+</span><span class='line'>
+</span><span class='line'>ARG TARGET=/build
+</span><span class='line'>
+</span><span class='line'>COPY --from=build ${TARGET}/_site /_site
+</span><span class='line'>
+</span><span class='line'>WORKDIR /_site
+</span><span class='line'>
+</span><span class='line'>RUN mkdir -p /out /out2 && apk add --no-cache ghostscript
+</span><span class='line'>
+</span><span class='line'>RUN count=1 ; for l in $(cat list); do sed -i 's|/css/|/_site/css/|g;s|/js/|/_site/js/|g;s|/images/|/_site/images/|g' /_site${l}index.html || : ; wkhtmltopdf /_site${l}index.html /out/$(printf "%03d" $count)-$(echo $l | sed 's/^.\(.*\).$/\1/;s|/|-|g').pdf || : ; count=$((count+1)) ; done
+</span><span class='line'>
+</span><span class='line'>WORKDIR /out
+</span><span class='line'>
+</span><span class='line'>RUN gs -q -sPAPERSIZE=letter -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=/out2/out.pdf $(ls /out)
+</span><span class='line'>
+</span><span class='line'>VOLUME /out3
+</span><span class='line'>
+</span><span class='line'>ENTRYPOINT ["sh"]
+</span><span class='line'>
+</span><span class='line'>CMD ["-c", "cp /out2/out.pdf /out3/"]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>아무튼 이렇게 제작한 pdf는 2016페이지 이고 지난번 보다 200페이지가 증가했다.</p>
+
+<p>역시나 읽지는..</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2018-04-07T01:15:37+09:00" pubdate data-updated="true"></time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/1-dot-1/'>1.1</a>, <a class='category' href='/blog/categories/docker/'>docker</a>, <a class='category' href='/blog/categories/document/'>document</a>, <a class='category' href='/blog/categories/ghostscript/'>ghostscript</a>, <a class='category' href='/blog/categories/jekyll/'>jekyll</a>, <a class='category' href='/blog/categories/k8s/'>k8s</a>, <a class='category' href='/blog/categories/kubernetes/'>kubernetes</a>, <a class='category' href='/blog/categories/pdf/'>pdf</a>, <a class='category' href='/blog/categories/unofficial/'>unofficial</a>, <a class='category' href='/blog/categories/wkhtmltopdf/'>wkhtmltopdf</a>
+
+
+</div>
+	
+	<div class="comments"><a href="/blog/2018/04/07/how-to-make-unofficial-kubernetes-pdf-documents-2/#disqus_thread">Comments</a></div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1732,94 +1994,6 @@ fi
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/05/19/youtube-chrome-mp3-downloader/">
-		
-			커맨드로 크롬에 떠 있는 유튜브 플레이중인 음악 Mp3로 다운로드 하기</a>
-	</h2>
-	<div class="entry-content">
-		<p>내가 듣는 음악 장르는 보통 스트리밍 서비스에서 찾을 수 가 없어서 보통 유튜브 자동재생을 켜놓고 음악을 듣는 편이다.</p>
-
-<p>그런데 이런 음악을 찾기 귀찮아서 mp3 파일로 다운로드 해두고 싶은일이 생긴다.</p>
-
-<p><img src="/images/unsun-whispers.png" width="452" height="239" title="unsun - whispers" ></p>
-
-<p><a href="https://www.youtube.com/watch?v=LapknbGS7Os">UNSUN - Whispers Youtube</a></p>
-
-<p>물론 그냥 아래 같이 <code>youtube-dl</code>와 같은 방법을 써도 된다.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew install youtube-dl
-</span><span class='line'>youtube-dl -t --extract-audio --audio-format mp3 <span class="nv">$YOUTUBEURL</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>하지만 일하는데 터미널에서 크롬으로 창을 포커스 바꾸고 url을 카피해서 저 커맨드를 넣는건 귀찮은 일이다.</p>
-
-<p>그래서 이런걸 해결해주는 <a href="https://github.com/prasmussen/chrome-cli">chrome-cli</a> 라는 솔루션을 이용한다.</p>
-
-<p>물론 설치는 간단하게..</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew install chrome-cli
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>그리고 그냥 아래 같은 방법을 쓰면 chrome 에서 열려 있는 유튜브 페이지들을 전부 조회해서 mp3로 다운로드 할 수 있다.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">function</span> yd<span class="o">(){</span>
-</span><span class='line'>  <span class="k">for</span> l in <span class="k">$(</span>chrome-cli list tabs <span class="p">|</span> grep YouTube <span class="p">|</span> cut -d <span class="s1">&#39;[&#39;</span> -f2- <span class="p">|</span> cut -d<span class="s1">&#39;:&#39;</span> -f2- <span class="p">|</span> cut -d<span class="s1">&#39;]&#39;</span> -f1<span class="k">)</span><span class="p">;</span> <span class="k">do</span>
-</span><span class='line'>    <span class="nv">url</span><span class="o">=</span><span class="k">$(</span>chrome-cli info -t <span class="nv">$l</span> <span class="p">|</span> grep <span class="s1">&#39;^Url: &#39;</span> <span class="p">|</span> cut -d<span class="s1">&#39; &#39;</span> -f2<span class="k">)</span>
-</span><span class='line'>    <span class="o">(</span><span class="nb">cd</span> /want/to/download/mp3<span class="p">;</span> youtube-dl -t --extract-audio --audio-format mp3 <span class="nv">$url</span><span class="o">)</span>
-</span><span class='line'>  <span class="k">done</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-05-19T09:49:32+09:00" pubdate data-updated="true"></time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/brew/'>brew</a>, <a class='category' href='/blog/categories/chrome-cli/'>chrome-cli</a>, <a class='category' href='/blog/categories/youtube-dl/'>youtube-dl</a>
-
-
-</div>
-	
-	<div class="comments"><a href="/blog/2015/05/19/youtube-chrome-mp3-downloader/#disqus_thread">Comments</a></div>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
     
@@ -1828,7 +2002,7 @@ fi
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav>
 </div>
-	<footer id="footer" class="inner">Copyright &copy; 2017
+	<footer id="footer" class="inner">Copyright &copy; 2018
 
     leoh0
 

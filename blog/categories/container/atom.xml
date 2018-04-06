@@ -4,7 +4,7 @@
   <title><![CDATA[Category: container | > /dev/null]]></title>
   <link href="http://leoh0.github.io/blog/categories/container/atom.xml" rel="self"/>
   <link href="http://leoh0.github.io/"/>
-  <updated>2018-04-07T01:11:19+09:00</updated>
+  <updated>2018-04-07T01:46:43+09:00</updated>
   <id>http://leoh0.github.io/</id>
   <author>
     <name><![CDATA[leoh0]]></name>
@@ -18,7 +18,7 @@
     <link href="http://leoh0.github.io/blog/2017/07/27/k8s-tools-for-watching-log-and-login-multiple-containers/"/>
     <updated>2017-07-27T00:58:28+09:00</updated>
     <id>http://leoh0.github.io/blog/2017/07/27/k8s-tools-for-watching-log-and-login-multiple-containers</id>
-    <content type="html"><![CDATA[<p>{% img /images/showterm-2017-07-27-01-10-29.png 780 290 %}</p>
+    <content type="html"><![CDATA[<p><img src="/images/showterm-2017-07-27-01-10-29.png" width="780" height="290"></p>
 
 <p>k8s 사용하면서 개인 취향에 맞게 작성한 자작 스크립트 몇가지 소개해 드리려고 합니다.</p>
 
@@ -39,7 +39,7 @@
 
 <ul>
 <li>자세한 영상은 <a href="http://showterm.io/df8a9f96e761012d3bb2c">여기</a>를 참고하시면 됩니다.  <br/>
-{% img /images/kt.gif 800 %}</li>
+<img src="/images/kt.gif" width="800"></li>
 </ul>
 </li>
 <li><p><code>-m</code> 옵션시 자신이 원하는 pod들을 선택해서 log tailing 함. 다만, auto reload는 지원 하지 않음</p>
@@ -49,7 +49,7 @@
 
 <ul>
 <li>자세한 영상은 <a href="http://showterm.io/f4ab6a8ed080700ece976">여기</a>를 참고하시면 됩니다.  <br/>
-{% img /images/ktm.gif 800 %}</li>
+<img src="/images/ktm.gif" width="800"></li>
 </ul>
 </li>
 <li><p><code>-l</code> 옵션시 선택한 pod의 전체 로그를 본다. fzf를 이용해서 log를 탐색 한다.</p>
@@ -59,7 +59,7 @@
 
 <ul>
 <li>자세한 영상은 <a href="http://showterm.io/6381c317d2e42920c0227">여기</a>를 참고하시면 됩니다.  <br/>
-{% img /images/ktl.gif 800 %}</li>
+<img src="/images/ktl.gif" width="800"></li>
 </ul>
 </li>
 </ul>
@@ -97,7 +97,7 @@
 
 <ul>
 <li>아래는 사용 영상입니다. 자세한 영상은 <a href="http://showterm.io/c58f9999d3ee6db03aa81">여기</a>를 참고하시면 됩니다.
-{% img /images/kl.gif 800 %}</li>
+<img src="/images/kl.gif" width="800"></li>
 </ul>
 
 
@@ -111,39 +111,69 @@ curl -s 'https://gist.githubusercontent.com/leoh0/'\
 
 <p>아래는 전체 소스입니다.
 <a href="https://gist.github.com/leoh0/c47dca1c98f998f0d0884c3560afac54">https://gist.github.com/leoh0/c47dca1c98f998f0d0884c3560afac54</a>
-&#8220;` bash
-function kl() {
-  chkcommand() {
-    command -v $1 >/dev/null 2>&amp;1 || { echo >&amp;2 &ldquo;Plz install $1 first. Aborting.&rdquo;; return 1; }
-  }
-  chkcommand fzf || return 1
-  chkcommand tmux || return 1
-  chkcommand kubectl || return 1</p>
-
-<p>  pods=$(kubectl get pods &ndash;all-namespaces | sed &lsquo;1d&rsquo; | fzf -x -m -e +s &ndash;reverse &ndash;bind=left:page-up,right:page-down &ndash;no-mouse | awk &lsquo;{print $1&#8221;,&ldquo;$2}&rsquo;);
-  if [[ $pods != &rdquo;&ldquo; ]]; then
-      init=&#8221;true&rdquo;
-      tmuxname=k8s-ns-$(date +%s)
-      tmux kill-session -t $tmuxname > /dev/null 2> /dev/null || true
-      while read line ;do
-        NS=$(echo $line | cut -d&#8217;,&lsquo; -f1)
-        NAME=$(echo $line | cut -d&rsquo;,&lsquo; -f2)
-        connect=&ldquo;kubectl exec -ti $NAME -n $NS &ndash; bash || kubectl exec -ti $NAME -n $NS &ndash; sh &rdquo;
-        tmux new-session -d -s $tmuxname &ldquo;export KUBECONFIG=${KUBECONFIG}; $connect&rdquo;
-        if [ &ldquo;${init}&rdquo; == &ldquo;true&rdquo; ]; then
-          if (( $(tmux ls 2> /dev/null | grep &ldquo;${tmuxname}&rdquo; | wc -l) > 0 )) ; then
-            init=&ldquo;false&rdquo;
-          fi
-        else
-          tmux split-window -t &ldquo;${tmuxname}&rdquo; &ldquo;${connect}&rdquo; &amp;&amp; \
-          tmux select-layout -t &ldquo;${tmuxname}&rdquo; &ldquo;tiled&rdquo;
-        fi
-      done &lt;&lt;&lt; &ldquo;$pods&rdquo;
-      tmux set-window-option -t &ldquo;${tmuxname}&rdquo; synchronize-panes on
-      tmux -2 a -t $tmuxname
-  fi
-}
-&#8220;`</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">function</span> kl<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  chkcommand<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="nb">command</span> -v <span class="nv">$1</span> &gt;/dev/null 2&gt;<span class="p">&amp;</span>amp<span class="p">;</span><span class="m">1</span> <span class="o">||</span> <span class="o">{</span> <span class="nb">echo</span> &gt;<span class="p">&amp;</span>amp<span class="p">;</span><span class="m">2</span> <span class="p">&amp;</span>ldquo<span class="p">;</span>Plz install <span class="nv">$1</span> first. Aborting.<span class="p">&amp;</span>rdquo<span class="p">;;</span> <span class="k">return</span> 1<span class="p">;</span> <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  chkcommand fzf <span class="o">||</span> <span class="k">return</span> 1
+</span><span class='line'>  chkcommand tmux <span class="o">||</span> <span class="k">return</span> 1
+</span><span class='line'>  chkcommand kubectl <span class="o">||</span> <span class="k">return</span> 1&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  <span class="nv">pods</span><span class="o">=</span><span class="k">$(</span>kubectl get pods <span class="p">&amp;</span>ndash<span class="p">;</span>all-namespaces <span class="p">|</span> sed <span class="p">&amp;</span>lsquo<span class="p">;</span>1d<span class="p">&amp;</span>rsquo<span class="p">;</span> <span class="p">|</span> fzf -x -m -e +s <span class="p">&amp;</span>ndash<span class="p">;</span>reverse <span class="p">&amp;</span>ndash<span class="p">;</span><span class="nb">bind</span><span class="o">=</span>left:page-up,right:page-down <span class="p">&amp;</span>ndash<span class="p">;</span>no-mouse <span class="p">|</span> awk <span class="p">&amp;</span>lsquo<span class="p">;</span><span class="o">{</span>print <span class="nv">$1</span><span class="s2">&quot;,&amp;ldquo;$2}&amp;rsquo;);</span>
+</span><span class='line'><span class="s2">  if [[ $pods != &amp;rdquo;&amp;ldquo; ]]; then</span>
+</span><span class='line'><span class="s2">      init=&quot;</span><span class="nb">true</span><span class="p">&amp;</span>rdquo<span class="p">;</span>
+</span><span class='line'>      <span class="nv">tmuxname</span><span class="o">=</span>k8s-ns-<span class="k">$(</span>date +%s<span class="k">)</span>
+</span><span class='line'>      tmux <span class="nb">kill</span>-session -t <span class="nv">$tmuxname</span> &gt; /dev/null 2&gt; /dev/null <span class="o">||</span> <span class="nb">true</span>
+</span><span class='line'><span class="nb">      </span><span class="k">while</span> <span class="nb">read </span>line <span class="p">;</span><span class="k">do</span>
+</span><span class='line'>        <span class="nv">NS</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$line</span> <span class="p">|</span> cut -d<span class="err">&#39;</span>,<span class="p">&amp;</span>lsquo<span class="p">;</span> -f1<span class="k">)</span>
+</span><span class='line'>        <span class="nv">NAME</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$line</span> <span class="p">|</span> cut -d<span class="p">&amp;</span>rsquo<span class="p">;</span>,<span class="p">&amp;</span>lsquo<span class="p">;</span> -f2<span class="k">)</span>
+</span><span class='line'>        <span class="nv">connect</span><span class="o">=</span><span class="p">&amp;</span>ldquo<span class="p">;</span>kubectl <span class="nb">exec</span> -ti <span class="nv">$NAME</span> -n <span class="nv">$NS</span> <span class="p">&amp;</span>ndash<span class="p">;</span> bash <span class="o">||</span> kubectl <span class="nb">exec</span> -ti <span class="nv">$NAME</span> -n <span class="nv">$NS</span> <span class="p">&amp;</span>ndash<span class="p">;</span> sh <span class="p">&amp;</span>rdquo<span class="p">;</span>
+</span><span class='line'>        tmux new-session -d -s <span class="nv">$tmuxname</span> <span class="p">&amp;</span>ldquo<span class="p">;</span><span class="nb">export </span><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="k">${</span><span class="nv">KUBECONFIG</span><span class="k">}</span><span class="p">;</span> <span class="nv">$connect</span><span class="p">&amp;</span>rdquo<span class="p">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">[</span> <span class="p">&amp;</span>ldquo<span class="p">;</span><span class="k">${</span><span class="nv">init</span><span class="k">}</span><span class="p">&amp;</span>rdquo<span class="p">;</span> <span class="o">==</span> <span class="p">&amp;</span>ldquo<span class="p">;</span><span class="nb">true</span><span class="p">&amp;</span>rdquo<span class="p">;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span><span class='line'>          <span class="k">if</span> <span class="o">((</span> <span class="k">$(</span>tmux ls 2&gt; /dev/null <span class="p">|</span> grep <span class="p">&amp;</span>ldquo<span class="p">;</span><span class="k">${</span><span class="nv">tmuxname</span><span class="k">}</span><span class="p">&amp;</span>rdquo<span class="p">;</span> <span class="p">|</span> wc -l<span class="k">)</span> &gt; <span class="m">0</span> <span class="k">)</span><span class="o">)</span> <span class="p">;</span> <span class="k">then</span>
+</span><span class='line'>            <span class="nv">init</span><span class="o">=</span><span class="p">&amp;</span>ldquo<span class="p">;</span><span class="nb">false</span><span class="p">&amp;</span>rdquo<span class="p">;</span>
+</span><span class='line'>          <span class="k">fi</span>
+</span><span class='line'>        <span class="k">else</span>
+</span><span class='line'>          tmux split-window -t <span class="p">&amp;</span>ldquo<span class="p">;</span><span class="k">${</span><span class="nv">tmuxname</span><span class="k">}</span><span class="p">&amp;</span>rdquo<span class="p">;</span> <span class="p">&amp;</span>ldquo<span class="p">;</span><span class="k">${</span><span class="nv">connect</span><span class="k">}</span><span class="p">&amp;</span>rdquo<span class="p">;</span> <span class="p">&amp;</span>amp<span class="p">;&amp;</span>amp<span class="p">;</span> <span class="se">\</span>
+</span><span class='line'>          tmux <span class="k">select</span>-layout -t <span class="p">&amp;</span>ldquo<span class="p">;</span><span class="k">${</span><span class="nv">tmuxname</span><span class="k">}</span><span class="p">&amp;</span>rdquo<span class="p">;</span> <span class="p">&amp;</span>ldquo<span class="p">;</span>tiled<span class="p">&amp;</span>rdquo<span class="p">;</span>
+</span><span class='line'>        <span class="k">fi</span>
+</span><span class='line'>      <span class="k">done</span> <span class="p">&amp;</span>lt<span class="p">;&amp;</span>lt<span class="p">;&amp;</span>lt<span class="p">;</span> <span class="p">&amp;</span>ldquo<span class="p">;</span><span class="nv">$pods</span><span class="p">&amp;</span>rdquo<span class="p">;</span>
+</span><span class='line'>      tmux <span class="nb">set</span>-window-option -t <span class="p">&amp;</span>ldquo<span class="p">;</span><span class="k">${</span><span class="nv">tmuxname</span><span class="k">}</span><span class="p">&amp;</span>rdquo<span class="p">;</span> synchronize-panes on
+</span><span class='line'>      tmux -2 a -t <span class="nv">$tmuxname</span>
+</span><span class='line'>  <span class="k">fi</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>참고: <a href="https://github.com/johanhaleby/kubetail">original kubetail</a></p>
 ]]></content>
@@ -154,7 +184,7 @@ function kl() {
     <link href="http://leoh0.github.io/blog/2016/10/13/install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/"/>
     <updated>2016-10-13T00:02:06+09:00</updated>
     <id>http://leoh0.github.io/blog/2016/10/13/install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve</id>
-    <content type="html"><![CDATA[<p><a href="http://showterm.io/404f651b005c52298bc9f">{% img /images/2016-10-13_00-04-57.jpg 924 533 %}</a>
+    <content type="html"><![CDATA[<p><a href="http://showterm.io/404f651b005c52298bc9f"><img src="/images/2016-10-13_00-04-57.jpg" width="924" height="533"></a>
 <a href="http://showterm.io/404f651b005c52298bc9f">클릭해서 과정 보기</a></p>
 
 <p><code>kubernetes</code> 로 <code>openstack mitaka</code>를 설치해 봤습니다.</p>

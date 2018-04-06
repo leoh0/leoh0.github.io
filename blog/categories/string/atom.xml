@@ -4,7 +4,7 @@
   <title><![CDATA[Category: string | > /dev/null]]></title>
   <link href="http://leoh0.github.io/blog/categories/string/atom.xml" rel="self"/>
   <link href="http://leoh0.github.io/"/>
-  <updated>2018-04-07T01:11:19+09:00</updated>
+  <updated>2018-04-07T01:46:43+09:00</updated>
   <id>http://leoh0.github.io/</id>
   <author>
     <name><![CDATA[leoh0]]></name>
@@ -75,7 +75,7 @@ foodcritic(chef lint tool)에서는 <a href="http://www.foodcritic.io/#FC001">st
 
 <p>그렇다면 사용자들이 선호하는 것은 어떨까? <br/>
 아래와 같이 3종류의 attribute 사용법에 대한 <a href="https://www.evernote.com/shard/s5/sh/1fc5a0c9-bdd0-44f4-8f5a-ed2ddc9d2cfd/a13f36acd7cfa2a468f7829e5549209f">user survey</a>에 대한 조사는 아래와 같이 symbol이 우세하다.
-{% img /images/fc001-survey-20121029-144804.jpg 1524 1164 fc001-survey-20121029-144804.png %}</p>
+<img src="/images/fc001-survey-20121029-144804.jpg" width="1524"></p>
 
 <p>그리고 실제 <a href="https://github.com/bbatsov/ruby-style-guide">ruby style guide</a>에서도 물론 특정한 규정은 없어서.. <br/>
 그렇다고 괜히 <code>string</code>을 선호하는 건 아니다. 자세한 이유는 <a href="https://github.com/acrmp/foodcritic/issues/1">여기1</a> <a href="https://github.com/acrmp/foodcritic/issues/86">여기2</a> 를 읽어 보면 도움이 될듯 하다.</p>

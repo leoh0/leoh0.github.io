@@ -4,7 +4,7 @@
   <title><![CDATA[Category: skew | > /dev/null]]></title>
   <link href="http://leoh0.github.io/blog/categories/skew/atom.xml" rel="self"/>
   <link href="http://leoh0.github.io/"/>
-  <updated>2018-04-07T01:11:19+09:00</updated>
+  <updated>2018-04-07T01:46:43+09:00</updated>
   <id>http://leoh0.github.io/</id>
   <author>
     <name><![CDATA[leoh0]]></name>
@@ -55,10 +55,10 @@ index e6b0fca..3f0de68 100644
 수치는 가려서 스케일만 감으로 볼 수 있게 남겼다.</p>
 
 <p><strong>A 서버</strong>
-{% img /images/2016-04-26_23-50-30.png 508 122 A 서버 %}</p>
+<img src="/images/2016-04-26_23-50-30.png" width="508" height="122" title="A 서버" ></p>
 
 <p><strong>B 서버</strong>
-{% img /images/2016-04-26_23-50-41.png 499 122 B 서버 %}</p>
+<img src="/images/2016-04-26_23-50-41.png" width="499" height="122" title="B 서버" ></p>
 
 <p>최초엔 keystone과 memcached connection 이 unbalance 할것이라고 생각했으나 그런 정황은 없었다.    (connection 개수가 일정) 그리고 특별히 keystone 로그에도 별다른 문제가 보이지 않았다.  <br/>
 memcache key 개수는 심지어 <strong>A 서버</strong>가 많았다.</p>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>http://leoh0.github.io/blog/2018/04/06/how-to-make-unofficial-kubernetes-pdf-documents-2/</loc>
-<lastmod>2018-04-06T23:49:30+09:00</lastmod>
+<loc>http://leoh0.github.io/blog/2018/04/07/how-to-make-unofficial-kubernetes-pdf-documents-2/</loc>
+<lastmod>2018-04-07T01:15:37+09:00</lastmod>
 </url>
 <url>
 <loc>http://leoh0.github.io/blog/2017/10/23/how-to-make-unofficial-kubernetes-pdf-documents/</loc>
@@ -328,6 +328,12 @@
 </url>
 <url>
 <loc>http://leoh0.github.io/blog/categories/ghostscript/</loc>
+</url>
+<url>
+<loc>http://leoh0.github.io/posts/2/</loc>
+</url>
+<url>
+<loc>http://leoh0.github.io/posts/3/</loc>
 </url>
 <url>
 <loc>http://leoh0.github.io/images/kubernetes-documents.pdf</loc>

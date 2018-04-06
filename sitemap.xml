@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://leoh0.github.io/blog/2018/04/06/how-to-make-unofficial-kubernetes-pdf-documents-2/</loc>
+<lastmod>2018-04-06T23:49:30+09:00</lastmod>
+</url>
+<url>
 <loc>http://leoh0.github.io/blog/2017/10/23/how-to-make-unofficial-kubernetes-pdf-documents/</loc>
 <lastmod>2017-10-23T21:21:47+09:00</lastmod>
 </url>
@@ -317,7 +321,20 @@
 <loc>http://leoh0.github.io/blog/categories/unofficial/</loc>
 </url>
 <url>
+<loc>http://leoh0.github.io/blog/categories/1-dot-1/</loc>
+</url>
+<url>
+<loc>http://leoh0.github.io/blog/categories/wkhtmltopdf/</loc>
+</url>
+<url>
+<loc>http://leoh0.github.io/blog/categories/ghostscript/</loc>
+</url>
+<url>
 <loc>http://leoh0.github.io/images/kubernetes-documents.pdf</loc>
 <lastmod>2017-10-23T17:54:22+09:00</lastmod>
+</url>
+<url>
+<loc>http://leoh0.github.io/images/kubernetes-documents-1.10.pdf</loc>
+<lastmod>2018-04-06T23:53:34+09:00</lastmod>
 </url>
 </urlset>

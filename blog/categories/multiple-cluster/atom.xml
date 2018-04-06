@@ -4,7 +4,7 @@
   <title><![CDATA[Category: multiple cluster | > /dev/null]]></title>
   <link href="http://leoh0.github.io/blog/categories/multiple-cluster/atom.xml" rel="self"/>
   <link href="http://leoh0.github.io/"/>
-  <updated>2017-10-23T21:30:20+09:00</updated>
+  <updated>2018-04-07T01:11:19+09:00</updated>
   <id>http://leoh0.github.io/</id>
   <author>
     <name><![CDATA[leoh0]]></name>
@@ -18,7 +18,7 @@
     <link href="http://leoh0.github.io/blog/2016/05/10/management-multiple-openstack-cluster-with-automatic-openstack-rc-file-loader-script/"/>
     <updated>2016-05-10T01:08:56+09:00</updated>
     <id>http://leoh0.github.io/blog/2016/05/10/management-multiple-openstack-cluster-with-automatic-openstack-rc-file-loader-script</id>
-    <content type="html"><![CDATA[<p><img src="/images/2016-05-10_03-40-27.jpg" width="368" height="272"></p>
+    <content type="html"><![CDATA[<p>{% img /images/2016-05-10_03-40-27.jpg 368 272 %}</p>
 
 <h2>openstack rc file</h2>
 
@@ -137,35 +137,22 @@ $ cat ~/.pyenv/pyenv.d/exec/openstack.bash
 </code></pre>
 
 <p>해당 파일내용은 아래와 같다.
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">openstack_root</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span> -P 2&gt;/dev/null <span class="o">||</span> <span class="nb">command pwd</span><span class="k">)</span>
-</span><span class='line'><span class="k">while</span> <span class="o">[</span> ! -e <span class="p">&amp;</span>ldquo<span class="p">;</span><span class="nv">$openstack_root</span>/openrc<span class="p">&amp;</span>rdquo<span class="p">;</span> <span class="o">]</span><span class="p">;</span>
-</span><span class='line'><span class="k">do</span>
-</span><span class='line'>  <span class="nv">openstack_root</span><span class="o">=</span><span class="k">${</span><span class="nv">openstack_root</span><span class="p">%/*</span><span class="k">}</span>
-</span><span class='line'>  <span class="k">if</span> <span class="o">[</span> <span class="p">&amp;</span>ldquo<span class="p">;</span><span class="nv">$openstack_root</span><span class="p">&amp;</span>rdquo<span class="p">;</span> <span class="o">==</span> <span class="p">&amp;</span>ldquo<span class="p">;&amp;</span>rdquo<span class="p">;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span><span class='line'>    <span class="nb">break</span>
-</span><span class='line'><span class="nb">  </span><span class="k">fi</span>
-</span><span class='line'><span class="k">done</span>&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;if <span class="o">[</span> <span class="p">&amp;</span>ldquo<span class="p">;</span><span class="nv">$openstack_root</span><span class="p">&amp;</span>rdquo<span class="p">;</span> !<span class="o">=</span> <span class="p">&amp;</span>ldquo<span class="p">;&amp;</span>rdquo<span class="p">;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span><span class='line'>  <span class="k">while</span> <span class="nb">read </span>var<span class="p">;</span> <span class="k">do</span> <span class="nb">unset</span> <span class="p">&amp;</span>ldquo<span class="p">;</span><span class="nv">$var</span><span class="p">&amp;</span>rdquo<span class="p">;;</span> <span class="k">done</span><span class="p">&amp;</span>lt<span class="p">;</span> <span class="p">&amp;</span>lt<span class="p">;</span><span class="o">(</span>env <span class="p">|</span> awk -F<span class="o">=</span> <span class="p">&amp;</span>lsquo<span class="p">;</span>/^OS_/<span class="o">{</span>print <span class="nv">$1</span><span class="o">}</span><span class="p">&amp;</span>rsquo<span class="p">;</span><span class="o">)</span>&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;  . <span class="p">&amp;</span>ldquo<span class="p">;</span><span class="nv">$openstack_root</span>/openrc<span class="p">&amp;</span>rdquo<span class="p">;</span>
-</span><span class='line'><span class="k">fi</span>
-</span></code></pre></td></tr></table></div></figure></p>
+&#8220;` bash
+openstack_root=$(pwd -P 2>/dev/null || command pwd)
+while [ ! -e &ldquo;$openstack_root/openrc&rdquo; ];
+do
+  openstack_root=${openstack_root%/*}
+  if [ &ldquo;$openstack_root&rdquo; == &ldquo;&rdquo; ]; then
+    break
+  fi
+done</p>
+
+<p>if [ &ldquo;$openstack_root&rdquo; != &ldquo;&rdquo; ]; then
+  while read var; do unset &ldquo;$var&rdquo;; done&lt; &lt;(env | awk -F= &lsquo;/^OS_/{print $1}&rsquo;)</p>
+
+<p>  . &ldquo;$openstack_root/openrc&rdquo;
+fi
+&#8220;`</p>
 
 <p>약간에 설명을 하자면 해당 커맨드를 실행하는 해당 디렉토리에 <code>openrc</code> 파일이 있으면 <code>OS_</code>로 시작하는 모든 환경 변수를 초기화(unset)하고 openrc 를 export 한다.  <br/>
 만약 해당 디렉토리에 해당 파일(openrc)가 없으면 상위 디렉토리가 존재할때까지 recursive 하게 올라간다.</p>
@@ -174,7 +161,7 @@ $ cat ~/.pyenv/pyenv.d/exec/openstack.bash
 
 <p>아래는 데모이다.  <br/>
 천천히 보려면 이 링크에서 커맨드를 확인하면서 볼 수 있다. (<a href="http://showterm.io/112d21ab5f83d5843f7b2">http://showterm.io/112d21ab5f83d5843f7b2</a>)
-<div class="embed-video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/r_Hgitz0Tn0" frameborder="0" allowfullscreen></iframe></div></p>
+{% youtube r_Hgitz0Tn0 560 315 %}</p>
 
 <p>중간에 보이는바와 같이 <code>env | grep OS_</code> 로 환경변수가 비어 있으나  <br/>
 <code>python</code> 커맨드 실행시 안에 환경변수들이 채워져 있는 것을 확인 할 수 있다.  <br/>

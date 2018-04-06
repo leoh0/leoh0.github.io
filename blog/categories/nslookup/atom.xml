@@ -4,7 +4,7 @@
   <title><![CDATA[Category: nslookup | > /dev/null]]></title>
   <link href="http://leoh0.github.io/blog/categories/nslookup/atom.xml" rel="self"/>
   <link href="http://leoh0.github.io/"/>
-  <updated>2017-10-23T21:30:20+09:00</updated>
+  <updated>2018-04-07T01:11:19+09:00</updated>
   <id>http://leoh0.github.io/</id>
   <author>
     <name><![CDATA[leoh0]]></name>
@@ -18,7 +18,7 @@
     <link href="http://leoh0.github.io/blog/2016/05/17/mac-os-x-nslookup/"/>
     <updated>2016-05-17T02:24:09+09:00</updated>
     <id>http://leoh0.github.io/blog/2016/05/17/mac-os-x-nslookup</id>
-    <content type="html"><![CDATA[<p><img src="/images/2016-05-17_03-24-13.jpg" width="650" height="167"></p>
+    <content type="html"><![CDATA[<p>{% img /images/2016-05-17_03-24-13.jpg 650 167 %}</p>
 
 <p>Mac os x 는 linux와 다른 resolving을 제공한다.</p>
 

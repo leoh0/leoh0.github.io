@@ -4,7 +4,7 @@
   <title><![CDATA[Category: block storage | > /dev/null]]></title>
   <link href="http://leoh0.github.io/blog/categories/block-storage/atom.xml" rel="self"/>
   <link href="http://leoh0.github.io/"/>
-  <updated>2017-10-23T21:30:20+09:00</updated>
+  <updated>2018-04-07T01:11:19+09:00</updated>
   <id>http://leoh0.github.io/</id>
   <author>
     <name><![CDATA[leoh0]]></name>
@@ -20,7 +20,7 @@
     <id>http://leoh0.github.io/blog/2015/01/16/jiogyi-ceph-rbd-image-format-2-data-recovering</id>
     <content type="html"><![CDATA[<h2>ceph: pg incomplete is worst nightmare</h2>
 
-<p><img class="<a" src="href="http://a1.res.cloudinary.com/hqq9ey1mh/image/upload/c_limit,w_793/v1414983220/z3vn1zndif6v7q2u08w1.png">http://a1.res.cloudinary.com/hqq9ey1mh/image/upload/c_limit,w_793/v1414983220/z3vn1zndif6v7q2u08w1.png</a>&#8221; width=&#8221;500&#8221; height=&#8221;500&#8221; title=&#8221;&ldquo;2014 open user survey block storage&rdquo;&#8221; ></p>
+<p>{% img <a href="http://a1.res.cloudinary.com/hqq9ey1mh/image/upload/c_limit,w_793/v1414983220/z3vn1zndif6v7q2u08w1.png">http://a1.res.cloudinary.com/hqq9ey1mh/image/upload/c_limit,w_793/v1414983220/z3vn1zndif6v7q2u08w1.png</a> 500 500 &ldquo;2014 open user survey block storage&rdquo; %}</p>
 
 <p><a href="http://superuser.openstack.org/articles/openstack-user-survey-insights-november-2014">2014년 유저 설문조사</a>에서 찾을 수 있듯이 <strong>ceph</strong>은 openstack의 block storage의 de facto standard 라고 말할 수 있다.</p>
 
@@ -46,7 +46,7 @@ If you see this state, report a bug, and try to start any failed OSDs that may c
 그러므로 전체 파일중 특정 조각이 문제가 되고 이 파일을 접근하는 모든 client request는 hang이 걸리게 된다. <br/>
 볼륨같은 큰 데이터(많은 조각을 갖는 데이터)는 몇 개의 pg만 <code>incomplete</code>로 떨어져도 결국 모든 client의 request가 hang이 걸리게 된다.</p>
 
-<p><img src="/images/ceph.png" width="1688" height="264" title="&ldquo;ceph logical flow&rdquo;" ></p>
+<p>{% img /images/ceph.png 1688 264 &ldquo;ceph logical flow&rdquo; %}</p>
 
 <p>그러므로 <code>incomplete</code> 된 pg가 있으면 pool 전체를 사용할 수 가 없다.(pool을 초기화 하기 전까지..) <br/>
 왜냐하면 어떠한 rbd object는 rados object로 분할되고 rados object들은 해당 pool에 분할 되어져서 들어간다. <br/>

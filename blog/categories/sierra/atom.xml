@@ -4,7 +4,7 @@
   <title><![CDATA[Category: sierra | > /dev/null]]></title>
   <link href="http://leoh0.github.io/blog/categories/sierra/atom.xml" rel="self"/>
   <link href="http://leoh0.github.io/"/>
-  <updated>2017-10-23T21:30:20+09:00</updated>
+  <updated>2018-04-07T01:11:19+09:00</updated>
   <id>http://leoh0.github.io/</id>
   <author>
     <name><![CDATA[leoh0]]></name>
@@ -18,7 +18,7 @@
     <link href="http://leoh0.github.io/blog/2016/10/13/install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/"/>
     <updated>2016-10-13T00:02:06+09:00</updated>
     <id>http://leoh0.github.io/blog/2016/10/13/install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve</id>
-    <content type="html"><![CDATA[<p><a href="http://showterm.io/404f651b005c52298bc9f"><img src="/images/2016-10-13_00-04-57.jpg" width="924" height="533"></a>
+    <content type="html"><![CDATA[<p><a href="http://showterm.io/404f651b005c52298bc9f">{% img /images/2016-10-13_00-04-57.jpg 924 533 %}</a>
 <a href="http://showterm.io/404f651b005c52298bc9f">클릭해서 과정 보기</a></p>
 
 <p><code>kubernetes</code> 로 <code>openstack mitaka</code>를 설치해 봤습니다.</p>

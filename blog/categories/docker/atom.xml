@@ -4,7 +4,7 @@
   <title><![CDATA[Category: docker | > /dev/null]]></title>
   <link href="http://leoh0.github.io/blog/categories/docker/atom.xml" rel="self"/>
   <link href="http://leoh0.github.io/"/>
-  <updated>2017-10-23T21:30:20+09:00</updated>
+  <updated>2018-04-07T01:11:19+09:00</updated>
   <id>http://leoh0.github.io/</id>
   <author>
     <name><![CDATA[leoh0]]></name>
@@ -14,11 +14,141 @@
 
   
   <entry>
+    <title type="html"><![CDATA[how to make unofficial kubernetes pdf documents 2]]></title>
+    <link href="http://leoh0.github.io/blog/2018/04/06/how-to-make-unofficial-kubernetes-pdf-documents-2/"/>
+    <updated>2018-04-06T23:49:30+09:00</updated>
+    <id>http://leoh0.github.io/blog/2018/04/06/how-to-make-unofficial-kubernetes-pdf-documents-2</id>
+    <content type="html"><![CDATA[<p><img src="/images/kubernetes-production-grade-container-orchestration.png" alt="kubernetes" /></p>
+
+<h3><a href="/images/kubernetes-documents-1.10.pdf">download k8s 1.10 pdf</a></h3>
+
+<hr />
+
+<h3>이전 포스팅과 뭐가 다른가?</h3>
+
+<p>이전에 해보고 더이상 안할거라 생각했다가 우연히 다시 포스팅을 읽었다가 너무 복잡한거 같아서 docker로 제작했다.
+아래와 같이 사용할시 pdf를 뽑아 낼 수 있다.</p>
+
+<pre><code>docker run -ti -v $PWD:/out3 leoh0/k8s-website-to-pdf
+</code></pre>
+
+<p>아니면 아래 dockerfile로 새로 제작해서 뽑아내면 된다.</p>
+
+<pre><code>docker build -t k8s-website-to-pdf .
+docker run -ti -v $PWD:/out3 k8s-website-to-pdf
+</code></pre>
+
+<p>우선 전체 dockerfile은 아래와 같다.</p>
+
+<pre><code># https://github.com/leoh0/k8s-website-to-pdf/blob/master/Dockerfile
+FROM alpine/git as source
+
+ARG BRANCH=master
+WORKDIR /app
+
+RUN git clone https://github.com/kubernetes/website &amp;&amp; cd website &amp;&amp; git checkout ${BRANCH}
+
+RUN sed -i '/{% include header.html %}/d;/{% include_cached footer.html %}/d;/{% include footer-scripts.html %}/d;/^&lt;!--  HERO  --&gt;/,/^&lt;\/section&gt;/d;s/&lt;div id="docsToc"&gt;/&lt;div id="docsToc" style="display: none;"&gt;/g;/editPageButton/d;s/&lt;div id="docsContent"&gt;/&lt;div id="docsContent" style="width: 100%;"&gt;/g;/&lt;p&gt;&lt;a href=""&gt;&lt;img src="https:\/\/kubernetes-site/,/{% endif %}/d' /app/website/_layouts/docwithnav.html
+
+FROM jekyll/jekyll as build
+
+COPY --from=source /app/website /srv/jekyll
+
+ARG TARGET=/build
+
+RUN mkdir -p ${TARGET} &amp;&amp; chown jekyll.jekyll ${TARGET}
+
+RUN jekyll build --destination ${TARGET}/_site &amp;&amp; cat ${TARGET}/_site/docs/home/index.html ${TARGET}/_site/docs/setup/index.html ${TARGET}/_site/docs/concepts/index.html \
+  ${TARGET}/_site/docs/tasks/index.html ${TARGET}/_site/docs/tutorials/index.html | \
+  grep 'a class="item"' | grep 'href="/docs' | \
+  uniq | cut -d'"' -f6 &gt; ${TARGET}/_site/list
+
+FROM madnight/docker-alpine-wkhtmltopdf as pdfs
+
+ARG TARGET=/build
+
+COPY --from=build ${TARGET}/_site /_site
+
+WORKDIR /_site
+
+RUN mkdir -p /out /out2 &amp;&amp; apk add --no-cache ghostscript
+
+RUN count=1 ; for l in $(cat list); do sed -i 's|/css/|/_site/css/|g;s|/js/|/_site/js/|g;s|/images/|/_site/images/|g' /_site${l}index.html || : ; wkhtmltopdf /_site${l}index.html /out/$(printf "%03d" $count)-$(echo $l | sed 's/^.\(.*\).$/\1/;s|/|-|g').pdf || : ; count=$((count+1)) ; done
+
+WORKDIR /out
+
+RUN gs -q -sPAPERSIZE=letter -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=/out2/out.pdf $(ls /out)
+
+VOLUME /out3
+
+ENTRYPOINT ["sh"]
+
+CMD ["-c", "cp /out2/out.pdf /out3/"]
+</code></pre>
+
+<p>우선 아래까지는 이전에도 설명한것과 비슷하게 website repository를 가져와서 필요없는 부분을 적당히 제거하고 jekyll로 빌드하고 빌드할 document의 list를 제작한다.</p>
+
+<pre><code># https://github.com/leoh0/k8s-website-to-pdf/blob/master/Dockerfile
+FROM alpine/git as source
+
+ARG BRANCH=master
+WORKDIR /app
+
+RUN git clone https://github.com/kubernetes/website &amp;&amp; cd website &amp;&amp; git checkout ${BRANCH}
+
+RUN sed -i '/{% include header.html %}/d;/{% include_cached footer.html %}/d;/{% include footer-scripts.html %}/d;/^&lt;!--  HERO  --&gt;/,/^&lt;\/section&gt;/d;s/&lt;div id="docsToc"&gt;/&lt;div id="docsToc" style="display: none;"&gt;/g;/editPageButton/d;s/&lt;div id="docsContent"&gt;/&lt;div id="docsContent" style="width: 100%;"&gt;/g;/&lt;p&gt;&lt;a href=""&gt;&lt;img src="https:\/\/kubernetes-site/,/{% endif %}/d' /app/website/_layouts/docwithnav.html
+
+FROM jekyll/jekyll as build
+
+COPY --from=source /app/website /srv/jekyll
+
+ARG TARGET=/build
+
+RUN mkdir -p ${TARGET} &amp;&amp; chown jekyll.jekyll ${TARGET}
+
+RUN jekyll build --destination ${TARGET}/_site &amp;&amp; cat ${TARGET}/_site/docs/home/index.html ${TARGET}/_site/docs/setup/index.html ${TARGET}/_site/docs/concepts/index.html \
+  ${TARGET}/_site/docs/tasks/index.html ${TARGET}/_site/docs/tutorials/index.html | \
+  grep 'a class="item"' | grep 'href="/docs' | \
+  uniq | cut -d'"' -f6 &gt; ${TARGET}/_site/list
+</code></pre>
+
+<p>이후엔 각 index.html이 website 기준이므로 로컬 파일 css, js를 참고 할 수 있게 경로 변경하고 wkhtmltopdf 로 pdf 생성한다. 다만 순서를 정렬하기 위해 앞에 숫자를 붙여서 제작한다.
+이후에 ghostscript를 이용해서 letter size로 모든 pdf를 합친다. 나중에 합친 결과물 pdf를 뽑아내기 위해 커맨드를 세팅한다.</p>
+
+<pre><code>FROM madnight/docker-alpine-wkhtmltopdf as pdfs
+
+ARG TARGET=/build
+
+COPY --from=build ${TARGET}/_site /_site
+
+WORKDIR /_site
+
+RUN mkdir -p /out /out2 &amp;&amp; apk add --no-cache ghostscript
+
+RUN count=1 ; for l in $(cat list); do sed -i 's|/css/|/_site/css/|g;s|/js/|/_site/js/|g;s|/images/|/_site/images/|g' /_site${l}index.html || : ; wkhtmltopdf /_site${l}index.html /out/$(printf "%03d" $count)-$(echo $l | sed 's/^.\(.*\).$/\1/;s|/|-|g').pdf || : ; count=$((count+1)) ; done
+
+WORKDIR /out
+
+RUN gs -q -sPAPERSIZE=letter -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=/out2/out.pdf $(ls /out)
+
+VOLUME /out3
+
+ENTRYPOINT ["sh"]
+
+CMD ["-c", "cp /out2/out.pdf /out3/"]
+</code></pre>
+
+<p>아무튼 이렇게 제작한 pdf는 2016페이지 이고 지난번 보다 200페이지가 증가했다.
+역시나 읽지는..</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Install openstack on macos Sierra using kolla-kubernetes with xhyve]]></title>
     <link href="http://leoh0.github.io/blog/2016/10/13/install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/"/>
     <updated>2016-10-13T00:02:06+09:00</updated>
     <id>http://leoh0.github.io/blog/2016/10/13/install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve</id>
-    <content type="html"><![CDATA[<p><a href="http://showterm.io/404f651b005c52298bc9f"><img src="/images/2016-10-13_00-04-57.jpg" width="924" height="533"></a>
+    <content type="html"><![CDATA[<p><a href="http://showterm.io/404f651b005c52298bc9f">{% img /images/2016-10-13_00-04-57.jpg 924 533 %}</a>
 <a href="http://showterm.io/404f651b005c52298bc9f">클릭해서 과정 보기</a></p>
 
 <p><code>kubernetes</code> 로 <code>openstack mitaka</code>를 설치해 봤습니다.</p>
@@ -51,7 +181,7 @@ windows 환경에선 xhyve 외에도 virtual box 등을 이용하셔도 좋을 �
 실질적으로 docker안에 kvm이 들어가게 된다면 docker process에 vm이 종속적이게 되어 불안정한 구성이 될테지만  <br/>
 이런 방식으로 피해 갈 수도 있는 것을 확인했습니다.</p>
 
-<p><img src="/images/containerize-openstack.png" width="1440" height="829" title="containerize-openstack" ></p>
+<p>{% img /images/containerize-openstack.png 1440 829 containerize-openstack %}</p>
 
 <p>아무튼 사진과 같이 기묘한 형태로 (실제 host os 에는 없는 바이너리가 parent 1 을 물고 process 로 뜨게되는) 관리가 가능합니다.  <br/>
 물론 보안 적인 결함에 대해서야 아직 끝도없이 이야기할 주제이겠지만 앞으로의 provisioning의 새로운 가능성에 대해서 관심이 가는건 사실인것 같습니다.</p>

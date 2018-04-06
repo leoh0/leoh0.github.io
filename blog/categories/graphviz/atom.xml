@@ -4,7 +4,7 @@
   <title><![CDATA[Category: graphviz | > /dev/null]]></title>
   <link href="http://leoh0.github.io/blog/categories/graphviz/atom.xml" rel="self"/>
   <link href="http://leoh0.github.io/"/>
-  <updated>2017-10-23T21:30:20+09:00</updated>
+  <updated>2018-04-07T01:11:19+09:00</updated>
   <id>http://leoh0.github.io/</id>
   <author>
     <name><![CDATA[leoh0]]></name>
@@ -27,43 +27,43 @@
 
 <h1>bridge-vlan</h1>
 
-<p><img src="/images/draw-bridge-vlan.png" width="1312" height="544" title="bridge-vlan" ></p>
+<p>{% img /images/draw-bridge-vlan.png 1312 544 bridge-vlan %}</p>
 
 <h1>openvswitch-flat</h1>
 
-<p><img src="/images/draw-ovs-flat.png" width="2526" height="780" title="openvswitch-flat" ></p>
+<p>{% img /images/draw-ovs-flat.png 2526 780 openvswitch-flat %}</p>
 
 <h1>openvswitch-vlan</h1>
 
-<p><img src="/images/draw-ovs-vlan.png" width="2752" height="544" title="openvswitch-vlan" ></p>
+<p>{% img /images/draw-ovs-vlan.png 2752 544 openvswitch-vlan %}</p>
 
 <p>이걸 graphviz 로 그리면 다음과 같다.</p>
 
 <h1>bridge-vlan</h1>
 
-<p><img src="/images/draw-bridge-vlan-g.png" width="757" height="131" title="bridge-vlan" ></p>
+<p>{% img /images/draw-bridge-vlan-g.png 757 131 bridge-vlan %}</p>
 
 <h1>openvswitch-flat</h1>
 
-<p><img src="/images/draw-ovs-flat-g.png" width="1101" height="491" title="openvswitch-flat" ></p>
+<p>{% img /images/draw-ovs-flat-g.png 1101 491 openvswitch-flat %}</p>
 
 <h1>openvswitch-vlan</h1>
 
-<p><img src="/images/draw-ovs-vlan-g.png" width="1594" height="131" title="openvswitch-vlan" ></p>
+<p>{% img /images/draw-ovs-vlan-g.png 1594 131 openvswitch-vlan %}</p>
 
 <p>이걸 3D 로 그리면 다음과 같다.</p>
 
 <h1>bridge-vlan</h1>
 
-<p><img src="/images/draw-bridge-vlan-3d.png" width="2716" height="1564" title="bridge-vlan" ></p>
+<p>{% img /images/draw-bridge-vlan-3d.png 2716 1564 bridge-vlan %}</p>
 
 <h1>openvswitch-flat</h1>
 
-<p><img src="/images/draw-ovs-flat-3d.png" width="2844" height="1668" title="openvswitch-flat" ></p>
+<p>{% img /images/draw-ovs-flat-3d.png 2844 1668 openvswitch-flat %}</p>
 
 <h1>openvswitch-vlan</h1>
 
-<p><img src="/images/draw-ovs-vlan-3d.png" width="2844" height="2032" title="openvswitch-vlan" ></p>
+<p>{% img /images/draw-ovs-vlan-3d.png 2844 2032 openvswitch-vlan %}</p>
 
 <p>는 사실 그냥 이전에 그려논 그림이다..</p>
 
@@ -71,77 +71,7 @@
 아래 스크립트를 컴퓨트 노드에서 돌리면 해당 정보를 수집해서 그리게 된다. (물론 네트워크 노드도 가능..) <br/>
 귀찮아서 하드코딩한 부분들은 편하게 고쳐쓰시길..</p>
 
-<p><div><script src='https://gist.github.com/8499b653f479766378d8.js'></script>
-<noscript><pre><code>#!/bin/bash
-
-sudo apt-get install -qqy ethtool libgraph-easy-perl graphviz &gt; /dev/null
-
-EXCEPT=/tmp/exceptlist
-echo &#39;&#39; &gt; $EXCEPT
-result=&quot;&quot;
-
-function on_exit() {
-  rm -f $EXCEPT
-}
-
-trap &quot;on_exit&quot; EXIT
-
-# find ovs br &lt;-&gt; port
-if [ &quot;x$(which ovs-vsctl)&quot; != &quot;x&quot; ]; then
-  for br in $(sudo ovs-vsctl list-br); do
-    for port in $(sudo ovs-vsctl list-ports $br); do
-      result=$(echo &quot;$result [$port]----&gt;[$br] [$br]----&gt;[$port] &quot;)
-    done
-  done
-fi
-
-# find br &lt;-&gt; port
-for br in $(brctl show | sed &#39;1d&#39; | grep &#39;^[a-z]&#39; | awk &#39;{print $1}&#39;); do
-  for port in $(brctl show $br | sed &#39;1d&#39; | sed &#39;s/.*\t.*\t.*\t\(.*\)/\1/g&#39;); do
-    result=$(echo &quot;$result [$port]----&gt;[$br] [$br]----&gt;[$port] &quot;)
-  done
-done
-
-# ip namespace veth
-for ns in $(ip netns); do
-  for interface in $(ip netns exec $ns ip a | cut -d&#39;:&#39; -f-2 | grep ^[1-9]); do
-    index=$(ip netns exec $ns ethtool -S $interface 2&gt; /dev/null | grep peer_ifindex | awk &#39;{print $2}&#39;)
-    ifname=$(ip netns exec $ns ip a | grep &quot;^$index:&quot; | awk &#39;{print $2}&#39; | cut -d&#39;:&#39; -f1)
-    if [ &quot;x$ifname&quot; == &quot;x&quot; ]; then
-      ifname=$(ip a | grep &quot;^$index:&quot; | awk &#39;{print $2}&#39; | cut -d&#39;:&#39; -f1)
-      if [ &quot;x$ifname&quot; != &quot;x&quot; ]; then
-        echo $ifname &gt;&gt; $EXCEPT
-        result=$(echo &quot;$result [$interface]----&gt;[$ifname] [$ifname]----&gt;[$interface] &quot;)
-      fi
-    fi
-  done
-done
-
-# ip veth
-for interface in $(ip a | cut -d&#39;:&#39; -f-2 | grep ^[1-9]); do
-  if cat $EXCEPT | grep -q &quot;^$interface$&quot; ; then continue ; fi
-  index=$(ethtool -S $interface 2&gt; /dev/null | grep peer_ifindex | awk &#39;{print $2}&#39;)
-  ifname=$(ip a | grep &quot;^$index:&quot; | awk &#39;{print $2}&#39; | cut -d&#39;:&#39; -f1)
-  if [ &quot;x$ifname&quot; != &quot;x&quot; ]; then
-    echo $ifname &gt;&gt; $EXCEPT
-    result=$(echo &quot;$result [$interface]----&gt;[$ifname] [$ifname]----&gt;[$interface] &quot;)
-  fi
-done
-
-# vm tap
-for tap in $(ip a | cut -d&#39;:&#39; -f-2 | grep ^[1-9]  | cut -d&#39; &#39; -f2 | grep &#39;^tap&#39;); do
-  vmuuid=$(grep -rl &quot;$tap&quot; /var/lib/nova/instances/*/libvirt.xml | cut -d&#39;/&#39; -f6)
-  if [ &quot;x$vmuuid&quot; != &quot;x&quot; ]; then
-    result=$(echo &quot;$result [$tap]----&gt;[VM-$vmuuid] [VM-$vmuuid]----&gt;[$tap] &quot;)
-  fi
-done
-
-rm -f $EXCEPT
-
-echo $result | graph-easy
-echo $result | graph-easy -as dot | dot -Tpng -o l2path.png
-</code></pre></noscript></div>
-</p>
+<p>{% gist 8499b653f479766378d8 %}</p>
 ]]></content>
   </entry>
   

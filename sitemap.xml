@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://leoh0.github.io/blog/2018/05/20/immutable-kubernetes/</loc>
+<lastmod>2018-05-20T00:55:10+09:00</lastmod>
+</url>
+<url>
 <loc>http://leoh0.github.io/blog/2018/04/07/how-to-make-unofficial-kubernetes-pdf-documents-2/</loc>
 <lastmod>2018-04-07T01:15:37+09:00</lastmod>
 </url>
@@ -330,10 +334,22 @@
 <loc>http://leoh0.github.io/blog/categories/ghostscript/</loc>
 </url>
 <url>
-<loc>http://leoh0.github.io/posts/2/</loc>
+<loc>http://leoh0.github.io/blog/categories/linuxkit/</loc>
 </url>
 <url>
-<loc>http://leoh0.github.io/posts/3/</loc>
+<loc>http://leoh0.github.io/blog/categories/weave/</loc>
+</url>
+<url>
+<loc>http://leoh0.github.io/blog/categories/cilium/</loc>
+</url>
+<url>
+<loc>http://leoh0.github.io/blog/categories/calico/</loc>
+</url>
+<url>
+<loc>http://leoh0.github.io/blog/categories/gcp/</loc>
+</url>
+<url>
+<loc>http://leoh0.github.io/blog/categories/aws/</loc>
 </url>
 <url>
 <loc>http://leoh0.github.io/images/kubernetes-documents.pdf</loc>
@@ -342,5 +358,9 @@
 <url>
 <loc>http://leoh0.github.io/images/kubernetes-documents-1.10.pdf</loc>
 <lastmod>2018-04-06T23:53:34+09:00</lastmod>
+</url>
+<url>
+<loc>http://leoh0.github.io/404.html</loc>
+<lastmod>2018-05-20T23:08:18+09:00</lastmod>
 </url>
 </urlset>

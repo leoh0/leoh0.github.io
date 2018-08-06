@@ -11,7 +11,7 @@ user의 token리스트를 관리하지 않으면 부담은 훨씬 줄어든다.
 물론 user의 password 변경 등으로 기존 모든 token을 revoke 시키는 경우때문에 이런 user 단위로 token리스트를 관리해야 하지만
 그걸 포기하면 그냥 코드 몇줄 추가로 간단하게 정리할 수 있다.
 diff --git a/keystone/token/persistence/backends/memcache.py b/keystone/token/persistence/backends/memcache.py index e6b0fca..3f0de68 100644 --- a/keystone/token/persistence/backends/memcache.py &#43;&#43;&#43; b/keystone/token/persistence/backends/memcache.py @@ -37,3 &#43;37,6 @@ class Token(kvs.Token):  kwargs[&#39;memcached_expire_time&#39;] = CONF.">
-    <meta name="keywords" content="1.1, 1.8, attribute, automatic, aws, block storage, brew, bridge, calico, ceph, chef, chef 12, chef server 12, chrome, chrome cli, cilium, compute node, container, containerize, dig, dns, docker, document, gcp, ghostscript, graph easy, graphviz, hash, headless, host, incomplete, install openstack, ip, jekyll, junos pulse, k8s, keystone, kolla, kolla kubernetes, kubernetes, kvm, libvirt, linuxkit, mac, macos, me, memcached, mitaka, multiple cluster, network architecture, neutron, nova, nslookup, ntfs, openrc, openstack, openvswitch, ovs, pdf, pdfmerge, pg, ping, qemu, rc, resolver, selinux, sierra, skew, ssh, ssh login fail, ssh password lost, string, symbol, token, tools, unbalance, unofficial, vagrant, vpn, weave, wkhtmltopdf, youtube dl, 잡담, ">
+    <meta name="keywords" content="keystone, memcached, openstack, skew, token, unbalance">
     
     
     
@@ -201,7 +201,7 @@ diff --git a/keystone/token/persistence/backends/memcache.py b/keystone/token/pe
 
 
 
-<meta itemprop="keywords" content="" />
+<meta itemprop="keywords" content="keystone,memcached,openstack,skew,token,unbalance," />
 
     <header>
       <h1 itemprop="headline">추가 - Keystone에서 Token Backend로 사용하는 Memcached가 Unbalanced되었다..</h1>
@@ -285,14 +285,26 @@ diff --git a/keystone/token/persistence/backends/memcache.py b/keystone/token/pe
     29 Sep, 2016
   </time>
   
-    in <span itemprop="articleSection"><a href="/categories/keystone/">keystone</a>, <a href="/categories/memcached/">memcached</a>, <a href="/categories/openstack/">openstack</a>, <a href="/categories/skew/">skew</a>, <a href="/categories/token/">token</a> and <a href="/categories/unbalance/">unbalance</a></span>
+    in <span itemprop="articleSection"><a href="/categories/technology/">technology</a></span>
   
+  
+    and tagged <a href="/tags/keystone/">keystone</a>, <a href="/tags/memcached/">memcached</a>, <a href="/tags/openstack/">openstack</a>, <a href="/tags/skew/">skew</a>, <a href="/tags/token/">token</a> and <a href="/tags/unbalance/">unbalance</a>
   
   using <span itemprop="wordCount">89</span> words.
 </p>
 
       
 
+
+  <aside>
+    <header>Related Content</header>
+    <ul>
+      
+        <li><a href="/post/2016-04-27-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossdamyeon-dot/">keystone에서 token backend로 사용하는 memcached가 unbalanced되었다..</a>
+        <time datetime="3M">3 minutes</time>
+      
+    </ul>
+  </aside>
 
 
     </footer>

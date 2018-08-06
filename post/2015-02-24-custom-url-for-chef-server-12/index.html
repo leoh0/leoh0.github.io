@@ -9,7 +9,7 @@
 여기에서 관련 정보를 얻을 수 있었는데 차이점은 /etc/chef-server/chef-server.rb 가 아닌 /etc/opscode/chef-server.rb 파일을 수정해서 적용 가능했다.
 아래 처럼 해당 파일을 수정한다.
 ... server_name = &#34;chef.yourdomain.com&#34; api_fqdn = server_name bookshelf[&#39;vip&#39;] = server_name nginx[&#39;url&#39;] = &#34;https://#{server_name}&#34; nginx[&#39;server_name&#39;] = server_name nginx[&#39;ssl_certificate&#39;] = &#34;/var/opt/chef-server/nginx/ca/#{server_name}.crt&#34; nginx[&#39;ssl_certificate_key&#39;] = &#34;/var/opt/chef-server/nginx/ca/#{server_name}.key&#34; lb[&#39;fqdn&#39;] = server_name 이후에 해당 컨피그 내용으로 적용한다.">
-    <meta name="keywords" content="1.1, 1.8, attribute, automatic, aws, block storage, brew, bridge, calico, ceph, chef, chef 12, chef server 12, chrome, chrome cli, cilium, compute node, container, containerize, dig, dns, docker, document, gcp, ghostscript, graph easy, graphviz, hash, headless, host, incomplete, install openstack, ip, jekyll, junos pulse, k8s, keystone, kolla, kolla kubernetes, kubernetes, kvm, libvirt, linuxkit, mac, macos, me, memcached, mitaka, multiple cluster, network architecture, neutron, nova, nslookup, ntfs, openrc, openstack, openvswitch, ovs, pdf, pdfmerge, pg, ping, qemu, rc, resolver, selinux, sierra, skew, ssh, ssh login fail, ssh password lost, string, symbol, token, tools, unbalance, unofficial, vagrant, vpn, weave, wkhtmltopdf, youtube dl, 잡담, ">
+    <meta name="keywords" content="chef, chef server 12">
     
     
     
@@ -193,7 +193,7 @@ img {
 
 
 
-<meta itemprop="keywords" content="" />
+<meta itemprop="keywords" content="chef,chef server 12," />
 
     <header>
       <h1 itemprop="headline">custom URL for chef server 12</h1>
@@ -278,8 +278,10 @@ lb[<span style="color:#0ff;font-weight:bold">&#39;fqdn&#39;</span>] = server_nam
     24 Feb, 2015
   </time>
   
-    in <span itemprop="articleSection"><a href="/categories/chef/">chef</a> and <a href="/categories/chef-server-12/">chef server 12</a></span>
+    in <span itemprop="articleSection"><a href="/categories/technology/">technology</a></span>
   
+  
+    and tagged <a href="/tags/chef/">chef</a> and <a href="/tags/chef-server-12/">chef server 12</a>
   
   using <span itemprop="wordCount">80</span> words.
 </p>

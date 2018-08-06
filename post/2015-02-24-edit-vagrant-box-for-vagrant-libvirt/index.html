@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>edit vagrant box for vagrant-libvirt | &gt; /dev/null</title>
     <meta name="description" content=" check file $ file trusty64_vagrant_box_image.img trusty64_vagrant_box_image.img: QEMU QCOW Image (unknown version)  init apt-get install -qqy lvm2 modprobe nbd  attach cd /var/lib/libvirt/images qemu-nbd -c /dev/nbd0 `pwd`/trusty64_vagrant_box_image.img vgscan vgchange -ay mount /dev/mapper/vagrant--vg-root /mnt  detach cd / umount /mnt vgchange -an vagrant-vg qemu-nbd -d /dev/nbd0  ">
-    <meta name="keywords" content="1.1, 1.8, attribute, automatic, aws, block storage, brew, bridge, calico, ceph, chef, chef 12, chef server 12, chrome, chrome cli, cilium, compute node, container, containerize, dig, dns, docker, document, gcp, ghostscript, graph easy, graphviz, hash, headless, host, incomplete, install openstack, ip, jekyll, junos pulse, k8s, keystone, kolla, kolla kubernetes, kubernetes, kvm, libvirt, linuxkit, mac, macos, me, memcached, mitaka, multiple cluster, network architecture, neutron, nova, nslookup, ntfs, openrc, openstack, openvswitch, ovs, pdf, pdfmerge, pg, ping, qemu, rc, resolver, selinux, sierra, skew, ssh, ssh login fail, ssh password lost, string, symbol, token, tools, unbalance, unofficial, vagrant, vpn, weave, wkhtmltopdf, youtube dl, 잡담, ">
+    <meta name="keywords" content="vagrant, libvirt">
     
     
     
@@ -181,7 +181,7 @@ img {
 
 
 
-<meta itemprop="keywords" content="" />
+<meta itemprop="keywords" content="vagrant,libvirt," />
 
     <header>
       <h1 itemprop="headline">edit vagrant box for vagrant-libvirt</h1>
@@ -274,8 +274,10 @@ qemu-nbd -d /dev/nbd0
     24 Feb, 2015
   </time>
   
-    in <span itemprop="articleSection"><a href="/categories/libvirt/">libvirt</a> and <a href="/categories/vagrant/">vagrant</a></span>
+    in <span itemprop="articleSection"><a href="/categories/technology/">technology</a></span>
   
+  
+    and tagged <a href="/tags/libvirt/">libvirt</a> and <a href="/tags/vagrant/">vagrant</a>
   
   using <span itemprop="wordCount">42</span> words.
 </p>

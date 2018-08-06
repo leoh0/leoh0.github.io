@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>추가 - edit vagrant box for vagrant-libvirt | &gt; /dev/null</title>
     <meta name="description" content=" copy image and files mkdir -p images cp ~/.vagrant.d/boxes/${TARGETIMAGE}/0/libvirt/* images/ cd images  init apt-get install -qqy lvm2 modprobe nbd  attach qemu-nbd -c /dev/nbd0 `pwd`/box.img vgscan vgchange -ay mount /dev/mapper/vagrant--vg-root /mnt  bind binds=&quot;/dev /dev/pts /proc /sys /run&quot; for d in $binds; do mkdir -p /mnt${d} mount --bind ${d} /mnt${d} done  work chroot /mnt bash # blah blah blah exit  unbind and detach cd / for d in $(mount | awk &#39;/\/mnt/{print $3}&#39; | sort -r); do umount $d done vgchange -an vagrant-vg qemu-nbd -d /dev/nbd0  ">
-    <meta name="keywords" content="1.1, 1.8, attribute, automatic, aws, block storage, brew, bridge, calico, ceph, chef, chef 12, chef server 12, chrome, chrome cli, cilium, compute node, container, containerize, dig, dns, docker, document, gcp, ghostscript, graph easy, graphviz, hash, headless, host, incomplete, install openstack, ip, jekyll, junos pulse, k8s, keystone, kolla, kolla kubernetes, kubernetes, kvm, libvirt, linuxkit, mac, macos, me, memcached, mitaka, multiple cluster, network architecture, neutron, nova, nslookup, ntfs, openrc, openstack, openvswitch, ovs, pdf, pdfmerge, pg, ping, qemu, rc, resolver, selinux, sierra, skew, ssh, ssh login fail, ssh password lost, string, symbol, token, tools, unbalance, unofficial, vagrant, vpn, weave, wkhtmltopdf, youtube dl, 잡담, ">
+    <meta name="keywords" content="vagrant, libvirt">
     
     
     
@@ -181,7 +181,7 @@ img {
 
 
 
-<meta itemprop="keywords" content="" />
+<meta itemprop="keywords" content="vagrant,libvirt," />
 
     <header>
       <h1 itemprop="headline">추가 - edit vagrant box for vagrant-libvirt</h1>
@@ -292,14 +292,26 @@ qemu-nbd -d /dev/nbd0
     29 Sep, 2016
   </time>
   
-    in <span itemprop="articleSection"><a href="/categories/libvirt/">libvirt</a> and <a href="/categories/vagrant/">vagrant</a></span>
+    in <span itemprop="articleSection"><a href="/categories/technology/">technology</a></span>
   
+  
+    and tagged <a href="/tags/libvirt/">libvirt</a> and <a href="/tags/vagrant/">vagrant</a>
   
   using <span itemprop="wordCount">84</span> words.
 </p>
 
       
 
+
+  <aside>
+    <header>Related Content</header>
+    <ul>
+      
+        <li><a href="/post/2015-02-24-edit-vagrant-box-for-vagrant-libvirt/">edit vagrant box for vagrant-libvirt</a>
+        <time datetime="1M">1 minutes</time>
+      
+    </ul>
+  </aside>
 
 
     </footer>

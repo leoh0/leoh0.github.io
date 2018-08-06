@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://leoh0.github.io/post/2018-08-04-migrate-to-hugo/</loc>
+    <lastmod>2018-08-04T23:13:37+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://leoh0.github.io/post/2018-05-21-immutable-kubernetes/</loc>
     <lastmod>2018-05-21T00:55:10+09:00</lastmod>
   </url>
@@ -123,20 +128,20 @@
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/1.1/</loc>
+    <loc>https://leoh0.github.io/tags/1.1/</loc>
     <lastmod>2018-04-07T01:15:37+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/1.8/</loc>
+    <loc>https://leoh0.github.io/tags/1.8/</loc>
     <lastmod>2017-10-23T21:21:47+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://leoh0.github.io/</loc>
-    <lastmod>2018-05-21T00:55:10+09:00</lastmod>
+    <lastmod>2018-08-04T23:13:37+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -146,265 +151,270 @@
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/attribute/</loc>
+    <loc>https://leoh0.github.io/tags/attribute/</loc>
     <lastmod>2015-02-05T17:21:56+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/automatic/</loc>
+    <loc>https://leoh0.github.io/tags/automatic/</loc>
     <lastmod>2016-05-10T01:08:56+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/aws/</loc>
+    <loc>https://leoh0.github.io/tags/aws/</loc>
     <lastmod>2018-05-21T00:55:10+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/block-storage/</loc>
+    <loc>https://leoh0.github.io/tags/block-storage/</loc>
     <lastmod>2015-01-16T00:54:53+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/brew/</loc>
+    <loc>https://leoh0.github.io/tags/brew/</loc>
     <lastmod>2015-05-19T09:49:32+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/bridge/</loc>
+    <loc>https://leoh0.github.io/tags/bridge/</loc>
     <lastmod>2015-04-03T02:29:52+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/calico/</loc>
+    <loc>https://leoh0.github.io/tags/calico/</loc>
     <lastmod>2018-05-21T00:55:10+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://leoh0.github.io/categories/</loc>
-    <lastmod>2018-04-07T01:15:37+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/ceph/</loc>
+    <loc>https://leoh0.github.io/tags/ceph/</loc>
     <lastmod>2015-01-16T00:54:53+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/chef/</loc>
+    <loc>https://leoh0.github.io/tags/chef/</loc>
     <lastmod>2015-02-24T23:29:19+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/chef-12/</loc>
+    <loc>https://leoh0.github.io/tags/chef-12/</loc>
     <lastmod>2015-02-05T17:21:56+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/chef-server-12/</loc>
+    <loc>https://leoh0.github.io/tags/chef-server-12/</loc>
     <lastmod>2015-02-24T23:29:19+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/chrome/</loc>
+    <loc>https://leoh0.github.io/tags/chrome/</loc>
     <lastmod>2017-10-23T21:21:47+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/chrome-cli/</loc>
+    <loc>https://leoh0.github.io/tags/chrome-cli/</loc>
     <lastmod>2015-05-19T09:49:32+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/cilium/</loc>
+    <loc>https://leoh0.github.io/tags/cilium/</loc>
     <lastmod>2018-05-21T00:55:10+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/compute-node/</loc>
+    <loc>https://leoh0.github.io/tags/compute-node/</loc>
     <lastmod>2015-02-11T17:12:39+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/container/</loc>
+    <loc>https://leoh0.github.io/tags/container/</loc>
     <lastmod>2017-07-27T00:58:28+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/containerize/</loc>
+    <loc>https://leoh0.github.io/tags/containerize/</loc>
     <lastmod>2015-04-24T01:08:16+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/dig/</loc>
+    <loc>https://leoh0.github.io/tags/dig/</loc>
     <lastmod>2016-05-17T02:24:09+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/dns/</loc>
+    <loc>https://leoh0.github.io/tags/dns/</loc>
     <lastmod>2016-05-17T02:24:09+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/docker/</loc>
+    <loc>https://leoh0.github.io/tags/docker/</loc>
     <lastmod>2018-05-21T00:55:10+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/document/</loc>
+    <loc>https://leoh0.github.io/tags/document/</loc>
     <lastmod>2018-04-07T01:15:37+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/gcp/</loc>
+    <loc>https://leoh0.github.io/tags/gcp/</loc>
     <lastmod>2018-05-21T00:55:10+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/ghostscript/</loc>
+    <loc>https://leoh0.github.io/tags/ghostscript/</loc>
     <lastmod>2018-04-07T01:15:37+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/graph-easy/</loc>
+    <loc>https://leoh0.github.io/tags/graph-easy/</loc>
     <lastmod>2015-04-03T02:29:52+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/graphviz/</loc>
+    <loc>https://leoh0.github.io/tags/graphviz/</loc>
     <lastmod>2015-04-03T02:29:52+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/hash/</loc>
+    <loc>https://leoh0.github.io/tags/hash/</loc>
     <lastmod>2015-02-05T17:21:56+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/headless/</loc>
+    <loc>https://leoh0.github.io/tags/headless/</loc>
     <lastmod>2017-10-23T21:21:47+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/host/</loc>
+    <loc>https://leoh0.github.io/tags/host/</loc>
     <lastmod>2016-05-17T02:24:09+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/incomplete/</loc>
+    <loc>https://leoh0.github.io/tags/hugo/</loc>
+    <lastmod>2018-08-04T23:13:37+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leoh0.github.io/tags/incomplete/</loc>
     <lastmod>2015-01-16T00:54:53+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/install-openstack/</loc>
+    <loc>https://leoh0.github.io/tags/install-openstack/</loc>
     <lastmod>2016-10-13T00:02:06+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/ip/</loc>
+    <loc>https://leoh0.github.io/tags/ip/</loc>
     <lastmod>2015-04-24T00:28:38+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/jekyll/</loc>
+    <loc>https://leoh0.github.io/tags/jekyll/</loc>
     <lastmod>2018-04-07T01:15:37+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/junos-pulse/</loc>
+    <loc>https://leoh0.github.io/tags/junos-pulse/</loc>
     <lastmod>2016-05-17T02:24:09+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/k8s/</loc>
+    <loc>https://leoh0.github.io/tags/k8s/</loc>
     <lastmod>2018-05-21T00:55:10+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/keystone/</loc>
+    <loc>https://leoh0.github.io/tags/keystone/</loc>
     <lastmod>2016-09-29T23:30:20+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/kolla/</loc>
+    <loc>https://leoh0.github.io/tags/kolla/</loc>
     <lastmod>2016-10-13T00:02:06+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/kolla-kubernetes/</loc>
+    <loc>https://leoh0.github.io/tags/kolla-kubernetes/</loc>
     <lastmod>2016-10-13T00:02:06+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/kubernetes/</loc>
+    <loc>https://leoh0.github.io/tags/kubernetes/</loc>
     <lastmod>2018-05-21T00:55:10+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/kvm/</loc>
+    <loc>https://leoh0.github.io/tags/kvm/</loc>
     <lastmod>2015-04-24T01:08:16+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/libvirt/</loc>
+    <loc>https://leoh0.github.io/tags/libvirt/</loc>
     <lastmod>2016-09-29T23:39:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/linuxkit/</loc>
+    <loc>https://leoh0.github.io/tags/linuxkit/</loc>
     <lastmod>2018-05-21T00:55:10+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/mac/</loc>
+    <loc>https://leoh0.github.io/tags/mac/</loc>
     <lastmod>2016-05-17T02:24:09+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/macos/</loc>
+    <loc>https://leoh0.github.io/tags/macos/</loc>
     <lastmod>2016-10-13T00:02:06+09:00</lastmod>
     <priority>0</priority>
   </url>
@@ -415,228 +425,241 @@
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/memcached/</loc>
+    <loc>https://leoh0.github.io/tags/memcached/</loc>
     <lastmod>2016-09-29T23:30:20+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/mitaka/</loc>
+    <loc>https://leoh0.github.io/tags/mitaka/</loc>
     <lastmod>2016-10-13T00:02:06+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/multiple-cluster/</loc>
+    <loc>https://leoh0.github.io/tags/multiple-cluster/</loc>
     <lastmod>2016-05-10T01:08:56+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/network-architecture/</loc>
+    <loc>https://leoh0.github.io/tags/network-architecture/</loc>
     <lastmod>2015-04-03T02:29:52+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/neutron/</loc>
+    <loc>https://leoh0.github.io/tags/neutron/</loc>
     <lastmod>2015-04-03T02:29:52+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/nova/</loc>
+    <loc>https://leoh0.github.io/tags/nova/</loc>
     <lastmod>2015-03-14T22:00:57+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/nslookup/</loc>
+    <loc>https://leoh0.github.io/tags/nslookup/</loc>
     <lastmod>2016-05-17T02:24:09+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/ntfs/</loc>
+    <loc>https://leoh0.github.io/tags/ntfs/</loc>
     <lastmod>2015-11-03T09:38:22+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/openrc/</loc>
+    <loc>https://leoh0.github.io/tags/openrc/</loc>
     <lastmod>2016-05-10T01:08:56+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/openstack/</loc>
+    <loc>https://leoh0.github.io/tags/openstack/</loc>
     <lastmod>2016-10-13T00:02:06+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/openvswitch/</loc>
+    <loc>https://leoh0.github.io/tags/openvswitch/</loc>
     <lastmod>2015-04-03T02:29:52+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/ovs/</loc>
+    <loc>https://leoh0.github.io/tags/ovs/</loc>
     <lastmod>2015-02-02T09:20:23+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/pdf/</loc>
+    <loc>https://leoh0.github.io/tags/pdf/</loc>
     <lastmod>2018-04-07T01:15:37+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/pdfmerge/</loc>
+    <loc>https://leoh0.github.io/tags/pdfmerge/</loc>
     <lastmod>2017-10-23T21:21:47+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/pg/</loc>
+    <loc>https://leoh0.github.io/tags/pg/</loc>
     <lastmod>2015-01-16T00:54:53+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/ping/</loc>
+    <loc>https://leoh0.github.io/tags/ping/</loc>
     <lastmod>2016-05-17T02:24:09+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://leoh0.github.io/post/</loc>
-    <lastmod>2018-05-21T00:55:10+09:00</lastmod>
+    <lastmod>2018-08-04T23:13:37+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/qemu/</loc>
+    <loc>https://leoh0.github.io/tags/qemu/</loc>
     <lastmod>2015-04-24T01:08:16+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/rc/</loc>
+    <loc>https://leoh0.github.io/tags/rc/</loc>
     <lastmod>2016-05-10T01:08:56+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/resolver/</loc>
+    <loc>https://leoh0.github.io/tags/resolver/</loc>
     <lastmod>2016-05-17T02:24:09+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/selinux/</loc>
+    <loc>https://leoh0.github.io/tags/rocks/</loc>
+    <lastmod>2018-08-04T23:13:37+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leoh0.github.io/tags/selinux/</loc>
     <lastmod>2015-03-14T22:00:57+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/sierra/</loc>
+    <loc>https://leoh0.github.io/tags/sierra/</loc>
     <lastmod>2016-10-13T00:02:06+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/skew/</loc>
+    <loc>https://leoh0.github.io/tags/skew/</loc>
     <lastmod>2016-09-29T23:30:20+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/ssh/</loc>
+    <loc>https://leoh0.github.io/tags/ssh/</loc>
     <lastmod>2016-05-17T02:24:09+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/ssh-login-fail/</loc>
+    <loc>https://leoh0.github.io/tags/ssh-login-fail/</loc>
     <lastmod>2015-03-14T22:00:57+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/ssh-password-lost/</loc>
+    <loc>https://leoh0.github.io/tags/ssh-password-lost/</loc>
     <lastmod>2015-03-14T22:00:57+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/string/</loc>
+    <loc>https://leoh0.github.io/tags/string/</loc>
     <lastmod>2015-02-05T17:21:56+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/symbol/</loc>
+    <loc>https://leoh0.github.io/tags/symbol/</loc>
     <lastmod>2015-02-05T17:21:56+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://leoh0.github.io/tags/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://leoh0.github.io/categories/token/</loc>
-    <lastmod>2016-09-29T23:30:20+09:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://leoh0.github.io/categories/tools/</loc>
-    <lastmod>2017-07-27T00:58:28+09:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://leoh0.github.io/categories/unbalance/</loc>
-    <lastmod>2016-09-29T23:30:20+09:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://leoh0.github.io/categories/unofficial/</loc>
     <lastmod>2018-04-07T01:15:37+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/vagrant/</loc>
-    <lastmod>2016-09-29T23:39:00+09:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://leoh0.github.io/categories/vpn/</loc>
-    <lastmod>2016-05-17T02:24:09+09:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://leoh0.github.io/categories/weave/</loc>
+    <loc>https://leoh0.github.io/categories/technology/</loc>
     <lastmod>2018-05-21T00:55:10+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/wkhtmltopdf/</loc>
+    <loc>https://leoh0.github.io/tags/token/</loc>
+    <lastmod>2016-09-29T23:30:20+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leoh0.github.io/tags/tools/</loc>
+    <lastmod>2017-07-27T00:58:28+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leoh0.github.io/tags/unbalance/</loc>
+    <lastmod>2016-09-29T23:30:20+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leoh0.github.io/tags/unofficial/</loc>
     <lastmod>2018-04-07T01:15:37+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leoh0.github.io/categories/youtube-dl/</loc>
+    <loc>https://leoh0.github.io/tags/vagrant/</loc>
+    <lastmod>2016-09-29T23:39:00+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leoh0.github.io/tags/vpn/</loc>
+    <lastmod>2016-05-17T02:24:09+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leoh0.github.io/tags/weave/</loc>
+    <lastmod>2018-05-21T00:55:10+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leoh0.github.io/tags/wkhtmltopdf/</loc>
+    <lastmod>2018-04-07T01:15:37+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leoh0.github.io/tags/youtube-dl/</loc>
     <lastmod>2015-05-19T09:49:32+09:00</lastmod>
     <priority>0</priority>
   </url>

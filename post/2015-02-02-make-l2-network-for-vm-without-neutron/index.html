@@ -8,7 +8,7 @@
     <meta name="description" content="우선 아래와 같은 컨피그를 이용할때..
 nova  linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver  neutron  type_drivers = vlan mechanism_drivers = openvswitch firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver  1. 기본 상태: 우선 실제 물리 머신에 아래와 같이 vm을 위한 ethernet인 eth1이 존재한다.
   변수 생성 vmuuid=9ee8db25-6a13-4ca8-8a4e-495db24492ca vlan=2001 localvlan=1 ip=$(nova show $vmuuid | grep &#39; network&#39; | awk &#39;{print $5}&#39;) interfaceid=$(neutron port-list | grep &quot;\&quot;$ip\&quot;&quot; | awk &#39;{print $2}&#39;) mac=$(neutron port-list | grep &quot;\&quot;$ip\&quot;&quot; | awk &#39;{print $5}&#39;) ovsid=${interfaceid:0:11}  2.">
-    <meta name="keywords" content="1.1, 1.8, attribute, automatic, aws, block storage, brew, bridge, calico, ceph, chef, chef 12, chef server 12, chrome, chrome cli, cilium, compute node, container, containerize, dig, dns, docker, document, gcp, ghostscript, graph easy, graphviz, hash, headless, host, incomplete, install openstack, ip, jekyll, junos pulse, k8s, keystone, kolla, kolla kubernetes, kubernetes, kvm, libvirt, linuxkit, mac, macos, me, memcached, mitaka, multiple cluster, network architecture, neutron, nova, nslookup, ntfs, openrc, openstack, openvswitch, ovs, pdf, pdfmerge, pg, ping, qemu, rc, resolver, selinux, sierra, skew, ssh, ssh login fail, ssh password lost, string, symbol, token, tools, unbalance, unofficial, vagrant, vpn, weave, wkhtmltopdf, youtube dl, 잡담, ">
+    <meta name="keywords" content="openstack, neutron, ovs, openvswitch">
     
     
     
@@ -189,7 +189,7 @@ nova  linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver
 
 
 
-<meta itemprop="keywords" content="" />
+<meta itemprop="keywords" content="openstack,neutron,ovs,openvswitch," />
 
     <header>
       <h1 itemprop="headline">make l2 network for vm without neutron</h1>
@@ -491,8 +491,10 @@ ovs-vsctl --timeout=10 set Port qvo${ovsid} tag=${localvlan}
     2 Feb, 2015
   </time>
   
-    in <span itemprop="articleSection"><a href="/categories/neutron/">neutron</a>, <a href="/categories/openstack/">openstack</a>, <a href="/categories/openvswitch/">openvswitch</a> and <a href="/categories/ovs/">ovs</a></span>
+    in <span itemprop="articleSection"><a href="/categories/technology/">technology</a></span>
   
+  
+    and tagged <a href="/tags/neutron/">neutron</a>, <a href="/tags/openstack/">openstack</a>, <a href="/tags/openvswitch/">openvswitch</a> and <a href="/tags/ovs/">ovs</a>
   
   using <span itemprop="wordCount">441</span> words.
 </p>

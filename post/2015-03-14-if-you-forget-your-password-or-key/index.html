@@ -9,7 +9,7 @@
 이후에 아래와 같이 key를 추가해도 되고 각 os 버전에 맞게 패스워드를 새로 해슁하여 /etc/shadow 를 변경해도 된다.
 물론 마지막에 dettach 를 꼭 신경써서 해줘야 한다.
 # attach disk qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/10794bbb-7856-4ed6-ab39-32afbc01156a/disk mount /dev/nbd0p1 /mnt # insert a new key to target user echo &#39;&#39;&#39;NEWKEY&#39;&#39;&#39; &gt;&gt; /mnt/home/USER/.ssh/authorized_keys # dettach disk umount /mnt qemu-nbd -d /dev/nbd0p1 하지만 이상하게도 저런 수정을 했을때 아예 접속이 불가능한 경우들이 생긴다.">
-    <meta name="keywords" content="1.1, 1.8, attribute, automatic, aws, block storage, brew, bridge, calico, ceph, chef, chef 12, chef server 12, chrome, chrome cli, cilium, compute node, container, containerize, dig, dns, docker, document, gcp, ghostscript, graph easy, graphviz, hash, headless, host, incomplete, install openstack, ip, jekyll, junos pulse, k8s, keystone, kolla, kolla kubernetes, kubernetes, kvm, libvirt, linuxkit, mac, macos, me, memcached, mitaka, multiple cluster, network architecture, neutron, nova, nslookup, ntfs, openrc, openstack, openvswitch, ovs, pdf, pdfmerge, pg, ping, qemu, rc, resolver, selinux, sierra, skew, ssh, ssh login fail, ssh password lost, string, symbol, token, tools, unbalance, unofficial, vagrant, vpn, weave, wkhtmltopdf, youtube dl, 잡담, ">
+    <meta name="keywords" content="openstack, nova, ssh password lost, ssh login fail, selinux">
     
     
     
@@ -193,7 +193,7 @@ img {
 
 
 
-<meta itemprop="keywords" content="" />
+<meta itemprop="keywords" content="openstack,nova,ssh password lost,ssh login fail,selinux," />
 
     <header>
       <h1 itemprop="headline">만약 사용자가 ssh password나 key등을 잃어 버려서 도저히 vm instance에 접속할 수 없을때..</h1>
@@ -303,8 +303,10 @@ qemu-nbd -d /dev/nbd0p1</code></pre></div>
     14 Mar, 2015
   </time>
   
-    in <span itemprop="articleSection"><a href="/categories/nova/">nova</a>, <a href="/categories/openstack/">openstack</a>, <a href="/categories/selinux/">selinux</a>, <a href="/categories/ssh-login-fail/">ssh login fail</a> and <a href="/categories/ssh-password-lost/">ssh password lost</a></span>
+    in <span itemprop="articleSection"><a href="/categories/technology/">technology</a></span>
   
+  
+    and tagged <a href="/tags/nova/">nova</a>, <a href="/tags/openstack/">openstack</a>, <a href="/tags/selinux/">selinux</a>, <a href="/tags/ssh-login-fail/">ssh login fail</a> and <a href="/tags/ssh-password-lost/">ssh password lost</a>
   
   using <span itemprop="wordCount">236</span> words.
 </p>

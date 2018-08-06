@@ -7,7 +7,7 @@
     <title>mac에서 ntfs disk에 write 하기 | &gt; /dev/null</title>
     <meta name="description" content="GPT 일때 가능
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21  #!/usr/bin/env bash  if mount | grep -q &#39;ntfs&#39; ; then if ! mount | grep -q &#39;read-only&#39; ; then echo -e &#34;\033[01;36mExist already in /etc/fstab.\033[00m&#34; VOLUME=$(mount | grep &#34;(ntfs, &#34; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(.*\) (ntfs,.*$|\1|g&#39;) open &#34;$VOLUME&#34; exit fi DISK=$(mount | grep &#39;read-only&#39; | awk &#39;{print $1}&#39;) UUID=$(diskutil info $DISK | grep UUID | awk &#39;{print $3}&#39;) echo -e &#34;\033[01;36mRegistry into /etc/fstab.">
-    <meta name="keywords" content="1.1, 1.8, attribute, automatic, aws, block storage, brew, bridge, calico, ceph, chef, chef 12, chef server 12, chrome, chrome cli, cilium, compute node, container, containerize, dig, dns, docker, document, gcp, ghostscript, graph easy, graphviz, hash, headless, host, incomplete, install openstack, ip, jekyll, junos pulse, k8s, keystone, kolla, kolla kubernetes, kubernetes, kvm, libvirt, linuxkit, mac, macos, me, memcached, mitaka, multiple cluster, network architecture, neutron, nova, nslookup, ntfs, openrc, openstack, openvswitch, ovs, pdf, pdfmerge, pg, ping, qemu, rc, resolver, selinux, sierra, skew, ssh, ssh login fail, ssh password lost, string, symbol, token, tools, unbalance, unofficial, vagrant, vpn, weave, wkhtmltopdf, youtube dl, 잡담, ">
+    <meta name="keywords" content="mac, ntfs">
     
     
     
@@ -185,7 +185,7 @@ img {
 
 
 
-<meta itemprop="keywords" content="" />
+<meta itemprop="keywords" content="mac,ntfs," />
 
     <header>
       <h1 itemprop="headline">mac에서 ntfs disk에 write 하기</h1>
@@ -298,8 +298,10 @@ img {
     3 Nov, 2015
   </time>
   
-    in <span itemprop="articleSection"><a href="/categories/mac/">mac</a> and <a href="/categories/ntfs/">ntfs</a></span>
+    in <span itemprop="articleSection"><a href="/categories/technology/">technology</a></span>
   
+  
+    and tagged <a href="/tags/mac/">mac</a> and <a href="/tags/ntfs/">ntfs</a>
   
   using <span itemprop="wordCount">128</span> words.
 </p>

@@ -9,7 +9,7 @@
 chef 12로 변화되며 추가된 기능인가 싶어 chef 12 release note를 뒤져보았지만 사실 관련된 부분을 찾지 못했다.
 대략 현상은 아래와 같다..
 chef &gt; attributes_mode chef:attributes &gt; default[&#39;haproxy&#39;][&#39;conf_dir&#39;] = &#39;aa&#39; chef:attributes &gt; puts node[&#39;haproxy&#39;][&#39;conf_dir&#39;] aa chef:attributes &gt; puts node[:haproxy][:conf_dir] aa chef:attributes &gt; node.set[&#39;haproxy&#39;][&#39;conf_dir&#39;] = &#39;bb&#39; chef:attributes &gt; puts node[&#39;haproxy&#39;][&#39;conf_dir&#39;] bb chef:attributes &gt; puts node[:haproxy][:conf_dir] aa  위와 같이 string으로 된 hash와 symbol로 된 hash의 값이 merge가 안되는 문제이다.">
-    <meta name="keywords" content="1.1, 1.8, attribute, automatic, aws, block storage, brew, bridge, calico, ceph, chef, chef 12, chef server 12, chrome, chrome cli, cilium, compute node, container, containerize, dig, dns, docker, document, gcp, ghostscript, graph easy, graphviz, hash, headless, host, incomplete, install openstack, ip, jekyll, junos pulse, k8s, keystone, kolla, kolla kubernetes, kubernetes, kvm, libvirt, linuxkit, mac, macos, me, memcached, mitaka, multiple cluster, network architecture, neutron, nova, nslookup, ntfs, openrc, openstack, openvswitch, ovs, pdf, pdfmerge, pg, ping, qemu, rc, resolver, selinux, sierra, skew, ssh, ssh login fail, ssh password lost, string, symbol, token, tools, unbalance, unofficial, vagrant, vpn, weave, wkhtmltopdf, youtube dl, 잡담, ">
+    <meta name="keywords" content="chef 12, attribute, symbol, string, hash">
     
     
     
@@ -193,7 +193,7 @@ chef &gt; attributes_mode chef:attributes &gt; default[&#39;haproxy&#39;][&#39;c
 
 
 
-<meta itemprop="keywords" content="" />
+<meta itemprop="keywords" content="chef 12,attribute,symbol,string,hash," />
 
     <header>
       <h1 itemprop="headline">chef 12: node attribute style problem - feature or bug?</h1>
@@ -355,8 +355,10 @@ foodcritic(chef lint tool)에서는 <a href="http://www.foodcritic.io/#FC001">st
     5 Feb, 2015
   </time>
   
-    in <span itemprop="articleSection"><a href="/categories/attribute/">attribute</a>, <a href="/categories/chef-12/">chef 12</a>, <a href="/categories/hash/">hash</a>, <a href="/categories/string/">string</a> and <a href="/categories/symbol/">symbol</a></span>
+    in <span itemprop="articleSection"><a href="/categories/technology/">technology</a></span>
   
+  
+    and tagged <a href="/tags/attribute/">attribute</a>, <a href="/tags/chef-12/">chef 12</a>, <a href="/tags/hash/">hash</a>, <a href="/tags/string/">string</a> and <a href="/tags/symbol/">symbol</a>
   
   using <span itemprop="wordCount">313</span> words.
 </p>

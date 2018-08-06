@@ -11,7 +11,7 @@
   단도직입적으로 ethernet 한개로는 아래와 같이 구성하면 된다.
 우선 eth0은 0.0.0.0 으로 ip를 사용안하는 대신 br0 부분에서 기존의 management용 ip를 가져간다.
   아래와 같은 흐름으로 진행하면 된다.">
-    <meta name="keywords" content="1.1, 1.8, attribute, automatic, aws, block storage, brew, bridge, calico, ceph, chef, chef 12, chef server 12, chrome, chrome cli, cilium, compute node, container, containerize, dig, dns, docker, document, gcp, ghostscript, graph easy, graphviz, hash, headless, host, incomplete, install openstack, ip, jekyll, junos pulse, k8s, keystone, kolla, kolla kubernetes, kubernetes, kvm, libvirt, linuxkit, mac, macos, me, memcached, mitaka, multiple cluster, network architecture, neutron, nova, nslookup, ntfs, openrc, openstack, openvswitch, ovs, pdf, pdfmerge, pg, ping, qemu, rc, resolver, selinux, sierra, skew, ssh, ssh login fail, ssh password lost, string, symbol, token, tools, unbalance, unofficial, vagrant, vpn, weave, wkhtmltopdf, youtube dl, 잡담, ">
+    <meta name="keywords" content="openstack, neutron, compute-node, openvswitch">
     
     
     
@@ -201,7 +201,7 @@ img {
 
 
 
-<meta itemprop="keywords" content="" />
+<meta itemprop="keywords" content="openstack,neutron,compute-node,openvswitch," />
 
     <header>
       <h1 itemprop="headline">NIC 1개로 compute node를 vlan type으로 neutron을 사용하여 구성하기 위한 팁</h1>
@@ -333,14 +333,26 @@ ovs-vsctl add-port br-eth0 br-eth0-veth
     11 Feb, 2015
   </time>
   
-    in <span itemprop="articleSection"><a href="/categories/compute-node/">compute-node</a>, <a href="/categories/neutron/">neutron</a>, <a href="/categories/openstack/">openstack</a> and <a href="/categories/openvswitch/">openvswitch</a></span>
+    in <span itemprop="articleSection"><a href="/categories/technology/">technology</a></span>
   
+  
+    and tagged <a href="/tags/compute-node/">compute-node</a>, <a href="/tags/neutron/">neutron</a>, <a href="/tags/openstack/">openstack</a> and <a href="/tags/openvswitch/">openvswitch</a>
   
   using <span itemprop="wordCount">167</span> words.
 </p>
 
       
 
+
+  <aside>
+    <header>Related Content</header>
+    <ul>
+      
+        <li><a href="/post/2015-02-02-make-l2-network-for-vm-without-neutron/">make l2 network for vm without neutron</a>
+        <time datetime="3M">3 minutes</time>
+      
+    </ul>
+  </aside>
 
 
     </footer>

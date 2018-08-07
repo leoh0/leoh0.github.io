@@ -6,10 +6,20 @@
     <description>Recent content in Technology on &gt; /dev/null</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Mon, 21 May 2018 00:55:10 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 07 Aug 2018 21:25:37 +0900</lastBuildDate>
     
 	<atom:link href="https://leoh0.github.io/categories/technology/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kubernetes dedicated node pattern for Daemonsets</title>
+      <link>https://leoh0.github.io/post/2018-08-07-kubernetes-dedicated-node-pattern/</link>
+      <pubDate>Tue, 07 Aug 2018 21:25:37 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/post/2018-08-07-kubernetes-dedicated-node-pattern/</guid>
+      <description>deploy Daemonset to dedicated nodes k8s를 운영하다 보면 전용 노드를 사용할 필요성을 느낄때가 있습니다. 특정 기능을 수행하기 위해서 라던지 아니면 특정 포트를 hostport 혹은 hostnetwork등으로 독점적으로 사용하던지 등의 경우들입니다. 이럴땐 Deployment보다 Daemonset을 이용하면 노드당 1개의 pod을 띄우기 때문에 쉽게 해당 노드들에 특정 기능을 수행하게 할 수 있으나 Daemonset의 특성상 모든 node에 들어가게 되거나 아니면 내가 원하는 특수한 node에 들어가지 못하는 경우 들이 있습니다.
+그래서 이런 경우를 해결하기 위한 가이드를 작성해 봤습니다.</description>
+    </item>
     
     <item>
       <title>immutable kubernetes by linuxkit</title>

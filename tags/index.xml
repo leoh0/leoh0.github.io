@@ -183,6 +183,24 @@
     </item>
     
     <item>
+      <title>Daemonset</title>
+      <link>https://leoh0.github.io/tags/daemonset/</link>
+      <pubDate>Tue, 07 Aug 2018 21:25:37 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/daemonset/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Dedicated</title>
+      <link>https://leoh0.github.io/tags/dedicated/</link>
+      <pubDate>Tue, 07 Aug 2018 21:25:37 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/dedicated/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Dig</title>
       <link>https://leoh0.github.io/tags/dig/</link>
       <pubDate>Tue, 17 May 2016 02:24:09 +0900</pubDate>
@@ -374,7 +392,7 @@
     <item>
       <title>Kubernetes</title>
       <link>https://leoh0.github.io/tags/kubernetes/</link>
-      <pubDate>Mon, 21 May 2018 00:55:10 +0900</pubDate>
+      <pubDate>Tue, 07 Aug 2018 21:25:37 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/kubernetes/</guid>
       <description></description>
@@ -471,6 +489,24 @@
     </item>
     
     <item>
+      <title>Node</title>
+      <link>https://leoh0.github.io/tags/node/</link>
+      <pubDate>Tue, 07 Aug 2018 21:25:37 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/node/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Nodeselector</title>
+      <link>https://leoh0.github.io/tags/nodeselector/</link>
+      <pubDate>Tue, 07 Aug 2018 21:25:37 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/nodeselector/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Nova</title>
       <link>https://leoh0.github.io/tags/nova/</link>
       <pubDate>Sat, 14 Mar 2015 22:00:57 +0900</pubDate>
@@ -530,6 +566,15 @@
       <pubDate>Mon, 02 Feb 2015 09:20:23 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/ovs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Pattern</title>
+      <link>https://leoh0.github.io/tags/pattern/</link>
+      <pubDate>Tue, 07 Aug 2018 21:25:37 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/pattern/</guid>
       <description></description>
     </item>
     
@@ -678,11 +723,29 @@
     </item>
     
     <item>
+      <title>Taint</title>
+      <link>https://leoh0.github.io/tags/taint/</link>
+      <pubDate>Tue, 07 Aug 2018 21:25:37 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/taint/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Token</title>
       <link>https://leoh0.github.io/tags/token/</link>
       <pubDate>Thu, 29 Sep 2016 23:30:20 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/token/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Toleration</title>
+      <link>https://leoh0.github.io/tags/toleration/</link>
+      <pubDate>Tue, 07 Aug 2018 21:25:37 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/toleration/</guid>
       <description></description>
     </item>
     

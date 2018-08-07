@@ -25,7 +25,7 @@
 
 
 
-<meta property="og:updated_time" content="2015-11-03T09:38:22&#43;09:00"/>
+<meta property="og:updated_time" content="2016-04-27T00:00:45&#43;09:00"/>
 
 
 
@@ -175,6 +175,47 @@ img {
   <header>
     <h1>Posts</h1>
   </header>
+  
+    <article itemscope itemtype="http://schema.org/CreativeWork">
+  <header>
+    <h2 itemprop="name">
+      <a href="/post/2016-04-27-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossdamyeon-dot/">keystone에서 token backend로 사용하는 memcached가 unbalanced되었다..</a>
+    </h2>
+    
+      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <circle cx="16" cy="16" r="14" />
+  <path d="M16 8 L16 16 20 20" />
+</svg>
+<span>3 minute read</span>
+<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+</svg>
+
+  Published: <time datetime="2016-04-27T00:00:45&#43;09:00">27 Apr, 2016</time>
+
+</p>
+    
+  </header>
+  
+  <div itemprop="description">
+    해당 클러스터는 kilo 버전으로 구성 되었었고 token 을 memcached 에 저장하고 있었다.
+또한 kilo 부터 dogpile.cache 는 거의 고정으로 들어가 있가 있어서 해당 모듈을 사용했다.
+이런 상황을 디버깅 했던 경험을 정리해 본다.
+아래는 문제가 되었던 memcached host의 in/out bound 그래프이다.
+수치는 가려서 스케일만 감으로 볼 수 있게 남겼다.
+A 서버   A 서버  
+B 서버   B 서버  
+최초엔 keystone과 memcached connection 이 unbalance 할것이라고 생각했으나 그런 정황은 없었다.
+  </div>
+  
+    <nav class="readmore"><a itemprop="url" href="/post/2016-04-27-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossdamyeon-dot/">Read More&nbsp;&raquo;</a></nav>
+  
+  <meta itemprop="inLanguage" content="en-US">
+  <meta itemprop="datePublished" content="2016-04-27T00:00:45&#43;09:00">
+  <meta itemprop="dateModified" content="2016-04-27T00:00:45&#43;09:00">
+  
+</article>
+
   
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
@@ -534,43 +575,6 @@ bridge-vlan   openvswitch-flat   openvswitch-vlan   이걸 graphviz 로 그리�
   <meta itemprop="inLanguage" content="en-US">
   <meta itemprop="datePublished" content="2015-02-11T17:12:39&#43;09:00">
   <meta itemprop="dateModified" content="2015-02-11T17:12:39&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2015-02-05-chef-12-feature-or-bug/">chef 12: node attribute style problem - feature or bug?</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>2 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2015-02-05T17:21:56&#43;09:00">5 Feb, 2015</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    chef 12 client를 이용하면서 기존 recipe 들을 사용중 갑자기 작동 안하는 문제가 있었다.
-chef 12로 변화되며 추가된 기능인가 싶어 chef 12 release note를 뒤져보았지만 사실 관련된 부분을 찾지 못했다.
-대략 현상은 아래와 같다..
-chef &gt; attributes_mode chef:attributes &gt; default['haproxy']['conf_dir'] = 'aa' chef:attributes &gt; puts node['haproxy']['conf_dir'] aa chef:attributes &gt; puts node[:haproxy][:conf_dir] aa chef:attributes &gt; node.set['haproxy']['conf_dir'] = 'bb' chef:attributes &gt; puts node['haproxy']['conf_dir'] bb chef:attributes &gt; puts node[:haproxy][:conf_dir] aa  위와 같이 string으로 된 hash와 symbol로 된 hash의 값이 merge가 안되는 문제이다.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2015-02-05-chef-12-feature-or-bug/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2015-02-05T17:21:56&#43;09:00">
-  <meta itemprop="dateModified" content="2015-02-05T17:21:56&#43;09:00">
   
 </article>
 

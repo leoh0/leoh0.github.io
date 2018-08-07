@@ -216,7 +216,7 @@ img {
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
     <h2 itemprop="name">
-      <a href="/blog/2015/02/24/2015-02-24-custom-url-for-chef-server-12/">custom URL for chef server 12</a>
+      <a href="/blog/2015/02/24/custom-url-for-chef-server-12/">custom URL for chef server 12</a>
     </h2>
     
   </header>
@@ -228,7 +228,7 @@ img {
 ... server_name = &#34;chef.yourdomain.com&#34; api_fqdn = server_name bookshelf[&#39;vip&#39;] = server_name nginx[&#39;url&#39;] = &#34;https://#{server_name}&#34; nginx[&#39;server_name&#39;] = server_name nginx[&#39;ssl_certificate&#39;] = &#34;/var/opt/chef-server/nginx/ca/#{server_name}.crt&#34; nginx[&#39;ssl_certificate_key&#39;] = &#34;/var/opt/chef-server/nginx/ca/#{server_name}.key&#34; lb[&#39;fqdn&#39;] = server_name 이후에 해당 컨피그 내용으로 적용한다.
   </div>
   
-    <nav class="readmore"><a itemprop="url" href="/blog/2015/02/24/2015-02-24-custom-url-for-chef-server-12/">Read More&nbsp;&raquo;</a></nav>
+    <nav class="readmore"><a itemprop="url" href="/blog/2015/02/24/custom-url-for-chef-server-12/">Read More&nbsp;&raquo;</a></nav>
   
   <meta itemprop="inLanguage" content="en-US">
   <meta itemprop="datePublished" content="2015-02-24T23:29:19&#43;09:00">
@@ -277,7 +277,7 @@ img {
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
     <h2 itemprop="name">
-      <a href="/blog/2015/02/24/2015-02-24-edit-vagrant-box-for-vagrant-libvirt/">edit vagrant box for vagrant-libvirt</a>
+      <a href="/blog/2015/02/24/edit-vagrant-box-for-vagrant-libvirt/">edit vagrant box for vagrant-libvirt</a>
     </h2>
     
   </header>
@@ -328,7 +328,7 @@ img {
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
     <h2 itemprop="name">
-      <a href="/blog/2015/02/11/2015-02-11-build-openstack-node-using-just-1-nic/">NIC 1개로 compute node를 vlan type으로 neutron을 사용하여 구성하기 위한 팁</a>
+      <a href="/blog/2015/02/11/build-openstack-node-using-just-1-nic/">NIC 1개로 compute node를 vlan type으로 neutron을 사용하여 구성하기 위한 팁</a>
     </h2>
     
   </header>
@@ -342,7 +342,7 @@ img {
   아래와 같은 흐름으로 진행하면 된다.
   </div>
   
-    <nav class="readmore"><a itemprop="url" href="/blog/2015/02/11/2015-02-11-build-openstack-node-using-just-1-nic/">Read More&nbsp;&raquo;</a></nav>
+    <nav class="readmore"><a itemprop="url" href="/blog/2015/02/11/build-openstack-node-using-just-1-nic/">Read More&nbsp;&raquo;</a></nav>
   
   <meta itemprop="inLanguage" content="en-US">
   <meta itemprop="datePublished" content="2015-02-11T17:12:39&#43;09:00">
@@ -393,7 +393,7 @@ img {
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
     <h2 itemprop="name">
-      <a href="/blog/2015/02/05/2015-02-05-chef-12-feature-or-bug/">chef 12: node attribute style problem - feature or bug?</a>
+      <a href="/blog/2015/02/05/chef-12-feature-or-bug/">chef 12: node attribute style problem - feature or bug?</a>
     </h2>
     
   </header>
@@ -405,7 +405,7 @@ chef 12로 변화되며 추가된 기능인가 싶어 chef 12 release note를 �
 chef &gt; attributes_mode chef:attributes &gt; default['haproxy']['conf_dir'] = 'aa' chef:attributes &gt; puts node['haproxy']['conf_dir'] aa chef:attributes &gt; puts node[:haproxy][:conf_dir] aa chef:attributes &gt; node.set['haproxy']['conf_dir'] = 'bb' chef:attributes &gt; puts node['haproxy']['conf_dir'] bb chef:attributes &gt; puts node[:haproxy][:conf_dir] aa  위와 같이 string으로 된 hash와 symbol로 된 hash의 값이 merge가 안되는 문제이다.
   </div>
   
-    <nav class="readmore"><a itemprop="url" href="/blog/2015/02/05/2015-02-05-chef-12-feature-or-bug/">Read More&nbsp;&raquo;</a></nav>
+    <nav class="readmore"><a itemprop="url" href="/blog/2015/02/05/chef-12-feature-or-bug/">Read More&nbsp;&raquo;</a></nav>
   
   <meta itemprop="inLanguage" content="en-US">
   <meta itemprop="datePublished" content="2015-02-05T17:21:56&#43;09:00">
@@ -454,7 +454,7 @@ chef &gt; attributes_mode chef:attributes &gt; default['haproxy']['conf_dir'] = 
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
     <h2 itemprop="name">
-      <a href="/blog/2015/02/02/2015-02-02-make-l2-network-for-vm-without-neutron/">make l2 network for vm without neutron</a>
+      <a href="/blog/2015/02/02/make-l2-network-for-vm-without-neutron/">make l2 network for vm without neutron</a>
     </h2>
     
   </header>
@@ -465,7 +465,7 @@ nova  linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver
   변수 생성 vmuuid=9ee8db25-6a13-4ca8-8a4e-495db24492ca vlan=2001 localvlan=1 ip=$(nova show $vmuuid | grep ' network' | awk '{print $5}') interfaceid=$(neutron port-list | grep &quot;\&quot;$ip\&quot;&quot; | awk '{print $2}') mac=$(neutron port-list | grep &quot;\&quot;$ip\&quot;&quot; | awk '{print $5}') ovsid=${interfaceid:0:11}  2.
   </div>
   
-    <nav class="readmore"><a itemprop="url" href="/blog/2015/02/02/2015-02-02-make-l2-network-for-vm-without-neutron/">Read More&nbsp;&raquo;</a></nav>
+    <nav class="readmore"><a itemprop="url" href="/blog/2015/02/02/make-l2-network-for-vm-without-neutron/">Read More&nbsp;&raquo;</a></nav>
   
   <meta itemprop="inLanguage" content="en-US">
   <meta itemprop="datePublished" content="2015-02-02T09:20:23&#43;09:00">

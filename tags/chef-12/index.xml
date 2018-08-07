@@ -13,10 +13,10 @@
     
     <item>
       <title>chef 12: node attribute style problem - feature or bug?</title>
-      <link>https://leoh0.github.io/blog/2015/02/05/2015-02-05-chef-12-feature-or-bug/</link>
+      <link>https://leoh0.github.io/blog/2015/02/05/chef-12-feature-or-bug/</link>
       <pubDate>Thu, 05 Feb 2015 17:21:56 +0900</pubDate>
       
-      <guid>https://leoh0.github.io/blog/2015/02/05/2015-02-05-chef-12-feature-or-bug/</guid>
+      <guid>https://leoh0.github.io/blog/2015/02/05/chef-12-feature-or-bug/</guid>
       <description>chef 12 client를 이용하면서 기존 recipe 들을 사용중 갑자기 작동 안하는 문제가 있었다.
 chef 12로 변화되며 추가된 기능인가 싶어 chef 12 release note를 뒤져보았지만 사실 관련된 부분을 찾지 못했다.
 대략 현상은 아래와 같다..

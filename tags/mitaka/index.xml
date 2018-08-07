@@ -13,10 +13,10 @@
     
     <item>
       <title>Install openstack on macos Sierra using kolla-kubernetes with xhyve</title>
-      <link>https://leoh0.github.io/blog/2016/10/13/2016-10-13-install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/</link>
+      <link>https://leoh0.github.io/blog/2016/10/13/install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/</link>
       <pubDate>Thu, 13 Oct 2016 00:02:06 +0900</pubDate>
       
-      <guid>https://leoh0.github.io/blog/2016/10/13/2016-10-13-install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/</guid>
+      <guid>https://leoh0.github.io/blog/2016/10/13/install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/</guid>
       <description>클릭해서 과정 보기
 kubernetes 로 openstack mitaka를 설치해 봤습니다.
 위의 이미지를 클릭하면 전과정을 보실 수 있습니다. 참고하시면 좋을 것 같습니다.

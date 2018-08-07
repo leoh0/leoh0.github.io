@@ -179,7 +179,7 @@ img {
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
     <h2 itemprop="name">
-      <a href="/blog/2015/11/03/2015-11-03-maceseo-ntfs-diske-write-hagi/">mac에서 ntfs disk에 write 하기</a>
+      <a href="/blog/2015/11/03/maceseo-ntfs-diske-write-hagi/">mac에서 ntfs disk에 write 하기</a>
     </h2>
     
   </header>
@@ -189,7 +189,7 @@ img {
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21  #!/usr/bin/env bash  if mount | grep -q &#39;ntfs&#39; ; then if ! mount | grep -q &#39;read-only&#39; ; then echo -e &#34;\033[01;36mExist already in /etc/fstab.\033[00m&#34; VOLUME=$(mount | grep &#34;(ntfs, &#34; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(.*\) (ntfs,.*$|\1|g&#39;) open &#34;$VOLUME&#34; exit fi DISK=$(mount | grep &#39;read-only&#39; | awk &#39;{print $1}&#39;) UUID=$(diskutil info $DISK | grep UUID | awk &#39;{print $3}&#39;) echo -e &#34;\033[01;36mRegistry into /etc/fstab.
   </div>
   
-    <nav class="readmore"><a itemprop="url" href="/blog/2015/11/03/2015-11-03-maceseo-ntfs-diske-write-hagi/">Read More&nbsp;&raquo;</a></nav>
+    <nav class="readmore"><a itemprop="url" href="/blog/2015/11/03/maceseo-ntfs-diske-write-hagi/">Read More&nbsp;&raquo;</a></nav>
   
   <meta itemprop="inLanguage" content="en-US">
   <meta itemprop="datePublished" content="2015-11-03T09:38:22&#43;09:00">

@@ -179,7 +179,7 @@ img {
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
     <h2 itemprop="name">
-      <a href="/blog/2016/05/17/2016-05-17-mac-os-x-nslookup/">Mac os x - nslookup, host, dig works with /etc/resolv.conf, but ping, ssh doesnt work</a>
+      <a href="/blog/2016/05/17/mac-os-x-nslookup/">Mac os x - nslookup, host, dig works with /etc/resolv.conf, but ping, ssh doesnt work</a>
     </h2>
     
   </header>
@@ -191,7 +191,7 @@ img {
 $ cat /etc/resolver/local nameserver 10.10.1.65  다만 이건 nslookup, host, dig 와 같은 dns lookup command 들에서는 나타나지 않는다. 이런 커맨드는 linux와 같이 /etc/resolv.conf 의 dns 서버를 이용해서 lookup을 하게 된다.
   </div>
   
-    <nav class="readmore"><a itemprop="url" href="/blog/2016/05/17/2016-05-17-mac-os-x-nslookup/">Read More&nbsp;&raquo;</a></nav>
+    <nav class="readmore"><a itemprop="url" href="/blog/2016/05/17/mac-os-x-nslookup/">Read More&nbsp;&raquo;</a></nav>
   
   <meta itemprop="inLanguage" content="en-US">
   <meta itemprop="datePublished" content="2016-05-17T02:24:09&#43;09:00">
@@ -240,7 +240,7 @@ $ cat /etc/resolver/local nameserver 10.10.1.65  다만 이건 nslookup, host, d
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
     <h2 itemprop="name">
-      <a href="/blog/2015/11/03/2015-11-03-maceseo-ntfs-diske-write-hagi/">mac에서 ntfs disk에 write 하기</a>
+      <a href="/blog/2015/11/03/maceseo-ntfs-diske-write-hagi/">mac에서 ntfs disk에 write 하기</a>
     </h2>
     
   </header>
@@ -250,7 +250,7 @@ $ cat /etc/resolver/local nameserver 10.10.1.65  다만 이건 nslookup, host, d
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21  #!/usr/bin/env bash  if mount | grep -q &#39;ntfs&#39; ; then if ! mount | grep -q &#39;read-only&#39; ; then echo -e &#34;\033[01;36mExist already in /etc/fstab.\033[00m&#34; VOLUME=$(mount | grep &#34;(ntfs, &#34; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(.*\) (ntfs,.*$|\1|g&#39;) open &#34;$VOLUME&#34; exit fi DISK=$(mount | grep &#39;read-only&#39; | awk &#39;{print $1}&#39;) UUID=$(diskutil info $DISK | grep UUID | awk &#39;{print $3}&#39;) echo -e &#34;\033[01;36mRegistry into /etc/fstab.
   </div>
   
-    <nav class="readmore"><a itemprop="url" href="/blog/2015/11/03/2015-11-03-maceseo-ntfs-diske-write-hagi/">Read More&nbsp;&raquo;</a></nav>
+    <nav class="readmore"><a itemprop="url" href="/blog/2015/11/03/maceseo-ntfs-diske-write-hagi/">Read More&nbsp;&raquo;</a></nav>
   
   <meta itemprop="inLanguage" content="en-US">
   <meta itemprop="datePublished" content="2015-11-03T09:38:22&#43;09:00">

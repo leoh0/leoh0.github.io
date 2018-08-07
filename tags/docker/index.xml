@@ -13,10 +13,10 @@
     
     <item>
       <title>immutable kubernetes by linuxkit</title>
-      <link>https://leoh0.github.io/blog/2018/05/21/2018-05-21-immutable-kubernetes/</link>
+      <link>https://leoh0.github.io/blog/2018/05/21/immutable-kubernetes/</link>
       <pubDate>Mon, 21 May 2018 00:55:10 +0900</pubDate>
       
-      <guid>https://leoh0.github.io/blog/2018/05/21/2018-05-21-immutable-kubernetes/</guid>
+      <guid>https://leoh0.github.io/blog/2018/05/21/immutable-kubernetes/</guid>
       <description>linuxkit with kubernetes    &amp;hellip; As a developer and sometimes system administrator, one of the scariest things I ever encounter is a server that’s been running for ages which has seen multiple upgrades of system and application software. &amp;hellip; Need to upgrade? No problem. Build a new, upgraded system and throw the old one away. New app revision? Same thing. Build a server (or image) with a new revision and throw away the old ones.</description>
     </item>
     
@@ -31,10 +31,10 @@
     
     <item>
       <title>how to make unofficial kubernetes pdf documents 2</title>
-      <link>https://leoh0.github.io/blog/2018/04/07/2018-04-07-how-to-make-unofficial-kubernetes-pdf-documents-2/</link>
+      <link>https://leoh0.github.io/blog/2018/04/07/how-to-make-unofficial-kubernetes-pdf-documents-2/</link>
       <pubDate>Sat, 07 Apr 2018 01:15:37 +0900</pubDate>
       
-      <guid>https://leoh0.github.io/blog/2018/04/07/2018-04-07-how-to-make-unofficial-kubernetes-pdf-documents-2/</guid>
+      <guid>https://leoh0.github.io/blog/2018/04/07/how-to-make-unofficial-kubernetes-pdf-documents-2/</guid>
       <description>kubernetes   download k8s 1.10 pdf 이전 포스팅과 뭐가 다른가? 이전에 해보고 더이상 안할거라 생각했다가 우연히 다시 포스팅을 읽었다가 너무 복잡한거 같아서 docker로 제작했다.
 아래와 같이 사용할시 pdf를 뽑아 낼 수 있다.
 docker run -ti -v $PWD:/out3 leoh0/k8s-website-to-pdf  아니면 아래 dockerfile로 새로 제작해서 뽑아내면 된다. 참고
@@ -57,10 +57,10 @@ docker build -t k8s-website-to-pdf . docker run -ti -v $PWD:/out3 k8s-website-to
     
     <item>
       <title>Install openstack on macos Sierra using kolla-kubernetes with xhyve</title>
-      <link>https://leoh0.github.io/blog/2016/10/13/2016-10-13-install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/</link>
+      <link>https://leoh0.github.io/blog/2016/10/13/install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/</link>
       <pubDate>Thu, 13 Oct 2016 00:02:06 +0900</pubDate>
       
-      <guid>https://leoh0.github.io/blog/2016/10/13/2016-10-13-install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/</guid>
+      <guid>https://leoh0.github.io/blog/2016/10/13/install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/</guid>
       <description>클릭해서 과정 보기
 kubernetes 로 openstack mitaka를 설치해 봤습니다.
 위의 이미지를 클릭하면 전과정을 보실 수 있습니다. 참고하시면 좋을 것 같습니다.
@@ -87,10 +87,10 @@ windows 환경에선 xhyve 외에도 virtual box 등을 이용하셔도 좋을 �
     
     <item>
       <title>containerize openstack</title>
-      <link>https://leoh0.github.io/blog/2015/04/24/2015-04-24-containerize-openstack/</link>
+      <link>https://leoh0.github.io/blog/2015/04/24/containerize-openstack/</link>
       <pubDate>Fri, 24 Apr 2015 01:08:16 +0900</pubDate>
       
-      <guid>https://leoh0.github.io/blog/2015/04/24/2015-04-24-containerize-openstack/</guid>
+      <guid>https://leoh0.github.io/blog/2015/04/24/containerize-openstack/</guid>
       <description>docker 바깥으로 process를 낼 수 있는 방법들로 kvm 프로세스를 docker 바깥 host os 에 배치시키는 방법이 가능하네요.
 실질적으로 docker안에 kvm이 들어가게 된다면 docker process에 vm이 종속적이게 되어 불안정한 구성이 될테지만
 이런 방식으로 피해 갈 수도 있는 것을 확인했습니다.

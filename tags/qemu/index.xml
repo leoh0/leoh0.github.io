@@ -13,10 +13,10 @@
     
     <item>
       <title>containerize openstack</title>
-      <link>https://leoh0.github.io/blog/2015/04/24/2015-04-24-containerize-openstack/</link>
+      <link>https://leoh0.github.io/blog/2015/04/24/containerize-openstack/</link>
       <pubDate>Fri, 24 Apr 2015 01:08:16 +0900</pubDate>
       
-      <guid>https://leoh0.github.io/blog/2015/04/24/2015-04-24-containerize-openstack/</guid>
+      <guid>https://leoh0.github.io/blog/2015/04/24/containerize-openstack/</guid>
       <description>docker 바깥으로 process를 낼 수 있는 방법들로 kvm 프로세스를 docker 바깥 host os 에 배치시키는 방법이 가능하네요.
 실질적으로 docker안에 kvm이 들어가게 된다면 docker process에 vm이 종속적이게 되어 불안정한 구성이 될테지만
 이런 방식으로 피해 갈 수도 있는 것을 확인했습니다.

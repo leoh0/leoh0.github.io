@@ -13,10 +13,10 @@
     
     <item>
       <title>Management multiple openstack cluster with automatic openstack rc file loader script</title>
-      <link>https://leoh0.github.io/blog/2016/05/10/2016-05-10-management-multiple-openstack-cluster-with-automatic-openstack-rc-file-loader-script/</link>
+      <link>https://leoh0.github.io/blog/2016/05/10/management-multiple-openstack-cluster-with-automatic-openstack-rc-file-loader-script/</link>
       <pubDate>Tue, 10 May 2016 01:08:56 +0900</pubDate>
       
-      <guid>https://leoh0.github.io/blog/2016/05/10/2016-05-10-management-multiple-openstack-cluster-with-automatic-openstack-rc-file-loader-script/</guid>
+      <guid>https://leoh0.github.io/blog/2016/05/10/management-multiple-openstack-cluster-with-automatic-openstack-rc-file-loader-script/</guid>
       <description>openstack rc file 여러 openstack 클러스터를 관리하려면 openstack rc file(이하 openrc file)을 잘 관리해야한다.
 이런 관리를 위해서 supernova 와 같은 rc file 관리해주는 툴들을 사용하게 된다.
 (개인적으로 비슷한 시기에 bash로 비슷한 아이디어로 구현해서 써서 사용하진 않았지만 이러한 관리 툴이 필요하다면 supernova를 참고하면 좋을것같다.)

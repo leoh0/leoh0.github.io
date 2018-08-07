@@ -13,10 +13,10 @@
     
     <item>
       <title>immutable kubernetes by linuxkit</title>
-      <link>https://leoh0.github.io/blog/2018/05/21/2018-05-21-immutable-kubernetes/</link>
+      <link>https://leoh0.github.io/blog/2018/05/21/immutable-kubernetes/</link>
       <pubDate>Mon, 21 May 2018 00:55:10 +0900</pubDate>
       
-      <guid>https://leoh0.github.io/blog/2018/05/21/2018-05-21-immutable-kubernetes/</guid>
+      <guid>https://leoh0.github.io/blog/2018/05/21/immutable-kubernetes/</guid>
       <description>linuxkit with kubernetes    &amp;hellip; As a developer and sometimes system administrator, one of the scariest things I ever encounter is a server that’s been running for ages which has seen multiple upgrades of system and application software. &amp;hellip; Need to upgrade? No problem. Build a new, upgraded system and throw the old one away. New app revision? Same thing. Build a server (or image) with a new revision and throw away the old ones.</description>
     </item>
     
@@ -31,10 +31,10 @@
     
     <item>
       <title>how to make unofficial kubernetes pdf documents 2</title>
-      <link>https://leoh0.github.io/blog/2018/04/07/2018-04-07-how-to-make-unofficial-kubernetes-pdf-documents-2/</link>
+      <link>https://leoh0.github.io/blog/2018/04/07/how-to-make-unofficial-kubernetes-pdf-documents-2/</link>
       <pubDate>Sat, 07 Apr 2018 01:15:37 +0900</pubDate>
       
-      <guid>https://leoh0.github.io/blog/2018/04/07/2018-04-07-how-to-make-unofficial-kubernetes-pdf-documents-2/</guid>
+      <guid>https://leoh0.github.io/blog/2018/04/07/how-to-make-unofficial-kubernetes-pdf-documents-2/</guid>
       <description>kubernetes   download k8s 1.10 pdf 이전 포스팅과 뭐가 다른가? 이전에 해보고 더이상 안할거라 생각했다가 우연히 다시 포스팅을 읽었다가 너무 복잡한거 같아서 docker로 제작했다.
 아래와 같이 사용할시 pdf를 뽑아 낼 수 있다.
 docker run -ti -v $PWD:/out3 leoh0/k8s-website-to-pdf  아니면 아래 dockerfile로 새로 제작해서 뽑아내면 된다. 참고
@@ -57,10 +57,10 @@ docker build -t k8s-website-to-pdf . docker run -ti -v $PWD:/out3 k8s-website-to
     
     <item>
       <title>how to make unofficial kubernetes pdf documents</title>
-      <link>https://leoh0.github.io/blog/2017/10/23/2017-10-23-how-to-make-unofficial-kubernetes-pdf-documents/</link>
+      <link>https://leoh0.github.io/blog/2017/10/23/how-to-make-unofficial-kubernetes-pdf-documents/</link>
       <pubDate>Mon, 23 Oct 2017 21:21:47 +0900</pubDate>
       
-      <guid>https://leoh0.github.io/blog/2017/10/23/2017-10-23-how-to-make-unofficial-kubernetes-pdf-documents/</guid>
+      <guid>https://leoh0.github.io/blog/2017/10/23/how-to-make-unofficial-kubernetes-pdf-documents/</guid>
       <description>kubernetes   download pdf 왜? 밖에서 심심할때 종이로 출력해서 문서를 좀 더 봐야겠다는 생각에 pdf 버전을 구해보려고 했으나. 우선 k8s webpage를 관리하는 website프로젝트에서 아래와 같이 지원을 안한다고 딱잘라서 이야기 하는것을 찾았다.
  &amp;hellip; we don&amp;rsquo;t plan to make PDFs available.
  그리고 마땅히 검색했을때 방법이 없기에 만들어야 겠다고 생각했다.
@@ -81,10 +81,10 @@ docker build -t k8s-website-to-pdf . docker run -ti -v $PWD:/out3 k8s-website-to
     
     <item>
       <title>k8s tools for watching log and login to multiple containers</title>
-      <link>https://leoh0.github.io/blog/2017/07/27/2017-07-27-k8s-tools-for-watching-log-and-login-multiple-containers/</link>
+      <link>https://leoh0.github.io/blog/2017/07/27/k8s-tools-for-watching-log-and-login-multiple-containers/</link>
       <pubDate>Thu, 27 Jul 2017 00:58:28 +0900</pubDate>
       
-      <guid>https://leoh0.github.io/blog/2017/07/27/2017-07-27-k8s-tools-for-watching-log-and-login-multiple-containers/</guid>
+      <guid>https://leoh0.github.io/blog/2017/07/27/k8s-tools-for-watching-log-and-login-multiple-containers/</guid>
       <description>k8s 사용하면서 개인 취향에 맞게 작성한 자작 스크립트 몇가지 소개해 드리려고 합니다.
 watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일일치다보니 불편했는데 kubetail이란 프로젝트가 있었습니다.
 덕분에 잘 쓰고 있었는데 인터페이스가 개인취향에 안맞아서 약간 수정해서 쓰고 있습니다.
@@ -109,10 +109,10 @@ watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일�
     
     <item>
       <title>Install openstack on macos Sierra using kolla-kubernetes with xhyve</title>
-      <link>https://leoh0.github.io/blog/2016/10/13/2016-10-13-install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/</link>
+      <link>https://leoh0.github.io/blog/2016/10/13/install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/</link>
       <pubDate>Thu, 13 Oct 2016 00:02:06 +0900</pubDate>
       
-      <guid>https://leoh0.github.io/blog/2016/10/13/2016-10-13-install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/</guid>
+      <guid>https://leoh0.github.io/blog/2016/10/13/install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/</guid>
       <description>클릭해서 과정 보기
 kubernetes 로 openstack mitaka를 설치해 봤습니다.
 위의 이미지를 클릭하면 전과정을 보실 수 있습니다. 참고하시면 좋을 것 같습니다.

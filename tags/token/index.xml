@@ -13,10 +13,10 @@
     
     <item>
       <title>추가 - Keystone에서 Token Backend로 사용하는 Memcached가 Unbalanced되었다..</title>
-      <link>https://leoh0.github.io/blog/2016/09/29/2016-09-29-cuga-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossda-dot/</link>
+      <link>https://leoh0.github.io/blog/2016/09/29/cuga-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossda-dot/</link>
       <pubDate>Thu, 29 Sep 2016 23:30:20 +0900</pubDate>
       
-      <guid>https://leoh0.github.io/blog/2016/09/29/2016-09-29-cuga-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossda-dot/</guid>
+      <guid>https://leoh0.github.io/blog/2016/09/29/cuga-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossda-dot/</guid>
       <description>예전에 아래글을 그냥 balancing 을 위해 id 를 잘 분배하자 라는식으로 결론 냈지만.
 Keystone에서 Token Backend로 사용하는 Memcached가 Unbalanced되었다..
 user의 token리스트를 관리하지 않으면 부담은 훨씬 줄어든다.
@@ -41,10 +41,10 @@ diff --git a/keystone/token/persistence/backends/memcache.py b/keystone/token/pe
     
     <item>
       <title>keystone에서 token backend로 사용하는 memcached가 unbalanced되었다..</title>
-      <link>https://leoh0.github.io/blog/2016/04/27/2016-04-27-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossdamyeon-dot/</link>
+      <link>https://leoh0.github.io/blog/2016/04/27/keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossdamyeon-dot/</link>
       <pubDate>Wed, 27 Apr 2016 00:00:45 +0900</pubDate>
       
-      <guid>https://leoh0.github.io/blog/2016/04/27/2016-04-27-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossdamyeon-dot/</guid>
+      <guid>https://leoh0.github.io/blog/2016/04/27/keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossdamyeon-dot/</guid>
       <description>해당 클러스터는 kilo 버전으로 구성 되었었고 token 을 memcached 에 저장하고 있었다.
 또한 kilo 부터 dogpile.cache 는 거의 고정으로 들어가 있가 있어서 해당 모듈을 사용했다.
 이런 상황을 디버깅 했던 경험을 정리해 본다.

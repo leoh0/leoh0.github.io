@@ -13,10 +13,10 @@
     
     <item>
       <title>k8s tools for watching log and login to multiple containers</title>
-      <link>https://leoh0.github.io/blog/2017/07/27/2017-07-27-k8s-tools-for-watching-log-and-login-multiple-containers/</link>
+      <link>https://leoh0.github.io/blog/2017/07/27/k8s-tools-for-watching-log-and-login-multiple-containers/</link>
       <pubDate>Thu, 27 Jul 2017 00:58:28 +0900</pubDate>
       
-      <guid>https://leoh0.github.io/blog/2017/07/27/2017-07-27-k8s-tools-for-watching-log-and-login-multiple-containers/</guid>
+      <guid>https://leoh0.github.io/blog/2017/07/27/k8s-tools-for-watching-log-and-login-multiple-containers/</guid>
       <description>k8s 사용하면서 개인 취향에 맞게 작성한 자작 스크립트 몇가지 소개해 드리려고 합니다.
 watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일일치다보니 불편했는데 kubetail이란 프로젝트가 있었습니다.
 덕분에 잘 쓰고 있었는데 인터페이스가 개인취향에 안맞아서 약간 수정해서 쓰고 있습니다.
@@ -41,10 +41,10 @@ watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일�
     
     <item>
       <title>Install openstack on macos Sierra using kolla-kubernetes with xhyve</title>
-      <link>https://leoh0.github.io/blog/2016/10/13/2016-10-13-install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/</link>
+      <link>https://leoh0.github.io/blog/2016/10/13/install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/</link>
       <pubDate>Thu, 13 Oct 2016 00:02:06 +0900</pubDate>
       
-      <guid>https://leoh0.github.io/blog/2016/10/13/2016-10-13-install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/</guid>
+      <guid>https://leoh0.github.io/blog/2016/10/13/install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/</guid>
       <description>클릭해서 과정 보기
 kubernetes 로 openstack mitaka를 설치해 봤습니다.
 위의 이미지를 클릭하면 전과정을 보실 수 있습니다. 참고하시면 좋을 것 같습니다.

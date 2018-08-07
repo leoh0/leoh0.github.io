@@ -13,18 +13,6 @@
     
     <item>
       <title>Mac os x - nslookup, host, dig works with /etc/resolv.conf, but ping, ssh doesnt work</title>
-      <link>https://leoh0.github.io/blog/2016/05/17/mac-os-x-nslookup/</link>
-      <pubDate>Tue, 17 May 2016 02:24:09 +0900</pubDate>
-      
-      <guid>https://leoh0.github.io/blog/2016/05/17/mac-os-x-nslookup/</guid>
-      <description>Mac os x 는 linux와 다른 resolving을 제공한다.
-간단하게만 이야기 하면 /etc/resolv.conf 외에도 /etc/resolver/* 에 원하는 dns명을 기록해 놓으면 해당 domain name을 갖을시 해당하는 nameserver로 쿼리를 할 수가 있다.
-예를 들어 아래와 같이 설정했다면 *.local 과 같은 도메인은 10.10.1.65로 dns 서버를 사용가능하다.
-$ cat /etc/resolver/local nameserver 10.10.1.65  다만 이건 nslookup, host, dig 와 같은 dns lookup command 들에서는 나타나지 않는다. 이런 커맨드는 linux와 같이 /etc/resolv.conf 의 dns 서버를 이용해서 lookup을 하게 된다.</description>
-    </item>
-    
-    <item>
-      <title>Mac os x - nslookup, host, dig works with /etc/resolv.conf, but ping, ssh doesnt work</title>
       <link>https://leoh0.github.io/post/2016-05-17-mac-os-x-nslookup/</link>
       <pubDate>Tue, 17 May 2016 02:24:09 +0900</pubDate>
       
@@ -33,16 +21,6 @@ $ cat /etc/resolver/local nameserver 10.10.1.65  다만 이건 nslookup, host, d
 간단하게만 이야기 하면 /etc/resolv.conf 외에도 /etc/resolver/* 에 원하는 dns명을 기록해 놓으면 해당 domain name을 갖을시 해당하는 nameserver로 쿼리를 할 수가 있다.
 예를 들어 아래와 같이 설정했다면 *.local 과 같은 도메인은 10.10.1.65로 dns 서버를 사용가능하다.
 $ cat /etc/resolver/local nameserver 10.10.1.65  다만 이건 nslookup, host, dig 와 같은 dns lookup command 들에서는 나타나지 않는다. 이런 커맨드는 linux와 같이 /etc/resolv.conf 의 dns 서버를 이용해서 lookup을 하게 된다.</description>
-    </item>
-    
-    <item>
-      <title>mac에서 ntfs disk에 write 하기</title>
-      <link>https://leoh0.github.io/blog/2015/11/03/maceseo-ntfs-diske-write-hagi/</link>
-      <pubDate>Tue, 03 Nov 2015 09:38:22 +0900</pubDate>
-      
-      <guid>https://leoh0.github.io/blog/2015/11/03/maceseo-ntfs-diske-write-hagi/</guid>
-      <description>GPT 일때 가능
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21  #!/usr/bin/env bash  if mount | grep -q &amp;#39;ntfs&amp;#39; ; then if ! mount | grep -q &amp;#39;read-only&amp;#39; ; then echo -e &amp;#34;\033[01;36mExist already in /etc/fstab.\033[00m&amp;#34; VOLUME=$(mount | grep &amp;#34;(ntfs, &amp;#34; | sed &amp;#39;s|/dev/disk[0-9]s[0-9] on \(.*\) (ntfs,.*$|\1|g&amp;#39;) open &amp;#34;$VOLUME&amp;#34; exit fi DISK=$(mount | grep &amp;#39;read-only&amp;#39; | awk &amp;#39;{print $1}&amp;#39;) UUID=$(diskutil info $DISK | grep UUID | awk &amp;#39;{print $3}&amp;#39;) echo -e &amp;#34;\033[01;36mRegistry into /etc/fstab.</description>
     </item>
     
     <item>

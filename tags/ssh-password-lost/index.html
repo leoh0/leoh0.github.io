@@ -165,7 +165,7 @@ img {
     
       <a itemprop="url" class="" href="/about/aboutme"><span itemprop="name">AboutMe</span></a>
     
-      <a itemprop="url" class="" href="/blog/"><span itemprop="name">Blogs</span></a>
+      <a itemprop="url" class="" href="/blog/"><span itemprop="name">.</span></a>
     
   </nav>
 
@@ -175,30 +175,6 @@ img {
   <header>
     <h1>Ssh Password Lost</h1>
   </header>
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/blog/2015/03/14/if-you-forget-your-password-or-key/">만약 사용자가 ssh password나 key등을 잃어 버려서 도저히 vm instance에 접속할 수 없을때..</a>
-    </h2>
-    
-  </header>
-  
-  <div itemprop="description">
-    우선은 nbd로 attach 하여 mount 해서 접근 가능하다.
-이후에 아래와 같이 key를 추가해도 되고 각 os 버전에 맞게 패스워드를 새로 해슁하여 /etc/shadow 를 변경해도 된다.
-물론 마지막에 dettach 를 꼭 신경써서 해줘야 한다.
-# attach disk qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/10794bbb-7856-4ed6-ab39-32afbc01156a/disk mount /dev/nbd0p1 /mnt # insert a new key to target user echo &#39;&#39;&#39;NEWKEY&#39;&#39;&#39; &gt;&gt; /mnt/home/USER/.ssh/authorized_keys # dettach disk umount /mnt qemu-nbd -d /dev/nbd0p1 하지만 이상하게도 저런 수정을 했을때 아예 접속이 불가능한 경우들이 생긴다.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/blog/2015/03/14/if-you-forget-your-password-or-key/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2015-03-14T22:00:57&#43;09:00">
-  <meta itemprop="dateModified" content="2015-03-14T22:00:57&#43;09:00">
-  
-</article>
-
   
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>

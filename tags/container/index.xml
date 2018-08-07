@@ -13,20 +13,6 @@
     
     <item>
       <title>k8s tools for watching log and login to multiple containers</title>
-      <link>https://leoh0.github.io/blog/2017/07/27/k8s-tools-for-watching-log-and-login-multiple-containers/</link>
-      <pubDate>Thu, 27 Jul 2017 00:58:28 +0900</pubDate>
-      
-      <guid>https://leoh0.github.io/blog/2017/07/27/k8s-tools-for-watching-log-and-login-multiple-containers/</guid>
-      <description>k8s 사용하면서 개인 취향에 맞게 작성한 자작 스크립트 몇가지 소개해 드리려고 합니다.
-watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일일치다보니 불편했는데 kubetail이란 프로젝트가 있었습니다.
-덕분에 잘 쓰고 있었는데 인터페이스가 개인취향에 안맞아서 약간 수정해서 쓰고 있습니다.
-전반적으로 pod 선택 방법의 변경과 비슷한 이름으로 auto tailing 기능을 추가 했습니다.
-아래들이 대표적인 기능 입니다.
- 선택된것과 같은 pod들을 전체 log tailing 하고 변화가 있을시 auto reload 함</description>
-    </item>
-    
-    <item>
-      <title>k8s tools for watching log and login to multiple containers</title>
       <link>https://leoh0.github.io/post/2017-07-27-k8s-tools-for-watching-log-and-login-multiple-containers/</link>
       <pubDate>Thu, 27 Jul 2017 00:58:28 +0900</pubDate>
       
@@ -37,21 +23,6 @@ watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일�
 전반적으로 pod 선택 방법의 변경과 비슷한 이름으로 auto tailing 기능을 추가 했습니다.
 아래들이 대표적인 기능 입니다.
  선택된것과 같은 pod들을 전체 log tailing 하고 변화가 있을시 auto reload 함</description>
-    </item>
-    
-    <item>
-      <title>Install openstack on macos Sierra using kolla-kubernetes with xhyve</title>
-      <link>https://leoh0.github.io/blog/2016/10/13/install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/</link>
-      <pubDate>Thu, 13 Oct 2016 00:02:06 +0900</pubDate>
-      
-      <guid>https://leoh0.github.io/blog/2016/10/13/install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/</guid>
-      <description>클릭해서 과정 보기
-kubernetes 로 openstack mitaka를 설치해 봤습니다.
-위의 이미지를 클릭하면 전과정을 보실 수 있습니다. 참고하시면 좋을 것 같습니다.
-대략 31분 정도 걸려서 minikube 구성 부터 전체 셋업 및 vm 2개 띄워서 로그인 테스트 합니다.
-그리고 저는 macos Sierra 에서 xhyve 로 8G 머신을 만들어서 사용을 했습니다.
-linux 머신이 있으면 kvm을 이용하시는 것도 좋을것 같습니다.
-windows 환경에선 xhyve 외에도 virtual box 등을 이용하셔도 좋을 것 같습니다.</description>
     </item>
     
     <item>

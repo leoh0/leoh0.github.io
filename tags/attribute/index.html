@@ -165,7 +165,7 @@ img {
     
       <a itemprop="url" class="" href="/about/aboutme"><span itemprop="name">AboutMe</span></a>
     
-      <a itemprop="url" class="" href="/blog/"><span itemprop="name">Blogs</span></a>
+      <a itemprop="url" class="" href="/blog/"><span itemprop="name">.</span></a>
     
   </nav>
 
@@ -175,30 +175,6 @@ img {
   <header>
     <h1>Attribute</h1>
   </header>
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/blog/2015/02/05/chef-12-feature-or-bug/">chef 12: node attribute style problem - feature or bug?</a>
-    </h2>
-    
-  </header>
-  
-  <div itemprop="description">
-    chef 12 client를 이용하면서 기존 recipe 들을 사용중 갑자기 작동 안하는 문제가 있었다.
-chef 12로 변화되며 추가된 기능인가 싶어 chef 12 release note를 뒤져보았지만 사실 관련된 부분을 찾지 못했다.
-대략 현상은 아래와 같다..
-chef &gt; attributes_mode chef:attributes &gt; default['haproxy']['conf_dir'] = 'aa' chef:attributes &gt; puts node['haproxy']['conf_dir'] aa chef:attributes &gt; puts node[:haproxy][:conf_dir] aa chef:attributes &gt; node.set['haproxy']['conf_dir'] = 'bb' chef:attributes &gt; puts node['haproxy']['conf_dir'] bb chef:attributes &gt; puts node[:haproxy][:conf_dir] aa  위와 같이 string으로 된 hash와 symbol로 된 hash의 값이 merge가 안되는 문제이다.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/blog/2015/02/05/chef-12-feature-or-bug/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2015-02-05T17:21:56&#43;09:00">
-  <meta itemprop="dateModified" content="2015-02-05T17:21:56&#43;09:00">
-  
-</article>
-
   
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>

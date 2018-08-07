@@ -165,6 +165,8 @@ img {
     
       <a itemprop="url" class="" href="/about/aboutme"><span itemprop="name">AboutMe</span></a>
     
+      <a itemprop="url" class="" href="/blog/"><span itemprop="name">Blogs</span></a>
+    
   </nav>
 
 
@@ -173,6 +175,32 @@ img {
   <header>
     <h1>Compute Node</h1>
   </header>
+  
+    <article itemscope itemtype="http://schema.org/CreativeWork">
+  <header>
+    <h2 itemprop="name">
+      <a href="/blog/2015/02/11/2015-02-11-build-openstack-node-using-just-1-nic/">NIC 1개로 compute node를 vlan type으로 neutron을 사용하여 구성하기 위한 팁</a>
+    </h2>
+    
+  </header>
+  
+  <div itemprop="description">
+    gre 같은 tunnel 을 사용한다면 NIC 하나로 구성 할 수 있겠지만 그게 아니라면 일반적으로는 management 용 NIC 한개와 service 용 NIC 한개가 필요하다.
+우선 아래와 같은 상태가 2 NIC을 사용하는 일반적인 구성이다.
+그림 처럼 eth0은 management를 위한 ip로 이용되며 eth1을 guest interface(vlan 이라면 0.0.0.0)로 사용할 수 있다.
+  단도직입적으로 ethernet 한개로는 아래와 같이 구성하면 된다.
+우선 eth0은 0.0.0.0 으로 ip를 사용안하는 대신 br0 부분에서 기존의 management용 ip를 가져간다.
+  아래와 같은 흐름으로 진행하면 된다.
+  </div>
+  
+    <nav class="readmore"><a itemprop="url" href="/blog/2015/02/11/2015-02-11-build-openstack-node-using-just-1-nic/">Read More&nbsp;&raquo;</a></nav>
+  
+  <meta itemprop="inLanguage" content="en-US">
+  <meta itemprop="datePublished" content="2015-02-11T17:12:39&#43;09:00">
+  <meta itemprop="dateModified" content="2015-02-11T17:12:39&#43;09:00">
+  
+</article>
+
   
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>

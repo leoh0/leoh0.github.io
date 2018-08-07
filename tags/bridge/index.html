@@ -165,6 +165,8 @@ img {
     
       <a itemprop="url" class="" href="/about/aboutme"><span itemprop="name">AboutMe</span></a>
     
+      <a itemprop="url" class="" href="/blog/"><span itemprop="name">Blogs</span></a>
+    
   </nav>
 
 
@@ -173,6 +175,32 @@ img {
   <header>
     <h1>Bridge</h1>
   </header>
+  
+    <article itemscope itemtype="http://schema.org/CreativeWork">
+  <header>
+    <h2 itemprop="name">
+      <a href="/blog/2015/04/03/2015-04-03-draw-openstack-l2-network-architecture-automatically/">draw openstack L2 network architecture automatically</a>
+    </h2>
+    
+  </header>
+  
+  <div itemprop="description">
+    iptables를 좀 보기 편하게 할 수 없는가를 이야기하다가 여기사이트를 보게되었다.
+그래서 감동을 받아서 이에 뭔가 남기고자 삽질을 했다. (어짜피 요새 deploy 테스트 하다보면 남는게 시간이다 보니..)
+대략 openstack neutron의 L2 architecture 에 구성요소들을 좀 보기 편하게 그린것이다.
+지금 tunnel architecture를 가진건 없어서 br-tun 쪽은 그리려고 테스트 하진 않았다. 다만 ovs 나 bridge 모드에서 대략적인 그림은 맘에 들게 그려지는 것 같다.
+ascii 로 그린 architecture 들이다.
+bridge-vlan   openvswitch-flat   openvswitch-vlan   이걸 graphviz 로 그리면 다음과 같다.
+  </div>
+  
+    <nav class="readmore"><a itemprop="url" href="/blog/2015/04/03/2015-04-03-draw-openstack-l2-network-architecture-automatically/">Read More&nbsp;&raquo;</a></nav>
+  
+  <meta itemprop="inLanguage" content="en-US">
+  <meta itemprop="datePublished" content="2015-04-03T02:29:52&#43;09:00">
+  <meta itemprop="dateModified" content="2015-04-03T02:29:52&#43;09:00">
+  
+</article>
+
   
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>

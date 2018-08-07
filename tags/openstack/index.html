@@ -165,6 +165,8 @@ img {
     
       <a itemprop="url" class="" href="/about/aboutme"><span itemprop="name">AboutMe</span></a>
     
+      <a itemprop="url" class="" href="/blog/"><span itemprop="name">Blogs</span></a>
+    
   </nav>
 
 
@@ -173,6 +175,33 @@ img {
   <header>
     <h1>Openstack</h1>
   </header>
+  
+    <article itemscope itemtype="http://schema.org/CreativeWork">
+  <header>
+    <h2 itemprop="name">
+      <a href="/blog/2016/10/13/2016-10-13-install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/">Install openstack on macos Sierra using kolla-kubernetes with xhyve</a>
+    </h2>
+    
+  </header>
+  
+  <div itemprop="description">
+    클릭해서 과정 보기
+kubernetes 로 openstack mitaka를 설치해 봤습니다.
+위의 이미지를 클릭하면 전과정을 보실 수 있습니다. 참고하시면 좋을 것 같습니다.
+대략 31분 정도 걸려서 minikube 구성 부터 전체 셋업 및 vm 2개 띄워서 로그인 테스트 합니다.
+그리고 저는 macos Sierra 에서 xhyve 로 8G 머신을 만들어서 사용을 했습니다.
+linux 머신이 있으면 kvm을 이용하시는 것도 좋을것 같습니다.
+windows 환경에선 xhyve 외에도 virtual box 등을 이용하셔도 좋을 것 같습니다.
+  </div>
+  
+    <nav class="readmore"><a itemprop="url" href="/blog/2016/10/13/2016-10-13-install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/">Read More&nbsp;&raquo;</a></nav>
+  
+  <meta itemprop="inLanguage" content="en-US">
+  <meta itemprop="datePublished" content="2016-10-13T00:02:06&#43;09:00">
+  <meta itemprop="dateModified" content="2016-10-13T00:02:06&#43;09:00">
+  
+</article>
+
   
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
@@ -210,6 +239,32 @@ windows 환경에선 xhyve 외에도 virtual box 등을 이용하셔도 좋을 �
   <meta itemprop="inLanguage" content="en-US">
   <meta itemprop="datePublished" content="2016-10-13T00:02:06&#43;09:00">
   <meta itemprop="dateModified" content="2016-10-13T00:02:06&#43;09:00">
+  
+</article>
+
+  
+    <article itemscope itemtype="http://schema.org/CreativeWork">
+  <header>
+    <h2 itemprop="name">
+      <a href="/blog/2016/09/29/2016-09-29-cuga-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossda-dot/">추가 - Keystone에서 Token Backend로 사용하는 Memcached가 Unbalanced되었다..</a>
+    </h2>
+    
+  </header>
+  
+  <div itemprop="description">
+    예전에 아래글을 그냥 balancing 을 위해 id 를 잘 분배하자 라는식으로 결론 냈지만.
+Keystone에서 Token Backend로 사용하는 Memcached가 Unbalanced되었다..
+user의 token리스트를 관리하지 않으면 부담은 훨씬 줄어든다.
+물론 user의 password 변경 등으로 기존 모든 token을 revoke 시키는 경우때문에 이런 user 단위로 token리스트를 관리해야 하지만
+그걸 포기하면 그냥 코드 몇줄 추가로 간단하게 정리할 수 있다.
+diff --git a/keystone/token/persistence/backends/memcache.py b/keystone/token/persistence/backends/memcache.py index e6b0fca..3f0de68 100644 --- a/keystone/token/persistence/backends/memcache.py +++ b/keystone/token/persistence/backends/memcache.py @@ -37,3 +37,6 @@ class Token(kvs.Token):  kwargs[&#39;memcached_expire_time&#39;] = CONF.
+  </div>
+  
+    <nav class="readmore"><a itemprop="url" href="/blog/2016/09/29/2016-09-29-cuga-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossda-dot/">Read More&nbsp;&raquo;</a></nav>
+  
+  <meta itemprop="inLanguage" content="en-US">
+  <meta itemprop="datePublished" content="2016-09-29T23:30:20&#43;09:00">
+  <meta itemprop="dateModified" content="2016-09-29T23:30:20&#43;09:00">
   
 </article>
 
@@ -256,6 +311,32 @@ diff --git a/keystone/token/persistence/backends/memcache.py b/keystone/token/pe
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
     <h2 itemprop="name">
+      <a href="/blog/2016/05/10/2016-05-10-management-multiple-openstack-cluster-with-automatic-openstack-rc-file-loader-script/">Management multiple openstack cluster with automatic openstack rc file loader script</a>
+    </h2>
+    
+  </header>
+  
+  <div itemprop="description">
+    openstack rc file 여러 openstack 클러스터를 관리하려면 openstack rc file(이하 openrc file)을 잘 관리해야한다.
+이런 관리를 위해서 supernova 와 같은 rc file 관리해주는 툴들을 사용하게 된다.
+(개인적으로 비슷한 시기에 bash로 비슷한 아이디어로 구현해서 써서 사용하진 않았지만 이러한 관리 툴이 필요하다면 supernova를 참고하면 좋을것같다.)
+이런 툴들은 기본적으로 shell에 환경변수를 추가하는 방식이기에 폴더가 변경된다고 자동으로 로딩된다기 보다는
+유저가 어떤 rc file을 사용할지 로딩하여(트리거링하여) 써야한다.
+openstack rc file (normal version) 예를 들면 아래는 일반적으로 사용하는 익숙 한 예이다.
+  </div>
+  
+    <nav class="readmore"><a itemprop="url" href="/blog/2016/05/10/2016-05-10-management-multiple-openstack-cluster-with-automatic-openstack-rc-file-loader-script/">Read More&nbsp;&raquo;</a></nav>
+  
+  <meta itemprop="inLanguage" content="en-US">
+  <meta itemprop="datePublished" content="2016-05-10T01:08:56&#43;09:00">
+  <meta itemprop="dateModified" content="2016-05-10T01:08:56&#43;09:00">
+  
+</article>
+
+  
+    <article itemscope itemtype="http://schema.org/CreativeWork">
+  <header>
+    <h2 itemprop="name">
       <a href="/post/2016-05-10-management-multiple-openstack-cluster-with-automatic-openstack-rc-file-loader-script/">Management multiple openstack cluster with automatic openstack rc file loader script</a>
     </h2>
     
@@ -288,6 +369,34 @@ openstack rc file (normal version) 예를 들면 아래는 일반적으로 사�
   <meta itemprop="inLanguage" content="en-US">
   <meta itemprop="datePublished" content="2016-05-10T01:08:56&#43;09:00">
   <meta itemprop="dateModified" content="2016-05-10T01:08:56&#43;09:00">
+  
+</article>
+
+  
+    <article itemscope itemtype="http://schema.org/CreativeWork">
+  <header>
+    <h2 itemprop="name">
+      <a href="/blog/2016/04/27/2016-04-27-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossdamyeon-dot/">keystone에서 token backend로 사용하는 memcached가 unbalanced되었다..</a>
+    </h2>
+    
+  </header>
+  
+  <div itemprop="description">
+    해당 클러스터는 kilo 버전으로 구성 되었었고 token 을 memcached 에 저장하고 있었다.
+또한 kilo 부터 dogpile.cache 는 거의 고정으로 들어가 있가 있어서 해당 모듈을 사용했다.
+이런 상황을 디버깅 했던 경험을 정리해 본다.
+아래는 문제가 되었던 memcached host의 in/out bound 그래프이다.
+수치는 가려서 스케일만 감으로 볼 수 있게 남겼다.
+A 서버   A 서버  
+B 서버   B 서버  
+최초엔 keystone과 memcached connection 이 unbalance 할것이라고 생각했으나 그런 정황은 없었다.
+  </div>
+  
+    <nav class="readmore"><a itemprop="url" href="/blog/2016/04/27/2016-04-27-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossdamyeon-dot/">Read More&nbsp;&raquo;</a></nav>
+  
+  <meta itemprop="inLanguage" content="en-US">
+  <meta itemprop="datePublished" content="2016-04-27T00:00:45&#43;09:00">
+  <meta itemprop="dateModified" content="2016-04-27T00:00:45&#43;09:00">
   
 </article>
 
@@ -336,6 +445,31 @@ B 서버   B 서버
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
     <h2 itemprop="name">
+      <a href="/blog/2015/04/24/2015-04-24-containerize-openstack/">containerize openstack</a>
+    </h2>
+    
+  </header>
+  
+  <div itemprop="description">
+    docker 바깥으로 process를 낼 수 있는 방법들로 kvm 프로세스를 docker 바깥 host os 에 배치시키는 방법이 가능하네요.
+실질적으로 docker안에 kvm이 들어가게 된다면 docker process에 vm이 종속적이게 되어 불안정한 구성이 될테지만
+이런 방식으로 피해 갈 수도 있는 것을 확인했습니다.
+  containerize-openstack   아무튼 사진과 같이 기묘한 형태로 (실제 host os 에는 없는 바이너리가 parent 1 을 물고 process 로 뜨게되는) 관리가 가능합니다.
+물론 보안 적인 결함에 대해서야 아직 끝도없이 이야기할 주제이겠지만 앞으로의 provisioning의 새로운 가능성에 대해서 관심이 가는건 사실인것 같습니다.
+  </div>
+  
+    <nav class="readmore"><a itemprop="url" href="/blog/2015/04/24/2015-04-24-containerize-openstack/">Read More&nbsp;&raquo;</a></nav>
+  
+  <meta itemprop="inLanguage" content="en-US">
+  <meta itemprop="datePublished" content="2015-04-24T01:08:16&#43;09:00">
+  <meta itemprop="dateModified" content="2015-04-24T01:08:16&#43;09:00">
+  
+</article>
+
+  
+    <article itemscope itemtype="http://schema.org/CreativeWork">
+  <header>
+    <h2 itemprop="name">
       <a href="/post/2015-04-24-containerize-openstack/">containerize openstack</a>
     </h2>
     
@@ -374,21 +508,8 @@ B 서버   B 서버
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
     <h2 itemprop="name">
-      <a href="/post/2015-04-03-draw-openstack-l2-network-architecture-automatically/">draw openstack L2 network architecture automatically</a>
+      <a href="/blog/2015/04/03/2015-04-03-draw-openstack-l2-network-architecture-automatically/">draw openstack L2 network architecture automatically</a>
     </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>3 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2015-04-03T02:29:52&#43;09:00">3 Apr, 2015</time>
-
-</p>
     
   </header>
   
@@ -401,193 +522,11 @@ ascii 로 그린 architecture 들이다.
 bridge-vlan   openvswitch-flat   openvswitch-vlan   이걸 graphviz 로 그리면 다음과 같다.
   </div>
   
-    <nav class="readmore"><a itemprop="url" href="/post/2015-04-03-draw-openstack-l2-network-architecture-automatically/">Read More&nbsp;&raquo;</a></nav>
+    <nav class="readmore"><a itemprop="url" href="/blog/2015/04/03/2015-04-03-draw-openstack-l2-network-architecture-automatically/">Read More&nbsp;&raquo;</a></nav>
   
   <meta itemprop="inLanguage" content="en-US">
   <meta itemprop="datePublished" content="2015-04-03T02:29:52&#43;09:00">
   <meta itemprop="dateModified" content="2015-04-03T02:29:52&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2015-03-31-ping-openstack-vms-in-specific-host/">ping openstack vms in specific host</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>0 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2015-03-31T09:36:44&#43;09:00">31 Mar, 2015</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-     
-  </div>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2015-03-31T09:36:44&#43;09:00">
-  <meta itemprop="dateModified" content="2015-03-31T09:36:44&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2015-03-14-if-you-forget-your-password-or-key/">만약 사용자가 ssh password나 key등을 잃어 버려서 도저히 vm instance에 접속할 수 없을때..</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>2 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2015-03-14T22:00:57&#43;09:00">14 Mar, 2015</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    우선은 nbd로 attach 하여 mount 해서 접근 가능하다.
-이후에 아래와 같이 key를 추가해도 되고 각 os 버전에 맞게 패스워드를 새로 해슁하여 /etc/shadow 를 변경해도 된다.
-물론 마지막에 dettach 를 꼭 신경써서 해줘야 한다.
-# attach disk qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/10794bbb-7856-4ed6-ab39-32afbc01156a/disk mount /dev/nbd0p1 /mnt # insert a new key to target user echo &#39;&#39;&#39;NEWKEY&#39;&#39;&#39; &gt;&gt; /mnt/home/USER/.ssh/authorized_keys # dettach disk umount /mnt qemu-nbd -d /dev/nbd0p1 하지만 이상하게도 저런 수정을 했을때 아예 접속이 불가능한 경우들이 생긴다.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2015-03-14-if-you-forget-your-password-or-key/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2015-03-14T22:00:57&#43;09:00">
-  <meta itemprop="dateModified" content="2015-03-14T22:00:57&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2015-02-11-build-openstack-node-using-just-1-nic/">NIC 1개로 compute node를 vlan type으로 neutron을 사용하여 구성하기 위한 팁</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>1 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2015-02-11T17:12:39&#43;09:00">11 Feb, 2015</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    gre 같은 tunnel 을 사용한다면 NIC 하나로 구성 할 수 있겠지만 그게 아니라면 일반적으로는 management 용 NIC 한개와 service 용 NIC 한개가 필요하다.
-우선 아래와 같은 상태가 2 NIC을 사용하는 일반적인 구성이다.
-그림 처럼 eth0은 management를 위한 ip로 이용되며 eth1을 guest interface(vlan 이라면 0.0.0.0)로 사용할 수 있다.
-  단도직입적으로 ethernet 한개로는 아래와 같이 구성하면 된다.
-우선 eth0은 0.0.0.0 으로 ip를 사용안하는 대신 br0 부분에서 기존의 management용 ip를 가져간다.
-  아래와 같은 흐름으로 진행하면 된다.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2015-02-11-build-openstack-node-using-just-1-nic/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2015-02-11T17:12:39&#43;09:00">
-  <meta itemprop="dateModified" content="2015-02-11T17:12:39&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2015-02-02-make-l2-network-for-vm-without-neutron/">make l2 network for vm without neutron</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>3 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2015-02-02T09:20:23&#43;09:00">2 Feb, 2015</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    우선 아래와 같은 컨피그를 이용할때..
-nova  linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver  neutron  type_drivers = vlan mechanism_drivers = openvswitch firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver  1. 기본 상태: 우선 실제 물리 머신에 아래와 같이 vm을 위한 ethernet인 eth1이 존재한다.
-  변수 생성 vmuuid=9ee8db25-6a13-4ca8-8a4e-495db24492ca vlan=2001 localvlan=1 ip=$(nova show $vmuuid | grep ' network' | awk '{print $5}') interfaceid=$(neutron port-list | grep &quot;\&quot;$ip\&quot;&quot; | awk '{print $2}') mac=$(neutron port-list | grep &quot;\&quot;$ip\&quot;&quot; | awk '{print $5}') ovsid=${interfaceid:0:11}  2.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2015-02-02-make-l2-network-for-vm-without-neutron/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2015-02-02T09:20:23&#43;09:00">
-  <meta itemprop="dateModified" content="2015-02-02T09:20:23&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2015-01-16-jiogyi-ceph-rbd-image-format-2-data-recovering/">ceph pg incomplete: rbd image-format 2 data recovery</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>14 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2015-01-16T00:54:53&#43;09:00">16 Jan, 2015</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    ceph: pg incomplete is worst nightmare   2014 open user survey block storage   2014년 유저 설문조사에서 찾을 수 있듯이 ceph은 openstack의 block storage의 de facto standard 라고 말할 수 있다.
-ceph을 사용한지 조금 되었지만 큰 문제가 한번도 없어서 일명 믿음의 ceph이라고 칭송하며 내부구조도 살필일 없이 블랙박스로 두고 잘 쓰고 있었었다.
-하지만 근래에 급작스런 몇가지 문제로 ceph의 placement group(pg) 들이 incomplete 상태로 떨어졌고..
-말그대로 절망했다.
-왜냐하면 incomplete 상태로 떨어진 pg들이 절대 다른 상태로 돌아올수 없으며 해당 pg에 접근하는 모든 request는 slow request화 되며 응답을 주지 않는다.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2015-01-16-jiogyi-ceph-rbd-image-format-2-data-recovering/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2015-01-16T00:54:53&#43;09:00">
-  <meta itemprop="dateModified" content="2015-01-16T00:54:53&#43;09:00">
   
 </article>
 
@@ -597,8 +536,10 @@ ceph을 사용한지 조금 되었지만 큰 문제가 한번도 없어서 일�
   <nav>
   
   
-    <span>Page 1 of 1</span>
+    <span>Page 1 of 2</span>
   
+  
+    | <a href="/tags/openstack/page/2/">Next &raquo;</a>
   
 </nav>
 

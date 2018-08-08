@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta name="generator" content="Hugo 0.46" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Debug Dead Container in K8s | &gt; /dev/null</title>
+    <meta name="description" content="till CrashLoopBackOff do us part">
+    <meta name="keywords" content="k8s, kubernetes, dead, CrashLoopBackOff, container, debug">
+    
+    
+    
+    
+    
+
+  <meta name="author" content="leoh0">
+
+
+    <meta property="og:title" content="How to Debug Dead Container in K8s" />
+<meta property="og:description" content="till CrashLoopBackOff do us part" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://leoh0.github.io/post/2018-08-04-how-to-debug-dead-container-in-k8s/" />
+
+  <meta property="og:image" content="https://source.unsplash.com/collection/983219/1600x900" />
+
+
+
+<meta property="article:published_time" content="2018-08-08T04:09:48&#43;09:00"/>
+
+<meta property="article:modified_time" content="2018-08-08T04:09:48&#43;09:00"/>
+
+
+
+
+
+
+
+
+
+
+
+    <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://source.unsplash.com/collection/983219/1600x900"/>
+
+<meta name="twitter:title" content="How to Debug Dead Container in K8s"/>
+<meta name="twitter:description" content="till CrashLoopBackOff do us part"/>
+
+    
+
+
+
+
+    
+
+    <meta name="theme-color" content="#000">
+
+    
+    
+  <meta name="referrer" content="same-origin">
+
+
+    
+  
+    
+
+  <meta title="mod:fractal-forest" content="status:enabled">
+  
+    <script async src=/js/bpgdec8a.js integrity=sha384-8PG0go3BW8hLm63KbTxk/hNcehaoSbrAhKzsmy2Jhs/KY8QdiKKkjhdeyHY/Q/0I&#10;></script>
+  
+
+
+  
+  
+
+
+    
+    <link rel="canonical" href="https://leoh0.github.io/post/2018-08-04-how-to-debug-dead-container-in-k8s/">
+    <link href="http://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+    
+    
+    <link rel="icon" sizes="any" href="data:image/svg+xml,%3Csvg%20viewBox='0%200%2046%2045'%20xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EAfter%20Dark%3C/title%3E%3Cpath%20d='M.708%2045L23%20.416%2045.292%2045H.708zM35%2038L23%2019%2011%2038h24z'%20fill='%23000'/%3E%3C/svg%3E">
+
+    
+
+
+  
+  
+  
+  
+  
+  
+  
+    
+      <style>html{font-size:12px}*{box-sizing:border-box;text-rendering:geometricPrecision}body{font-size:1rem;line-height:1.5rem;margin:0;font-family:Menlo,'Noto Sans KR',Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;word-wrap:break-word}h1,h2,h3,h4,h5,h6{line-height:1.3em}fieldset{border:none;padding:0;margin:0}pre{padding:2rem;margin:1.75rem 0;background-color:#fff;border:1px solid #ccc;overflow:auto}code[class*=language-],pre[class*=language-],pre code{font-weight:100;text-shadow:none;margin:1.75rem 0}a{cursor:pointer;color:#ff2e88;text-decoration:none;border-bottom:1px solid #ff2e88}a:hover{background-color:#ff2e88;color:#fff}.grid{display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap}.grid.\-top{-ms-flex-align:start;align-items:flex-start}.grid.\-middle{-ms-flex-align:center;align-items:center}.grid.\-bottom{-ms-flex-align:end;align-items:flex-end}.grid.\-stretch{-ms-flex-align:stretch;align-items:stretch}.grid.\-baseline{-ms-flex-align:baseline;align-items:baseline}.grid.\-left{-ms-flex-pack:start;justify-content:flex-start}.grid.\-center{-ms-flex-pack:center;justify-content:center}.grid.\-right{-ms-flex-pack:end;justify-content:flex-end}.grid.\-between{-ms-flex-pack:justify;justify-content:space-between}.grid.\-around{-ms-flex-pack:distribute;justify-content:space-around}.cell{-ms-flex:1;flex:1;box-sizing:border-box}@media screen and (min-width:768px){.cell.\-1of12{-ms-flex:0 0 8.33333%;flex:0 0 8.33333%}.cell.\-2of12{-ms-flex:0 0 16.66667%;flex:0 0 16.66667%}.cell.\-3of12{-ms-flex:0 0 25%;flex:0 0 25%}.cell.\-4of12{-ms-flex:0 0 33.33333%;flex:0 0 33.33333%}.cell.\-5of12{-ms-flex:0 0 41.66667%;flex:0 0 41.66667%}.cell.\-6of12{-ms-flex:0 0 50%;flex:0 0 50%}.cell.\-7of12{-ms-flex:0 0 58.33333%;flex:0 0 58.33333%}.cell.\-8of12{-ms-flex:0 0 66.66667%;flex:0 0 66.66667%}.cell.\-9of12{-ms-flex:0 0 75%;flex:0 0 75%}.cell.\-10of12{-ms-flex:0 0 83.33333%;flex:0 0 83.33333%}.cell.\-11of12{-ms-flex:0 0 91.66667%;flex:0 0 91.66667%}}@media screen and (max-width:768px){.grid{-ms-flex-direction:column;flex-direction:column}.cell{-ms-flex:0 0 auto;flex:0 0 auto}}.hack,.hack blockquote,.hack code,.hack em,.hack h1,.hack h2,.hack h3,.hack h4,.hack h5,.hack h6,.hack strong{font-size:1rem;font-style:normal;font-family:Menlo,'Noto Sans KR',Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif}.hack blockquote,.hack code,.hack em,.hack strong{line-height:20px}.hack blockquote,.hack code,.hack footer,.hack h1,.hack h2,.hack h3,.hack h4,.hack h5,.hack h6,.hack header,.hack li,.hack ol,.hack p,.hack section,.hack ul{float:none;margin:0;padding:0}.hack blockquote,.hack h1,.hack ol,.hack p,.hack ul{margin-top:20px;margin-bottom:20px}.hack h1{position:relative;display:inline-block;display:table-cell;padding:20px 0 30px;margin:0;overflow:hidden}.hack h1:after{content:"====================================================================================================";position:absolute;bottom:10px;left:0}.hack h1+*{margin-top:0}.hack h2,.hack h3,.hack h4,.hack h5,.hack h6{position:relative;margin-bottom:1.75rem}.hack h2:before,.hack h3:before,.hack h4:before,.hack h5:before,.hack h6:before{display:inline}.hack h2:before{content:"## "}.hack h3:before{content:"### "}.hack h4:before{content:"#### "}.hack h5:before{content:"##### "}.hack h6:before{content:"###### "}.hack li{position:relative;display:block;padding-left:20px}.hack li:after{position:absolute;top:0;left:0}.hack ul>li:after{content:"-"}.hack ol{counter-reset:a}.hack ol>li:after{content:counter(a) ".";counter-increment:a}.hack ol li:nth-child(n+10):after{left:-7px}.hack blockquote{position:relative;padding-left:17px;padding-left:2ch;overflow:hidden}.hack blockquote:after{content:">\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>";white-space:pre;position:absolute;top:0;left:0;line-height:20px}.hack em:after,.hack em:before{content:"*";display:inline}.hack pre code:after,.hack pre code:before{content:""}.hack code{font-weight:700}.hack code:after,.hack code:before{content:"`";display:inline}.hack hr{position:relative;height:20px;overflow:hidden;border:0;margin:20px 0}.hack hr:after{content:"----------------------------------------------------------------------------------------------------";position:absolute;top:0;left:0;line-height:20px;width:100%;word-wrap:break-word}@-moz-document url-prefix(){.hack h1{display:block}}.hack-ones ol>li:after{content:"1."}p{margin:0 0 1.75rem}.container{max-width:70rem}.container,.container-fluid{margin:0 auto;padding:0 1rem}.inner{padding:1rem}.inner2x{padding:2rem}.pull-left{float:left}.pull-right{float:right}.progress-bar{height:8px;opacity:.8;background-color:#ccc;margin-top:12px}.progress-bar.progress-bar-show-percent{margin-top:38px}.progress-bar-filled{background-color:gray;height:100%;transition:width .3s ease;position:relative;width:0}.progress-bar-filled:before{content:"";border:6px solid transparent;border-top-color:gray;position:absolute;top:-12px;right:-6px}.progress-bar-filled:after{color:gray;content:attr(data-filled);display:block;font-size:12px;white-space:nowrap;position:absolute;border:6px solid transparent;top:-38px;right:0;-ms-transform:translateX(50%);transform:translateX(50%)}table{width:100%;border-collapse:collapse;margin:1.75rem 0;color:#778087}table td,table th{vertical-align:top;border:1px solid #ccc;line-height:15px;padding:10px}table thead th{font-size:10px}table tbody td:first-child{font-weight:700;color:#333}.form{width:30rem}.form-group{margin-bottom:1.75rem;overflow:auto}.form-group label{border-bottom:2px solid #ccc;color:#333;width:10rem;display:inline-block;height:38px;line-height:38px;padding:0;float:left;position:relative}.form-group.form-success label{color:#4caf50!important;border-color:#4caf50!important}.form-group.form-warning label{color:#ff9800!important;border-color:#ff9800!important}.form-group.form-error label{color:#f44336!important;border-color:#f44336!important}.form-control{outline:none;border:none;border-bottom:2px solid #ccc;padding:.5rem 0;width:20rem;height:38px;background-color:transparent}.form-control:focus{border-color:#555}.form-group.form-textarea label:after{position:absolute;content:"";width:2px;background-color:#fff;right:-2px;top:0;bottom:0}textarea.form-control{height:auto;resize:none;padding:1rem 0;border-bottom:2px solid #ccc;border-left:2px solid #ccc;padding:.5rem}select.form-control{border-radius:0;background-color:transparent;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none}.help-block{color:#999;margin-top:.5rem}.form-actions{margin-bottom:1.75rem}.btn{display:-ms-inline-flexbox;display:inline-flex;-ms-flex-align:center;align-items:center;-ms-flex-pack:center;justify-content:center;cursor:pointer;outline:none;padding:.65rem 2rem;font-size:1rem;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;position:relative;z-index:1}.btn:active{box-shadow:inset 0 1px 3px rgba(0,0,0,.12)}.btn.btn-ghost{border-color:#757575;color:#757575;background-color:transparent}.btn.btn-ghost:focus,.btn.btn-ghost:hover{border-color:#424242;color:#424242;z-index:2}.btn.btn-ghost:hover{background-color:transparent}.btn-block{width:100%;display:-ms-flexbox;display:flex}.btn-default{color:#fff;background-color:#e0e0e0;border:1px solid #e0e0e0;color:#333}.btn-default:focus:not(.btn-ghost),.btn-default:hover{background-color:#dcdcdc;border-color:#dcdcdc}.btn-success{color:#fff;background-color:#4caf50;border:1px solid #4caf50}.btn-success:focus:not(.btn-ghost),.btn-success:hover{background-color:#43a047;border-color:#43a047}.btn-success.btn-ghost{border-color:#4caf50;color:#4caf50}.btn-success.btn-ghost:focus,.btn-success.btn-ghost:hover{border-color:#388e3c;color:#388e3c;z-index:2}.btn-error{color:#fff;background-color:#f44336;border:1px solid #f44336}.btn-error:focus:not(.btn-ghost),.btn-error:hover{background-color:#e53935;border-color:#e53935}.btn-error.btn-ghost{border-color:#f44336;color:#f44336}.btn-error.btn-ghost:focus,.btn-error.btn-ghost:hover{border-color:#d32f2f;color:#d32f2f;z-index:2}.btn-warning{color:#fff;background-color:#ff9800;border:1px solid #ff9800}.btn-warning:focus:not(.btn-ghost),.btn-warning:hover{background-color:#fb8c00;border-color:#fb8c00}.btn-warning.btn-ghost{border-color:#ff9800;color:#ff9800}.btn-warning.btn-ghost:focus,.btn-warning.btn-ghost:hover{border-color:#f57c00;color:#f57c00;z-index:2}.btn-info{color:#fff;background-color:#00bcd4;border:1px solid #00bcd4}.btn-info:focus:not(.btn-ghost),.btn-info:hover{background-color:#00acc1;border-color:#00acc1}.btn-info.btn-ghost{border-color:#00bcd4;color:#00bcd4}.btn-info.btn-ghost:focus,.btn-info.btn-ghost:hover{border-color:#0097a7;color:#0097a7;z-index:2}.btn-primary{color:#fff;background-color:#2196f3;border:1px solid #2196f3}.btn-primary:focus:not(.btn-ghost),.btn-primary:hover{background-color:#1e88e5;border-color:#1e88e5}.btn-primary.btn-ghost{border-color:#2196f3;color:#2196f3}.btn-primary.btn-ghost:focus,.btn-primary.btn-ghost:hover{border-color:#1976d2;color:#1976d2;z-index:2}.btn-group{overflow:auto}.btn-group .btn{float:left}.btn-group .btn-ghost:not(:first-child){margin-left:-1px}.card{border:1px solid #ccc}.card .card-header{color:#333;text-align:center;background-color:#ddd;padding:.5rem 0}.alert{color:#ccc;padding:1rem;border:1px solid #ccc;margin-bottom:1.75rem}.alert-success{color:#4caf50;border-color:#4caf50}.alert-error{color:#f44336;border-color:#f44336}.alert-info{color:#00bcd4;border-color:#00bcd4}.alert-warning{color:#ff9800;border-color:#ff9800}.media:not(:last-child){margin-bottom:1.25rem}.media-left{padding-right:1rem}.media-left,.media-right{display:table-cell;vertical-align:top}.media-right{padding-left:1rem}.media-body{display:table-cell;vertical-align:top}.media-heading{font-size:1.16667rem;font-weight:700}.media-content{margin-top:.3rem}.avatarholder,.placeholder{background-color:#f0f0f0;text-align:center;color:#b9b9b9;font-size:1rem;border:1px solid #f0f0f0}.avatarholder{width:48px;height:48px;line-height:46px;font-size:2rem;background-size:cover;background-position:50%;background-repeat:no-repeat}.avatarholder.rounded{border-radius:33px}.loading{display:inline-block;content:"&nbsp;";height:20px;width:20px;margin:0 .5rem;animation:a .6s infinite linear;border:2px solid #e91e63;border-right-color:transparent;border-radius:50%}.btn .loading{margin-bottom:0;width:14px;height:14px}.btn div.loading{float:left}.alert .loading{margin-bottom:-5px}@keyframes a{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}.menu{width:100%}.menu .menu-item{display:block;color:#616161;border-color:#616161}.menu .menu-item.active,.menu .menu-item:hover{color:#000;border-color:#000;background-color:transparent}@media screen and (max-width:768px){.form-group label{display:block;border-bottom:none;width:100%}.form-group.form-textarea label:after{display:none}.form-control{width:100%}textarea.form-control{border-left:none;padding:.5rem 0}pre::-webkit-scrollbar{height:3px}}@media screen and (max-width:480px){.form{width:100%}}.dark{color:#ccc}.dark,.dark pre{background-color:#000}.dark pre{padding:0;border:none}.dark pre code{color:#00bcd4}.dark h1 a,.dark h2 a,.dark h3 a,.dark h4 a,.dark h5 a{color:#ccc}.dark code,.dark strong{color:#fff}.dark code{font-weight:100}.dark table{color:#ccc}.dark table td,.dark table th{border-color:#444}.dark table tbody td:first-child{color:#fff}.dark .form-group label{color:#ccc;border-color:rgba(95,95,95,.78)}.dark .form-group.form-textarea label:after{background-color:#000}.dark .form-control{color:#ccc;border-color:rgba(95,95,95,.78)}.dark .form-control:focus{border-color:#ccc;color:#ccc}.dark textarea.form-control{color:#ccc}.dark .card{border-color:rgba(95,95,95,.78)}.dark .card .card-header{background-color:transparent;color:#ccc;border-bottom:1px solid rgba(95,95,95,.78)}.dark .btn.btn-ghost.btn-default{border-color:#ababab;color:#ababab}.dark .btn.btn-ghost.btn-default:focus,.dark .btn.btn-ghost.btn-default:hover{border-color:#9c9c9c;color:#9c9c9c;z-index:1}.dark .btn.btn-ghost.btn-default:focus,.dark .btn.btn-ghost.btn-default:hover{border-color:#e0e0e0;color:#e0e0e0}.dark .btn.btn-ghost.btn-primary:focus,.dark .btn.btn-ghost.btn-primary:hover{border-color:#64b5f6;color:#64b5f6}.dark .btn.btn-ghost.btn-success:focus,.dark .btn.btn-ghost.btn-success:hover{border-color:#81c784;color:#81c784}.dark .btn.btn-ghost.btn-info:focus,.dark .btn.btn-ghost.btn-info:hover{border-color:#4dd0e1;color:#4dd0e1}.dark .btn.btn-ghost.btn-error:focus,.dark .btn.btn-ghost.btn-error:hover{border-color:#e57373;color:#e57373}.dark .btn.btn-ghost.btn-warning:focus,.dark .btn.btn-ghost.btn-warning:hover{border-color:#ffb74d;color:#ffb74d}.dark .avatarholder,.dark .placeholder{background-color:transparent;border-color:#333}.dark .menu .menu-item{color:#ccc;border-color:rgba(95,95,95,.78)}.dark .menu .menu-item.active,.dark .menu .menu-item:hover{color:#fff;border-color:#ccc}:root{--screen-size-small: 30em}@keyframes intro{0%{opacity:0}; 100%{opacity:1}}.blur-up{-webkit-filter:blur(5px);filter:blur(5px);transition:filter 400ms,-webkit-filter 400ms}.blur-up.lazyloaded{-webkit-filter:blur(0);filter:blur(0)}.hack .readmore{margin-bottom:2.2em}.responsive-iframe{position:relative;padding-bottom:56.25%;padding-top:25px;height:0}.responsive-iframe iframe{position:absolute;top:0;left:0;width:100%;height:100%}iframe{border:0}main,footer{animation:intro .3s both;animation-delay:.15s}footer time[datetime$=M]:before{content:"\2013\0020"}@media only screen and (max-width:30em){footer time[datetime$=M]{display:none}}blockquote cite{display:block}blockquote cite::before{content:"\2014"}:target{color:#fff}.hack li ul{margin:0}.main{padding:20px 10px}input.form-control{border-radius:0;background-color:transparent;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none}input.form-control{font-size:initial}.hack .help-block{font-size:1rem}html{font-size:13px}.hack pre{font-size:17px}.hack .form input,.hack .form textarea,.hack .form button,.hack .form label{font-size:1rem}article [itemprop=description]{margin-bottom:20px;margin-top:20px}article header img{width:100%;border-radius:3px}@media screen and (min-width:768px){html{font-size:1em}.container{max-width:50rem}}[v-cloak]{display:none}a[href*="://"]::after,
+a[rel*="external"] {
+  content: " " url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20class='i-external'%20viewBox='0%200%2032%2032'%20width='14'%20height='14'%20fill='none'%20stroke='%23ff9800'%20stroke-linecap='round'%20stroke-linejoin='round'%20stroke-width='9.38%'%3E%3Cpath%20d='M14%209%20L3%209%203%2029%2023%2029%2023%2018%20M18%204%20L28%204%2028%2014%20M28%204%20L14%2018'/%3E%3C/svg%3E");
+}
+figure a[href*="://"]::after,
+figure a[rel*="external"] {
+  content: "";
+}
+nav a.active {
+  background-color: #ff2e88;
+  color: #fff;
+}
+a[itemprop="url"] {
+  color: #ff9800;
+}
+a[itemprop="url"]:hover {
+  color: #fff;
+}
+.muted, .help-block {
+  opacity: 0.70;
+}
+.hack .muted,
+.hack .help-block {
+  color: #e0e0e0;
+}
+
+canvas {
+  margin: auto;
+  display: block;
+}
+figure {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+figure img {
+  max-width: 80%;
+}
+figure a {
+  border-bottom: none !important;
+}
+figure a:hover {
+  background-color: inherit !important;
+}
+
+img {
+  max-width: 90%;
+}
+
+.highlight,pre.highlight{background:#282c34;color:#abb2bf}.highlight pre{background:#282c34}.highlight .ge{font-style:italic}.highlight .gs{font-weight:700}.highlight .ow{font-weight:700}.highlight .n,.highlight .nf,.highlight .nn,.highlight .o,.highlight .p{color:#abb2bf}.highlight .c,.highlight .c1,.highlight .cm,.highlight .cp,.highlight .cs{color:#5c6370;font-style:italic}.highlight .sr,.highlight .ss{color:#56b6c2}.highlight .k,.highlight .kc,.highlight .kd,.highlight .kn,.highlight .kp,.highlight .kr,.highlight .kt{color:#c678dd}.highlight .l,.highlight .ld,.highlight .s,.highlight .s1,.highlight .s2,.highlight .sb,.highlight .sc,.highlight .sd,.highlight .se,.highlight .sh,.highlight .si,.highlight .sx{color:#98c379}.highlight .nt,.highlight .nx,.highlight .vi{color:#e06c75}.highlight .il,.highlight .m,.highlight .mf,.highlight .mh,.highlight .mi,.highlight .mo,.highlight .na{color:#d19a66}.highlight .bp,.highlight .nb,.highlight .nc,.highlight .nd,.highlight .ne,.highlight .ni,.highlight .nl,.highlight .no,.highlight .nv,.highlight .py,.highlight .vc,.highlight .vg{color:#e5c07b}.highlight .err{color:#fff;background-color:#e05252}.highlight .gd{color:#e05252}.highlight .gi{color:#43d08a}.highlight .w{color:#f8f8f2}.highlight .cpf{color:navy}.highlight .gu{color:#75715e}.highlight .lineno{color:#636d83;user-select:none}.highlight .ln{color:#636d83;user-select:none}.highlight .ln:after{content:" "}.highlight .hll{color:#abb2bf;background-color:#3a3f4b}.highlight .hl{color:#abb2bf;background-color:#3a3f4b}.highlight .language-json .w+.s2{color:#e06c75}.highlight .language-json .kc{color:#56b6c2}
+</style>
+    
+  
+
+
+    <script async src=/js/lazysizes.min.js></script>
+
+  </head>
+  
+  
+  
+  <body class="hack dark main container">
+    <header>
+  
+  <nav itemscope itemtype="http://schema.org/SiteNavigationElement">
+    
+    
+      <a itemprop="url" class="" href="/"><span itemprop="name">Home</span></a>
+    
+      <a itemprop="url" class="active" href="/post/"><span itemprop="name">Posts</span></a>
+    
+      <a itemprop="url" class="" href="/about/aboutme"><span itemprop="name">AboutMe</span></a>
+    
+      <a itemprop="url" class="" href="/blog/"><span itemprop="name">.</span></a>
+    
+  </nav>
+
+
+</header>
+    <main>
+  <article itemscope itemtype="http://schema.org/BlogPosting">
+    
+<meta itemprop="name" content="How to Debug Dead Container in K8s">
+<meta itemprop="description" content="till CrashLoopBackOff do us part">
+
+
+<meta itemprop="datePublished" content="2018-08-08T04:09:48&#43;09:00" />
+<meta itemprop="dateModified" content="2018-08-08T04:09:48&#43;09:00" />
+<meta itemprop="wordCount" content="1999">
+
+  <meta itemprop="image" content="https://source.unsplash.com/collection/983219/1600x900">
+
+
+
+<meta itemprop="keywords" content="k8s,kubernetes,dead,CrashLoopBackOff,container,debug," />
+
+    <header>
+      <h1 itemprop="headline">How to Debug Dead Container in K8s</h1>
+      <p class="muted">
+        <svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <circle cx="16" cy="16" r="14" />
+  <path d="M16 8 L16 16 20 20" />
+</svg>
+<span>10 minute read</span>
+<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+</svg>
+
+  Published: <time datetime="2018-08-08T04:09:48&#43;09:00">8 Aug, 2018</time>
+
+
+      </p>
+      
+        <blockquote itemprop="description">till CrashLoopBackOff do us part</blockquote>
+      
+      
+    </header>
+    
+
+    <div itemprop="articleBody">
+      
+
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+  
+    
+      <img class="lazyload" data-src="/images/dead_docker.png"  />
+    
+  
+  
+</figure>
+
+<blockquote>
+<p>Bugs happen. That&rsquo;s a fact of life.</p>
+
+<p><a href="https://lkml.org/lkml/2018/8/3/621">&ldquo;ABSOLUTELY THE MOST IMPORTANT THING IN THE UNIVERSE WHEN IT COMES TO SOFTWARE DEVELOPMENT&rdquo;, linus</a></p>
+</blockquote>
+
+<h1 id="k8s에서-pod-을-debugging-하는-일반적인-방법들">k8s에서 pod 을 debugging 하는 일반적인 방법들</h1>
+
+<blockquote>
+<p>Everyone knows that debugging is twice as hard as writing a program in the first place.</p>
+
+<p>“The Elements of Programming Style”, 2nd edition</p>
+</blockquote>
+
+<p>우리는 소프트웨어는 언제나 문제가 생길 수 있다는 것을 알고 있고 많은 문제들을 debugging 을 통해서 해결합니다. container를 debugging 하는 것들은 준비여부(log, debugging tools, &hellip;)가 중요해서 쉽지 않은 경우들이 대부분입니다. 다행히도 container를 debugging 하기 위한 방법들은 많은 발전을 했습니다.</p>
+
+<p>그래서 이 글을 적을 때만 해도 이런 기술셋들 부터 정리 하려고 했는데 아래 글에서 아주 잘 정리해서 이를 대체 해도 될것 같습니다.</p>
+
+<p><a href="https://radu-matei.com/blog/state-of-debugging-microservices-on-k8s/">THE STATE OF DEBUGGING MICROSERVICES ON KUBERNETES</a></p>
+
+<p>위 블로그 내용을 대략 간추려보면 아래와 같습니다.</p>
+
+<p>public cloud에서는 아래와 같은 툴들을 지원해서 debugging 을 편하게 할수 있습니다.</p>
+
+<ul>
+<li>Azure의 <a href="https://docs.microsoft.com/ko-kr/azure/dev-spaces/azure-dev-spaces">dev spaces</a></li>
+<li>Google의 <a href="https://cloud.google.com/debugger/">stackdriver debugger</a></li>
+</ul>
+
+<p>원격 디버깅은 squash의 kubernetes 버전을 이용하면 됩니다.</p>
+
+<ul>
+<li><a href="https://github.com/solo-io/kubesquash">kubesquash</a></li>
+</ul>
+
+<p>어플리케이션 디버깅을 도울수 있는 도구들은 아래와 같습니다.</p>
+
+<ul>
+<li><a href="https://github.com/vapor-ware/ksync">KSync</a>: local filesystem를 k8s 내 container와 sync</li>
+<li><a href="https://github.com/telepresenceio/telepresence">Telepresence</a>: k8s cluster로 들어오는 traffic을 local로 redirect</li>
+<li><a href="https://github.com/Azure/draft">Draft</a> and <a href="https://github.com/GoogleContainerTools/skaffold">Skaffold</a>: 일관된 재배포 방법 제공</li>
+</ul>
+
+<p>k8s에서는 아래와 같은 기능들을 활용할 수 있습니다.</p>
+
+<ul>
+<li><a href="https://kubernetes.io/docs/tasks/configure-pod-container/share-process-namespace/">Share Process Namespace between Containers in a Pod</a> 를 이용해서 debugging할 container를 namespace에 sharing 시킴</li>
+<li>향후엔 <code>debug</code> 커맨드를 지원해서 아래와 같은 커맨드로 임시적으로 debugger를 붙여서 디버깅을 할 수 있게 함. <a href="https://github.com/kubernetes/community/blob/master/contributors/design-proposals/node/troubleshoot-running-pods.md">Troubleshoot Running Pods</a></li>
+</ul>
+
+<pre><code>   kubectl debug  --image=&lt;your-debugger-image&gt; &lt;your-application-pod&gt;
+</code></pre>
+
+<p>자세한 내용은 위 블로그에서 확인 가능합니다.</p>
+
+<p>위에 정리한 글로 모든 문제를 해결하면 좋지만 실제로 서비스를 하다보면 위 정보들은 <code>살아 있는</code> 컨테이너를 디버깅 하기 위한 것임을 알게 됩니다. 그리고 <code>app</code>을 디버깅 하기위한 수단들이여서 뭔가 부족함을 알게됩니다.</p>
+
+<h1 id="crashloopbackoff-된-컨테이너를-어떻게-디버깅-할-것인가">CrashLoopBackOff 된 컨테이너를 어떻게 디버깅 할 것인가</h1>
+
+<p><code>CrashLoopBackOff</code>가 되면 pod은 지속적으로 <code>start</code> -&gt; <code>crash</code> -&gt; <code>start</code> -&gt; <code>crash</code>를 반복하게 됩니다.</p>
+
+<p>예를 들면 아래 같이 지속적으로 계속 리스타트 되고 있는 팟들은 디버깅 하다보면 계속 리스타트 되서 테스트를 하기 힘듭니다.
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">$ kubectl get pod --all-namespaces | grep -v Running
+NAMESPACE  NAME                         READY   STATUS             RESTARTS   AGE
+test       my-very-important-pod-pgzgb  0/1     CrashLoopBackOff   6761       17d
+...</code></pre></div></p>
+
+<p>그리고 CrashLoopBackOff의 원인은 아주 여러가지기 때문에 user들이 자신의 pod이 CrashLoopBackOff 이 되어서 구글에 검색해봐도 답은 다음과 같습니다.</p>
+
+<blockquote>
+<p>log를 잘 보세요.</p>
+</blockquote>
+
+<p>사실 이말이 틀렸다고 할 수는 없으나(원론적으로는 가장 맞습니다.) 문제가 있는 상태에서 log로 해결하는건 쉬운일이 아닙니다.
+예를 들어 해결하고자 하면 <code>기존 코드에 log 추가</code> -&gt; <code>재빌드</code> -&gt; <code>재배포</code> -&gt; <code>문제가 아님을 확인</code> -&gt; <code>기존 코드에 log 추가</code> -&gt; <code>재빌드</code> -&gt; <code>재배포</code> 를 반복하게 됩니다.</p>
+
+<p>약간 더 추가하자면 <code>describe</code>까지 봐야 합니다. pods이 죽었을때 <code>message</code>와 <code>event</code>를 봐야 하기 때문입니다.</p>
+
+<p>그래서 이 글에서는 이런 컨테이너가 <code>CrashLoopBackOff</code> 되고 있는 이유 중 대표적인 2가지에 대해서 설명하고 이를 해결하기 위한 도구, 방법들을 설명하려고 합니다.</p>
+
+<ol>
+<li>liveness probe에 만족하지 못해서 pod이 리스타트 되는 경우</li>
+<li>k8s pod의 command가 exit 0 외의 code로 실패하고 있는 경우</li>
+</ol>
+
+<p>물론 이 2가지를 설명하기 전에 유저가 첫번째로 봐야하는 것은 로그입니다.</p>
+
+<p>일반적으로 아래와 같은 로그 확인 방법으로만 로그를 보지만 출력이 안될 경우</p>
+
+<pre><code>```
+kubectl -n &lt;namespace&gt; logs &lt;podname&gt; -c &lt;containername&gt;
+```
+</code></pre>
+
+<p>아래와 같이 <code>-p(--previous)</code> 를 추가해서도 확인해 보면 좋습니다. 이전 컨테이너 로그를 볼시 문제를 확인할 가능성이 조금이라도 높아지기 때문입니다.</p>
+
+<pre><code>```
+kubectl -n &lt;namespace&gt; logs &lt;podname&gt; -c &lt;containername&gt; -p
+```
+</code></pre>
+
+<p>그리고 만약 이런 케이스에 지속적으로 restart 시키고 싶지 않다면 <code>restartPolicy</code>을 <code>Always</code> 외의 값들을 살펴보는 것도 좋습니다.</p>
+
+<h2 id="liveness-probe에-만족하지-못해서-pod이-리스타트-되는-경우">liveness probe에 만족하지 못해서 pod이 리스타트 되는 경우</h2>
+
+<p>이 케이스는 즉 healthcheck가 실패해서 pod이 back-off 되고 있는 상태입니다. 그래서 간단하게 liveness probe를 제거함으로 pod의 리스타트를 막을 수 있습니다. 이 방법은 단순 무식하지만 잠시동안 시간을 벌어서 pod을 디버깅 할 수 있는 시간을 버는데는 아주 용이합니다.</p>
+
+<p>이 팁은 아주 간단하지만 굉장히 효과적입니다. 물론 실제 pod이 서비스 되고 있는 경우 사용하기가 꺼림직 하지만 그래도 잠깐이라도 시간을 벌어 디버깅 하기에 좋습니다.</p>
+
+<h2 id="k8s-pod의-command가-exit-0-외의-code로-실패하고-있는-경우">k8s pod의 command가 exit 0 외의 code로 실패하고 있는 경우</h2>
+
+<p>사실은 이게 거의 이번 포스트의 핵심이라고 할 수 있습니다. 이런 상태가 되면 우선 pod(container)은 지속적으로 죽기때문에 <code>exec</code>등을 해볼 기회조차 없습니다.</p>
+
+<p>심지어 어떤 팟들은 exec를 하고 싶으나 debug tool은 커녕 <code>sh</code>도 없는 컨테이너들이 있습니다.</p>
+
+<p>예를 들면 아래는 heapster의 이미지 입니다. 보다시피 <code>scratch</code>로 되어 있어 아무런 툴들이 없습니다.</p>
+
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="color:#fff;font-weight:bold">FROM</span><span style="color:#0ff;font-weight:bold"> scratch</span><span style="color:#f00">
+</span><span style="color:#f00">
+</span><span style="color:#f00"></span>COPY heapster eventer /<span style="color:#f00">
+</span><span style="color:#f00"></span>COPY ca-certificates.crt /etc/ssl/certs/<span style="color:#f00">
+</span><span style="color:#f00">
+</span><span style="color:#f00"></span><span style="color:#007f7f">#   nobody:nobody</span><span style="color:#f00">
+</span><span style="color:#f00"></span>USER <span style="color:#ff0;font-weight:bold">65534</span>:65534<span style="color:#f00">
+</span><span style="color:#f00"></span><span style="color:#fff;font-weight:bold">ENTRYPOINT</span><span style="color:#0ff;font-weight:bold"> [&#34;/heapster&#34;]</span></code></pre></div>
+
+<p>이런 container들은 아래와 같이 <code>sh</code>도 사용할 수 없습니다.</p>
+
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">$ kubectl exec -ti heapster-heapster-65489b94b5-kjlk4 -n kube-system -c heapster sh
+OCI runtime exec failed: exec failed: container_linux.go:348: starting container process caused &#34;exec: \&#34;sh\&#34;: executable file not found in $PATH&#34;: unknown
+command terminated with exit code 126</code></pre></div>
+
+<p>결국 2가지를 해결해야 합니다.</p>
+
+<ol>
+<li>scratch image에 debugging tool을 심는다.</li>
+<li>커맨드를 항상 성공하는 것으로 교체한다.</li>
+</ol>
+
+<p>그래서 여기서 잠깐 우선 1번째 <code>scratch image에 debugging tool을 심는다.</code>을 집고 넘어 갑니다.</p>
+
+<h3 id="scratch-image에-debugging-tool을-심는다">scratch image에 debugging tool을 심는다.</h3>
+
+<p>우선 결론은 간단합니다. <a href="https://github.com/kubernetes/contrib/tree/master/scratch-debugger">scratch debugger</a>을 사용하면 됩니다. 현재 원본 레포의 코드가 망가진 상태여서 제가 수정한 <a href="https://gist.github.com/leoh0/a4f07c89ed41dca40ffb91b5e9ec1efd">gist</a>를 참고하시면 좋습니다.</p>
+
+<p>이 툴은 아래와 같이 <code>POD_NAME</code>, <code>POD_NAMESPACE</code>, <code>CONTAINER_NAME</code> 정도만 지정하면 해당 pod에 debugging tool(busybox)를 심습니다.</p>
+
+<pre><code>scratch-debugger/debug.sh POD_NAME [POD_NAMESPACE CONTAINER_NAME]
+</code></pre>
+
+<p>원리는 단순합니다. 특정 지정된 pod과 같은 node에 pod을 띄우는데 해당 pod이 docker socket을 마운트 해서 docker command를 이용해서 busybox 바이너리를 docker cp로 특정 지정된 pod에 심는 방법입니다. 이 방법을 이용하면 아무런 제약없이 binary를 심을 수 있습니다.</p>
+
+<p>하지만 이 방법도 현재 한계가 있습니다.</p>
+
+<ol>
+<li>죽은 컨테이너를 대상으로 테스트 할 수 없다.</li>
+<li>바이너리 인젝트를 하려면 해당 컨테이너가 바이너리를 바인드 마운트 해야 제대로 접근가능한 경우들이 있다.</li>
+</ol>
+
+<h4 id="죽은-컨테이너를-대상으로-테스트-할-수-없다">죽은 컨테이너를 대상으로 테스트 할 수 없다.</h4>
+
+<p>말 그대로 죽은 컨테이너를 대상으로 쓸 수 없습니다. 그래서 <code>커맨드를 항상 성공하는 것으로 교체한다.</code>에서 이를 극복하는 방법을 소개 합니다.</p>
+
+<h4 id="바이너리-인젝트를-하려면-해당-컨테이너가-바이너리를-바인드-마운트-해야-제대로-접근가능한-경우들이-있다">바이너리 인젝트를 하려면 해당 컨테이너가 바이너리를 바인드 마운트 해야 제대로 접근가능한 경우들이 있다.</h4>
+
+<p>이 방법도 heapster(와 같은 scratch image)를 debugging 하려면 바로 돌리긴 힘듭니다.
+아래와 같이 /tmp/debug-tools/sh를 바로 사용할 수가 없기 때문입니다. 이건 바이너리 인젝트 방법을 바인드 마운트 방법을 쓰지 않아서 어쩔 수 없습니다.</p>
+
+<pre><code>$ debugk  heapster-heapster-65489b94b5-kjlk4 -n kube-system -c heapster
+Debug Target Container:
+  Pod:          heapster-heapster-65489b94b5-kjlk4
+  Namespace:    kube-system
+  Node:         kube-node009-nucleo-stg-jp2v-dev
+  Container:    heapster
+  Container ID: f095214821b2645f53919c4628c6d9d3019ef6c85f7f86bb7ed8d6eb6b7e5cae
+  Runtime:      docker
+
+  &quot;Installing busybox to /tmp/debug-tools ...&quot;
+waiting for debugger pod to complete (currently Pending)...
+waiting for debugger pod to complete (currently Pending)...
+waiting for debugger pod to complete (currently Pending)...
+waiting for debugger pod to complete (currently Pending)...
+waiting for debugger pod to complete (currently Running)...
+waiting for debugger pod to complete (currently Running)...
+waiting for debugger pod to complete (currently Running)...
+waiting for debugger pod to complete (currently Running)...
+pod &quot;debugger-st86p&quot; deleted
+Installation complete.
+To debug heapster-heapster-65489b94b5-kjlk4, run:
+    kubectl --namespace=kube-system exec -i -t heapster-heapster-65489b94b5-kjlk4 -c heapster -- /tmp/debug-tools/sh -c 'PATH=${PATH}:/tmp/debug-tools sh'
+Dumping you into the pod container now.
+
+OCI runtime exec failed: exec failed: container_linux.go:348: starting container process caused &quot;exec: \&quot;/tmp/debug-tools/sh\&quot;: stat /tmp/debug-tools/sh: no such file or directory&quot;: unknown
+command terminated with exit code 126
+</code></pre>
+
+<p>대신 아래와 같은 방법으로 <code>/tmp/debug-tools/busybox sh</code> 와 같은 방법으로 busybox를 바로 호출하는식으로 사용하면 접근이 가능합니다.</p>
+
+<pre><code>$ kubectl --namespace=kube-system exec -i -t heapster-heapster-65489b94b5-kjlk4 -c heapster -- /tmp/debug-tools/busybox sh
+/ $
+</code></pre>
+
+<h3 id="커맨드를-항상-성공하는-것으로-교체한다">커맨드를 항상 성공하는 것으로 교체한다.</h3>
+
+<p>띄우기만 해도 실패하는 pod을 디버깅 하기 위해서는 커맨드를 교체해야 합니다. 우선 가장 효용성이 좋은건 아무래도 <code>sleep</code>입니다. sleep인 pod에 다른 자신이 원하는 커맨드들을 실행시켜서 결과를 보기 용이 하기 때문입니다.</p>
+
+<p>하지만 커맨드를 교체할때 <code>sleep</code>과 같은 커맨드가 있어야 함으로 미리 위와같이 debug tool을 심어야 하는 경우들이 있습니다.</p>
+
+<p>또한 커맨드를 교체하면 기존에 떠있는 팟들이 전체가 수정되야 하는 불편함이 있으니, 하나의 pod을 복사해서 새로 띄워서 사용하도록 합니다. 그리고 팟이 떴을때 문제가 될만한 소지가 있는 부분들을 수정, 제거 합니다.</p>
+
+<p>제거하는 값들은 다음과 같습니다.</p>
+
+<ul>
+<li>.metadata.ownerReferences (replica set 종속성에서 띄어내서 서비스에 속하지 않는 pod으로 설정하도록 함)</li>
+<li>.metadata.selfLink</li>
+<li>.metadata.generateName</li>
+<li>.metadata.labels.pod-template-hash</li>
+<li>.spec.nodeName (이전 노드와 다른 노드에도 스케쥴링이 가능하도록 유도 예를 들어 포트 충돌 회피)</li>
+<li>.spec.containers[].livenessProbe (헬스체크 실패해도 영향 없도록)</li>
+<li>.spec.containers[].readinessProbe</li>
+<li>.status</li>
+</ul>
+
+<p>수정하는 값들은 다음과 같습니다.</p>
+
+<ul>
+<li>.metadata.name (기존 pod과 이름을 다르게 함)</li>
+<li>.spec.initContainers (busybox binary inject)</li>
+<li>.spec.containers[].command (sleep command)</li>
+<li>.spec.containers[].volumeMounts (busybox binary inject)</li>
+<li>.spec.volumes (busybox binary inject)</li>
+<li>.spec.volumes[].persistentVolumeClaim (pvc에 동시접근을 막도록 emptyDir로 변경)</li>
+</ul>
+
+<p>아래 스크립트는 <a href="https://gist.github.com/leoh0/0af21e5839a1ee7a799e8b2b40603ecd">여기</a>를 참고하셔도 됩니다.</p>
+
+<p>자세한 코드는 아래와 같습니다. 이 코드를 실행가능한 곳에 <code>debugdead.py</code> 와 같이 저장해 둡니다.</p>
+
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#007f7f">#!/usr/bin/env python</span>
+
+<span style="color:#fff;font-weight:bold">import</span> argparse
+<span style="color:#fff;font-weight:bold">import</span> os
+<span style="color:#fff;font-weight:bold">import</span> subprocess
+<span style="color:#fff;font-weight:bold">import</span> sys
+<span style="color:#fff;font-weight:bold">import</span> uuid
+<span style="color:#fff;font-weight:bold">from</span> tempfile <span style="color:#fff;font-weight:bold">import</span> NamedTemporaryFile
+
+<span style="color:#fff;font-weight:bold">import</span> yaml
+
+
+<span style="color:#fff;font-weight:bold">def</span> main():
+    parser = argparse.ArgumentParser(description=<span style="color:#0ff;font-weight:bold">&#39;Dead container rising.&#39;</span>)
+    parser.add_argument(<span style="color:#0ff;font-weight:bold">&#39;pod&#39;</span>, <span style="color:#fff;font-weight:bold">type</span>=<span style="color:#fff;font-weight:bold">str</span>,
+                        help=<span style="color:#0ff;font-weight:bold">&#39;target pod name&#39;</span>)
+    parser.add_argument(<span style="color:#0ff;font-weight:bold">&#39;-n&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;--namespace&#39;</span>, <span style="color:#fff;font-weight:bold">type</span>=<span style="color:#fff;font-weight:bold">str</span>,
+                        default=<span style="color:#0ff;font-weight:bold">&#39;default&#39;</span>,
+                        help=<span style="color:#0ff;font-weight:bold">&#39;target namespace (default: default)&#39;</span>)
+    parser.add_argument(<span style="color:#0ff;font-weight:bold">&#39;-c&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;--container&#39;</span>, <span style="color:#fff;font-weight:bold">type</span>=<span style="color:#fff;font-weight:bold">str</span>,
+                        default=<span style="color:#0ff;font-weight:bold">&#39;&#39;</span>,
+                        help=<span style="color:#0ff;font-weight:bold">&#39;target container name&#39;</span>)
+    parser.add_argument(<span style="color:#0ff;font-weight:bold">&#39;-k&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;--keep&#39;</span>, action=<span style="color:#0ff;font-weight:bold">&#34;store_true&#34;</span>,
+                        help=<span style="color:#0ff;font-weight:bold">&#39;keep yaml&#39;</span>)
+
+    args = parser.parse_args()
+    container_name = args.container
+
+    kwargs = {}
+    kwargs.setdefault(<span style="color:#0ff;font-weight:bold">&#39;stdout&#39;</span>, subprocess.PIPE)
+    kwargs.setdefault(<span style="color:#0ff;font-weight:bold">&#39;stderr&#39;</span>, subprocess.STDOUT)
+    kwargs.setdefault(<span style="color:#0ff;font-weight:bold">&#39;encoding&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;utf8&#39;</span>)
+    kwargs.setdefault(<span style="color:#0ff;font-weight:bold">&#39;universal_newlines&#39;</span>, True)
+    kwargs[<span style="color:#0ff;font-weight:bold">&#39;env&#39;</span>] = os.environ.copy()
+
+    command = [<span style="color:#0ff;font-weight:bold">&#39;kubectl&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;get&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;pods&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;-n&#39;</span>, args.namespace,
+               args.pod, <span style="color:#0ff;font-weight:bold">&#34;--export=true&#34;</span>, <span style="color:#0ff;font-weight:bold">&#34;-o&#34;</span>, <span style="color:#0ff;font-weight:bold">&#34;yaml&#34;</span>]
+    pipe = subprocess.Popen(command, **kwargs)
+    output, _ = pipe.communicate()
+
+    <span style="color:#fff;font-weight:bold">try</span>:
+        data = yaml.load(output)
+    <span style="color:#fff;font-weight:bold">except</span> yaml.YAMLError <span style="color:#fff;font-weight:bold">as</span> exc:
+        <span style="color:#fff;font-weight:bold">print</span>(exc)
+
+    <span style="color:#fff;font-weight:bold">if</span> <span style="color:#0ff;font-weight:bold">&#39;metadata&#39;</span> not in data:
+        <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;There is no pod&#34;</span>)
+        <span style="color:#fff;font-weight:bold">return</span>
+
+    data[<span style="color:#0ff;font-weight:bold">&#39;metadata&#39;</span>].pop(<span style="color:#0ff;font-weight:bold">&#39;ownerReferences&#39;</span>, None)
+    data[<span style="color:#0ff;font-weight:bold">&#39;metadata&#39;</span>].pop(<span style="color:#0ff;font-weight:bold">&#39;selfLink&#39;</span>, None)
+    name = <span style="color:#0ff;font-weight:bold">&#34;debug-&#34;</span>
+    <span style="color:#fff;font-weight:bold">if</span> <span style="color:#0ff;font-weight:bold">&#39;generateName&#39;</span> in data[<span style="color:#0ff;font-weight:bold">&#39;metadata&#39;</span>]:
+        name += data[<span style="color:#0ff;font-weight:bold">&#39;metadata&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;generateName&#39;</span>]
+        name += <span style="color:#fff;font-weight:bold">str</span>(uuid.uuid4())[:<span style="color:#ff0;font-weight:bold">5</span>]
+    <span style="color:#fff;font-weight:bold">else</span>:
+        name += data[<span style="color:#0ff;font-weight:bold">&#39;metadata&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>]
+        name += <span style="color:#fff;font-weight:bold">str</span>(uuid.uuid4())[:<span style="color:#ff0;font-weight:bold">5</span>]
+    data[<span style="color:#0ff;font-weight:bold">&#39;metadata&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>] = name
+    data[<span style="color:#0ff;font-weight:bold">&#39;metadata&#39;</span>].pop(<span style="color:#0ff;font-weight:bold">&#39;generateName&#39;</span>, None)
+    <span style="color:#fff;font-weight:bold">if</span> data[<span style="color:#0ff;font-weight:bold">&#39;metadata&#39;</span>].get(<span style="color:#0ff;font-weight:bold">&#39;labels&#39;</span>):
+        data[<span style="color:#0ff;font-weight:bold">&#39;metadata&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;labels&#39;</span>].pop(<span style="color:#0ff;font-weight:bold">&#39;pod-template-hash&#39;</span>, None)
+
+    <span style="color:#fff;font-weight:bold">if</span> not data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>].get(<span style="color:#0ff;font-weight:bold">&#39;initContainers&#39;</span>):
+        data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;initContainers&#39;</span>] = []
+
+    data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>].pop(<span style="color:#0ff;font-weight:bold">&#39;nodeName&#39;</span>, None)
+
+    initcontainer = {}
+    initcontainer[<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>] = <span style="color:#0ff;font-weight:bold">&#39;init-debugger&#39;</span>
+    initcontainer[<span style="color:#0ff;font-weight:bold">&#39;image&#39;</span>] = <span style="color:#0ff;font-weight:bold">&#39;busybox&#39;</span>
+    initcontainer[<span style="color:#0ff;font-weight:bold">&#39;command&#39;</span>] = [<span style="color:#0ff;font-weight:bold">&#39;cp&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;/bin/busybox&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;/tmp/mydebug/busybox&#39;</span>]
+    initcontainer[<span style="color:#0ff;font-weight:bold">&#39;volumeMounts&#39;</span>] = [
+        {<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;mydebug&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;mountPath&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;/tmp/mydebug/&#39;</span>}]
+
+    data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;initContainers&#39;</span>].append(initcontainer)
+
+    real_command = <span style="color:#0ff;font-weight:bold">&#39;&#39;</span>
+    <span style="color:#fff;font-weight:bold">for</span> c in data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;containers&#39;</span>]:
+        <span style="color:#fff;font-weight:bold">if</span> container_name == <span style="color:#0ff;font-weight:bold">&#39;&#39;</span> or c[<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>] == container_name:
+            <span style="color:#fff;font-weight:bold">if</span> <span style="color:#0ff;font-weight:bold">&#39;command&#39;</span> in c:
+                real_command = <span style="color:#0ff;font-weight:bold">&#34; &#34;</span>.join(c[<span style="color:#0ff;font-weight:bold">&#39;command&#39;</span>])
+
+            c[<span style="color:#0ff;font-weight:bold">&#39;command&#39;</span>] = [
+                <span style="color:#0ff;font-weight:bold">&#39;/bin/busybox&#39;</span>,
+                <span style="color:#0ff;font-weight:bold">&#39;sh&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;-c&#39;</span>,
+                <span style="color:#0ff;font-weight:bold">&#39;/bin/busybox --install -s /tmp/mydebug/ &amp;&amp; &#39;</span>
+                <span style="color:#0ff;font-weight:bold">&#39;/tmp/mydebug/sleep 86400&#39;</span>]
+            <span style="color:#fff;font-weight:bold">if</span> <span style="color:#0ff;font-weight:bold">&#39;volumeMounts&#39;</span> not in c:
+                c[<span style="color:#0ff;font-weight:bold">&#39;volumeMounts&#39;</span>] = []
+            c[<span style="color:#0ff;font-weight:bold">&#39;volumeMounts&#39;</span>].append(
+                {<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;insert-busybox&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;mountPath&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;/tmp/mydebug/&#39;</span>})
+            c[<span style="color:#0ff;font-weight:bold">&#39;volumeMounts&#39;</span>].append(
+                {<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;mydebug-busybox&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;mountPath&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;/bin/busybox&#39;</span>})
+
+            c.pop(<span style="color:#0ff;font-weight:bold">&#39;livenessProbe&#39;</span>, None)
+            c.pop(<span style="color:#0ff;font-weight:bold">&#39;readinessProbe&#39;</span>, None)
+            <span style="color:#fff;font-weight:bold">if</span> container_name == <span style="color:#0ff;font-weight:bold">&#39;&#39;</span>:
+                container_name = c[<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>]
+            <span style="color:#fff;font-weight:bold">break</span>
+    <span style="color:#fff;font-weight:bold">else</span>:
+        <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;Error: can not found </span><span style="color:#0ff;font-weight:bold">%s</span><span style="color:#0ff;font-weight:bold">&#34;</span> % container_name)
+
+    <span style="color:#fff;font-weight:bold">if</span> <span style="color:#0ff;font-weight:bold">&#39;volumes&#39;</span> not in data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>]:
+        data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;volumes&#39;</span>] = []
+    <span style="color:#fff;font-weight:bold">for</span> v in data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;volumes&#39;</span>]:
+        <span style="color:#fff;font-weight:bold">if</span> v.get(<span style="color:#0ff;font-weight:bold">&#39;persistentVolumeClaim&#39;</span>, None):
+            v.pop(<span style="color:#0ff;font-weight:bold">&#39;persistentVolumeClaim&#39;</span>, None)
+            v[<span style="color:#0ff;font-weight:bold">&#39;emptyDir&#39;</span>] = {}
+
+    data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;volumes&#39;</span>].append(
+        {<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;insert-busybox&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;emptyDir&#39;</span>: {}})
+    data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;volumes&#39;</span>].append(
+        {<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;mydebug&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;hostPath&#39;</span>: {<span style="color:#0ff;font-weight:bold">&#39;path&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;/tmp/mydebug/&#39;</span>}})
+    data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;volumes&#39;</span>].append(
+        {<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;mydebug-busybox&#39;</span>,
+         <span style="color:#0ff;font-weight:bold">&#39;hostPath&#39;</span>: {<span style="color:#0ff;font-weight:bold">&#39;path&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;/tmp/mydebug/busybox&#39;</span>}})
+
+    data.pop(<span style="color:#0ff;font-weight:bold">&#39;status&#39;</span>, None)
+
+    <span style="color:#fff;font-weight:bold">file</span> = NamedTemporaryFile(suffix=<span style="color:#0ff;font-weight:bold">&#39;.yaml&#39;</span>, delete=False)
+
+    yamlfile = yaml.dump(data, None, canonical=True)
+    <span style="color:#fff;font-weight:bold">file</span>.write(yamlfile.encode(<span style="color:#0ff;font-weight:bold">&#39;utf8&#39;</span>))
+    <span style="color:#fff;font-weight:bold">file</span>.close()
+
+    command2 = [<span style="color:#0ff;font-weight:bold">&#39;kubectl&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;create&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;-n&#39;</span>, args.namespace, <span style="color:#0ff;font-weight:bold">&#39;-f&#39;</span>, <span style="color:#fff;font-weight:bold">file</span>.name]
+    pipe = subprocess.Popen(command2, **kwargs)
+    output, _ = pipe.communicate()
+    <span style="color:#fff;font-weight:bold">if</span> args.keep:
+        <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;Check this changed pod yaml:&#34;</span>)
+        <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#fff;font-weight:bold">file</span>.name)
+    <span style="color:#fff;font-weight:bold">else</span>:
+        os.unlink(<span style="color:#fff;font-weight:bold">file</span>.name)
+
+    <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;To debug </span><span style="color:#0ff;font-weight:bold">%s</span><span style="color:#0ff;font-weight:bold">, wait some second and run:&#34;</span> % args.pod)
+    <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;    kubectl exec -ti </span><span style="color:#0ff;font-weight:bold">%s</span><span style="color:#0ff;font-weight:bold"> -n </span><span style="color:#0ff;font-weight:bold">%s</span><span style="color:#0ff;font-weight:bold"> &#34;</span>
+          <span style="color:#0ff;font-weight:bold">&#34;-c </span><span style="color:#0ff;font-weight:bold">%s</span><span style="color:#0ff;font-weight:bold"> -- /tmp/mydebug/sh &#34;</span>
+          <span style="color:#0ff;font-weight:bold">&#34;-c </span><span style="color:#0ff;font-weight:bold">\&#34;</span><span style="color:#0ff;font-weight:bold">PATH=\$PATH:/tmp/mydebug/ sh</span><span style="color:#0ff;font-weight:bold">\&#34;</span><span style="color:#0ff;font-weight:bold">&#34;</span> %
+          (name, args.namespace, container_name))
+
+    <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;&#34;</span>)
+    <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;If you want to run </span><span style="color:#0ff;font-weight:bold">%s</span><span style="color:#0ff;font-weight:bold"> container&#39;s command&#34;</span>
+          <span style="color:#0ff;font-weight:bold">&#34; then check below command&#34;</span> % args.pod)
+    <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;    &#34;</span> + real_command)
+    <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;&#34;</span>)
+    <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;After finish debugging please delete debugging container:&#34;</span>)
+    <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;    kubectl delete pods </span><span style="color:#0ff;font-weight:bold">%s</span><span style="color:#0ff;font-weight:bold"> -n </span><span style="color:#0ff;font-weight:bold">%s</span><span style="color:#0ff;font-weight:bold"> &#34;</span> %
+          (name, args.namespace))
+
+
+<span style="color:#fff;font-weight:bold">if</span> __name__ == <span style="color:#0ff;font-weight:bold">&#39;__main__&#39;</span>:
+    sys.<span style="color:#fff;font-weight:bold">exit</span>(main())</code></pre></div>
+
+<p>위의 스크립트를 <code>debugdead.py</code>라고 준비해서 실행할 수 있게 해두고 아래와 같이 사용합니다.</p>
+
+<pre><code>```
+debugdead.py POD_NAME [-n POD_NAMESPACE -c CONTAINER_NAME];
+```
+</code></pre>
+
+<p>실제 사용예 입니다. 저는 왠만한 모든 cli에 <a href="https://github.com/junegunn/fzf">fzf</a> 를 붙여서 UI(item select)로 사용합니다.</p>
+
+<p>아래와 같이 스크립트를 준비해서 사용합니다. 아래 커맨드는 pod들을 컨테이너가 기준으로 분리해서 상태가 running 인것과 아닌것을 출력시키고 이를 fzf 로 선택하도록 합니다.
+이 후 그 결과값을 위의 스크립트에 전달해서 사용합니다.</p>
+
+<p><div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kdd ()
+{
+    pods=<span style="color:#fff;font-weight:bold">$(</span>kubectl get pods --all-namespaces -o=go-template=<span style="color:#0ff;font-weight:bold">&#39;
+</span><span style="color:#0ff;font-weight:bold">      {{ range .items }}
+</span><span style="color:#0ff;font-weight:bold">        {{$metadata:=.metadata}}
+</span><span style="color:#0ff;font-weight:bold">        {{$status:=.status}}
+</span><span style="color:#0ff;font-weight:bold">        {{ range .spec.containers }}
+</span><span style="color:#0ff;font-weight:bold">          {{$name:=.name}}
+</span><span style="color:#0ff;font-weight:bold">          {{ range $status.containerStatuses }}
+</span><span style="color:#0ff;font-weight:bold">            {{ if eq .name $name }}
+</span><span style="color:#0ff;font-weight:bold">              {{ range $key, $value := .state }}
+</span><span style="color:#0ff;font-weight:bold">                {{- printf &#34;%v %v %v %v\n&#34; $metadata.namespace $metadata.name $name $key }}
+</span><span style="color:#0ff;font-weight:bold">              {{ end }}
+</span><span style="color:#0ff;font-weight:bold">            {{ end }}
+</span><span style="color:#0ff;font-weight:bold">          {{ end }}
+</span><span style="color:#0ff;font-weight:bold">        {{ end }}
+</span><span style="color:#0ff;font-weight:bold">      {{ end }}&#39;</span> | column -t | sed <span style="color:#0ff;font-weight:bold">&#39;1d&#39;</span> | <span style="color:#0ff;font-weight:bold">\
+</span><span style="color:#0ff;font-weight:bold"></span>        fzf -x -e +s --reverse --no-mouse | awk <span style="color:#0ff;font-weight:bold">&#39;{print $1&#34;,&#34;$2&#34;,&#34;$3}&#39;</span><span style="color:#fff;font-weight:bold">)</span>;
+    <span style="color:#fff;font-weight:bold">if</span> [[ $pods != <span style="color:#0ff;font-weight:bold">&#34;&#34;</span> ]]; <span style="color:#fff;font-weight:bold">then</span>
+        namespace=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">${</span>pods<span style="color:#0ff;font-weight:bold">}</span> | cut -d<span style="color:#0ff;font-weight:bold">&#39;,&#39;</span> -f1<span style="color:#fff;font-weight:bold">)</span>;
+        name=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">${</span>pods<span style="color:#0ff;font-weight:bold">}</span> | cut -d<span style="color:#0ff;font-weight:bold">&#39;,&#39;</span> -f2<span style="color:#fff;font-weight:bold">)</span>;
+        container=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">${</span>pods<span style="color:#0ff;font-weight:bold">}</span> | cut -d<span style="color:#0ff;font-weight:bold">&#39;,&#39;</span> -f3<span style="color:#fff;font-weight:bold">)</span>;
+        debugdead.py <span style="color:#0ff;font-weight:bold">${</span>name<span style="color:#0ff;font-weight:bold">}</span> -n <span style="color:#0ff;font-weight:bold">${</span>namespace<span style="color:#0ff;font-weight:bold">}</span> -c <span style="color:#0ff;font-weight:bold">${</span>container<span style="color:#0ff;font-weight:bold">}</span> $@;
+    <span style="color:#fff;font-weight:bold">fi</span>
+}</code></pre></div></p>
+
+<p>이후 아래처럼 입력해서 디버깅할 pod을 찾으면 아래처럼 출력됩니다.</p>
+
+<pre><code>$ kdd
+To debug heapster-heapster-65489b94b5-kjlk4, wait some second and run:
+    kubectl exec -ti debug-heapster-heapster-65489b94b5-2fea7 -n kube-system -c heapster -- /tmp/mydebug/sh -c &quot;PATH=\$PATH:/tmp/mydebug/ sh&quot;
+
+If you want to run heapster-heapster-65489b94b5-kjlk4 container's command then check below command
+    /heapster --source=kubernetes:https://kubernetes.default --sink=influxdb:http://influxdb-influxdb.kube-system.svc:8086 --store-label=nucleo_app=nucleo.app,nucleo_config=nucleo.config,nucleo_service=nucleo.service
+
+After finish debugging please delete debugging container:
+    kubectl delete pods debug-heapster-heapster-65489b94b5-2fea7 -n kube-system
+</code></pre>
+
+<p>우선은 잠깐 생성이 안됐을때는 아래처럼 실패할겁니다.
+debugging pod이 뜰 수 있도록 조금 기다려 준 후에 접근 합니다.</p>
+
+<pre><code>$ kubectl exec -ti debug-heapster-heapster-65489b94b5-2fea7 -n kube-system -c heapster -- /tmp/mydebug/sh -c &quot;PATH=\$PATH:/tmp/mydebug/ sh&quot;
+error: unable to upgrade connection: container not found (&quot;heapster&quot;)
+$ kubectl exec -ti debug-heapster-heapster-65489b94b5-2fea7 -n kube-system -c heapster -- /tmp/mydebug/sh -c &quot;PATH=\$PATH:/tmp/mydebug/ sh&quot;
+/ $
+</code></pre>
+
+<p>이후 원하는 커맨드를 실행해서 기존 죽은 팟의 문제점을 찾도록 합니다.</p>
+
+<p>자세한 과정은 아래를 참고해서 보시면 됩니다.</p>
+
+<script src="https://asciinema.org/a/rwE73RWEJdJWdv5TnJZMZmmQm.js" id="asciicast-rwE73RWEJdJWdv5TnJZMZmmQm" async></script>
+
+<h1 id="결론">결론</h1>
+
+<p>살아있는 팟을 디버깅할 수 있는 툴들도 많지만 죽은 이유를 알아내야 할때는 아래 정도로 정리하면 좋을 것 같습니다.</p>
+
+<ol>
+<li>log 확인 log가 없으면 log -p 를 사용해서 이전 컨테이너 로그까지 확인 (없으면 추가적으로 kubelet log, docker log, controller manager log 등도 확인)</li>
+<li>describe를 이용해 message, event 등을 보고 파악함</li>
+<li>debug tool이 없는 scratch image일 경우 바이너리를 인젝션 시켜서 사용할 수 있도록 함</li>
+<li>커맨드가 지속적으로 실패하는 팟은 팟을 복사해서 커맨드만 교체해서 테스트 할 수 있도록 함</li>
+</ol>
+
+<p>긴 글 읽어주셔서 감사합니다.</p>
+
+    </div>
+    
+      <article>
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leoh0githubio" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </article>
+    
+    <footer>
+      <hr>
+      <p>
+  Published
+  
+    
+      by <span itemprop="author">leoh0</span>
+    
+  
+  <time itemprop="datePublished" datetime="2018-08-08T04:09:48&#43;09:00">
+    8 Aug, 2018
+  </time>
+  
+    in <span itemprop="articleSection"><a href="/categories/technology/">technology</a></span>
+  
+  
+    and tagged <a href="/tags/crashloopbackoff/">CrashLoopBackOff</a>, <a href="/tags/container/">container</a>, <a href="/tags/dead/">dead</a>, <a href="/tags/debug/">debug</a>, <a href="/tags/k8s/">k8s</a> and <a href="/tags/kubernetes/">kubernetes</a>
+  
+  using <span itemprop="wordCount">1999</span> words.
+</p>
+
+      
+
+
+  <aside>
+    <header>Related Content</header>
+    <ul>
+      
+        <li><a href="/post/2017-07-27-k8s-tools-for-watching-log-and-login-multiple-containers/">k8s tools for watching log and login to multiple containers</a>
+        <time datetime="2M">2 minutes</time>
+      
+        <li><a href="/post/2018-05-21-immutable-kubernetes/">immutable kubernetes by linuxkit</a>
+        <time datetime="11M">11 minutes</time>
+      
+        <li><a href="/post/2018-04-07-how-to-make-unofficial-kubernetes-pdf-documents-2/">how to make unofficial kubernetes pdf documents 2</a>
+        <time datetime="3M">3 minutes</time>
+      
+        <li><a href="/post/2017-10-23-how-to-make-unofficial-kubernetes-pdf-documents/">how to make unofficial kubernetes pdf documents</a>
+        <time datetime="3M">3 minutes</time>
+      
+        <li><a href="/post/2016-10-13-install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/">Install openstack on macos Sierra using kolla-kubernetes with xhyve</a>
+        <time datetime="1M">1 minutes</time>
+      
+    </ul>
+  </aside>
+
+
+    </footer>
+  </article>
+</main>
+    <footer>
+  
+
+</footer>
+  </body>
+</html>

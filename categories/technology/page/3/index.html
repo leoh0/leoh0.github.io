@@ -25,7 +25,7 @@
 
 
 
-<meta property="og:updated_time" content="2015-02-05T17:21:56&#43;09:00"/>
+<meta property="og:updated_time" content="2015-02-11T17:12:39&#43;09:00"/>
 
 
 
@@ -175,6 +175,45 @@ img {
   <header>
     <h1>Technology</h1>
   </header>
+  
+    <article itemscope itemtype="http://schema.org/CreativeWork">
+  <header>
+    <h2 itemprop="name">
+      <a href="/post/2015-02-11-build-openstack-node-using-just-1-nic/">NIC 1개로 compute node를 vlan type으로 neutron을 사용하여 구성하기 위한 팁</a>
+    </h2>
+    
+      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <circle cx="16" cy="16" r="14" />
+  <path d="M16 8 L16 16 20 20" />
+</svg>
+<span>1 minute read</span>
+<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+</svg>
+
+  Published: <time datetime="2015-02-11T17:12:39&#43;09:00">11 Feb, 2015</time>
+
+</p>
+    
+  </header>
+  
+  <div itemprop="description">
+    gre 같은 tunnel 을 사용한다면 NIC 하나로 구성 할 수 있겠지만 그게 아니라면 일반적으로는 management 용 NIC 한개와 service 용 NIC 한개가 필요하다.
+우선 아래와 같은 상태가 2 NIC을 사용하는 일반적인 구성이다.
+그림 처럼 eth0은 management를 위한 ip로 이용되며 eth1을 guest interface(vlan 이라면 0.0.0.0)로 사용할 수 있다.
+  단도직입적으로 ethernet 한개로는 아래와 같이 구성하면 된다.
+우선 eth0은 0.0.0.0 으로 ip를 사용안하는 대신 br0 부분에서 기존의 management용 ip를 가져간다.
+  아래와 같은 흐름으로 진행하면 된다.
+  </div>
+  
+    <nav class="readmore"><a itemprop="url" href="/post/2015-02-11-build-openstack-node-using-just-1-nic/">Read More&nbsp;&raquo;</a></nav>
+  
+  <meta itemprop="inLanguage" content="en-US">
+  <meta itemprop="datePublished" content="2015-02-11T17:12:39&#43;09:00">
+  <meta itemprop="dateModified" content="2015-02-11T17:12:39&#43;09:00">
+  
+</article>
+
   
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>

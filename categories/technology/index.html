@@ -25,7 +25,7 @@
 
 
 
-<meta property="og:updated_time" content="2018-08-07T21:25:37&#43;09:00"/>
+<meta property="og:updated_time" content="2018-08-08T04:09:48&#43;09:00"/>
 
 
 
@@ -175,6 +175,48 @@ img {
   <header>
     <h1>Technology</h1>
   </header>
+  
+    <article itemscope itemtype="http://schema.org/CreativeWork">
+  <header>
+    <h2 itemprop="name">
+      <a href="/post/2018-08-04-how-to-debug-dead-container-in-k8s/">How to Debug Dead Container in K8s</a>
+    </h2>
+    
+      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <circle cx="16" cy="16" r="14" />
+  <path d="M16 8 L16 16 20 20" />
+</svg>
+<span>10 minute read</span>
+<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+</svg>
+
+  Published: <time datetime="2018-08-08T04:09:48&#43;09:00">8 Aug, 2018</time>
+
+</p>
+    
+  </header>
+  
+    <blockquote itemprop="headline">till CrashLoopBackOff do us part</blockquote>
+  
+  <div itemprop="description">
+    Bugs happen. That&rsquo;s a fact of life.
+&ldquo;ABSOLUTELY THE MOST IMPORTANT THING IN THE UNIVERSE WHEN IT COMES TO SOFTWARE DEVELOPMENT&rdquo;, linus
+ k8s에서 pod 을 debugging 하는 일반적인 방법들  Everyone knows that debugging is twice as hard as writing a program in the first place.
+“The Elements of Programming Style”, 2nd edition
+ 우리는 소프트웨어는 언제나 문제가 생길 수 있다는 것을 알고 있고 많은 문제들을 debugging 을 통해서 해결합니다.
+  </div>
+  
+    <nav class="readmore"><a itemprop="url" href="/post/2018-08-04-how-to-debug-dead-container-in-k8s/">Read More&nbsp;&raquo;</a></nav>
+  
+  <meta itemprop="inLanguage" content="en-US">
+  <meta itemprop="datePublished" content="2018-08-08T04:09:48&#43;09:00">
+  <meta itemprop="dateModified" content="2018-08-08T04:09:48&#43;09:00">
+  
+    <meta itemprop="image" content="https://source.unsplash.com/collection/983219/1600x900">
+  
+</article>
+
   
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
@@ -546,47 +588,6 @@ openstack rc file (normal version) 예를 들면 아래는 일반적으로 사�
   <meta itemprop="inLanguage" content="en-US">
   <meta itemprop="datePublished" content="2016-05-10T01:08:56&#43;09:00">
   <meta itemprop="dateModified" content="2016-05-10T01:08:56&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2016-04-27-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossdamyeon-dot/">keystone에서 token backend로 사용하는 memcached가 unbalanced되었다..</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>3 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2016-04-27T00:00:45&#43;09:00">27 Apr, 2016</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    해당 클러스터는 kilo 버전으로 구성 되었었고 token 을 memcached 에 저장하고 있었다.
-또한 kilo 부터 dogpile.cache 는 거의 고정으로 들어가 있가 있어서 해당 모듈을 사용했다.
-이런 상황을 디버깅 했던 경험을 정리해 본다.
-아래는 문제가 되었던 memcached host의 in/out bound 그래프이다.
-수치는 가려서 스케일만 감으로 볼 수 있게 남겼다.
-A 서버   A 서버  
-B 서버   B 서버  
-최초엔 keystone과 memcached connection 이 unbalance 할것이라고 생각했으나 그런 정황은 없었다.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2016-04-27-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossdamyeon-dot/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2016-04-27T00:00:45&#43;09:00">
-  <meta itemprop="dateModified" content="2016-04-27T00:00:45&#43;09:00">
   
 </article>
 

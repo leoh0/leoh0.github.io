@@ -6,10 +6,23 @@
     <description>Recent content in Posts on &gt; /dev/null</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Tue, 07 Aug 2018 21:25:37 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 08 Aug 2018 04:09:48 +0900</lastBuildDate>
     
 	<atom:link href="https://leoh0.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How to Debug Dead Container in K8s</title>
+      <link>https://leoh0.github.io/post/2018-08-04-how-to-debug-dead-container-in-k8s/</link>
+      <pubDate>Wed, 08 Aug 2018 04:09:48 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/post/2018-08-04-how-to-debug-dead-container-in-k8s/</guid>
+      <description>Bugs happen. That&amp;rsquo;s a fact of life.
+&amp;ldquo;ABSOLUTELY THE MOST IMPORTANT THING IN THE UNIVERSE WHEN IT COMES TO SOFTWARE DEVELOPMENT&amp;rdquo;, linus
+ k8s에서 pod 을 debugging 하는 일반적인 방법들  Everyone knows that debugging is twice as hard as writing a program in the first place.
+“The Elements of Programming Style”, 2nd edition
+ 우리는 소프트웨어는 언제나 문제가 생길 수 있다는 것을 알고 있고 많은 문제들을 debugging 을 통해서 해결합니다.</description>
+    </item>
     
     <item>
       <title>Kubernetes dedicated node pattern for Daemonsets</title>

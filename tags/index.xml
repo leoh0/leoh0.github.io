@@ -167,7 +167,7 @@
     <item>
       <title>Container</title>
       <link>https://leoh0.github.io/tags/container/</link>
-      <pubDate>Thu, 27 Jul 2017 00:58:28 +0900</pubDate>
+      <pubDate>Wed, 08 Aug 2018 04:09:48 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/container/</guid>
       <description></description>
@@ -183,11 +183,38 @@
     </item>
     
     <item>
+      <title>Crashloopbackoff</title>
+      <link>https://leoh0.github.io/tags/crashloopbackoff/</link>
+      <pubDate>Wed, 08 Aug 2018 04:09:48 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/crashloopbackoff/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Daemonset</title>
       <link>https://leoh0.github.io/tags/daemonset/</link>
       <pubDate>Tue, 07 Aug 2018 21:25:37 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/daemonset/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Dead</title>
+      <link>https://leoh0.github.io/tags/dead/</link>
+      <pubDate>Wed, 08 Aug 2018 04:09:48 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/dead/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Debug</title>
+      <link>https://leoh0.github.io/tags/debug/</link>
+      <pubDate>Wed, 08 Aug 2018 04:09:48 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/debug/</guid>
       <description></description>
     </item>
     
@@ -356,7 +383,7 @@
     <item>
       <title>K8s</title>
       <link>https://leoh0.github.io/tags/k8s/</link>
-      <pubDate>Mon, 21 May 2018 00:55:10 +0900</pubDate>
+      <pubDate>Wed, 08 Aug 2018 04:09:48 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/k8s/</guid>
       <description></description>
@@ -392,7 +419,7 @@
     <item>
       <title>Kubernetes</title>
       <link>https://leoh0.github.io/tags/kubernetes/</link>
-      <pubDate>Tue, 07 Aug 2018 21:25:37 +0900</pubDate>
+      <pubDate>Wed, 08 Aug 2018 04:09:48 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/kubernetes/</guid>
       <description></description>

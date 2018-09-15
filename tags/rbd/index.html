@@ -179,7 +179,7 @@ img {
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
     <h2 itemprop="name">
-      <a href="/post/2018-09-09-how-to-migrate-ceph-rbd-to-csi-ceph-rbd/">How to Migrate Ceph RBD to CSI Ceph RBD in K8S</a>
+      <a href="/post/2018-09-09-how-to-migrate-ceph-rbd-to-csi-ceph-rbd-in-k8s/">How to Migrate Ceph RBD to CSI Ceph RBD in K8S</a>
     </h2>
     
       <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
@@ -205,7 +205,7 @@ img {
  볼륨을 생성할때는 기존에는 controller manager중에 controller가 볼륨을 생성하는식이였습니다. 예를 들어 Persistent volume claim(이하 PVC)이 들어올시 PVC를 watch 하는 controller가 이 변화를 감지하며 volume을 생성(provisioning) 했습니다. 하지만 대부분의 볼륨들을 생성 하려면 이를 위한 바이너리가 있어야 합니다.(예를 들어 ceph같은 경우 rbd 바이너리) 하지만 이런 바이너리들이 in-tree volume type들이 추가될때마다 같이 추가되면 용량이나 버전 관리에 힘든점이 있기때문에 이를 밖으로 빼서 관리하려고 했습니다.
   </div>
   
-    <nav class="readmore"><a itemprop="url" href="/post/2018-09-09-how-to-migrate-ceph-rbd-to-csi-ceph-rbd/">Read More&nbsp;&raquo;</a></nav>
+    <nav class="readmore"><a itemprop="url" href="/post/2018-09-09-how-to-migrate-ceph-rbd-to-csi-ceph-rbd-in-k8s/">Read More&nbsp;&raquo;</a></nav>
   
   <meta itemprop="inLanguage" content="en-US">
   <meta itemprop="datePublished" content="2018-09-09T11:43:14&#43;09:00">

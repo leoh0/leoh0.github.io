@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://leoh0.github.io/post/2018-09-09-how-to-migrate-ceph-rbd-to-csi-ceph-rbd/</loc>
+    <loc>https://leoh0.github.io/post/2018-09-09-how-to-migrate-ceph-rbd-to-csi-ceph-rbd-in-k8s/</loc>
     <lastmod>2018-09-09T11:43:14+09:00</lastmod>
   </url>
   

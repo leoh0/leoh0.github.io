@@ -6,10 +6,21 @@
     <description>Recent content in Posts on &gt; /dev/null</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Wed, 08 Aug 2018 04:09:48 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 09 Sep 2018 11:43:14 +0900</lastBuildDate>
     
 	<atom:link href="https://leoh0.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How to Migrate Ceph RBD to CSI Ceph RBD</title>
+      <link>https://leoh0.github.io/post/2018-09-09-how-to-migrate-ceph-rbd-to-csi-ceph-rbd/</link>
+      <pubDate>Sun, 09 Sep 2018 11:43:14 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/post/2018-09-09-how-to-migrate-ceph-rbd-to-csi-ceph-rbd/</guid>
+      <description>Container Storage Interface가 왜 필요한가 Container Storage Interface(이하 CSI)는 k8s에서 확장 가능한 볼륨 사용을 위한 현존하는 최고의 방법입니다. 기존에 방법이 무엇이 문제였는지는 2가지로 접근 가능합니다.
+ 볼륨을 생성(or 삭제)할때
+ 볼륨을 생성할때는 기존에는 controller manager중에 controller가 볼륨을 생성하는식이였습니다. 예를 들어 Persistent volume claim(이하 PVC)이 들어올시 PVC를 watch 하는 controller가 이 변화를 감지하며 volume을 생성(provisioning) 했습니다. 하지만 대부분의 볼륨들을 생성 하려면 이를 위한 바이너리가 있어야 합니다.(예를 들어 ceph같은 경우 rbd 바이너리) 하지만 이런 바이너리들이 in-tree volume type들이 추가될때마다 같이 추가되면 용량이나 버전 관리에 힘든점이 있기때문에 이를 밖으로 빼서 관리하려고 했습니다.</description>
+    </item>
     
     <item>
       <title>How to Debug Dead Container in K8s</title>

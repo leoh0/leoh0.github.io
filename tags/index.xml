@@ -95,7 +95,7 @@
     <item>
       <title>Ceph</title>
       <link>https://leoh0.github.io/tags/ceph/</link>
-      <pubDate>Fri, 16 Jan 2015 00:54:53 +0900</pubDate>
+      <pubDate>Sun, 09 Sep 2018 11:43:14 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/ceph/</guid>
       <description></description>
@@ -188,6 +188,15 @@
       <pubDate>Wed, 08 Aug 2018 04:09:48 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/crashloopbackoff/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Csi</title>
+      <link>https://leoh0.github.io/tags/csi/</link>
+      <pubDate>Sun, 09 Sep 2018 11:43:14 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/csi/</guid>
       <description></description>
     </item>
     
@@ -383,7 +392,7 @@
     <item>
       <title>K8s</title>
       <link>https://leoh0.github.io/tags/k8s/</link>
-      <pubDate>Wed, 08 Aug 2018 04:09:48 +0900</pubDate>
+      <pubDate>Sun, 09 Sep 2018 11:43:14 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/k8s/</guid>
       <description></description>
@@ -419,7 +428,7 @@
     <item>
       <title>Kubernetes</title>
       <link>https://leoh0.github.io/tags/kubernetes/</link>
-      <pubDate>Wed, 08 Aug 2018 04:09:48 +0900</pubDate>
+      <pubDate>Sun, 09 Sep 2018 11:43:14 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/kubernetes/</guid>
       <description></description>
@@ -476,6 +485,15 @@
       <pubDate>Thu, 29 Sep 2016 23:30:20 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/memcached/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Migration</title>
+      <link>https://leoh0.github.io/tags/migration/</link>
+      <pubDate>Sun, 09 Sep 2018 11:43:14 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/migration/</guid>
       <description></description>
     </item>
     
@@ -647,6 +665,15 @@
       <pubDate>Fri, 24 Apr 2015 01:08:16 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/qemu/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rbd</title>
+      <link>https://leoh0.github.io/tags/rbd/</link>
+      <pubDate>Sun, 09 Sep 2018 11:43:14 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/rbd/</guid>
       <description></description>
     </item>
     

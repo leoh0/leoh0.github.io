@@ -25,7 +25,7 @@
 
 
 
-<meta property="og:updated_time" content="2016-04-27T00:00:45&#43;09:00"/>
+<meta property="og:updated_time" content="2016-05-10T01:08:56&#43;09:00"/>
 
 
 
@@ -175,6 +175,45 @@ img {
   <header>
     <h1>Technology</h1>
   </header>
+  
+    <article itemscope itemtype="http://schema.org/CreativeWork">
+  <header>
+    <h2 itemprop="name">
+      <a href="/post/2016-05-10-management-multiple-openstack-cluster-with-automatic-openstack-rc-file-loader-script/">Management multiple openstack cluster with automatic openstack rc file loader script</a>
+    </h2>
+    
+      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <circle cx="16" cy="16" r="14" />
+  <path d="M16 8 L16 16 20 20" />
+</svg>
+<span>4 minute read</span>
+<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+</svg>
+
+  Published: <time datetime="2016-05-10T01:08:56&#43;09:00">10 May, 2016</time>
+
+</p>
+    
+  </header>
+  
+  <div itemprop="description">
+    openstack rc file 여러 openstack 클러스터를 관리하려면 openstack rc file(이하 openrc file)을 잘 관리해야한다.
+이런 관리를 위해서 supernova 와 같은 rc file 관리해주는 툴들을 사용하게 된다.
+(개인적으로 비슷한 시기에 bash로 비슷한 아이디어로 구현해서 써서 사용하진 않았지만 이러한 관리 툴이 필요하다면 supernova를 참고하면 좋을것같다.)
+이런 툴들은 기본적으로 shell에 환경변수를 추가하는 방식이기에 폴더가 변경된다고 자동으로 로딩된다기 보다는
+유저가 어떤 rc file을 사용할지 로딩하여(트리거링하여) 써야한다.
+openstack rc file (normal version) 예를 들면 아래는 일반적으로 사용하는 익숙 한 예이다.
+  </div>
+  
+    <nav class="readmore"><a itemprop="url" href="/post/2016-05-10-management-multiple-openstack-cluster-with-automatic-openstack-rc-file-loader-script/">Read More&nbsp;&raquo;</a></nav>
+  
+  <meta itemprop="inLanguage" content="en-US">
+  <meta itemprop="datePublished" content="2016-05-10T01:08:56&#43;09:00">
+  <meta itemprop="dateModified" content="2016-05-10T01:08:56&#43;09:00">
+  
+</article>
+
   
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
@@ -530,38 +569,6 @@ bridge-vlan   openvswitch-flat   openvswitch-vlan   이걸 graphviz 로 그리�
   <meta itemprop="inLanguage" content="en-US">
   <meta itemprop="datePublished" content="2015-02-24T23:29:19&#43;09:00">
   <meta itemprop="dateModified" content="2015-02-24T23:29:19&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2015-02-24-edit-vagrant-box-for-vagrant-libvirt/">edit vagrant box for vagrant-libvirt</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>1 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2015-02-24T13:22:36&#43;09:00">24 Feb, 2015</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-     check file $ file trusty64_vagrant_box_image.img trusty64_vagrant_box_image.img: QEMU QCOW Image (unknown version)  init apt-get install -qqy lvm2 modprobe nbd  attach cd /var/lib/libvirt/images qemu-nbd -c /dev/nbd0 `pwd`/trusty64_vagrant_box_image.img vgscan vgchange -ay mount /dev/mapper/vagrant--vg-root /mnt  detach cd / umount /mnt vgchange -an vagrant-vg qemu-nbd -d /dev/nbd0  
-  </div>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2015-02-24T13:22:36&#43;09:00">
-  <meta itemprop="dateModified" content="2015-02-24T13:22:36&#43;09:00">
   
 </article>
 

@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://leoh0.github.io/post/2018-10-09-kubernetes-prometheus-metric-aggregation-by-daemonset-statefulset-deployment-walkthrough/</loc>
+    <lastmod>2018-10-09T01:42:33+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://leoh0.github.io/post/2018-09-09-how-to-migrate-ceph-rbd-to-csi-ceph-rbd-in-k8s/</loc>
     <lastmod>2018-09-09T11:43:14+09:00</lastmod>
   </url>
@@ -166,12 +171,18 @@
   
   <url>
     <loc>https://leoh0.github.io/</loc>
-    <lastmod>2018-09-09T11:43:14+09:00</lastmod>
+    <lastmod>2018-10-09T01:42:33+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://leoh0.github.io/about/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leoh0.github.io/tags/aggregation/</loc>
+    <lastmod>2018-10-09T01:42:33+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -302,7 +313,7 @@
   
   <url>
     <loc>https://leoh0.github.io/tags/daemonset/</loc>
-    <lastmod>2018-08-07T21:25:37+09:00</lastmod>
+    <lastmod>2018-10-09T01:42:33+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -321,6 +332,12 @@
   <url>
     <loc>https://leoh0.github.io/tags/dedicated/</loc>
     <lastmod>2018-08-07T21:25:37+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leoh0.github.io/tags/deployment/</loc>
+    <lastmod>2018-10-09T01:42:33+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -428,7 +445,7 @@
   
   <url>
     <loc>https://leoh0.github.io/tags/k8s/</loc>
-    <lastmod>2018-09-09T11:43:14+09:00</lastmod>
+    <lastmod>2018-10-09T01:42:33+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -452,7 +469,7 @@
   
   <url>
     <loc>https://leoh0.github.io/tags/kubernetes/</loc>
-    <lastmod>2018-09-09T11:43:14+09:00</lastmod>
+    <lastmod>2018-10-09T01:42:33+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -494,6 +511,12 @@
   <url>
     <loc>https://leoh0.github.io/tags/memcached/</loc>
     <lastmod>2016-09-29T23:30:20+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leoh0.github.io/tags/metric/</loc>
+    <lastmod>2018-10-09T01:42:33+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -613,7 +636,19 @@
   
   <url>
     <loc>https://leoh0.github.io/post/</loc>
-    <lastmod>2018-09-09T11:43:14+09:00</lastmod>
+    <lastmod>2018-10-09T01:42:33+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leoh0.github.io/tags/prometheus/</loc>
+    <lastmod>2018-10-09T01:42:33+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leoh0.github.io/tags/promql/</loc>
+    <lastmod>2018-10-09T01:42:33+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -684,6 +719,12 @@
   </url>
   
   <url>
+    <loc>https://leoh0.github.io/tags/statefulset/</loc>
+    <lastmod>2018-10-09T01:42:33+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://leoh0.github.io/tags/string/</loc>
     <lastmod>2015-02-05T17:21:56+09:00</lastmod>
     <priority>0</priority>
@@ -709,7 +750,7 @@
   
   <url>
     <loc>https://leoh0.github.io/categories/technology/</loc>
-    <lastmod>2018-09-09T11:43:14+09:00</lastmod>
+    <lastmod>2018-10-09T01:42:33+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -752,6 +793,12 @@
   <url>
     <loc>https://leoh0.github.io/tags/vpn/</loc>
     <lastmod>2016-05-17T02:24:09+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leoh0.github.io/tags/walkthrough/</loc>
+    <lastmod>2018-10-09T01:42:33+09:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -23,7 +23,7 @@
 
 
 
-<meta property="og:updated_time" content="2015-02-24T13:22:36&#43;09:00"/>
+<meta property="og:updated_time" content="2015-02-24T23:29:19&#43;09:00"/>
 
 
 
@@ -191,6 +191,43 @@ ga('send', 'pageview');
   <header>
     <h1>&gt; /dev/null</h1>
   </header>
+  
+    <article itemscope itemtype="http://schema.org/CreativeWork">
+  <header>
+    <h2 itemprop="name">
+      <a href="/post/2015-02-24-custom-url-for-chef-server-12/">custom URL for chef server 12</a>
+    </h2>
+    
+      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <circle cx="16" cy="16" r="14" />
+  <path d="M16 8 L16 16 20 20" />
+</svg>
+<span>1 minute read</span>
+<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+</svg>
+
+  Published: <time datetime="2015-02-24T23:29:19&#43;09:00">24 Feb, 2015</time>
+
+</p>
+    
+  </header>
+  
+  <div itemprop="description">
+    chef server ssl verification 때문에 그냥 domain 인증서를 제대로 적용하려고 했는데 엄청 삽질했다. 아마 chef 11 에서 chef 12 로 올라가면서 config 위치가 변경된거 같다.
+여기에서 관련 정보를 얻을 수 있었는데 차이점은 /etc/chef-server/chef-server.rb 가 아닌 /etc/opscode/chef-server.rb 파일을 수정해서 적용 가능했다.
+아래 처럼 해당 파일을 수정한다.
+... server_name = &#34;chef.yourdomain.com&#34; api_fqdn = server_name bookshelf[&#39;vip&#39;] = server_name nginx[&#39;url&#39;] = &#34;https://#{server_name}&#34; nginx[&#39;server_name&#39;] = server_name nginx[&#39;ssl_certificate&#39;] = &#34;/var/opt/chef-server/nginx/ca/#{server_name}.crt&#34; nginx[&#39;ssl_certificate_key&#39;] = &#34;/var/opt/chef-server/nginx/ca/#{server_name}.key&#34; lb[&#39;fqdn&#39;] = server_name 이후에 해당 컨피그 내용으로 적용한다.
+  </div>
+  
+    <nav class="readmore"><a itemprop="url" href="/post/2015-02-24-custom-url-for-chef-server-12/">Read More&nbsp;&raquo;</a></nav>
+  
+  <meta itemprop="inLanguage" content="en-US">
+  <meta itemprop="datePublished" content="2015-02-24T23:29:19&#43;09:00">
+  <meta itemprop="dateModified" content="2015-02-24T23:29:19&#43;09:00">
+  
+</article>
+
   
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>

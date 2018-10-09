@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta name="generator" content="Hugo 0.46" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kubernetes Prometheus Metric Aggregation by Daemonset, Statefulset, Deployment Walkthrough | &gt; /dev/null</title>
+    <meta name="description" content="Big Fantastic PromQL">
+    <meta name="keywords" content="k8s, kubernetes, prometheus, promql, metric, aggregation, daemonset, statefulset, deployment, walkthrough">
+    
+    
+    
+    
+    
+
+  <meta name="author" content="leoh0">
+
+
+    <meta property="og:title" content="Kubernetes Prometheus Metric Aggregation by Daemonset, Statefulset, Deployment Walkthrough" />
+<meta property="og:description" content="Big Fantastic PromQL" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://leoh0.github.io/post/2018-10-09-kubernetes-prometheus-metric-aggregation-by-daemonset-statefulset-deployment-walkthrough/" />
+
+  <meta property="og:image" content="http://leoh0.github.io/images/Grafana - Aggregation 2018-10-09 03-57-21.png" />
+
+
+
+<meta property="article:published_time" content="2018-10-09T01:42:33&#43;09:00"/>
+
+<meta property="article:modified_time" content="2018-10-09T01:42:33&#43;09:00"/>
+
+
+
+
+
+
+
+
+
+
+
+    <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://leoh0.github.io/images/Grafana - Aggregation 2018-10-09 03-57-21.png"/>
+
+<meta name="twitter:title" content="Kubernetes Prometheus Metric Aggregation by Daemonset, Statefulset, Deployment Walkthrough"/>
+<meta name="twitter:description" content="Big Fantastic PromQL"/>
+
+    
+
+
+
+
+    
+
+    <meta name="theme-color" content="#000">
+
+    
+    
+  <meta name="referrer" content="same-origin">
+
+
+    
+  
+    
+
+  <meta title="mod:fractal-forest" content="status:enabled">
+  
+    <script async src=/js/bpgdec8a.js integrity=sha384-8PG0go3BW8hLm63KbTxk/hNcehaoSbrAhKzsmy2Jhs/KY8QdiKKkjhdeyHY/Q/0I&#10;></script>
+  
+
+
+  
+  
+
+
+    
+    <link rel="canonical" href="https://leoh0.github.io/post/2018-10-09-kubernetes-prometheus-metric-aggregation-by-daemonset-statefulset-deployment-walkthrough/">
+    <link href="http://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+    
+    
+    <link rel="icon" sizes="any" href="data:image/svg+xml,%3Csvg%20viewBox='0%200%2046%2045'%20xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EAfter%20Dark%3C/title%3E%3Cpath%20d='M.708%2045L23%20.416%2045.292%2045H.708zM35%2038L23%2019%2011%2038h24z'%20fill='%23000'/%3E%3C/svg%3E">
+
+    
+
+
+  
+  
+  
+  
+  
+  
+  
+    
+      <style>html{font-size:12px}*{box-sizing:border-box;text-rendering:geometricPrecision}body{font-size:1rem;line-height:1.5rem;margin:0;font-family:Menlo,'Noto Sans KR',Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;word-wrap:break-word}h1,h2,h3,h4,h5,h6{line-height:1.3em}fieldset{border:none;padding:0;margin:0}pre{padding:2rem;margin:1.75rem 0;background-color:#fff;border:1px solid #ccc;overflow:auto}code[class*=language-],pre[class*=language-],pre code{font-weight:100;text-shadow:none;margin:1.75rem 0}a{cursor:pointer;color:#ff2e88;text-decoration:none;border-bottom:1px solid #ff2e88}a:hover{background-color:#ff2e88;color:#fff}.grid{display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap}.grid.\-top{-ms-flex-align:start;align-items:flex-start}.grid.\-middle{-ms-flex-align:center;align-items:center}.grid.\-bottom{-ms-flex-align:end;align-items:flex-end}.grid.\-stretch{-ms-flex-align:stretch;align-items:stretch}.grid.\-baseline{-ms-flex-align:baseline;align-items:baseline}.grid.\-left{-ms-flex-pack:start;justify-content:flex-start}.grid.\-center{-ms-flex-pack:center;justify-content:center}.grid.\-right{-ms-flex-pack:end;justify-content:flex-end}.grid.\-between{-ms-flex-pack:justify;justify-content:space-between}.grid.\-around{-ms-flex-pack:distribute;justify-content:space-around}.cell{-ms-flex:1;flex:1;box-sizing:border-box}@media screen and (min-width:768px){.cell.\-1of12{-ms-flex:0 0 8.33333%;flex:0 0 8.33333%}.cell.\-2of12{-ms-flex:0 0 16.66667%;flex:0 0 16.66667%}.cell.\-3of12{-ms-flex:0 0 25%;flex:0 0 25%}.cell.\-4of12{-ms-flex:0 0 33.33333%;flex:0 0 33.33333%}.cell.\-5of12{-ms-flex:0 0 41.66667%;flex:0 0 41.66667%}.cell.\-6of12{-ms-flex:0 0 50%;flex:0 0 50%}.cell.\-7of12{-ms-flex:0 0 58.33333%;flex:0 0 58.33333%}.cell.\-8of12{-ms-flex:0 0 66.66667%;flex:0 0 66.66667%}.cell.\-9of12{-ms-flex:0 0 75%;flex:0 0 75%}.cell.\-10of12{-ms-flex:0 0 83.33333%;flex:0 0 83.33333%}.cell.\-11of12{-ms-flex:0 0 91.66667%;flex:0 0 91.66667%}}@media screen and (max-width:768px){.grid{-ms-flex-direction:column;flex-direction:column}.cell{-ms-flex:0 0 auto;flex:0 0 auto}}.hack,.hack blockquote,.hack code,.hack em,.hack h1,.hack h2,.hack h3,.hack h4,.hack h5,.hack h6,.hack strong{font-size:1rem;font-style:normal;font-family:Menlo,'Noto Sans KR',Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif}.hack blockquote,.hack code,.hack em,.hack strong{line-height:20px}.hack blockquote,.hack code,.hack footer,.hack h1,.hack h2,.hack h3,.hack h4,.hack h5,.hack h6,.hack header,.hack li,.hack ol,.hack p,.hack section,.hack ul{float:none;margin:0;padding:0}.hack blockquote,.hack h1,.hack ol,.hack p,.hack ul{margin-top:20px;margin-bottom:20px}.hack h1{position:relative;display:inline-block;display:table-cell;padding:20px 0 30px;margin:0;overflow:hidden}.hack h1:after{content:"====================================================================================================";position:absolute;bottom:10px;left:0}.hack h1+*{margin-top:0}.hack h2,.hack h3,.hack h4,.hack h5,.hack h6{position:relative;margin-bottom:1.75rem}.hack h2:before,.hack h3:before,.hack h4:before,.hack h5:before,.hack h6:before{display:inline}.hack h2:before{content:"## "}.hack h3:before{content:"### "}.hack h4:before{content:"#### "}.hack h5:before{content:"##### "}.hack h6:before{content:"###### "}.hack li{position:relative;display:block;padding-left:20px}.hack li:after{position:absolute;top:0;left:0}.hack ul>li:after{content:"-"}.hack ol{counter-reset:a}.hack ol>li:after{content:counter(a) ".";counter-increment:a}.hack ol li:nth-child(n+10):after{left:-7px}.hack blockquote{position:relative;padding-left:17px;padding-left:2ch;overflow:hidden}.hack blockquote:after{content:">\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>";white-space:pre;position:absolute;top:0;left:0;line-height:20px}.hack em:after,.hack em:before{content:"*";display:inline}.hack pre code:after,.hack pre code:before{content:""}.hack code{font-weight:700}.hack code:after,.hack code:before{content:"`";display:inline}.hack hr{position:relative;height:20px;overflow:hidden;border:0;margin:20px 0}.hack hr:after{content:"----------------------------------------------------------------------------------------------------";position:absolute;top:0;left:0;line-height:20px;width:100%;word-wrap:break-word}@-moz-document url-prefix(){.hack h1{display:block}}.hack-ones ol>li:after{content:"1."}p{margin:0 0 1.75rem}.container{max-width:70rem}.container,.container-fluid{margin:0 auto;padding:0 1rem}.inner{padding:1rem}.inner2x{padding:2rem}.pull-left{float:left}.pull-right{float:right}.progress-bar{height:8px;opacity:.8;background-color:#ccc;margin-top:12px}.progress-bar.progress-bar-show-percent{margin-top:38px}.progress-bar-filled{background-color:gray;height:100%;transition:width .3s ease;position:relative;width:0}.progress-bar-filled:before{content:"";border:6px solid transparent;border-top-color:gray;position:absolute;top:-12px;right:-6px}.progress-bar-filled:after{color:gray;content:attr(data-filled);display:block;font-size:12px;white-space:nowrap;position:absolute;border:6px solid transparent;top:-38px;right:0;-ms-transform:translateX(50%);transform:translateX(50%)}table{width:100%;border-collapse:collapse;margin:1.75rem 0;color:#778087}table td,table th{vertical-align:top;border:1px solid #ccc;line-height:15px;padding:10px}table thead th{font-size:10px}table tbody td:first-child{font-weight:700;color:#333}.form{width:30rem}.form-group{margin-bottom:1.75rem;overflow:auto}.form-group label{border-bottom:2px solid #ccc;color:#333;width:10rem;display:inline-block;height:38px;line-height:38px;padding:0;float:left;position:relative}.form-group.form-success label{color:#4caf50!important;border-color:#4caf50!important}.form-group.form-warning label{color:#ff9800!important;border-color:#ff9800!important}.form-group.form-error label{color:#f44336!important;border-color:#f44336!important}.form-control{outline:none;border:none;border-bottom:2px solid #ccc;padding:.5rem 0;width:20rem;height:38px;background-color:transparent}.form-control:focus{border-color:#555}.form-group.form-textarea label:after{position:absolute;content:"";width:2px;background-color:#fff;right:-2px;top:0;bottom:0}textarea.form-control{height:auto;resize:none;padding:1rem 0;border-bottom:2px solid #ccc;border-left:2px solid #ccc;padding:.5rem}select.form-control{border-radius:0;background-color:transparent;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none}.help-block{color:#999;margin-top:.5rem}.form-actions{margin-bottom:1.75rem}.btn{display:-ms-inline-flexbox;display:inline-flex;-ms-flex-align:center;align-items:center;-ms-flex-pack:center;justify-content:center;cursor:pointer;outline:none;padding:.65rem 2rem;font-size:1rem;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;position:relative;z-index:1}.btn:active{box-shadow:inset 0 1px 3px rgba(0,0,0,.12)}.btn.btn-ghost{border-color:#757575;color:#757575;background-color:transparent}.btn.btn-ghost:focus,.btn.btn-ghost:hover{border-color:#424242;color:#424242;z-index:2}.btn.btn-ghost:hover{background-color:transparent}.btn-block{width:100%;display:-ms-flexbox;display:flex}.btn-default{color:#fff;background-color:#e0e0e0;border:1px solid #e0e0e0;color:#333}.btn-default:focus:not(.btn-ghost),.btn-default:hover{background-color:#dcdcdc;border-color:#dcdcdc}.btn-success{color:#fff;background-color:#4caf50;border:1px solid #4caf50}.btn-success:focus:not(.btn-ghost),.btn-success:hover{background-color:#43a047;border-color:#43a047}.btn-success.btn-ghost{border-color:#4caf50;color:#4caf50}.btn-success.btn-ghost:focus,.btn-success.btn-ghost:hover{border-color:#388e3c;color:#388e3c;z-index:2}.btn-error{color:#fff;background-color:#f44336;border:1px solid #f44336}.btn-error:focus:not(.btn-ghost),.btn-error:hover{background-color:#e53935;border-color:#e53935}.btn-error.btn-ghost{border-color:#f44336;color:#f44336}.btn-error.btn-ghost:focus,.btn-error.btn-ghost:hover{border-color:#d32f2f;color:#d32f2f;z-index:2}.btn-warning{color:#fff;background-color:#ff9800;border:1px solid #ff9800}.btn-warning:focus:not(.btn-ghost),.btn-warning:hover{background-color:#fb8c00;border-color:#fb8c00}.btn-warning.btn-ghost{border-color:#ff9800;color:#ff9800}.btn-warning.btn-ghost:focus,.btn-warning.btn-ghost:hover{border-color:#f57c00;color:#f57c00;z-index:2}.btn-info{color:#fff;background-color:#00bcd4;border:1px solid #00bcd4}.btn-info:focus:not(.btn-ghost),.btn-info:hover{background-color:#00acc1;border-color:#00acc1}.btn-info.btn-ghost{border-color:#00bcd4;color:#00bcd4}.btn-info.btn-ghost:focus,.btn-info.btn-ghost:hover{border-color:#0097a7;color:#0097a7;z-index:2}.btn-primary{color:#fff;background-color:#2196f3;border:1px solid #2196f3}.btn-primary:focus:not(.btn-ghost),.btn-primary:hover{background-color:#1e88e5;border-color:#1e88e5}.btn-primary.btn-ghost{border-color:#2196f3;color:#2196f3}.btn-primary.btn-ghost:focus,.btn-primary.btn-ghost:hover{border-color:#1976d2;color:#1976d2;z-index:2}.btn-group{overflow:auto}.btn-group .btn{float:left}.btn-group .btn-ghost:not(:first-child){margin-left:-1px}.card{border:1px solid #ccc}.card .card-header{color:#333;text-align:center;background-color:#ddd;padding:.5rem 0}.alert{color:#ccc;padding:1rem;border:1px solid #ccc;margin-bottom:1.75rem}.alert-success{color:#4caf50;border-color:#4caf50}.alert-error{color:#f44336;border-color:#f44336}.alert-info{color:#00bcd4;border-color:#00bcd4}.alert-warning{color:#ff9800;border-color:#ff9800}.media:not(:last-child){margin-bottom:1.25rem}.media-left{padding-right:1rem}.media-left,.media-right{display:table-cell;vertical-align:top}.media-right{padding-left:1rem}.media-body{display:table-cell;vertical-align:top}.media-heading{font-size:1.16667rem;font-weight:700}.media-content{margin-top:.3rem}.avatarholder,.placeholder{background-color:#f0f0f0;text-align:center;color:#b9b9b9;font-size:1rem;border:1px solid #f0f0f0}.avatarholder{width:48px;height:48px;line-height:46px;font-size:2rem;background-size:cover;background-position:50%;background-repeat:no-repeat}.avatarholder.rounded{border-radius:33px}.loading{display:inline-block;content:"&nbsp;";height:20px;width:20px;margin:0 .5rem;animation:a .6s infinite linear;border:2px solid #e91e63;border-right-color:transparent;border-radius:50%}.btn .loading{margin-bottom:0;width:14px;height:14px}.btn div.loading{float:left}.alert .loading{margin-bottom:-5px}@keyframes a{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}.menu{width:100%}.menu .menu-item{display:block;color:#616161;border-color:#616161}.menu .menu-item.active,.menu .menu-item:hover{color:#000;border-color:#000;background-color:transparent}@media screen and (max-width:768px){.form-group label{display:block;border-bottom:none;width:100%}.form-group.form-textarea label:after{display:none}.form-control{width:100%}textarea.form-control{border-left:none;padding:.5rem 0}pre::-webkit-scrollbar{height:3px}}@media screen and (max-width:480px){.form{width:100%}}.dark{color:#ccc}.dark,.dark pre{background-color:#000}.dark pre{padding:0;border:none}.dark pre code{color:#00bcd4}.dark h1 a,.dark h2 a,.dark h3 a,.dark h4 a,.dark h5 a{color:#ccc}.dark code,.dark strong{color:#fff}.dark code{font-weight:100}.dark table{color:#ccc}.dark table td,.dark table th{border-color:#444}.dark table tbody td:first-child{color:#fff}.dark .form-group label{color:#ccc;border-color:rgba(95,95,95,.78)}.dark .form-group.form-textarea label:after{background-color:#000}.dark .form-control{color:#ccc;border-color:rgba(95,95,95,.78)}.dark .form-control:focus{border-color:#ccc;color:#ccc}.dark textarea.form-control{color:#ccc}.dark .card{border-color:rgba(95,95,95,.78)}.dark .card .card-header{background-color:transparent;color:#ccc;border-bottom:1px solid rgba(95,95,95,.78)}.dark .btn.btn-ghost.btn-default{border-color:#ababab;color:#ababab}.dark .btn.btn-ghost.btn-default:focus,.dark .btn.btn-ghost.btn-default:hover{border-color:#9c9c9c;color:#9c9c9c;z-index:1}.dark .btn.btn-ghost.btn-default:focus,.dark .btn.btn-ghost.btn-default:hover{border-color:#e0e0e0;color:#e0e0e0}.dark .btn.btn-ghost.btn-primary:focus,.dark .btn.btn-ghost.btn-primary:hover{border-color:#64b5f6;color:#64b5f6}.dark .btn.btn-ghost.btn-success:focus,.dark .btn.btn-ghost.btn-success:hover{border-color:#81c784;color:#81c784}.dark .btn.btn-ghost.btn-info:focus,.dark .btn.btn-ghost.btn-info:hover{border-color:#4dd0e1;color:#4dd0e1}.dark .btn.btn-ghost.btn-error:focus,.dark .btn.btn-ghost.btn-error:hover{border-color:#e57373;color:#e57373}.dark .btn.btn-ghost.btn-warning:focus,.dark .btn.btn-ghost.btn-warning:hover{border-color:#ffb74d;color:#ffb74d}.dark .avatarholder,.dark .placeholder{background-color:transparent;border-color:#333}.dark .menu .menu-item{color:#ccc;border-color:rgba(95,95,95,.78)}.dark .menu .menu-item.active,.dark .menu .menu-item:hover{color:#fff;border-color:#ccc}:root{--screen-size-small: 30em}@keyframes intro{0%{opacity:0}; 100%{opacity:1}}.blur-up{-webkit-filter:blur(5px);filter:blur(5px);transition:filter 400ms,-webkit-filter 400ms}.blur-up.lazyloaded{-webkit-filter:blur(0);filter:blur(0)}.hack .readmore{margin-bottom:2.2em}.responsive-iframe{position:relative;padding-bottom:56.25%;padding-top:25px;height:0}.responsive-iframe iframe{position:absolute;top:0;left:0;width:100%;height:100%}iframe{border:0}main,footer{animation:intro .3s both;animation-delay:.15s}footer time[datetime$=M]:before{content:"\2013\0020"}@media only screen and (max-width:30em){footer time[datetime$=M]{display:none}}blockquote cite{display:block}blockquote cite::before{content:"\2014"}:target{color:#fff}.hack li ul{margin:0}.main{padding:20px 10px}input.form-control{border-radius:0;background-color:transparent;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none}input.form-control{font-size:initial}.hack .help-block{font-size:1rem}html{font-size:13px}.hack pre{font-size:17px}.hack .form input,.hack .form textarea,.hack .form button,.hack .form label{font-size:1rem}article [itemprop=description]{margin-bottom:20px;margin-top:20px}article header img{width:100%;border-radius:3px}@media screen and (min-width:768px){html{font-size:1em}.container{max-width:50rem}}[v-cloak]{display:none}a[href*="://"]::after,
+a[rel*="external"] {
+  content: " " url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20class='i-external'%20viewBox='0%200%2032%2032'%20width='14'%20height='14'%20fill='none'%20stroke='%23ff9800'%20stroke-linecap='round'%20stroke-linejoin='round'%20stroke-width='9.38%'%3E%3Cpath%20d='M14%209%20L3%209%203%2029%2023%2029%2023%2018%20M18%204%20L28%204%2028%2014%20M28%204%20L14%2018'/%3E%3C/svg%3E");
+}
+figure a[href*="://"]::after,
+figure a[rel*="external"] {
+  content: "";
+}
+nav a.active {
+  background-color: #ff2e88;
+  color: #fff;
+}
+a[itemprop="url"] {
+  color: #ff9800;
+}
+a[itemprop="url"]:hover {
+  color: #fff;
+}
+.muted, .help-block {
+  opacity: 0.70;
+}
+.hack .muted,
+.hack .help-block {
+  color: #e0e0e0;
+}
+
+canvas {
+  margin: auto;
+  display: block;
+}
+figure {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+figure img {
+  max-width: 80%;
+}
+figure a {
+  border-bottom: none !important;
+}
+figure a:hover {
+  background-color: inherit !important;
+}
+
+img {
+  max-width: 90%;
+}
+
+.highlight,pre.highlight{background:#282c34;color:#abb2bf}.highlight pre{background:#282c34}.highlight .ge{font-style:italic}.highlight .gs{font-weight:700}.highlight .ow{font-weight:700}.highlight .n,.highlight .nf,.highlight .nn,.highlight .o,.highlight .p{color:#abb2bf}.highlight .c,.highlight .c1,.highlight .cm,.highlight .cp,.highlight .cs{color:#5c6370;font-style:italic}.highlight .sr,.highlight .ss{color:#56b6c2}.highlight .k,.highlight .kc,.highlight .kd,.highlight .kn,.highlight .kp,.highlight .kr,.highlight .kt{color:#c678dd}.highlight .l,.highlight .ld,.highlight .s,.highlight .s1,.highlight .s2,.highlight .sb,.highlight .sc,.highlight .sd,.highlight .se,.highlight .sh,.highlight .si,.highlight .sx{color:#98c379}.highlight .nt,.highlight .nx,.highlight .vi{color:#e06c75}.highlight .il,.highlight .m,.highlight .mf,.highlight .mh,.highlight .mi,.highlight .mo,.highlight .na{color:#d19a66}.highlight .bp,.highlight .nb,.highlight .nc,.highlight .nd,.highlight .ne,.highlight .ni,.highlight .nl,.highlight .no,.highlight .nv,.highlight .py,.highlight .vc,.highlight .vg{color:#e5c07b}.highlight .err{color:#fff;background-color:#e05252}.highlight .gd{color:#e05252}.highlight .gi{color:#43d08a}.highlight .w{color:#f8f8f2}.highlight .cpf{color:navy}.highlight .gu{color:#75715e}.highlight .lineno{color:#636d83;user-select:none}.highlight .ln{color:#636d83;user-select:none}.highlight .ln:after{content:" "}.highlight .hll{color:#abb2bf;background-color:#3a3f4b}.highlight .hl{color:#abb2bf;background-color:#3a3f4b}.highlight .language-json .w+.s2{color:#e06c75}.highlight .language-json .kc{color:#56b6c2}
+</style>
+    
+  
+
+
+    <script async src=/js/lazysizes.min.js></script>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-46519012-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+  </head>
+  
+  
+  
+  <body class="hack dark main container">
+    <header>
+  
+  <nav itemscope itemtype="http://schema.org/SiteNavigationElement">
+    
+    
+      <a itemprop="url" class="" href="/"><span itemprop="name">Home</span></a>
+    
+      <a itemprop="url" class="active" href="/post/"><span itemprop="name">Posts</span></a>
+    
+      <a itemprop="url" class="" href="/about/aboutme"><span itemprop="name">AboutMe</span></a>
+    
+      <a itemprop="url" class="" href="/blog/"><span itemprop="name">.</span></a>
+    
+  </nav>
+
+
+</header>
+    <main>
+  <article itemscope itemtype="http://schema.org/BlogPosting">
+    
+<meta itemprop="name" content="Kubernetes Prometheus Metric Aggregation by Daemonset, Statefulset, Deployment Walkthrough">
+<meta itemprop="description" content="Big Fantastic PromQL">
+
+
+<meta itemprop="datePublished" content="2018-10-09T01:42:33&#43;09:00" />
+<meta itemprop="dateModified" content="2018-10-09T01:42:33&#43;09:00" />
+<meta itemprop="wordCount" content="2795">
+
+  <meta itemprop="image" content="http://leoh0.github.io/images/Grafana - Aggregation 2018-10-09 03-57-21.png">
+
+
+
+<meta itemprop="keywords" content="k8s,kubernetes,prometheus,promql,metric,aggregation,daemonset,statefulset,deployment,walkthrough," />
+
+    <header>
+      <h1 itemprop="headline">Kubernetes Prometheus Metric Aggregation by Daemonset, Statefulset, Deployment Walkthrough</h1>
+      <p class="muted">
+        <svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <circle cx="16" cy="16" r="14" />
+  <path d="M16 8 L16 16 20 20" />
+</svg>
+<span>14 minute read</span>
+<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+</svg>
+
+  Published: <time datetime="2018-10-09T01:42:33&#43;09:00">9 Oct, 2018</time>
+
+
+      </p>
+      
+        <blockquote itemprop="description">Big Fantastic PromQL</blockquote>
+      
+      
+    </header>
+    
+
+    <div itemprop="articleBody">
+      
+
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+  
+    
+      <img class="lazyload" data-src="/images/Grafana%20-%20Aggregation%202018-10-09%2003-57-21.png" alt="Kubernetes Aggregation Metrics" />
+    
+  
+  
+  <figcaption>
+    
+    <small>Kubernetes Aggregation Metrics
+    
+      
+    
+    </small>
+  </figcaption>
+  
+</figure>
+
+<h1 id="kubernetes-and-prometheus">kubernetes and prometheus</h1>
+
+<p>최근 kubernetes에서 metric을 관리하는 것중 가장 유명한 것은 prometheus라고 할 수 있습니다. metric 관리방법으로 heapster를 사용할때 까지는 influxdb를 많이 사용하는 추세 였으나 앞으로 대채될 metrics-server는 <a href="https://github.com/kubernetes-incubator/metrics-server/issues/66">현재 in-memory sink밖에 없어서</a> 우선 기존에 influxdb를 사용하던것을 많이 안쓰게 될것 같습니다. 더욱이 <a href="https://github.com/DirectXMan12/k8s-prometheus-adapter">custom metric들에 대한 예제들이 prometheus로 제공</a>되고 있어서 prometheus로 metric관리가 통합될것으로 기대하고 있습니다.</p>
+
+<p>이러한 prometheus로 kubernetes metric들을 수집하는 것은 대체로 크게 2가지 케이스 입니다.</p>
+
+<ol>
+<li>application 들의 metric 수집</li>
+<li>container 단위 metric 수집</li>
+</ol>
+
+<p>오늘 이야기하고자 하는 주제는 2번과 같이 단위 container들로 수집된 metric들을 kubernetes 안에 pod들로 모아주고 이 pod들의 metric을 aggregation 하여 <code>daemonset</code>, <code>replicaset</code>, <code>deployment</code>, <code>statefulset</code> 과 같은 단위로 데이터를 보여줄 수 있도록 하기 위한 방법입니다.</p>
+
+<h2 id="grafana-dashboard를-통해-살펴보는-기존-방법들">grafana dashboard를 통해 살펴보는 기존 방법들</h2>
+
+<p>실제 grafana dashboard들을 참고하면 마땅히 위와 같은 방식으로 aggregation한 대쉬보드를 많이 찾을 수가 없을 것입니다. 아래는 grafana dashboard 중에서 kubernetes와 관련된 그래프들을 중 다운로드 수가 높은 순으로 정렬해봤습니다. 이중 높은 순위 10개가 아래와 같습니다.</p>
+
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ (<span style="color:#fff;font-weight:bold">echo</span> -e <span style="color:#0ff;font-weight:bold">&#34;Download@Link@Name&#34;</span> ; <span style="color:#0ff;font-weight:bold">\
+</span><span style="color:#0ff;font-weight:bold"></span>   curl -s <span style="color:#0ff;font-weight:bold">&#39;https://grafana.com/api/dashboards?orderBy=name&amp;includeLogo=1&amp;page=1&amp;pageSize=100000&amp;filter=kubernetes&#39;</span> | <span style="color:#0ff;font-weight:bold">\
+</span><span style="color:#0ff;font-weight:bold"></span>   jq -cr <span style="color:#0ff;font-weight:bold">&#39;.items | sort_by(.downloads)[] | ((.downloads | tostring) + &#34;@https://grafana.com/dashboards/&#34; + (.id | tostring) + &#34;@&#34; + (.name))&#39;</span> | tail -n10) | <span style="color:#0ff;font-weight:bold">\
+</span><span style="color:#0ff;font-weight:bold"></span>   column -s <span style="color:#0ff;font-weight:bold">&#39;@&#39;</span> -t
+Download  Link                                 Name
+<span style="color:#ff0;font-weight:bold">4603</span>      https://grafana.com/dashboards/747   Kubernetes Pod Metrics
+<span style="color:#ff0;font-weight:bold">5430</span>      https://grafana.com/dashboards/162   Kubernetes cluster monitoring (via Prometheus)
+<span style="color:#ff0;font-weight:bold">5904</span>      https://grafana.com/dashboards/5303  Kubernetes Deployment (Prometheus)
+<span style="color:#ff0;font-weight:bold">6215</span>      https://grafana.com/dashboards/3320  Kubernetes Node Exporter Full
+<span style="color:#ff0;font-weight:bold">6288</span>      https://grafana.com/dashboards/3131  Kubernetes All Nodes
+<span style="color:#ff0;font-weight:bold">6466</span>      https://grafana.com/dashboards/3119  Kubernetes cluster monitoring (via Prometheus)
+<span style="color:#ff0;font-weight:bold">7760</span>      https://grafana.com/dashboards/5309  Kubernetes Capacity (Prometheus)
+<span style="color:#ff0;font-weight:bold">10884</span>     https://grafana.com/dashboards/315   Kubernetes cluster monitoring (via Prometheus)
+<span style="color:#ff0;font-weight:bold">12866</span>     https://grafana.com/dashboards/6663  Kubernetes pod and cluster monitoring (via Prometheus)
+<span style="color:#ff0;font-weight:bold">29231</span>     https://grafana.com/dashboards/1621  Kubernetes cluster monitoring (via Prometheus)</code></pre></div>
+
+<p>이런 데이터를 몇개 보시면 알겠지만 대부분 node 혹은 pod의 이름으로만 검색해서 보도록 되어 있습니다.</p>
+
+<p>예를 들어 아래와 같이 node와 pod 이름으로 검색해서 보던가
+<a href="https://grafana.com/dashboards/747">
+
+
+
+
+
+
+
+
+
+
+<figure>
+  
+    
+      <img class="lazyload" data-src="/images/Grafana%20-%20Kubernetes%20Pod%20Metrics%202018-10-08%2023-13-12.png" alt="Kubernetes Pod Metrics" />
+    
+  
+  
+  <figcaption>
+    
+    <small>Kubernetes Pod Metrics
+    
+      
+    
+    </small>
+  </figcaption>
+  
+</figure></a></p>
+
+<p>혹은 아래와 같이 node를 선택하고 그 안에서 pod들을 보도록 되어 있습니다.
+<a href="https://grafana.com/dashboards/1621">
+
+
+
+
+
+
+
+
+
+
+<figure>
+  
+    
+      <img class="lazyload" data-src="/images/Grafana%20-%20Kubernetes%20cluster%20monitoring%20%28via%20Prometheus%29%202018-10-08%2023-10-43.png" alt="Kubernetes cluster monitoring (via Prometheus)" />
+    
+  
+  
+  <figcaption>
+    
+    <small>Kubernetes cluster monitoring (via Prometheus)
+    
+      
+    
+    </small>
+  </figcaption>
+  
+</figure></a></p>
+
+<p>하지만 실제 우리가 kubernetes를 운영하다보면 kubernetes안의 object중 <code>daemonset</code>, <code>statefulset</code>, <code>deployment</code> 와 같은 단위로 선택해서 보고 싶은 경우들이 생기기에 이런 dashboard 만으로 부족하다는걸 알 수 있습니다.</p>
+
+<h2 id="string-partial-match를-이용한-방법들">string partial match를 이용한 방법들</h2>
+
+<p>이런 경우 일반적으로 현재까지는 container이름들의 앞부분이 일치하는 것을 이용하여 이런 것을 <code>string partial match</code> 하여 해당 pod이 해당 deployment 들에 포함되는 것을 알아내는 식으로 구현 했습니다.</p>
+
+<p>예를 들면 <code>calico-node</code> daemonset의 pod 이름들은 <code>calico-node-xxxxx</code>의 패턴이기 때문에 <code>calico-node-.*</code> 와 같은 regrex로 match를 유도하는 것입니다. 예를 들면 아래와 같습니다.</p>
+
+<pre><code>rate(container_cpu_usage_seconds_total{namespace=&quot;$namespace&quot;,pod_name=~&quot;$daemonset.*&quot;}[1m])
+</code></pre>
+
+<p>실제 dashboard 들은 아래와 같은 것들을 참고해보면 이런 방식으로 많이 구현함을 알 수 있습니다.
+<a href="https://grafana.com/dashboards/5330">Kubernetes StatefulSets (Prometheus)</a></p>
+
+<p>하지만 이런 방법들은 정확하지 않고 좀 더 확실한 방법이 없나 찾게 됩니다. 왜냐하면 예를들어 만약 <code>calico-node-test</code> 와 같이 앞부분이 일치하는 다른 daemonset이 있다면 저런 regrex로 match 시키기 어려워 지기 때문입니다.</p>
+
+<h2 id="label의-partial-match를-이용한-방법들">label의 partial match를 이용한 방법들</h2>
+
+<p>아래 링크들과 같이 pod들의 label이 부분 일치하는것들을 이용해서 방법론들이 있었습니다. 이런 aggregation 하는 글들을 적용하면 정확한 pod을 찾아내기 위해서는 label을 열심히 준비해야 하는등 실제 상황에서는 좀 쓰기 불편한것들을이 있었습니다.</p>
+
+<p><a href="https://medium.com/@amimahloof/kubernetes-promql-prometheus-cpu-aggregation-walkthrough-2c6fd2f941eb">Kubernetes PromQL (Prometheus Query Language) CPU aggregation walkthrough</a></p>
+
+<p><a href="https://5pi.de/2017/11/09/use-prometheus-vector-matching-to-get-kubernetes-utilization-across-any-pod-label/">Use Prometheus Vector Matching to get Kubernetes Utilization across any Pod Label</a></p>
+
+<p>그래서 이런 부분 일치 시키는 방법보다 kubernetes가 실제 pod을 관리하는 방법과 가장 유사하게 수집이 되면 좋겠다고 생각할 수 있습니다.</p>
+
+<h1 id="prometheus의-pod-metric을-위한-raw-데이터">prometheus의 pod metric을 위한 raw 데이터</h1>
+
+<p>우선 pod들의 데이터를 aggregation하기 전에 container 단위로 수집되는 데이터들을 pod의 데이터로 환산하기 위한 방법을 설명합니다.</p>
+
+<p>예를 들어 <a href="https://github.com/helm/charts/blob/master/stable/prometheus/values.yaml">helm chart default 값으로 labeling 값들이 구성</a>되어 있고 prometheus에서 pod 이름으로 예를 들어 데이터를 아래와 같이 수집한다고 했을때,</p>
+
+<pre><code>container_cpu_usage_seconds_total{namespace=&quot;kube-system&quot;,pod_name=&quot;calico-node-xxxxx&quot;}
+</code></pre>
+
+<p>실제 확인되는 데이터들은 아래와 같습니다. 한 pod이지만 아래와 같이 3개의 데이터로 구성이 되어있는데 1개의 데이터가 아닌 이유는 cadvisor가 container단위로 수집하기 때문입니다. 수집하는 cadvisor 입장에서는 수집되는 데이터는 container기준으로만 수집이 되기 때문에 아래와 같습니다. 아래 calico-node 같은 경우 1개의 pause container와 2개의 conatiner(side car)로 구성되어 있기 때문에 3개 입니다.</p>
+
+<pre><code>container_cpu_usage_seconds_total{
+    beta_kubernetes_io_arch=&quot;amd64&quot;,
+    beta_kubernetes_io_fluentd_ds_ready=&quot;true&quot;,
+    beta_kubernetes_io_os=&quot;linux&quot;,
+    container_name=&quot;POD&quot;,
+    cpu=&quot;total&quot;,
+    id=&quot;/system.slice/docker-9e11fe23188ab8df11e6695fd56567df63ff7d0709b0be1d892d5f32283a61af.scope&quot;,
+    image=&quot;k8s.gcr.io/pause-amd64:3.1&quot;,
+    instance=&quot;kubernetes-hostname&quot;,
+    job=&quot;kubernetes-nodes-cadvisor&quot;,
+    kubernetes_io_hostname=&quot;kubernetes-hostname&quot;,
+    name=&quot;k8s_POD_calico-node-xxxxx_kube-system_1c2a925f-c609-11e8-9756-fa163eae1e89_0&quot;,
+    namespace=&quot;kube-system&quot;,
+    pod_name=&quot;calico-node-xxxxx&quot;
+} 0.019708013
+
+container_cpu_usage_seconds_total{
+    beta_kubernetes_io_arch=&quot;amd64&quot;,
+    beta_kubernetes_io_fluentd_ds_ready=&quot;true&quot;,
+    beta_kubernetes_io_os=&quot;linux&quot;,
+    container_name=&quot;calico-node&quot;,
+    cpu=&quot;total&quot;,
+    id=&quot;/system.slice/docker-b12ea25db1b81117c8f21791b94c627f10bb1fed8625fe6c6c94b29b26325c31.scope&quot;,
+    image=&quot;quay.io/calico/node@sha256:563e45196382727b7e3d97640fa88955c75e7210f3bf1870140fa717f9b73b92&quot;,
+    instance=&quot;kubernetes-hostname&quot;,
+    job=&quot;kubernetes-nodes-cadvisor&quot;,
+    kubernetes_io_hostname=&quot;kubernetes-hostname&quot;,
+    name=&quot;k8s_calico-node_calico-node-xxxxx_kube-system_1c2a936e-c609-11e8-9756-fa163eae1e89_0&quot;,
+    namespace=&quot;kube-system&quot;,
+    pod_name=&quot;calico-node-xxxxx&quot;
+}    3317.174431967
+
+container_cpu_usage_seconds_total{
+    beta_kubernetes_io_arch=&quot;amd64&quot;,
+    beta_kubernetes_io_fluentd_ds_ready=&quot;true&quot;,
+    beta_kubernetes_io_os=&quot;linux&quot;,
+    container_name=&quot;install-cni&quot;,
+    cpu=&quot;total&quot;,
+    id=&quot;/system.slice/docker-c98388e79128f17b1c2544531df9b92e72b682015ab4ad896620a756ca345c0c.scope&quot;,
+    image=&quot;quay.io/calico/cni@sha256:df90cb1d18182fe41aef0eea293c0045473749e64b8dfd3e420db1a39e5edb39&quot;,
+    instance=&quot;kubernetes-hostname&quot;,
+    job=&quot;kubernetes-nodes-cadvisor&quot;,
+    kubernetes_io_hostname=&quot;kubernetes-hostname&quot;,
+    name=&quot;k8s_install-cni_calico-node-xxxxx_kube-system_1c2a936e-c609-11e8-9756-fa163eae1e89_0&quot;,
+    namespace=&quot;kube-system&quot;,
+    pod_name=&quot;calico-node-xxxxx&quot;
+}   54.916640243
+</code></pre>
+
+<p>그래서 일반적으로 pod이라고 할 수 있는 단위는 namespace와 pod_name으로 지정된 단위라고 볼 수 있습니다. 이런 metric들은 일반적으로 아래와 같이 sum하면 하나의 pod의 metric으로 간주 할 수 있습니다. 아래와 같이 label matching을 제거하면 모든 namespace와 pod에 대해서 수집하게 됩니다.</p>
+
+<pre><code>sum(
+  rate(container_cpu_usage_seconds_total[1m])
+) by (namespace, pod_name, kubernetes_io_hostname)
+</code></pre>
+
+<p>위의 결과는 아래와 같이 합쳐지고 이 값을 이후 pod의 metric으로 사용하게 됩니다.</p>
+
+<pre><code>{
+    kubernetes_io_hostname=&quot;kubernetes_hostname&quot;,
+    namespace=&quot;kube-system&quot;,
+    pod_name=&quot;calico-node-xxxxx&quot;
+}  0.009238304374996708
+...
+</code></pre>
+
+<h1 id="kubernetes-안에서-pod이-어떻게-object들로-관리-되고-있는가">kubernetes 안에서 pod이 어떻게 object들로 관리 되고 있는가</h1>
+
+<p>kubernetes안에서 pod은 그냥 생성 할 수도 있지만 대부분은 owner를 갖게 됩니다. 예외인 경우는 첫번째로는 staticpod 입니다. staticpod은 kubelet과 같은 특수한 agent를 통해 lifecycle이 관리 되고 있기에 owner가 필요없습니다. 두번째로는 그냥 pod 입니다. 이 pod은 owner가 없어서 관리되지 않기에 삭제시 재생성되지 않고 바로 삭제됩니다. 이런 경우 빼고 대부분 확인해 보면 모든 pod들은 owner들을 가지고 있고 이 owner들로 우리는 aggregation 가능 합니다.</p>
+
+<p>예를 들면 아래와 같이 <code>metadata.ownerReferences</code> 를 참고하시면 이게 해당 pod이 어떤 object(daemonset, statefulset, deployment)에 속해 있는지 알 수 있습니다. 예를 들면 이걸 기준으로 아래와 같이 <code>calico-node</code> 라는 <code>daemonset</code>은 아래의 pod을 가지고(관리하고) 있다고 알 수 있고 우리는 이런 기준으로 aggregation 가능함을 알게 됩니다.</p>
+
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">apiVersion: v1
+kind: Pod
+metadata:
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: <span style="color:#fff;font-weight:bold">true</span>
+    controller: <span style="color:#fff;font-weight:bold">true</span>
+    kind: DaemonSet
+    name: calico-node
+    ...
+spec:
+  containers:
+...</code></pre></div>
+
+<p>즉, 이런 ownerReferences를 갖는 pod들은 모두 해당 daemonset에 포함됨으로 이런 ownerReferences를 갖는 pod들을 aggregation하게 되면 그것이 이 daemonset의 데이터가 됨을 알 수 있습니다.</p>
+
+<h1 id="prometheus-데이터로-pod을-aggregation-하는-방법">prometheus 데이터로 pod을 aggregation 하는 방법</h1>
+
+<p>앞서 말한것 처럼 pod의 aggregation을 하기 위해서는 ownerreference를 수집해야합니다. 이를 위해 <code>kube-state-metric</code> 프로젝트를 사용하면 됩니다. 일반적으로 helm을 이용해 prometheus를 설치했다면 기본으로 설정되어 있습니다. kube-state-metric을 이용하면 deployment들의 개수 상태등과 같은 kubernetes object에 대한 통계를 수집할수 있습니다. 하지만 이보다 이 글에서 더 중요하게 생각하는 부분은 다음과 같습니다.</p>
+
+<blockquote>
+<p>kube-state-metric은 pod들을 aggregation 하기 위한 metadata들을 제공</p>
+</blockquote>
+
+<p>일반적으로 prometheus에 수집되는 metric 들은 counter, gauge, histogram과 일반적으로 그 값(value)이 특정한 의미를 갖는 경우들입니다. 하지만 여기서 말하는 이런 metadata들은 value는 전부 1입니다. 왜냐하면 이 metadata들은 해당 vector 안에 label들의 연관관계를 보이기 위함이 주 목적이기 때문입니다.</p>
+
+<p>이런 kube-state-metric을 통해 수집되는 metadata들중 우리에게 필요한 값들은 <code>kube_pod_owner</code>, <code>kube_replicaset_owner</code>등과 같습니다. 이런 metric들은 실제로 값을 찍어보면 아래와 같습니다. 모두 그 value가 1임을 알 수 있습니다.</p>
+
+<pre><code>kube_pod_owner{
+    app=&quot;prometheus&quot;,
+    chart=&quot;prometheus-7.0.0&quot;,
+    component=&quot;kube-state-metrics&quot;,
+    heritage=&quot;Tiller&quot;,
+    job=&quot;kubernetes-service-endpoints&quot;,
+    kubernetes_name=&quot;prometheus-kube-state-metrics&quot;,
+    kubernetes_namespace=&quot;kube-system&quot;,
+    namespace=&quot;kube-system&quot;,
+    owner_is_controller=&quot;true&quot;,
+    owner_kind=&quot;DaemonSet&quot;,
+    owner_name=&quot;calico-node&quot;,
+    pod=&quot;calico-node-xxxxx&quot;,
+    release=&quot;prometheus&quot;
+} 1
+</code></pre>
+
+<p>위에서 말했지만 다시 한번 강조하면 여기서 결국 중요한 label은 <code>namespace</code>, <code>owner_name</code>, <code>pod</code>, <code>owner_kind</code>와 같은 데이터 입니다. 이 값들을 알면 pod의 데이터를 이 값을 기준으로 aggregation 시킬 수 있기 때문입니다. 즉 위의 값은 <code>pod=&quot;calico-node-xxxxx&quot;</code> 와 같은 pod은 <code>owner_name=&quot;calico-node&quot;</code> 와 같은 daemonset으로 aggregation 가능하다는 것을 알 수 있습니다.</p>
+
+<p>그리고 이런 값들은 아래와 같이 value는 중요하지 않기때문에 필요한 label들만 아래와 같이 <code>max</code> 같은 함수로 추려낼 수 있습니다.</p>
+
+<pre><code>max(
+  kube_pod_owner
+) by (owner_name, owner_kind, pod, namespace)
+</code></pre>
+
+<p>위와 같이 수행하면 아래와 같이 <code>owner_name</code>와 <code>pod</code>의 관계들이 나오게 됩니다.</p>
+
+<pre><code>{
+    namespace=&quot;kube-system&quot;,
+    owner_kind=&quot;DaemonSet&quot;,
+    owner_name=&quot;calico-node&quot;,
+    pod=&quot;calico-node-xxxxx&quot;
+}    1
+{
+    namespace=&quot;kube-system&quot;,
+    owner_kind=&quot;DaemonSet&quot;,
+    owner_name=&quot;csi-rbdplugin&quot;,
+    pod=&quot;csi-rbdplugin-xxxxx&quot;
+}   1
+{
+    namespace=&quot;kube-system&quot;,
+    owner_kind=&quot;ReplicaSet&quot;,
+    owner_name=&quot;calicoctl-5cb5cc8c56&quot;,
+    pod=&quot;calicoctl-5cb5cc8c56-xxxxx&quot;
+}    1
+...
+</code></pre>
+
+<p>그렇다면 이제 위와 같은 metadata에 aggregation될 metric 들을 살펴보겠습니다. 위에서 한번 언급한 pod단위로 수집된 container의 metric은 아래와 같습니다.</p>
+
+<pre><code>sum(
+  rate(container_cpu_usage_seconds_total[1m])
+) by (namespace, pod_name, kubernetes_io_hostname)
+</code></pre>
+
+<p>다시한번 이값을 살펴보면 아래와 같이 <code>kubernetes_io_hostname</code>, <code>namespace</code>, <code>pod_name</code> 으로 정리됩니다.</p>
+
+<pre><code>{
+    kubernetes_io_hostname=&quot;kubernetes_hostname&quot;,
+    namespace=&quot;kube-system&quot;,
+    pod_name=&quot;calico-node-xxxxx&quot;
+}  0.00312516730000425
+...
+</code></pre>
+
+<p>이 값은 위에서 수집된 <code>kube_pod_owner</code>의 label과 차이가 있음을 알 수 있습니다. <code>kube_pod_owner</code>에서 pod은 <code>pod</code>인데 여기에서는 <code>pod_name</code> 이기 때문입니다. 그래서 이 값을 aggregation(<a href="https://prometheus.io/docs/prometheus/latest/querying/operators/#vector-matching">vector matching</a>) 하기 위해서는 한쪽 metric의 label에 동일한 label을 만들어야 합니다. 그러기 위해서 prometheus의 <a href="https://prometheus.io/docs/prometheus/latest/querying/functions/#label_replace">label_replace</a>를 사용합니다. 이 function을 이용하면 prometheus vector들의 label을 재설정 가능합니다.</p>
+
+<p>그래서 이를 위해 <code>container_cpu_usage_seconds_total</code>의 label 중 <code>pod_name</code> label을 <code>pod</code>으로 복사합니다. 이러면 <code>kube_pod_owner</code>의 <code>pod</code> label과 vector matching 시킬 수 있기 때문입니다.</p>
+
+<p>그래서 아래와 같이 label을 복사합니다.</p>
+
+<pre><code>label_replace(
+  sum(
+    rate(container_cpu_usage_seconds_total[1m])
+  ) by (namespace, pod_name, kubernetes_io_hostname)
+  ,&quot;pod&quot;, &quot;$1&quot;, &quot;pod_name&quot;, &quot;(.+)&quot;
+)
+</code></pre>
+
+<p>그러면 아래와 같이 <code>pod</code> label이 추가 됩니다.</p>
+
+<pre><code>{
+    kubernetes_io_hostname=&quot;kubernetes_hostname&quot;,
+    namespace=&quot;kube-system&quot;,
+    pod=&quot;calico-node-xxxxx&quot;,
+    pod_name=&quot;calico-node-xxxxx&quot;
+}  0.00312516730000425
+...
+</code></pre>
+
+<p>이렇게 까지 진행하면 이제 아래와 같이 metadata와 metric을 아래와 같이 aggregation 할 수 있습니다.</p>
+
+<pre><code>max(
+  kube_pod_owner
+) by (owner_name, owner_kind, pod, namespace)
+*
+on(pod, namespace)
+group_right(owner_name, owner_kind)
+label_replace(
+  sum(
+    rate(container_cpu_usage_seconds_total[1m])
+  ) by (namespace, pod_name, kubernetes_io_hostname)
+  ,&quot;pod&quot;, &quot;$1&quot;, &quot;pod_name&quot;, &quot;(.+)&quot;
+)
+</code></pre>
+
+<p>위의 vector matching은 5가지로 쪼개서 이해할 수 있습니다.</p>
+
+<pre><code># 1
+max(
+  kube_pod_owner
+) by (owner_name, owner_kind, pod, namespace)
+
+# 2
+*
+
+# 3
+on(pod, namespace)
+
+# 4
+group_right(owner_name, owner_kind)
+
+# 5
+label_replace(
+  sum(
+    rate(container_cpu_usage_seconds_total[1m])
+  ) by (namespace, pod_name, kubernetes_io_hostname)
+  ,&quot;pod&quot;, &quot;$1&quot;, &quot;pod_name&quot;, &quot;(.+)&quot;
+)
+</code></pre>
+
+<p>위는 두 벡터(위의 #1과 #5)중에서 <code>on(pod, namespace)</code> 가 동일한 벡터를 <code>*(multiplication)</code> 와 같이 곱하고 이 결과를 #5 벡터값에 <code>group_right(owner_name, owner_kind)</code>를 추가한다는 의미입니다.  자세한건 <a href="https://prometheus.io/docs/prometheus/latest/querying/operators/#many-to-one-and-one-to-many-vector-matches">Many-to-one and one-to-many vector matches</a> 를 참고하시면 됩니다.</p>
+
+<p>이렇게 하면 결과값은 아래와 같이 <code>owner_name</code> 을 기준으로 pod들 metric이 aggregation 되어 출력됩니다.</p>
+
+<pre><code>{
+    kubernetes_io_hostname=&quot;kubernetes_hostname&quot;,
+    namespace=&quot;kube-system&quot;,
+    owner_kind=&quot;DaemonSet&quot;,
+    owner_name=&quot;calico-node&quot;,
+    pod=&quot;calico-node-xxxxx&quot;,
+    pod_name=&quot;calico-node-xxxxx&quot;
+}  0.00312516730000425
+{
+    kubernetes_io_hostname=&quot;kubernetes_hostname&quot;,
+    namespace=&quot;kube-system&quot;,
+    owner_kind=&quot;DaemonSet&quot;,
+    owner_name=&quot;calico-node&quot;,
+    pod=&quot;calico-node-yyyyy&quot;,
+    pod_name=&quot;calico-node-yyyyy&quot;
+}  0.00231112232123345
+...
+</code></pre>
+
+<p>이 값은 아래와 같이 AVG 등의 함수를 이용하면 해당 값들을 평균값들도 생성가능하게 됩니다.</p>
+
+<pre><code>avg(
+  max(
+    kube_pod_owner
+  ) by (owner_name, owner_kind, pod, namespace)
+  *
+  on(pod, namespace)
+  group_right(owner_name, owner_kind)
+  label_replace(
+    sum(
+      rate(container_cpu_usage_seconds_total[1m])
+    ) by (namespace, pod_name, kubernetes_io_hostname)
+    ,&quot;pod&quot;, &quot;$1&quot;, &quot;pod_name&quot;, &quot;(.+)&quot;
+  )
+) by (namespace, owner_kind, owner_name)
+</code></pre>
+
+<p>결과는 아래와 같이 모든 <code>replicaset</code>, <code>daemonset</code>, <code>statefulset</code> pod들을 aggregation 하고 평균값을 내줄 수 있습니다.</p>
+
+<pre><code>{
+    namespace=&quot;kube-system&quot;,
+    owner_kind=&quot;DaemonSet&quot;,
+    owner_name=&quot;calico-node&quot;
+}   0.01108754473353368
+{
+    namespace=&quot;rook-ceph&quot;,
+    owner_kind=&quot;ReplicaSet&quot;,
+    owner_name=&quot;rook-ceph-mgr-a-88d56c679&quot;
+}  0.0036500768999985665
+{
+    namespace=&quot;kube-system&quot;,
+    owner_kind=&quot;StatefulSet&quot;,
+    owner_name=&quot;csi-rbdplugin-attacher&quot;
+}  0.00247490775230173
+...
+</code></pre>
+
+<h1 id="deployment로-aggregation-하기-위한-방법">deployment로 aggregation 하기 위한 방법</h1>
+
+<p>daemonset과 statefulset은 위와 같은 방법들을 이용하면 쉽게 aggregation 가능 합니다. 다만 deployment와 같은 경우는 replicaset과 같은 ownerreference를 한번 더 거쳐야 합니다. (pod -&gt; replicaset -&gt; deployment) 다시 말해 다른 object와 달리 2단계의 ownerreference 체크가 필요합니다. 이 케이스를 설명하는 것은 이런 방법을 응용하면 이후에도 다양한 형태의 object들을 aggregation 할 수 있다고 생각하기 때문입니다.</p>
+
+<p>다만 이부분 부터는 kube-state-metrics 에 <a href="https://github.com/kubernetes/kube-state-metrics/commit/991e511f11a9bb201b8f10f6dc4c5703c0065e06">add kube_replicatset_owner metric</a>과 같은 커밋이 있어야 합니다. 왜냐하면 아래에서 나오는 <code>kube_replicaset_owner</code>는 위의 커밋이 있어야 수집되기 때문입니다. 이건 kube-state-metrics 다음버전에 들어갈 것으로 예상되고 아직은 추가 되지 않은 상태입니다. 대충 해당 커밋을 포함해서 이미지를 빌드해서 사용하면 됩니다. 아니면 미리 빌드해둔 <code>leoh0/kube-state-metrics:latest</code> 이미지를 쓰셔도 됩니다.</p>
+
+<p>그렇다면 <code>kube_pod_owner</code> 와 <code>kube_replicaset_owner</code> 를 어떻게 vector matching 하는지 설명 드리겠습니다. 즉, pod -&gt; replicaset -&gt; deployment 연계중 우선 replicaset -&gt; deployment 부터 조합하는 것입니다. 이런 metadata들을 먼저 vector matching하는 것은 아무래도 이런 metadata가 metric 수보다는 적기에 먼저 연산하는 것이 유리하기 때문입니다.</p>
+
+<p>이제 match할 <code>kube_pod_owner</code>는 위에서도 사용것과 같은 아래 값입니다.</p>
+
+<pre><code>max(
+  kube_pod_owner
+) by (owner_name, owner_kind, pod, namespace)
+</code></pre>
+
+<p>이 결과중 아래와 같이 <code>ReplicaSet</code> 데이터가 있음을 확인 할 수 있습니다.</p>
+
+<pre><code>{
+    namespace=&quot;rook-ceph&quot;,
+    owner_kind=&quot;ReplicaSet&quot;,
+    owner_name=&quot;rook-ceph-mgr-a-88d56c679&quot;,
+    pod=&quot;rook-ceph-mgr-a-88d56c679-7kwgc&quot;
+}    1
+...
+</code></pre>
+
+<p>이런 위의 데이터와 연결할  <code>kube_replicaset_owner</code>를 살펴보면 아래와 같이 확인할 수 있습니다.</p>
+
+<pre><code>max(
+  kube_replicaset_owner
+) by (namespace, owner_name, owner_kind, replicaset)
+</code></pre>
+
+<p>이 데이터는 아래와 같습니다.</p>
+
+<pre><code>{
+    namespace=&quot;rook-ceph&quot;,
+    owner_kind=&quot;Deployment&quot;,
+    owner_name=&quot;rook-ceph-mgr-a&quot;,
+    replicaset=&quot;rook-ceph-mgr-a-88d56c679&quot;
+}  1
+</code></pre>
+
+<p>즉, <code>kube_pod_owner</code>의 <code>owner_name</code> 가 <code>kube_replicaset_owner</code>의 <code>replicaset</code>와 일치 될경우(물론 namespace도 동일) vector가 매칭 될 수 있습니다.</p>
+
+<p>그러면 이제 단순한 생각의 흐름으로 이 두 벡터를 매칭 시키는 방법을 설명드립니다. 쿼리를 최적화 하려면 다른 방법들도 가능하지만 다양한 방법들이 가능하다는 것을 설명드리고자 합니다.</p>
+
+<p>우리가 원하는 결과물은 아래와 같습니다. <code>owner_kind</code> <code>owner_name</code>은 <code>kube_replicaset_owner</code>용 label value를 사용하고 <code>pod</code>은 <code>kube_pod_owner</code>의 label value를 사용하는 것입니다. 이런 metadata를 만들어야 나중에 pod metric을 아래 metadata에 match 시키면 deployment로 수집될 수 있기 때문입니다. 이를 간단히 설명하면 아래와 같습니다.</p>
+
+<pre><code>{
+    namespace=&quot;rook-ceph&quot;, // kube_pod_owner, kube_replicaset_owner 동일
+    owner_kind=&quot;Deployment&quot;, // kube_replicaset_owner 값
+    owner_name=&quot;rook-ceph-mgr-a&quot;, // kube_replicaset_owner 값
+    pod=&quot;rook-ceph-mgr-a-88d56c679-7kwgc&quot; // kube_pod_owner 값
+}   1
+</code></pre>
+
+<p>위와 같이 구성하기 위해 우선 kube_replicaset_owner를 -&gt; kube_pod_owner 로 매칭 시키도록 합니다. 결국 base는 <code>kube_pod_owner</code> 가 되기 때문에 이 owner_kind를 나중에 <code>Deployment</code>로 세팅하기 위한 값을 세팅합니다.</p>
+
+<pre><code>label_replace(
+  max(
+    kube_replicaset_owner
+  ) by (namespace, owner_name, owner_kind, replicaset)
+  ,&quot;new_kind&quot;, &quot;$1&quot;, &quot;owner_kind&quot;, &quot;(.+)&quot;
+)
+</code></pre>
+
+<p>이런 결과는 아래와 같이 <code>new_kind=&quot;Deployment&quot;</code> 가 생깁니다.</p>
+
+<pre><code>{
+    namespace=&quot;rook-ceph&quot;,
+    new_kind=&quot;Deployment&quot;,
+    owner_kind=&quot;Deployment&quot;,
+    owner_name=&quot;rook-ceph-mgr-a&quot;,
+    replicaset=&quot;rook-ceph-mgr-a-88d56c679&quot;
+}  1
+</code></pre>
+
+<p>이제 나중에 <code>owner_name</code>도 나중에 덮어쓰기 위한 값을 세팅합니다. 왜냐하면 <code>kube_pod_owner</code>에 owner_name에 매칭하기 위해서 기존의 replicaset 을 owner_name으로 변경하기 때문에 미리 owner_name을 나중에 다시 사용하기 위해 <code>new_name</code>으로 복사해 두는 겁니다.</p>
+
+<pre><code>label_replace(
+  label_replace(
+    max(
+      kube_replicaset_owner
+    ) by (namespace, owner_name, owner_kind, replicaset)
+    ,&quot;new_kind&quot;, &quot;$1&quot;, &quot;owner_kind&quot;, &quot;(.+)&quot;
+  )
+  ,&quot;new_name&quot;, &quot;$1&quot;, &quot;owner_name&quot;, &quot;(.+)&quot;
+)
+</code></pre>
+
+<p><code>new_name=&quot;rook-ceph-mgr-a&quot;</code> 와 같이 추가 되어 있는 것을 알 수 있습니다.</p>
+
+<pre><code>{
+    namespace=&quot;rook-ceph&quot;,
+    new_kind=&quot;Deployment&quot;,
+    new_name=&quot;rook-ceph-mgr-a&quot;,
+    owner_kind=&quot;Deployment&quot;,
+    owner_name=&quot;rook-ceph-mgr-a&quot;,
+    replicaset=&quot;rook-ceph-mgr-a-88d56c679&quot;
+}  1
+</code></pre>
+
+<p>또, 아래와 같이 나중에 match시키기 위해 kube_pod_owner의 owner_name과 match하기 위해 replicaset값을 owner_name로 변경합니다.</p>
+
+<pre><code>label_replace(
+  label_replace(
+    label_replace(
+      max(
+        kube_replicaset_owner
+      ) by (namespace, owner_name, owner_kind, replicaset)
+      ,&quot;new_kind&quot;, &quot;$1&quot;, &quot;owner_kind&quot;, &quot;(.+)&quot;
+    )
+    ,&quot;new_name&quot;, &quot;$1&quot;, &quot;owner_name&quot;, &quot;(.+)&quot;
+  )
+  ,&quot;owner_name&quot;, &quot;$1&quot;, &quot;replicaset&quot;, &quot;(.+)&quot;
+)
+</code></pre>
+
+<p>owner_name이 <code>owner_name=&quot;rook-ceph-mgr-a&quot;</code> -&gt; <code>owner_name=&quot;rook-ceph-mgr-a-88d56c679&quot;</code> 로 변경됩니다.</p>
+
+<pre><code>{
+    namespace=&quot;rook-ceph&quot;,
+    new_kind=&quot;Deployment&quot;,
+    new_name=&quot;rook-ceph-mgr-a&quot;,
+    owner_kind=&quot;Deployment&quot;,
+    owner_name=&quot;rook-ceph-mgr-a-88d56c679&quot;,
+    replicaset=&quot;rook-ceph-mgr-a-88d56c679&quot;
+}  1
+</code></pre>
+
+<p>이제 준비한 이 벡터를 kube_pod_owner 에 match합니다.</p>
+
+<pre><code>label_replace(
+  label_replace(
+    label_replace(
+      max(
+        kube_replicaset_owner
+      ) by (namespace, owner_name, owner_kind, replicaset)
+      ,&quot;new_kind&quot;, &quot;$1&quot;, &quot;owner_kind&quot;, &quot;(.+)&quot;
+    )
+    ,&quot;new_name&quot;, &quot;$1&quot;, &quot;owner_name&quot;, &quot;(.+)&quot;
+  )
+  ,&quot;owner_name&quot;, &quot;$1&quot;, &quot;replicaset&quot;, &quot;(.+)&quot;
+)
+*
+on(owner_name, namespace)
+group_right(new_name, new_kind)
+max(
+  kube_pod_owner
+) by (owner_name, owner_kind, pod, namespace)
+</code></pre>
+
+<p>결과는 아래와 같이 kube_pod_owner 벡터에 new_name과 new_kind가 추가되서 match됩니다.</p>
+
+<pre><code>{
+    namespace=&quot;rook-ceph&quot;,
+    new_kind=&quot;Deployment&quot;,
+    new_name=&quot;rook-ceph-mgr-a&quot;,
+    owner_kind=&quot;ReplicaSet&quot;,
+    owner_name=&quot;rook-ceph-mgr-a-88d56c679&quot;,
+    pod=&quot;rook-ceph-mgr-a-88d56c679-7kwgc&quot;
+}   1
+</code></pre>
+
+<p>여기에서 우리는 new_kind를 우리가 원하는 owner_kind에 덮어씁니다.</p>
+
+<pre><code>label_replace(
+  label_replace(
+    label_replace(
+      label_replace(
+        max(
+          kube_replicaset_owner
+        ) by (namespace, owner_name, owner_kind, replicaset)
+        ,&quot;new_kind&quot;, &quot;$1&quot;, &quot;owner_kind&quot;, &quot;(.+)&quot;
+      )
+      ,&quot;new_name&quot;, &quot;$1&quot;, &quot;owner_name&quot;, &quot;(.+)&quot;
+    )
+    ,&quot;owner_name&quot;, &quot;$1&quot;, &quot;replicaset&quot;, &quot;(.+)&quot;
+  )
+  *
+  on(owner_name, namespace)
+  group_right(new_name, new_kind)
+  max(
+    kube_pod_owner
+  ) by (owner_name, owner_kind, pod, namespace)
+  ,&quot;owner_kind&quot;, &quot;$1&quot;, &quot;new_kind&quot;, &quot;(.+)&quot;
+)
+</code></pre>
+
+<p>아래와 같이 <code>owner_kind=&quot;ReplicaSet&quot;</code> -&gt; <code>owner_kind=&quot;Deployment&quot;</code> 로 변경 됩니다.</p>
+
+<pre><code>{
+    namespace=&quot;rook-ceph&quot;,
+    new_kind=&quot;Deployment&quot;,
+    new_name=&quot;rook-ceph-mgr-a&quot;,
+    owner_kind=&quot;Deployment&quot;,
+    owner_name=&quot;rook-ceph-mgr-a-88d56c679&quot;,
+    pod=&quot;rook-ceph-mgr-a-88d56c679-7kwgc&quot;
+}   1
+</code></pre>
+
+<p>또 비슷하게 new_name으로 owner_name을 덮어씁니다.</p>
+
+<pre><code>label_replace(
+  label_replace(
+    label_replace(
+      label_replace(
+        label_replace(
+          max(
+            kube_replicaset_owner
+          ) by (namespace, owner_name, owner_kind, replicaset)
+          ,&quot;new_kind&quot;, &quot;$1&quot;, &quot;owner_kind&quot;, &quot;(.+)&quot;
+        )
+        ,&quot;new_name&quot;, &quot;$1&quot;, &quot;owner_name&quot;, &quot;(.+)&quot;
+      )
+      ,&quot;owner_name&quot;, &quot;$1&quot;, &quot;replicaset&quot;, &quot;(.+)&quot;
+    )
+    *
+    on(owner_name, namespace)
+    group_right(new_name, new_kind)
+    max(
+      kube_pod_owner
+    ) by (owner_name, owner_kind, pod, namespace)
+    ,&quot;owner_kind&quot;, &quot;$1&quot;, &quot;new_kind&quot;, &quot;(.+)&quot;
+  )
+  ,&quot;owner_name&quot;, &quot;$1&quot;, &quot;new_name&quot;, &quot;(.+)&quot;
+)
+</code></pre>
+
+<p>아래와 같이 <code>owner_name=&quot;rook-ceph-mgr-a-88d56c679&quot;</code> -&gt; <code>owner_name=&quot;rook-ceph-mgr-a&quot;</code> 로 변경 됩니다.</p>
+
+<pre><code>{
+    namespace=&quot;rook-ceph&quot;,
+    new_kind=&quot;Deployment&quot;,
+    new_name=&quot;rook-ceph-mgr-a&quot;,
+    owner_kind=&quot;Deployment&quot;,
+    owner_name=&quot;rook-ceph-mgr-a&quot;,
+    pod=&quot;rook-ceph-mgr-a-88d56c679-7kwgc&quot;
+}   1
+</code></pre>
+
+<p>여기에서 사용할 <code>owner_name</code>, <code>owner_kind</code>, <code>pod</code>, <code>namespace</code> 만 추려냅니다.</p>
+
+<pre><code>max(
+  label_replace(
+    label_replace(
+      label_replace(
+        label_replace(
+          label_replace(
+            max(
+              kube_replicaset_owner
+            ) by (namespace, owner_name, owner_kind, replicaset)
+            ,&quot;new_kind&quot;, &quot;$1&quot;, &quot;owner_kind&quot;, &quot;(.+)&quot;
+          )
+          ,&quot;new_name&quot;, &quot;$1&quot;, &quot;owner_name&quot;, &quot;(.+)&quot;
+        )
+        ,&quot;owner_name&quot;, &quot;$1&quot;, &quot;replicaset&quot;, &quot;(.+)&quot;
+      )
+      *
+      on(owner_name, namespace)
+      group_right(new_name, new_kind)
+      max(
+        kube_pod_owner
+      ) by (owner_name, owner_kind, pod, namespace)
+      ,&quot;owner_kind&quot;, &quot;$1&quot;, &quot;new_kind&quot;, &quot;(.+)&quot;
+    )
+    ,&quot;owner_name&quot;, &quot;$1&quot;, &quot;new_name&quot;, &quot;(.+)&quot;
+  )
+) by (owner_name, owner_kind, pod, namespace)
+</code></pre>
+
+<p>아래와 같이 벡터가 추려진것을 확인 할 수 있습니다.</p>
+
+<pre><code>{
+    namespace=&quot;rook-ceph&quot;,
+    owner_kind=&quot;Deployment&quot;,
+    owner_name=&quot;rook-ceph-mgr-a&quot;,
+    pod=&quot;rook-ceph-mgr-a-88d56c679-7kwgc&quot;
+}   1
+</code></pre>
+
+<h1 id="grafana-에-kubernetes-aggregation-dashboard-만들기">grafana 에 kubernetes aggregation dashboard 만들기</h1>
+
+<p>우선 예제로 설명할 dashboard는 아래와 같습니다.</p>
+
+<p><a href="http://leoh0.github.io/data/aggregation.json">download kubernetes aggregation grafana dashboard</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+  
+    
+      <img class="lazyload" data-src="/images/Grafana%20-%20Aggregation%202018-10-09%2003-40-53.png" alt="Kubernetes Aggregation Metrics" />
+    
+  
+  
+  <figcaption>
+    
+    <small>Kubernetes Aggregation Metrics
+    
+      
+    
+    </small>
+  </figcaption>
+  
+</figure>
+
+<p>우선 해당 dashboard를 사용하려면 <code>grafana/grafana:5.3.0-beta3</code> 와 같은 grafana 5.3.0 이상을 사용해야 합니다. 왜냐하면 prometheus의 <code>$__interval</code>과 같은 <a href="https://github.com/grafana/grafana/issues/7664">range query 옵션</a>을 넣었기 때문입니다. 만약 이전버전 grafana를 그대로 이용하실 분들은 그냥 <code>$__interval</code>과 같은 부분을 <code>1m</code> 과 같이 변경하면 사용 가능합니다. 하지만 이 query를 사용해야 보다 기간에 따른 적당한 양의 data를 가져올 수 있어 더욱 용이 합니다.</p>
+
+<p>이 dashboard에서 사용한 metadata aggregation을 위해 아래와 같은 query문을 만들었습니다. 이 쿼리의 결과는 모든 pod, namespace들의 owner_name와 owner_kind들을 출력해줍니다.</p>
+
+<pre><code>max(
+  max(
+    kube_replicaset_owner
+  ) by (namespace, owner_name, owner_kind, replicaset)
+  *
+  on(replicaset, namespace)
+  group_right(owner_name, owner_kind)
+  label_replace(
+    max(
+      kube_pod_owner{namespace=&quot;$ns&quot;,owner_kind=&quot;ReplicaSet&quot;}
+    ) by (owner_name, pod, namespace)
+    , &quot;replicaset&quot;, &quot;$1&quot;, &quot;owner_name&quot;, &quot;(.+)&quot;
+  )
+  or
+  kube_pod_owner
+) by (owner_name, owner_kind, pod, namespace)
+</code></pre>
+
+<p>이 쿼리는 아래와 같이 분리해서 해석할 수 있습니다. 우선 아래는 사실 위 챕터에서 replicaset -&gt; deployment match를 조금 더 튜닝한 버전입니다.</p>
+
+<pre><code>max(
+  kube_replicaset_owner
+) by (namespace, owner_name, owner_kind, replicaset)
+*
+on(replicaset, namespace)
+group_right(owner_name, owner_kind)
+label_replace(
+  max(
+    kube_pod_owner{namespace=&quot;$ns&quot;,owner_kind=&quot;ReplicaSet&quot;}
+  ) by (owner_name, pod, namespace)
+  , &quot;replicaset&quot;, &quot;$1&quot;, &quot;owner_name&quot;, &quot;(.+)&quot;
+)
+</code></pre>
+
+<p>여기에 아래와같이 기존의 모든 pod들의 owner 관련 정보를 추가합니다.</p>
+
+<pre><code>or
+kube_pod_owner
+</code></pre>
+
+<p>dashboard에 대해서 간략히 설명하면 우선 다음과 같습니다.</p>
+
+<p><code>ns</code> variables은 namespace를 의미하며 아래와 같은 결과에서 <code>&quot;^{namespace=\&quot;(.+?)\&quot;,.*$&quot;</code> 와 같은 regrex로 결과를 추출한 값입니다.</p>
+
+<pre><code>max(
+  max(
+    kube_replicaset_owner
+  ) by (namespace, owner_name, owner_kind, replicaset)
+  *
+  on(replicaset, namespace)
+  group_right(owner_name, owner_kind)
+  label_replace(
+    max(
+      kube_pod_owner{namespace=&quot;$ns&quot;,owner_kind=&quot;ReplicaSet&quot;}
+    ) by (owner_name, pod, namespace)
+    , &quot;replicaset&quot;, &quot;$1&quot;, &quot;owner_name&quot;, &quot;(.+)&quot;
+  )
+  or
+  kube_pod_owner
+) by (owner_name, owner_kind, pod, namespace)
+</code></pre>
+
+<p><code>kind</code> variables는 여기에 <code>{namespace=&quot;$ns&quot;}</code> 가 정의된 상태에서 검색 되도록 하고 <code>&quot;^.*owner_kind=\&quot;(.+?)\&quot;,.*$&quot;</code> 와 같이 추출합니다.</p>
+
+<pre><code>max(
+  max(
+    kube_replicaset_owner{namespace=&quot;$ns&quot;}
+  ) by (namespace, owner_name, owner_kind, replicaset)
+  *
+  on(replicaset, namespace)
+  group_right(owner_name, owner_kind)
+  label_replace(
+    max(
+      kube_pod_owner{namespace=&quot;$ns&quot;,owner_kind=&quot;ReplicaSet&quot;}
+    ) by (owner_name, pod, namespace)
+    , &quot;replicaset&quot;, &quot;$1&quot;, &quot;owner_name&quot;, &quot;(.+)&quot;
+  )
+  or
+  kube_pod_owner{namespace=&quot;$ns&quot;}
+) by (owner_name, owner_kind, pod, namespace)
+</code></pre>
+
+<p><code>on</code> variables는 여기에 <code>{namespace=&quot;$ns&quot;,owner_kind=&quot;$kind&quot;}</code> 가 정의된 상태에서 검색되고 <code>&quot;^.*owner_name=\&quot;(.+?)\&quot;,.*$&quot;</code> 로 추출 되도록 합니다.</p>
+
+<pre><code>max(
+  max(
+    kube_replicaset_owner{namespace=&quot;$ns&quot;,owner_kind=&quot;$kind&quot;}
+  ) by (namespace, owner_name, owner_kind, replicaset)
+  *
+  on(replicaset, namespace)
+  group_right(owner_name, owner_kind)
+  label_replace(
+    max(
+      kube_pod_owner{namespace=&quot;$ns&quot;,owner_kind=&quot;ReplicaSet&quot;}
+    ) by (owner_name, pod, namespace)
+    , &quot;replicaset&quot;, &quot;$1&quot;, &quot;owner_name&quot;, &quot;(.+)&quot;
+  )
+  or
+  kube_pod_owner{namespace=&quot;$ns&quot;,owner_kind=&quot;$kind&quot;}
+) by (owner_name, owner_kind, pod, namespace)
+</code></pre>
+
+<p>실제 metric은 아래와 같습니다. 위의 쿼리에 보통 metric을 join 시키는 방식입니다.
+각각 pod 각각의 상태와 avg 한 그래프를 배치시키는 방식입니다.</p>
+
+<p>query A</p>
+
+<pre><code>max(
+  max(
+    kube_replicaset_owner{namespace=&quot;$ns&quot;,owner_kind=&quot;$kind&quot;,owner_name=&quot;$on&quot;}
+  ) by (namespace, owner_name, owner_kind, replicaset)
+  *
+  on(replicaset, namespace)
+  group_right(owner_name, owner_kind)
+  label_replace(
+    max(
+      kube_pod_owner{namespace=&quot;$ns&quot;,owner_kind=&quot;ReplicaSet&quot;}
+    ) by (owner_name, pod, namespace)
+    , &quot;replicaset&quot;, &quot;$1&quot;, &quot;owner_name&quot;, &quot;(.+)&quot;
+  )
+  or
+  kube_pod_owner{namespace=&quot;$ns&quot;,owner_kind=&quot;$kind&quot;,owner_name=&quot;$on&quot;}
+) by (owner_name, owner_kind, pod, namespace)
+*
+on(pod, namespace)
+group_right(owner_kind, owner_name)
+label_replace(
+  sum by(pod_name, namespace, kubernetes_io_hostname) (
+    rate(container_cpu_usage_seconds_total{namespace=&quot;$ns&quot;}[$__interval])
+  ), &quot;pod&quot;, &quot;$1&quot;, &quot;pod_name&quot;, &quot;(.+)&quot;
+)
+</code></pre>
+
+<p>query B</p>
+
+<pre><code>avg(
+  max(
+    max(
+      kube_replicaset_owner{namespace=&quot;$ns&quot;,owner_kind=&quot;$kind&quot;,owner_name=&quot;$on&quot;}
+    ) by (namespace, owner_name, owner_kind, replicaset)
+    *
+    on(replicaset, namespace)
+    group_right(owner_name, owner_kind)
+    label_replace(
+      max(
+        kube_pod_owner{namespace=&quot;$ns&quot;,owner_kind=&quot;ReplicaSet&quot;}
+      ) by (owner_name, pod, namespace)
+      , &quot;replicaset&quot;, &quot;$1&quot;, &quot;owner_name&quot;, &quot;(.+)&quot;
+    )
+    or
+    kube_pod_owner{namespace=&quot;$ns&quot;,owner_kind=&quot;$kind&quot;,owner_name=&quot;$on&quot;}
+  ) by (owner_name, owner_kind, pod, namespace)
+  *
+  on(pod, namespace)
+  group_right(owner_kind, owner_name)
+  label_replace(
+    sum by(pod_name, namespace, kubernetes_io_hostname) (
+      rate(container_cpu_usage_seconds_total{namespace=&quot;$ns&quot;}[$__interval])
+    ), &quot;pod&quot;, &quot;$1&quot;, &quot;pod_name&quot;, &quot;(.+)&quot;
+  )
+) by (owner_name, owner_kind, namespace)
+</code></pre>
+
+<p>실제 여기 있는 metric graph나 variable 같은 경우 최적화를 하지 않은 쿼리문이라서 속도가 느립니다. 이런식으로 많은 join(vector matching)을 하면 쿼리 성능에도 영향을 크게 미칩니다. 이건 그냥 복잡한 케이스 해결의 예시로 참고하시면 좋을 것 같습니다. 실제로 예를 들어 <code>namespace</code>나 <code>kind</code>를 variable로 정리하는 것은 더 간단한 쿼리를 사용합니다.</p>
+
+<h1 id="결론">결론</h1>
+
+<p>사실 여기까지 설명한것은 이런 기법들중 굉장히 일부분을 설명한 것입니다. 사실 prometheus를 kubernetes에 제대로 연동하기 위해서는 추가적인 metadata들을 더 수집하고 custom metric들을 위한 labeling 작업 등등 많은 부분들이 남아 있습니다. 다만 이런 방법들을 적용하면 기존에 만들지 못한 패턴들을 탐지할 수 있는 그래프들을 만들 단초가 될것으로 기대됩니다.</p>
+
+    </div>
+    
+      <article>
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leoh0githubio" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </article>
+    
+    <footer>
+      <hr>
+      <p>
+  Published
+  
+    
+      by <span itemprop="author">leoh0</span>
+    
+  
+  <time itemprop="datePublished" datetime="2018-10-09T01:42:33&#43;09:00">
+    9 Oct, 2018
+  </time>
+  
+    in <span itemprop="articleSection"><a href="/categories/technology/">technology</a></span>
+  
+  
+    and tagged <a href="/tags/aggregation/">aggregation</a>, <a href="/tags/daemonset/">daemonset</a>, <a href="/tags/deployment/">deployment</a>, <a href="/tags/k8s/">k8s</a>, <a href="/tags/kubernetes/">kubernetes</a>, <a href="/tags/metric/">metric</a>, <a href="/tags/prometheus/">prometheus</a>, <a href="/tags/promql/">promql</a>, <a href="/tags/statefulset/">statefulset</a> and <a href="/tags/walkthrough/">walkthrough</a>
+  
+  using <span itemprop="wordCount">2795</span> words.
+</p>
+
+      
+
+
+  <aside>
+    <header>Related Content</header>
+    <ul>
+      
+        <li><a href="/post/2018-09-09-how-to-migrate-ceph-rbd-to-csi-ceph-rbd-in-k8s/">How to Migrate Ceph RBD to CSI Ceph RBD in K8S</a>
+        <time datetime="11M">11 minutes</time>
+      
+        <li><a href="/post/2018-08-04-how-to-debug-dead-container-in-k8s/">How to Debug Dead Container in K8s</a>
+        <time datetime="10M">10 minutes</time>
+      
+        <li><a href="/post/2018-05-21-immutable-kubernetes/">immutable kubernetes by linuxkit</a>
+        <time datetime="11M">11 minutes</time>
+      
+        <li><a href="/post/2018-04-07-how-to-make-unofficial-kubernetes-pdf-documents-2/">how to make unofficial kubernetes pdf documents 2</a>
+        <time datetime="3M">3 minutes</time>
+      
+        <li><a href="/post/2017-10-23-how-to-make-unofficial-kubernetes-pdf-documents/">how to make unofficial kubernetes pdf documents</a>
+        <time datetime="3M">3 minutes</time>
+      
+    </ul>
+  </aside>
+
+
+    </footer>
+  </article>
+</main>
+    <footer>
+  
+
+</footer>
+  </body>
+</html>

@@ -23,7 +23,7 @@
 
 
 
-<meta property="og:updated_time" content="2018-09-09T11:43:14&#43;09:00"/>
+<meta property="og:updated_time" content="2018-10-09T01:42:33&#43;09:00"/>
 
 
 
@@ -191,6 +191,45 @@ ga('send', 'pageview');
   <header>
     <h1>&gt; /dev/null</h1>
   </header>
+  
+    <article itemscope itemtype="http://schema.org/CreativeWork">
+  <header>
+    <h2 itemprop="name">
+      <a href="/post/2018-10-09-kubernetes-prometheus-metric-aggregation-by-daemonset-statefulset-deployment-walkthrough/">Kubernetes Prometheus Metric Aggregation by Daemonset, Statefulset, Deployment Walkthrough</a>
+    </h2>
+    
+      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <circle cx="16" cy="16" r="14" />
+  <path d="M16 8 L16 16 20 20" />
+</svg>
+<span>14 minute read</span>
+<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+</svg>
+
+  Published: <time datetime="2018-10-09T01:42:33&#43;09:00">9 Oct, 2018</time>
+
+</p>
+    
+  </header>
+  
+    <blockquote itemprop="headline">Big Fantastic PromQL</blockquote>
+  
+  <div itemprop="description">
+    Kubernetes Aggregation Metrics    kubernetes and prometheus 최근 kubernetes에서 metric을 관리하는 것중 가장 유명한 것은 prometheus라고 할 수 있습니다. metric 관리방법으로 heapster를 사용할때 까지는 influxdb를 많이 사용하는 추세 였으나 앞으로 대채될 metrics-server는 현재 in-memory sink밖에 없어서 우선 기존에 influxdb를 사용하던것을 많이 안쓰게 될것 같습니다. 더욱이 custom metric들에 대한 예제들이 prometheus로 제공되고 있어서 prometheus로 metric관리가 통합될것으로 기대하고 있습니다.
+이러한 prometheus로 kubernetes metric들을 수집하는 것은 대체로 크게 2가지 케이스 입니다.
+  </div>
+  
+    <nav class="readmore"><a itemprop="url" href="/post/2018-10-09-kubernetes-prometheus-metric-aggregation-by-daemonset-statefulset-deployment-walkthrough/">Read More&nbsp;&raquo;</a></nav>
+  
+  <meta itemprop="inLanguage" content="en-US">
+  <meta itemprop="datePublished" content="2018-10-09T01:42:33&#43;09:00">
+  <meta itemprop="dateModified" content="2018-10-09T01:42:33&#43;09:00">
+  
+    <meta itemprop="image" content="http://leoh0.github.io/images/Grafana - Aggregation 2018-10-09 03-57-21.png">
+  
+</article>
+
   
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
@@ -565,45 +604,6 @@ windows 환경에선 xhyve 외에도 virtual box 등을 이용하셔도 좋을 �
   <meta itemprop="inLanguage" content="en-US">
   <meta itemprop="datePublished" content="2016-09-29T23:39:00&#43;09:00">
   <meta itemprop="dateModified" content="2016-09-29T23:39:00&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2016-09-29-cuga-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossda-dot/">추가 - Keystone에서 Token Backend로 사용하는 Memcached가 Unbalanced되었다..</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>1 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2016-09-29T23:30:20&#43;09:00">29 Sep, 2016</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    예전에 아래글을 그냥 balancing 을 위해 id 를 잘 분배하자 라는식으로 결론 냈지만.
-Keystone에서 Token Backend로 사용하는 Memcached가 Unbalanced되었다..
-user의 token리스트를 관리하지 않으면 부담은 훨씬 줄어든다.
-물론 user의 password 변경 등으로 기존 모든 token을 revoke 시키는 경우때문에 이런 user 단위로 token리스트를 관리해야 하지만
-그걸 포기하면 그냥 코드 몇줄 추가로 간단하게 정리할 수 있다.
-diff --git a/keystone/token/persistence/backends/memcache.py b/keystone/token/persistence/backends/memcache.py index e6b0fca..3f0de68 100644 --- a/keystone/token/persistence/backends/memcache.py +++ b/keystone/token/persistence/backends/memcache.py @@ -37,3 +37,6 @@ class Token(kvs.Token):  kwargs[&#39;memcached_expire_time&#39;] = CONF.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2016-09-29-cuga-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossda-dot/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2016-09-29T23:30:20&#43;09:00">
-  <meta itemprop="dateModified" content="2016-09-29T23:30:20&#43;09:00">
   
 </article>
 

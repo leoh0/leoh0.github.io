@@ -30,6 +30,15 @@
     </item>
     
     <item>
+      <title>Aggregation</title>
+      <link>https://leoh0.github.io/tags/aggregation/</link>
+      <pubDate>Tue, 09 Oct 2018 01:42:33 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/aggregation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Attribute</title>
       <link>https://leoh0.github.io/tags/attribute/</link>
       <pubDate>Thu, 05 Feb 2015 17:21:56 +0900</pubDate>
@@ -203,7 +212,7 @@
     <item>
       <title>Daemonset</title>
       <link>https://leoh0.github.io/tags/daemonset/</link>
-      <pubDate>Tue, 07 Aug 2018 21:25:37 +0900</pubDate>
+      <pubDate>Tue, 09 Oct 2018 01:42:33 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/daemonset/</guid>
       <description></description>
@@ -233,6 +242,15 @@
       <pubDate>Tue, 07 Aug 2018 21:25:37 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/dedicated/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Deployment</title>
+      <link>https://leoh0.github.io/tags/deployment/</link>
+      <pubDate>Tue, 09 Oct 2018 01:42:33 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/deployment/</guid>
       <description></description>
     </item>
     
@@ -392,7 +410,7 @@
     <item>
       <title>K8s</title>
       <link>https://leoh0.github.io/tags/k8s/</link>
-      <pubDate>Sun, 09 Sep 2018 11:43:14 +0900</pubDate>
+      <pubDate>Tue, 09 Oct 2018 01:42:33 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/k8s/</guid>
       <description></description>
@@ -428,7 +446,7 @@
     <item>
       <title>Kubernetes</title>
       <link>https://leoh0.github.io/tags/kubernetes/</link>
-      <pubDate>Sun, 09 Sep 2018 11:43:14 +0900</pubDate>
+      <pubDate>Tue, 09 Oct 2018 01:42:33 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/kubernetes/</guid>
       <description></description>
@@ -485,6 +503,15 @@
       <pubDate>Thu, 29 Sep 2016 23:30:20 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/memcached/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Metric</title>
+      <link>https://leoh0.github.io/tags/metric/</link>
+      <pubDate>Tue, 09 Oct 2018 01:42:33 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/metric/</guid>
       <description></description>
     </item>
     
@@ -660,6 +687,24 @@
     </item>
     
     <item>
+      <title>Prometheus</title>
+      <link>https://leoh0.github.io/tags/prometheus/</link>
+      <pubDate>Tue, 09 Oct 2018 01:42:33 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/prometheus/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Promql</title>
+      <link>https://leoh0.github.io/tags/promql/</link>
+      <pubDate>Tue, 09 Oct 2018 01:42:33 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/promql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Qemu</title>
       <link>https://leoh0.github.io/tags/qemu/</link>
       <pubDate>Fri, 24 Apr 2015 01:08:16 +0900</pubDate>
@@ -759,6 +804,15 @@
     </item>
     
     <item>
+      <title>Statefulset</title>
+      <link>https://leoh0.github.io/tags/statefulset/</link>
+      <pubDate>Tue, 09 Oct 2018 01:42:33 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/statefulset/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>String</title>
       <link>https://leoh0.github.io/tags/string/</link>
       <pubDate>Thu, 05 Feb 2015 17:21:56 +0900</pubDate>
@@ -845,6 +899,15 @@
       <pubDate>Tue, 17 May 2016 02:24:09 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/vpn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Walkthrough</title>
+      <link>https://leoh0.github.io/tags/walkthrough/</link>
+      <pubDate>Tue, 09 Oct 2018 01:42:33 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/walkthrough/</guid>
       <description></description>
     </item>
     

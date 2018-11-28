@@ -4,7 +4,7 @@
     <meta name="generator" content="Hugo 0.46" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Technology | &gt; /dev/null</title>
+    <title>Admin.conf | &gt; /dev/null</title>
     <meta name="description" content="... nothing ...">
     <meta name="keywords" content="me, technology, 잡담, ">
     
@@ -18,14 +18,14 @@
   <meta name="author" content="leoh0">
 
 
-    <meta property="og:title" content="Technology" />
+    <meta property="og:title" content="Admin.conf" />
 <meta property="og:description" content="... nothing ..." />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://leoh0.github.io/categories/technology/" />
+<meta property="og:url" content="https://leoh0.github.io/tags/admin.conf/" />
 
 
 
-<meta property="og:updated_time" content="2015-03-14T22:00:57&#43;09:00"/>
+<meta property="og:updated_time" content="2018-11-28T18:16:54&#43;09:00"/>
 
 
 
@@ -39,7 +39,7 @@
     <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 
-<meta name="twitter:title" content="Technology"/>
+<meta name="twitter:title" content="Admin.conf"/>
 <meta name="twitter:description" content="... nothing ..."/>
 
     
@@ -73,9 +73,9 @@
 
 
     
-      <link href="https://leoh0.github.io/categories/technology/index.xml" rel="alternate" type="application/rss+xml" title="&gt; /dev/null">
+      <link href="https://leoh0.github.io/tags/admin.conf/index.xml" rel="alternate" type="application/rss+xml" title="&gt; /dev/null">
     
-    <link rel="canonical" href="https://leoh0.github.io/categories/technology/">
+    <link rel="canonical" href="https://leoh0.github.io/tags/admin.conf/">
     <link href="http://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
     
     
@@ -185,13 +185,13 @@ ga('send', 'pageview');
 </header>
     <main>
   <header>
-    <h1>Technology</h1>
+    <h1>Admin.conf</h1>
   </header>
   
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
     <h2 itemprop="name">
-      <a href="/post/2015-03-14-if-you-forget-your-password-or-key/">만약 사용자가 ssh password나 key등을 잃어 버려서 도저히 vm instance에 접속할 수 없을때..</a>
+      <a href="/post/2018-11-28-create-admin-token-for-kubernetes/">Use Admin Token Instead of Cert In Admin.conf For Kubernetes</a>
     </h2>
     
       <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
@@ -203,268 +203,27 @@ ga('send', 'pageview');
   <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
 </svg>
 
-  Published: <time datetime="2015-03-14T22:00:57&#43;09:00">14 Mar, 2015</time>
+  Published: <time datetime="2018-11-28T18:16:54&#43;09:00">28 Nov, 2018</time>
 
 </p>
     
   </header>
   
-  <div itemprop="description">
-    우선은 nbd로 attach 하여 mount 해서 접근 가능하다.
-이후에 아래와 같이 key를 추가해도 되고 각 os 버전에 맞게 패스워드를 새로 해슁하여 /etc/shadow 를 변경해도 된다.
-물론 마지막에 dettach 를 꼭 신경써서 해줘야 한다.
-# attach disk qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/10794bbb-7856-4ed6-ab39-32afbc01156a/disk mount /dev/nbd0p1 /mnt # insert a new key to target user echo &#39;&#39;&#39;NEWKEY&#39;&#39;&#39; &gt;&gt; /mnt/home/USER/.ssh/authorized_keys # dettach disk umount /mnt qemu-nbd -d /dev/nbd0p1 하지만 이상하게도 저런 수정을 했을때 아예 접속이 불가능한 경우들이 생긴다.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2015-03-14-if-you-forget-your-password-or-key/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2015-03-14T22:00:57&#43;09:00">
-  <meta itemprop="dateModified" content="2015-03-14T22:00:57&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2015-02-24-custom-url-for-chef-server-12/">custom URL for chef server 12</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>1 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2015-02-24T23:29:19&#43;09:00">24 Feb, 2015</time>
-
-</p>
-    
-  </header>
+    <blockquote itemprop="headline">After one year later using k8s, maybe you need this.</blockquote>
   
   <div itemprop="description">
-    chef server ssl verification 때문에 그냥 domain 인증서를 제대로 적용하려고 했는데 엄청 삽질했다. 아마 chef 11 에서 chef 12 로 올라가면서 config 위치가 변경된거 같다.
-여기에서 관련 정보를 얻을 수 있었는데 차이점은 /etc/chef-server/chef-server.rb 가 아닌 /etc/opscode/chef-server.rb 파일을 수정해서 적용 가능했다.
-아래 처럼 해당 파일을 수정한다.
-... server_name = &#34;chef.yourdomain.com&#34; api_fqdn = server_name bookshelf[&#39;vip&#39;] = server_name nginx[&#39;url&#39;] = &#34;https://#{server_name}&#34; nginx[&#39;server_name&#39;] = server_name nginx[&#39;ssl_certificate&#39;] = &#34;/var/opt/chef-server/nginx/ca/#{server_name}.crt&#34; nginx[&#39;ssl_certificate_key&#39;] = &#34;/var/opt/chef-server/nginx/ca/#{server_name}.key&#34; lb[&#39;fqdn&#39;] = server_name 이후에 해당 컨피그 내용으로 적용한다.
+    일반적으로 kubernetes에서 운영자가 kubernetes를 조작하기 위해서는 admin.conf 와 같이 전체 권한을 사용할 수 있는 파일을 이용해서 kubectl을 사용합니다. 이때 admin.conf는 일반적으로 kubeadm 등을 이용하면 certification expiration이 1년등에 제약이 있어서 1년 뒤에는 이 admin.conf를 이용할 시 사용이 불가능해서 재 발급 받아야 합니다.
+물론 kubespray등을 쓰면 10년의 기간으로 생성하긴 하나 날짜가 기간한정이란게 여전히 불안함을 해소하지는 못합니다.
+그래서 인증서 기반 방법을 피해서 token 기반으로 인증을 하면 좋지만 일반적으로 알려진 token auth file로 관리하려면 apiserver에 사용할 파일을 편집하는등 불편할 수 있습니다.
   </div>
   
-    <nav class="readmore"><a itemprop="url" href="/post/2015-02-24-custom-url-for-chef-server-12/">Read More&nbsp;&raquo;</a></nav>
+    <nav class="readmore"><a itemprop="url" href="/post/2018-11-28-create-admin-token-for-kubernetes/">Read More&nbsp;&raquo;</a></nav>
   
   <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2015-02-24T23:29:19&#43;09:00">
-  <meta itemprop="dateModified" content="2015-02-24T23:29:19&#43;09:00">
+  <meta itemprop="datePublished" content="2018-11-28T18:16:54&#43;09:00">
+  <meta itemprop="dateModified" content="2018-11-28T18:16:54&#43;09:00">
   
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2015-02-24-edit-vagrant-box-for-vagrant-libvirt/">edit vagrant box for vagrant-libvirt</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>1 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2015-02-24T13:22:36&#43;09:00">24 Feb, 2015</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-     check file $ file trusty64_vagrant_box_image.img trusty64_vagrant_box_image.img: QEMU QCOW Image (unknown version)  init apt-get install -qqy lvm2 modprobe nbd  attach cd /var/lib/libvirt/images qemu-nbd -c /dev/nbd0 `pwd`/trusty64_vagrant_box_image.img vgscan vgchange -ay mount /dev/mapper/vagrant--vg-root /mnt  detach cd / umount /mnt vgchange -an vagrant-vg qemu-nbd -d /dev/nbd0  
-  </div>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2015-02-24T13:22:36&#43;09:00">
-  <meta itemprop="dateModified" content="2015-02-24T13:22:36&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2015-02-11-build-openstack-node-using-just-1-nic/">NIC 1개로 compute node를 vlan type으로 neutron을 사용하여 구성하기 위한 팁</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>1 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2015-02-11T17:12:39&#43;09:00">11 Feb, 2015</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    gre 같은 tunnel 을 사용한다면 NIC 하나로 구성 할 수 있겠지만 그게 아니라면 일반적으로는 management 용 NIC 한개와 service 용 NIC 한개가 필요하다.
-우선 아래와 같은 상태가 2 NIC을 사용하는 일반적인 구성이다.
-그림 처럼 eth0은 management를 위한 ip로 이용되며 eth1을 guest interface(vlan 이라면 0.0.0.0)로 사용할 수 있다.
-  단도직입적으로 ethernet 한개로는 아래와 같이 구성하면 된다.
-우선 eth0은 0.0.0.0 으로 ip를 사용안하는 대신 br0 부분에서 기존의 management용 ip를 가져간다.
-  아래와 같은 흐름으로 진행하면 된다.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2015-02-11-build-openstack-node-using-just-1-nic/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2015-02-11T17:12:39&#43;09:00">
-  <meta itemprop="dateModified" content="2015-02-11T17:12:39&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2015-02-05-chef-12-feature-or-bug/">chef 12: node attribute style problem - feature or bug?</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>2 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2015-02-05T17:21:56&#43;09:00">5 Feb, 2015</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    chef 12 client를 이용하면서 기존 recipe 들을 사용중 갑자기 작동 안하는 문제가 있었다.
-chef 12로 변화되며 추가된 기능인가 싶어 chef 12 release note를 뒤져보았지만 사실 관련된 부분을 찾지 못했다.
-대략 현상은 아래와 같다..
-chef &gt; attributes_mode chef:attributes &gt; default['haproxy']['conf_dir'] = 'aa' chef:attributes &gt; puts node['haproxy']['conf_dir'] aa chef:attributes &gt; puts node[:haproxy][:conf_dir] aa chef:attributes &gt; node.set['haproxy']['conf_dir'] = 'bb' chef:attributes &gt; puts node['haproxy']['conf_dir'] bb chef:attributes &gt; puts node[:haproxy][:conf_dir] aa  위와 같이 string으로 된 hash와 symbol로 된 hash의 값이 merge가 안되는 문제이다.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2015-02-05-chef-12-feature-or-bug/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2015-02-05T17:21:56&#43;09:00">
-  <meta itemprop="dateModified" content="2015-02-05T17:21:56&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2015-02-02-make-l2-network-for-vm-without-neutron/">make l2 network for vm without neutron</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>3 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2015-02-02T09:20:23&#43;09:00">2 Feb, 2015</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    우선 아래와 같은 컨피그를 이용할때..
-nova  linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver  neutron  type_drivers = vlan mechanism_drivers = openvswitch firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver  1. 기본 상태: 우선 실제 물리 머신에 아래와 같이 vm을 위한 ethernet인 eth1이 존재한다.
-  변수 생성 vmuuid=9ee8db25-6a13-4ca8-8a4e-495db24492ca vlan=2001 localvlan=1 ip=$(nova show $vmuuid | grep ' network' | awk '{print $5}') interfaceid=$(neutron port-list | grep &quot;\&quot;$ip\&quot;&quot; | awk '{print $2}') mac=$(neutron port-list | grep &quot;\&quot;$ip\&quot;&quot; | awk '{print $5}') ovsid=${interfaceid:0:11}  2.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2015-02-02-make-l2-network-for-vm-without-neutron/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2015-02-02T09:20:23&#43;09:00">
-  <meta itemprop="dateModified" content="2015-02-02T09:20:23&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/blog/2015/01/16/jiogyi-ceph-rbd-image-format-2-data-recovering/">ceph pg incomplete: rbd image-format 2 data recovery</a>
-    </h2>
-    
-  </header>
-  
-  <div itemprop="description">
-    ceph: pg incomplete is worst nightmare   2014 open user survey block storage   2014년 유저 설문조사에서 찾을 수 있듯이 ceph은 openstack의 block storage의 de facto standard 라고 말할 수 있다.
-ceph을 사용한지 조금 되었지만 큰 문제가 한번도 없어서 일명 믿음의 ceph이라고 칭송하며 내부구조도 살필일 없이 블랙박스로 두고 잘 쓰고 있었었다.
-하지만 근래에 급작스런 몇가지 문제로 ceph의 placement group(pg) 들이 incomplete 상태로 떨어졌고..
-말그대로 절망했다.
-왜냐하면 incomplete 상태로 떨어진 pg들이 절대 다른 상태로 돌아올수 없으며 해당 pg에 접근하는 모든 request는 slow request화 되며 응답을 주지 않는다.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/blog/2015/01/16/jiogyi-ceph-rbd-image-format-2-data-recovering/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2015-01-16T00:54:53&#43;09:00">
-  <meta itemprop="dateModified" content="2015-01-16T00:54:53&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2015-01-16-jiogyi-ceph-rbd-image-format-2-data-recovering/">ceph pg incomplete: rbd image-format 2 data recovery</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>14 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2015-01-16T00:54:53&#43;09:00">16 Jan, 2015</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    ceph: pg incomplete is worst nightmare   2014 open user survey block storage   2014년 유저 설문조사에서 찾을 수 있듯이 ceph은 openstack의 block storage의 de facto standard 라고 말할 수 있다.
-ceph을 사용한지 조금 되었지만 큰 문제가 한번도 없어서 일명 믿음의 ceph이라고 칭송하며 내부구조도 살필일 없이 블랙박스로 두고 잘 쓰고 있었었다.
-하지만 근래에 급작스런 몇가지 문제로 ceph의 placement group(pg) 들이 incomplete 상태로 떨어졌고..
-말그대로 절망했다.
-왜냐하면 incomplete 상태로 떨어진 pg들이 절대 다른 상태로 돌아올수 없으며 해당 pg에 접근하는 모든 request는 slow request화 되며 응답을 주지 않는다.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2015-01-16-jiogyi-ceph-rbd-image-format-2-data-recovering/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2015-01-16T00:54:53&#43;09:00">
-  <meta itemprop="dateModified" content="2015-01-16T00:54:53&#43;09:00">
+    <meta itemprop="image" content="https://kamsar.net/index.php/2017/10/All-about-xConnect-Security/cert-issuer.jpg">
   
 </article>
 
@@ -473,10 +232,8 @@ ceph을 사용한지 조금 되었지만 큰 문제가 한번도 없어서 일�
     <footer>
   <nav>
   
-    <a href="/categories/technology/page/2/">&laquo; Previous</a> |
   
-  
-    <span>Page 3 of 3</span>
+    <span>Page 1 of 1</span>
   
   
 </nav>

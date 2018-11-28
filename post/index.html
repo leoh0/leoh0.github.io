@@ -25,7 +25,7 @@
 
 
 
-<meta property="og:updated_time" content="2018-10-09T01:42:33&#43;09:00"/>
+<meta property="og:updated_time" content="2018-11-28T18:16:54&#43;09:00"/>
 
 
 
@@ -187,6 +187,46 @@ ga('send', 'pageview');
   <header>
     <h1>Posts</h1>
   </header>
+  
+    <article itemscope itemtype="http://schema.org/CreativeWork">
+  <header>
+    <h2 itemprop="name">
+      <a href="/post/2018-11-28-create-admin-token-for-kubernetes/">Use Admin Token Instead of Cert In Admin.conf For Kubernetes</a>
+    </h2>
+    
+      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <circle cx="16" cy="16" r="14" />
+  <path d="M16 8 L16 16 20 20" />
+</svg>
+<span>2 minute read</span>
+<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+</svg>
+
+  Published: <time datetime="2018-11-28T18:16:54&#43;09:00">28 Nov, 2018</time>
+
+</p>
+    
+  </header>
+  
+    <blockquote itemprop="headline">After one year later using k8s, maybe you need this.</blockquote>
+  
+  <div itemprop="description">
+    일반적으로 kubernetes에서 운영자가 kubernetes를 조작하기 위해서는 admin.conf 와 같이 전체 권한을 사용할 수 있는 파일을 이용해서 kubectl을 사용합니다. 이때 admin.conf는 일반적으로 kubeadm 등을 이용하면 certification expiration이 1년등에 제약이 있어서 1년 뒤에는 이 admin.conf를 이용할 시 사용이 불가능해서 재 발급 받아야 합니다.
+물론 kubespray등을 쓰면 10년의 기간으로 생성하긴 하나 날짜가 기간한정이란게 여전히 불안함을 해소하지는 못합니다.
+그래서 인증서 기반 방법을 피해서 token 기반으로 인증을 하면 좋지만 일반적으로 알려진 token auth file로 관리하려면 apiserver에 사용할 파일을 편집하는등 불편할 수 있습니다.
+  </div>
+  
+    <nav class="readmore"><a itemprop="url" href="/post/2018-11-28-create-admin-token-for-kubernetes/">Read More&nbsp;&raquo;</a></nav>
+  
+  <meta itemprop="inLanguage" content="en-US">
+  <meta itemprop="datePublished" content="2018-11-28T18:16:54&#43;09:00">
+  <meta itemprop="dateModified" content="2018-11-28T18:16:54&#43;09:00">
+  
+    <meta itemprop="image" content="https://kamsar.net/index.php/2017/10/All-about-xConnect-Security/cert-issuer.jpg">
+  
+</article>
+
   
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
@@ -568,38 +608,6 @@ windows 환경에선 xhyve 외에도 virtual box 등을 이용하셔도 좋을 �
   <meta itemprop="inLanguage" content="en-US">
   <meta itemprop="datePublished" content="2016-10-13T00:02:06&#43;09:00">
   <meta itemprop="dateModified" content="2016-10-13T00:02:06&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2016-09-29-cuga-edit-vagrant-box-for-vagrant-libvirt/">추가 - edit vagrant box for vagrant-libvirt</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>1 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2016-09-29T23:39:00&#43;09:00">29 Sep, 2016</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-     copy image and files mkdir -p images cp ~/.vagrant.d/boxes/${TARGETIMAGE}/0/libvirt/* images/ cd images  init apt-get install -qqy lvm2 modprobe nbd  attach qemu-nbd -c /dev/nbd0 `pwd`/box.img vgscan vgchange -ay mount /dev/mapper/vagrant--vg-root /mnt  bind binds=&quot;/dev /dev/pts /proc /sys /run&quot; for d in $binds; do mkdir -p /mnt${d} mount --bind ${d} /mnt${d} done  work chroot /mnt bash # blah blah blah exit  unbind and detach cd / for d in $(mount | awk '/\/mnt/{print $3}' | sort -r); do umount $d done vgchange -an vagrant-vg qemu-nbd -d /dev/nbd0  
-  </div>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2016-09-29T23:39:00&#43;09:00">
-  <meta itemprop="dateModified" content="2016-09-29T23:39:00&#43;09:00">
   
 </article>
 

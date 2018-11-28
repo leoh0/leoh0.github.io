@@ -25,7 +25,7 @@
 
 
 
-<meta property="og:updated_time" content="2016-09-29T23:30:20&#43;09:00"/>
+<meta property="og:updated_time" content="2016-09-29T23:39:00&#43;09:00"/>
 
 
 
@@ -187,6 +187,38 @@ ga('send', 'pageview');
   <header>
     <h1>Posts</h1>
   </header>
+  
+    <article itemscope itemtype="http://schema.org/CreativeWork">
+  <header>
+    <h2 itemprop="name">
+      <a href="/post/2016-09-29-cuga-edit-vagrant-box-for-vagrant-libvirt/">추가 - edit vagrant box for vagrant-libvirt</a>
+    </h2>
+    
+      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <circle cx="16" cy="16" r="14" />
+  <path d="M16 8 L16 16 20 20" />
+</svg>
+<span>1 minute read</span>
+<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+</svg>
+
+  Published: <time datetime="2016-09-29T23:39:00&#43;09:00">29 Sep, 2016</time>
+
+</p>
+    
+  </header>
+  
+  <div itemprop="description">
+     copy image and files mkdir -p images cp ~/.vagrant.d/boxes/${TARGETIMAGE}/0/libvirt/* images/ cd images  init apt-get install -qqy lvm2 modprobe nbd  attach qemu-nbd -c /dev/nbd0 `pwd`/box.img vgscan vgchange -ay mount /dev/mapper/vagrant--vg-root /mnt  bind binds=&quot;/dev /dev/pts /proc /sys /run&quot; for d in $binds; do mkdir -p /mnt${d} mount --bind ${d} /mnt${d} done  work chroot /mnt bash # blah blah blah exit  unbind and detach cd / for d in $(mount | awk '/\/mnt/{print $3}' | sort -r); do umount $d done vgchange -an vagrant-vg qemu-nbd -d /dev/nbd0  
+  </div>
+  
+  <meta itemprop="inLanguage" content="en-US">
+  <meta itemprop="datePublished" content="2016-09-29T23:39:00&#43;09:00">
+  <meta itemprop="dateModified" content="2016-09-29T23:39:00&#43;09:00">
+  
+</article>
+
   
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
@@ -557,43 +589,6 @@ bridge-vlan   openvswitch-flat   openvswitch-vlan   이걸 graphviz 로 그리�
   <meta itemprop="inLanguage" content="en-US">
   <meta itemprop="datePublished" content="2015-03-31T09:36:44&#43;09:00">
   <meta itemprop="dateModified" content="2015-03-31T09:36:44&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2015-03-14-if-you-forget-your-password-or-key/">만약 사용자가 ssh password나 key등을 잃어 버려서 도저히 vm instance에 접속할 수 없을때..</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>2 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2015-03-14T22:00:57&#43;09:00">14 Mar, 2015</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    우선은 nbd로 attach 하여 mount 해서 접근 가능하다.
-이후에 아래와 같이 key를 추가해도 되고 각 os 버전에 맞게 패스워드를 새로 해슁하여 /etc/shadow 를 변경해도 된다.
-물론 마지막에 dettach 를 꼭 신경써서 해줘야 한다.
-# attach disk qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/10794bbb-7856-4ed6-ab39-32afbc01156a/disk mount /dev/nbd0p1 /mnt # insert a new key to target user echo &#39;&#39;&#39;NEWKEY&#39;&#39;&#39; &gt;&gt; /mnt/home/USER/.ssh/authorized_keys # dettach disk umount /mnt qemu-nbd -d /dev/nbd0p1 하지만 이상하게도 저런 수정을 했을때 아예 접속이 불가능한 경우들이 생긴다.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2015-03-14-if-you-forget-your-password-or-key/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2015-03-14T22:00:57&#43;09:00">
-  <meta itemprop="dateModified" content="2015-03-14T22:00:57&#43;09:00">
   
 </article>
 

@@ -30,6 +30,15 @@
     </item>
     
     <item>
+      <title>Admin.conf</title>
+      <link>https://leoh0.github.io/tags/admin.conf/</link>
+      <pubDate>Wed, 28 Nov 2018 18:16:54 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/admin.conf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Aggregation</title>
       <link>https://leoh0.github.io/tags/aggregation/</link>
       <pubDate>Tue, 09 Oct 2018 01:42:33 +0900</pubDate>
@@ -161,6 +170,15 @@
       <pubDate>Mon, 21 May 2018 00:55:10 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/cilium/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Cluster Role</title>
+      <link>https://leoh0.github.io/tags/cluster-role/</link>
+      <pubDate>Wed, 28 Nov 2018 18:16:54 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/cluster-role/</guid>
       <description></description>
     </item>
     
@@ -410,7 +428,7 @@
     <item>
       <title>K8s</title>
       <link>https://leoh0.github.io/tags/k8s/</link>
-      <pubDate>Tue, 09 Oct 2018 01:42:33 +0900</pubDate>
+      <pubDate>Wed, 28 Nov 2018 18:16:54 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/k8s/</guid>
       <description></description>
@@ -444,9 +462,18 @@
     </item>
     
     <item>
+      <title>Kubectl</title>
+      <link>https://leoh0.github.io/tags/kubectl/</link>
+      <pubDate>Wed, 28 Nov 2018 18:16:54 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/kubectl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Kubernetes</title>
       <link>https://leoh0.github.io/tags/kubernetes/</link>
-      <pubDate>Tue, 09 Oct 2018 01:42:33 +0900</pubDate>
+      <pubDate>Wed, 28 Nov 2018 18:16:54 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/kubernetes/</guid>
       <description></description>
@@ -759,6 +786,15 @@
     </item>
     
     <item>
+      <title>Service Account</title>
+      <link>https://leoh0.github.io/tags/service-account/</link>
+      <pubDate>Wed, 28 Nov 2018 18:16:54 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/service-account/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Sierra</title>
       <link>https://leoh0.github.io/tags/sierra/</link>
       <pubDate>Thu, 13 Oct 2016 00:02:06 +0900</pubDate>
@@ -842,7 +878,7 @@
     <item>
       <title>Token</title>
       <link>https://leoh0.github.io/tags/token/</link>
-      <pubDate>Thu, 29 Sep 2016 23:30:20 +0900</pubDate>
+      <pubDate>Wed, 28 Nov 2018 18:16:54 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/token/</guid>
       <description></description>

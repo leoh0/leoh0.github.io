@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubectl on &gt; /dev/null</title>
+    <link>https://leoh0.github.io/tags/kubectl/</link>
+    <description>Recent content in Kubectl on &gt; /dev/null</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Wed, 28 Nov 2018 18:16:54 +0900</lastBuildDate>
+    
+	<atom:link href="https://leoh0.github.io/tags/kubectl/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Use Admin Token Instead of Cert In Admin.conf For Kubernetes</title>
+      <link>https://leoh0.github.io/post/2018-11-28-create-admin-token-for-kubernetes/</link>
+      <pubDate>Wed, 28 Nov 2018 18:16:54 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/post/2018-11-28-create-admin-token-for-kubernetes/</guid>
+      <description>일반적으로 kubernetes에서 운영자가 kubernetes를 조작하기 위해서는 admin.conf 와 같이 전체 권한을 사용할 수 있는 파일을 이용해서 kubectl을 사용합니다. 이때 admin.conf는 일반적으로 kubeadm 등을 이용하면 certification expiration이 1년등에 제약이 있어서 1년 뒤에는 이 admin.conf를 이용할 시 사용이 불가능해서 재 발급 받아야 합니다.
+물론 kubespray등을 쓰면 10년의 기간으로 생성하긴 하나 날짜가 기간한정이란게 여전히 불안함을 해소하지는 못합니다.
+그래서 인증서 기반 방법을 피해서 token 기반으로 인증을 하면 좋지만 일반적으로 알려진 token auth file로 관리하려면 apiserver에 사용할 파일을 편집하는등 불편할 수 있습니다.</description>
+    </item>
+    
+  </channel>
+</rss>

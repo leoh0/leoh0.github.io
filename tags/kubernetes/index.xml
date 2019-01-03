@@ -6,10 +6,21 @@
     <description>Recent content in Kubernetes on &gt; /dev/null</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Wed, 28 Nov 2018 18:16:54 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 03 Jan 2019 22:33:17 +0900</lastBuildDate>
     
 	<atom:link href="https://leoh0.github.io/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>2019 01 03 Immutable Kubernetes by Linuxkit</title>
+      <link>https://leoh0.github.io/post/2019-01-03-immutable-kubernetes-by-linuxkit/</link>
+      <pubDate>Thu, 03 Jan 2019 22:33:17 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/post/2019-01-03-immutable-kubernetes-by-linuxkit/</guid>
+      <description>open infra day때 발표 했던 슬라이드 를 그냥 옮겨놨다.
+지금와서 이야기 하지만 처음 어떤 세션 발표할것인지 물어봤을때 아무생각없이 좀 deep한걸 발표하고 싶어서 deep dive를 골랐더니 1시간 50번 뱔표였다. 그래서 86페이지짜리 pt를.. 하지만 생각보다 중요한 이야기는 많이 빼먹은것 같아서 다시 보면 아쉽긴 하다. 그래도 추억이니 옮겨둠.
+ </description>
+    </item>
     
     <item>
       <title>Use Admin Token Instead of Cert In Admin.conf For Kubernetes</title>

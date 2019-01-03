@@ -4,28 +4,35 @@
     <meta name="generator" content="Hugo 0.46" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K8s | &gt; /dev/null</title>
-    <meta name="description" content="... nothing ...">
-    <meta name="keywords" content="me, technology, 잡담, ">
+    <title>2019 01 03 Immutable Kubernetes by Linuxkit | &gt; /dev/null</title>
+    <meta name="description" content="open infra day때 발표 했던 슬라이드 를 그냥 옮겨놨다.
+지금와서 이야기 하지만 처음 어떤 세션 발표할것인지 물어봤을때 아무생각없이 좀 deep한걸 발표하고 싶어서 deep dive를 골랐더니 1시간 50번 뱔표였다. 그래서 86페이지짜리 pt를.. 하지만 생각보다 중요한 이야기는 많이 빼먹은것 같아서 다시 보면 아쉽긴 하다. 그래도 추억이니 옮겨둠.
+ ">
+    <meta name="keywords" content="k8s, kubernetes, immutable, linuxkit">
     
     
     
-    
-      <meta name="robots" content="noindex">
     
     
 
   <meta name="author" content="leoh0">
 
 
-    <meta property="og:title" content="K8s" />
-<meta property="og:description" content="... nothing ..." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://leoh0.github.io/tags/k8s/" />
+    <meta property="og:title" content="2019 01 03 Immutable Kubernetes by Linuxkit" />
+<meta property="og:description" content="open infra day때 발표 했던 슬라이드 를 그냥 옮겨놨다.
+지금와서 이야기 하지만 처음 어떤 세션 발표할것인지 물어봤을때 아무생각없이 좀 deep한걸 발표하고 싶어서 deep dive를 골랐더니 1시간 50번 뱔표였다. 그래서 86페이지짜리 pt를.. 하지만 생각보다 중요한 이야기는 많이 빼먹은것 같아서 다시 보면 아쉽긴 하다. 그래도 추억이니 옮겨둠.
+ " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://leoh0.github.io/post/2019-01-03-immutable-kubernetes-by-linuxkit/" />
+
+  <meta property="og:image" content="https://source.unsplash.com/collection/983219/1600x900" />
 
 
 
-<meta property="og:updated_time" content="2019-01-03T22:33:17&#43;09:00"/>
+<meta property="article:published_time" content="2019-01-03T22:33:17&#43;09:00"/>
+
+<meta property="article:modified_time" content="2019-01-03T22:33:17&#43;09:00"/>
+
 
 
 
@@ -37,14 +44,14 @@
 
 
     <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
+<meta name="twitter:image" content="https://source.unsplash.com/collection/983219/1600x900"/>
 
-<meta name="twitter:title" content="K8s"/>
-<meta name="twitter:description" content="... nothing ..."/>
+<meta name="twitter:title" content="2019 01 03 Immutable Kubernetes by Linuxkit"/>
+<meta name="twitter:description" content="open infra day때 발표 했던 슬라이드 를 그냥 옮겨놨다.
+지금와서 이야기 하지만 처음 어떤 세션 발표할것인지 물어봤을때 아무생각없이 좀 deep한걸 발표하고 싶어서 deep dive를 골랐더니 1시간 50번 뱔표였다. 그래서 86페이지짜리 pt를.. 하지만 생각보다 중요한 이야기는 많이 빼먹은것 같아서 다시 보면 아쉽긴 하다. 그래도 추억이니 옮겨둠.
+ "/>
 
     
-
-  <meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322">
 
 
 
@@ -73,9 +80,7 @@
 
 
     
-      <link href="https://leoh0.github.io/tags/k8s/index.xml" rel="alternate" type="application/rss+xml" title="&gt; /dev/null">
-    
-    <link rel="canonical" href="https://leoh0.github.io/tags/k8s/">
+    <link rel="canonical" href="https://leoh0.github.io/post/2019-01-03-immutable-kubernetes-by-linuxkit/">
     <link href="http://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
     
     
@@ -173,7 +178,7 @@ ga('send', 'pageview');
     
       <a itemprop="url" class="" href="/"><span itemprop="name">Home</span></a>
     
-      <a itemprop="url" class="" href="/post/"><span itemprop="name">Posts</span></a>
+      <a itemprop="url" class="active" href="/post/"><span itemprop="name">Posts</span></a>
     
       <a itemprop="url" class="" href="/about/aboutme"><span itemprop="name">AboutMe</span></a>
     
@@ -184,17 +189,28 @@ ga('send', 'pageview');
 
 </header>
     <main>
-  <header>
-    <h1>K8s</h1>
-  </header>
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2019-01-03-immutable-kubernetes-by-linuxkit/">2019 01 03 Immutable Kubernetes by Linuxkit</a>
-    </h2>
+  <article itemscope itemtype="http://schema.org/BlogPosting">
     
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+<meta itemprop="name" content="2019 01 03 Immutable Kubernetes by Linuxkit">
+<meta itemprop="description" content="open infra day때 발표 했던 슬라이드 를 그냥 옮겨놨다.
+지금와서 이야기 하지만 처음 어떤 세션 발표할것인지 물어봤을때 아무생각없이 좀 deep한걸 발표하고 싶어서 deep dive를 골랐더니 1시간 50번 뱔표였다. 그래서 86페이지짜리 pt를.. 하지만 생각보다 중요한 이야기는 많이 빼먹은것 같아서 다시 보면 아쉽긴 하다. 그래도 추억이니 옮겨둠.
+ ">
+
+
+<meta itemprop="datePublished" content="2019-01-03T22:33:17&#43;09:00" />
+<meta itemprop="dateModified" content="2019-01-03T22:33:17&#43;09:00" />
+<meta itemprop="wordCount" content="45">
+
+  <meta itemprop="image" content="https://source.unsplash.com/collection/983219/1600x900">
+
+
+
+<meta itemprop="keywords" content="k8s,kubernetes,immutable,linuxkit," />
+
+    <header>
+      <h1 itemprop="headline">2019 01 03 Immutable Kubernetes by Linuxkit</h1>
+      <p class="muted">
+        <svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
   <circle cx="16" cy="16" r="14" />
   <path d="M16 8 L16 16 20 20" />
 </svg>
@@ -205,344 +221,97 @@ ga('send', 'pageview');
 
   Published: <time datetime="2019-01-03T22:33:17&#43;09:00">3 Jan, 2019</time>
 
+
+      </p>
+      
+      
+    </header>
+    
+
+    <div itemprop="articleBody">
+      <p>open infra day때 <a href="https://www.slideshare.net/openstack_kr/openinfra-days-korea-2018-day-2-e4-immutable-kubernetes-architecture">발표 했던 슬라이드</a> 를 그냥 옮겨놨다.</p>
+
+<p>지금와서 이야기 하지만 처음 어떤 세션 발표할것인지 물어봤을때 아무생각없이 좀 deep한걸 발표하고 싶어서 deep dive를 골랐더니 <a href="https://event.openinfradays.kr/2018/workshop2/30-track-4">1시간 50번 뱔표</a>였다. 그래서 86페이지짜리 pt를.. 하지만 생각보다 중요한 이야기는 많이 빼먹은것 같아서 다시 보면 아쉽긴 하다.
+그래도 추억이니 옮겨둠.</p>
+
+<iframe src="https://www.slideshare.net/ssuser5ad078/slideshelf" width="760px" height="570px" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:none;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
+
+    </div>
+    
+      <article>
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "leoh0githubio" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </article>
+    
+    <footer>
+      <hr>
+      <p>
+  Published
+  
+    
+      by <span itemprop="author">leoh0</span>
+    
+  
+  <time itemprop="datePublished" datetime="2019-01-03T22:33:17&#43;09:00">
+    3 Jan, 2019
+  </time>
+  
+    in <span itemprop="articleSection"><a href="/categories/technology/">technology</a></span>
+  
+  
+    and tagged <a href="/tags/immutable/">immutable</a>, <a href="/tags/k8s/">k8s</a>, <a href="/tags/kubernetes/">kubernetes</a> and <a href="/tags/linuxkit/">linuxkit</a>
+  
+  using <span itemprop="wordCount">45</span> words.
 </p>
-    
-  </header>
-  
-  <div itemprop="description">
-    open infra day때 발표 했던 슬라이드 를 그냥 옮겨놨다.
-지금와서 이야기 하지만 처음 어떤 세션 발표할것인지 물어봤을때 아무생각없이 좀 deep한걸 발표하고 싶어서 deep dive를 골랐더니 1시간 50번 뱔표였다. 그래서 86페이지짜리 pt를.. 하지만 생각보다 중요한 이야기는 많이 빼먹은것 같아서 다시 보면 아쉽긴 하다. 그래도 추억이니 옮겨둠.
- 
-  </div>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2019-01-03T22:33:17&#43;09:00">
-  <meta itemprop="dateModified" content="2019-01-03T22:33:17&#43;09:00">
-  
-    <meta itemprop="image" content="https://source.unsplash.com/collection/983219/1600x900">
-  
-</article>
 
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2018-11-28-create-admin-token-for-kubernetes/">Use Admin Token Instead of Cert In Admin.conf For Kubernetes</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>2 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
+      
 
-  Published: <time datetime="2018-11-28T18:16:54&#43;09:00">28 Nov, 2018</time>
 
-</p>
-    
-  </header>
-  
-    <blockquote itemprop="headline">After one year later using k8s, maybe you need this.</blockquote>
-  
-  <div itemprop="description">
-    일반적으로 kubernetes에서 운영자가 kubernetes를 조작하기 위해서는 admin.conf 와 같이 전체 권한을 사용할 수 있는 파일을 이용해서 kubectl을 사용합니다. 이때 admin.conf는 일반적으로 kubeadm 등을 이용하면 certification expiration이 1년등에 제약이 있어서 1년 뒤에는 이 admin.conf를 이용할 시 사용이 불가능해서 재 발급 받아야 합니다.
-물론 kubespray등을 쓰면 10년의 기간으로 생성하긴 하나 날짜가 기간한정이란게 여전히 불안함을 해소하지는 못합니다.
-그래서 인증서 기반 방법을 피해서 token 기반으로 인증을 하면 좋지만 일반적으로 알려진 token auth file로 관리하려면 apiserver에 사용할 파일을 편집하는등 불편할 수 있습니다.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2018-11-28-create-admin-token-for-kubernetes/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2018-11-28T18:16:54&#43;09:00">
-  <meta itemprop="dateModified" content="2018-11-28T18:16:54&#43;09:00">
-  
-    <meta itemprop="image" content="https://kamsar.net/index.php/2017/10/All-about-xConnect-Security/cert-issuer.jpg">
-  
-</article>
+  <aside>
+    <header>Related Content</header>
+    <ul>
+      
+        <li><a href="/post/2018-05-21-immutable-kubernetes/">immutable kubernetes by linuxkit</a>
+        <time datetime="11M">11 minutes</time>
+      
+        <li><a href="/post/2018-11-28-create-admin-token-for-kubernetes/">Use Admin Token Instead of Cert In Admin.conf For Kubernetes</a>
+        <time datetime="2M">2 minutes</time>
+      
+        <li><a href="/post/2018-10-09-kubernetes-prometheus-metric-aggregation-by-daemonset-statefulset-deployment-walkthrough/">Kubernetes Prometheus Metric Aggregation by Daemonset, Statefulset, Deployment Walkthrough</a>
+        <time datetime="14M">14 minutes</time>
+      
+        <li><a href="/post/2018-09-09-how-to-migrate-ceph-rbd-to-csi-ceph-rbd-in-k8s/">How to Migrate Ceph RBD to CSI Ceph RBD in K8S</a>
+        <time datetime="11M">11 minutes</time>
+      
+        <li><a href="/post/2018-08-04-how-to-debug-dead-container-in-k8s/">How to Debug Dead Container in K8s</a>
+        <time datetime="10M">10 minutes</time>
+      
+    </ul>
+  </aside>
 
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2018-10-09-kubernetes-prometheus-metric-aggregation-by-daemonset-statefulset-deployment-walkthrough/">Kubernetes Prometheus Metric Aggregation by Daemonset, Statefulset, Deployment Walkthrough</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>14 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
 
-  Published: <time datetime="2018-10-09T01:42:33&#43;09:00">9 Oct, 2018</time>
-
-</p>
-    
-  </header>
-  
-    <blockquote itemprop="headline">Big Fantastic PromQL</blockquote>
-  
-  <div itemprop="description">
-    Kubernetes Aggregation Metrics    kubernetes and prometheus 최근 kubernetes에서 metric을 관리하는 것중 가장 유명한 것은 prometheus라고 할 수 있습니다. metric 관리방법으로 heapster를 사용할때 까지는 influxdb를 많이 사용하는 추세 였으나 앞으로 대채될 metrics-server는 현재 in-memory sink밖에 없어서 우선 기존에 influxdb를 사용하던것을 많이 안쓰게 될것 같습니다. 더욱이 custom metric들에 대한 예제들이 prometheus로 제공되고 있어서 prometheus로 metric관리가 통합될것으로 기대하고 있습니다.
-이러한 prometheus로 kubernetes metric들을 수집하는 것은 대체로 크게 2가지 케이스 입니다.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2018-10-09-kubernetes-prometheus-metric-aggregation-by-daemonset-statefulset-deployment-walkthrough/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2018-10-09T01:42:33&#43;09:00">
-  <meta itemprop="dateModified" content="2018-10-09T01:42:33&#43;09:00">
-  
-    <meta itemprop="image" content="http://leoh0.github.io/images/Grafana%20-%20Aggregation%202018-10-09%2003-57-21.png">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2018-09-09-how-to-migrate-ceph-rbd-to-csi-ceph-rbd-in-k8s/">How to Migrate Ceph RBD to CSI Ceph RBD in K8S</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>11 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2018-09-09T11:43:14&#43;09:00">9 Sep, 2018</time>
-
-</p>
-    
-  </header>
-  
-    <blockquote itemprop="headline">CSI for Container Storage Interface not Crime Scene Investigation</blockquote>
-  
-  <div itemprop="description">
-    Container Storage Interface가 왜 필요한가 Container Storage Interface(이하 CSI)는 k8s에서 확장 가능한 볼륨 사용을 위한 현존하는 최고의 방법입니다. 기존에 방법이 무엇이 문제였는지는 2가지로 접근 가능합니다.
- 볼륨을 생성(or 삭제)할때
- 볼륨을 생성할때는 기존에는 controller manager중에 controller가 볼륨을 생성하는식이였습니다. 예를 들어 Persistent volume claim(이하 PVC)이 들어올시 PVC를 watch 하는 controller가 이 변화를 감지하며 volume을 생성(provisioning) 했습니다. 하지만 대부분의 볼륨들을 생성 하려면 이를 위한 바이너리가 있어야 합니다.(예를 들어 ceph같은 경우 rbd 바이너리) 하지만 이런 바이너리들이 in-tree volume type들이 추가될때마다 같이 추가되면 용량이나 버전 관리에 힘든점이 있기때문에 이를 밖으로 빼서 관리하려고 했습니다.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2018-09-09-how-to-migrate-ceph-rbd-to-csi-ceph-rbd-in-k8s/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2018-09-09T11:43:14&#43;09:00">
-  <meta itemprop="dateModified" content="2018-09-09T11:43:14&#43;09:00">
-  
-    <meta itemprop="image" content="https://source.unsplash.com/collection/983219/1600x900">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2018-08-04-how-to-debug-dead-container-in-k8s/">How to Debug Dead Container in K8s</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>10 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2018-08-08T04:09:48&#43;09:00">8 Aug, 2018</time>
-
-</p>
-    
-  </header>
-  
-    <blockquote itemprop="headline">till CrashLoopBackOff do us part</blockquote>
-  
-  <div itemprop="description">
-    Bugs happen. That&rsquo;s a fact of life.
-&ldquo;ABSOLUTELY THE MOST IMPORTANT THING IN THE UNIVERSE WHEN IT COMES TO SOFTWARE DEVELOPMENT&rdquo;, linus
- k8s에서 pod 을 debugging 하는 일반적인 방법들  Everyone knows that debugging is twice as hard as writing a program in the first place.
-“The Elements of Programming Style”, 2nd edition
- 우리는 소프트웨어는 언제나 문제가 생길 수 있다는 것을 알고 있고 많은 문제들을 debugging 을 통해서 해결합니다.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2018-08-04-how-to-debug-dead-container-in-k8s/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2018-08-08T04:09:48&#43;09:00">
-  <meta itemprop="dateModified" content="2018-08-08T04:09:48&#43;09:00">
-  
-    <meta itemprop="image" content="https://source.unsplash.com/collection/983219/1600x900">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2018-05-21-immutable-kubernetes/">immutable kubernetes by linuxkit</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>11 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2018-05-21T00:55:10&#43;09:00">21 May, 2018</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    linuxkit with kubernetes    &hellip; As a developer and sometimes system administrator, one of the scariest things I ever encounter is a server that’s been running for ages which has seen multiple upgrades of system and application software. &hellip; Need to upgrade? No problem. Build a new, upgraded system and throw the old one away. New app revision? Same thing. Build a server (or image) with a new revision and throw away the old ones.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2018-05-21-immutable-kubernetes/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2018-05-21T00:55:10&#43;09:00">
-  <meta itemprop="dateModified" content="2018-05-21T00:55:10&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2018-04-07-how-to-make-unofficial-kubernetes-pdf-documents-2/">how to make unofficial kubernetes pdf documents 2</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>3 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2018-04-07T01:15:37&#43;09:00">7 Apr, 2018</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    kubernetes   download k8s 1.10 pdf 이전 포스팅과 뭐가 다른가? 이전에 해보고 더이상 안할거라 생각했다가 우연히 다시 포스팅을 읽었다가 너무 복잡한거 같아서 docker로 제작했다.
-아래와 같이 사용할시 pdf를 뽑아 낼 수 있다.
-docker run -ti -v $PWD:/out3 leoh0/k8s-website-to-pdf  아니면 아래 dockerfile로 새로 제작해서 뽑아내면 된다. 참고
-docker build -t k8s-website-to-pdf . docker run -ti -v $PWD:/out3 k8s-website-to-pdf  우선 전체 dockerfile은 아래와 같다.
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44  # 참고 https://github.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2018-04-07-how-to-make-unofficial-kubernetes-pdf-documents-2/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2018-04-07T01:15:37&#43;09:00">
-  <meta itemprop="dateModified" content="2018-04-07T01:15:37&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2017-10-23-how-to-make-unofficial-kubernetes-pdf-documents/">how to make unofficial kubernetes pdf documents</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>3 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2017-10-23T21:21:47&#43;09:00">23 Oct, 2017</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    kubernetes   download pdf 왜? 밖에서 심심할때 종이로 출력해서 문서를 좀 더 봐야겠다는 생각에 pdf 버전을 구해보려고 했으나. 우선 k8s webpage를 관리하는 website프로젝트에서 아래와 같이 지원을 안한다고 딱잘라서 이야기 하는것을 찾았다.
- &hellip; we don&rsquo;t plan to make PDFs available.
- 그리고 마땅히 검색했을때 방법이 없기에 만들어야 겠다고 생각했다.
-어떻게 할까? 외부의 웹사이트를 pdf 로 출력하는 방법들은 여러가지가 있다 그냥 웹 주소를 넣으면 바로 pdf 로 변환해 주는 솔루션이나 사이트들도 많다.
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2017-10-23-how-to-make-unofficial-kubernetes-pdf-documents/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2017-10-23T21:21:47&#43;09:00">
-  <meta itemprop="dateModified" content="2017-10-23T21:21:47&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2017-07-27-k8s-tools-for-watching-log-and-login-multiple-containers/">k8s tools for watching log and login to multiple containers</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>2 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2017-07-27T00:58:28&#43;09:00">27 Jul, 2017</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-    k8s 사용하면서 개인 취향에 맞게 작성한 자작 스크립트 몇가지 소개해 드리려고 합니다.
-watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일일치다보니 불편했는데 kubetail이란 프로젝트가 있었습니다.
-덕분에 잘 쓰고 있었는데 인터페이스가 개인취향에 안맞아서 약간 수정해서 쓰고 있습니다.
-전반적으로 pod 선택 방법의 변경과 비슷한 이름으로 auto tailing 기능을 추가 했습니다.
-아래들이 대표적인 기능 입니다.
- 선택된것과 같은 pod들을 전체 log tailing 하고 변화가 있을시 auto reload 함
-  </div>
-  
-    <nav class="readmore"><a itemprop="url" href="/post/2017-07-27-k8s-tools-for-watching-log-and-login-multiple-containers/">Read More&nbsp;&raquo;</a></nav>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2017-07-27T00:58:28&#43;09:00">
-  <meta itemprop="dateModified" content="2017-07-27T00:58:28&#43;09:00">
-  
-</article>
-
-  
+    </footer>
+  </article>
 </main>
     <footer>
-  <nav>
-  
-  
-    <span>Page 1 of 1</span>
-  
-  
-</nav>
-
   
 
 </footer>

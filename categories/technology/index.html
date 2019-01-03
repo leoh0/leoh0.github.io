@@ -25,7 +25,7 @@
 
 
 
-<meta property="og:updated_time" content="2018-11-28T18:16:54&#43;09:00"/>
+<meta property="og:updated_time" content="2019-01-03T22:33:17&#43;09:00"/>
 
 
 
@@ -187,6 +187,42 @@ ga('send', 'pageview');
   <header>
     <h1>Technology</h1>
   </header>
+  
+    <article itemscope itemtype="http://schema.org/CreativeWork">
+  <header>
+    <h2 itemprop="name">
+      <a href="/post/2019-01-03-immutable-kubernetes-by-linuxkit/">2019 01 03 Immutable Kubernetes by Linuxkit</a>
+    </h2>
+    
+      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <circle cx="16" cy="16" r="14" />
+  <path d="M16 8 L16 16 20 20" />
+</svg>
+<span>1 minute read</span>
+<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+</svg>
+
+  Published: <time datetime="2019-01-03T22:33:17&#43;09:00">3 Jan, 2019</time>
+
+</p>
+    
+  </header>
+  
+  <div itemprop="description">
+    open infra day때 발표 했던 슬라이드 를 그냥 옮겨놨다.
+지금와서 이야기 하지만 처음 어떤 세션 발표할것인지 물어봤을때 아무생각없이 좀 deep한걸 발표하고 싶어서 deep dive를 골랐더니 1시간 50번 뱔표였다. 그래서 86페이지짜리 pt를.. 하지만 생각보다 중요한 이야기는 많이 빼먹은것 같아서 다시 보면 아쉽긴 하다. 그래도 추억이니 옮겨둠.
+ 
+  </div>
+  
+  <meta itemprop="inLanguage" content="en-US">
+  <meta itemprop="datePublished" content="2019-01-03T22:33:17&#43;09:00">
+  <meta itemprop="dateModified" content="2019-01-03T22:33:17&#43;09:00">
+  
+    <meta itemprop="image" content="https://source.unsplash.com/collection/983219/1600x900">
+  
+</article>
+
   
     <article itemscope itemtype="http://schema.org/CreativeWork">
   <header>
@@ -572,38 +608,6 @@ windows 환경에선 xhyve 외에도 virtual box 등을 이용하셔도 좋을 �
   <meta itemprop="inLanguage" content="en-US">
   <meta itemprop="datePublished" content="2016-10-13T00:02:06&#43;09:00">
   <meta itemprop="dateModified" content="2016-10-13T00:02:06&#43;09:00">
-  
-</article>
-
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/2016-09-29-cuga-edit-vagrant-box-for-vagrant-libvirt/">추가 - edit vagrant box for vagrant-libvirt</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>1 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
-
-  Published: <time datetime="2016-09-29T23:39:00&#43;09:00">29 Sep, 2016</time>
-
-</p>
-    
-  </header>
-  
-  <div itemprop="description">
-     copy image and files mkdir -p images cp ~/.vagrant.d/boxes/${TARGETIMAGE}/0/libvirt/* images/ cd images  init apt-get install -qqy lvm2 modprobe nbd  attach qemu-nbd -c /dev/nbd0 `pwd`/box.img vgscan vgchange -ay mount /dev/mapper/vagrant--vg-root /mnt  bind binds=&quot;/dev /dev/pts /proc /sys /run&quot; for d in $binds; do mkdir -p /mnt${d} mount --bind ${d} /mnt${d} done  work chroot /mnt bash # blah blah blah exit  unbind and detach cd / for d in $(mount | awk '/\/mnt/{print $3}' | sort -r); do umount $d done vgchange -an vagrant-vg qemu-nbd -d /dev/nbd0  
-  </div>
-  
-  <meta itemprop="inLanguage" content="en-US">
-  <meta itemprop="datePublished" content="2016-09-29T23:39:00&#43;09:00">
-  <meta itemprop="dateModified" content="2016-09-29T23:39:00&#43;09:00">
   
 </article>
 

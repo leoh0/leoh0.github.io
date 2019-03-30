@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-    <meta name="generator" content="Hugo 0.46" />
+    <meta name="generator" content="Hugo 0.54.0" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>How to Migrate Ceph RBD to CSI Ceph RBD in K8S | &gt; /dev/null</title>
@@ -21,23 +21,9 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://leoh0.github.io/post/2018-09-09-how-to-migrate-ceph-rbd-to-csi-ceph-rbd-in-k8s/" />
 
-  <meta property="og:image" content="https://source.unsplash.com/collection/983219/1600x900" />
-
-
-
+<meta property="og:image" content="https://source.unsplash.com/collection/983219/1600x900" />
 <meta property="article:published_time" content="2018-09-09T11:43:14&#43;09:00"/>
-
 <meta property="article:modified_time" content="2018-09-09T11:43:14&#43;09:00"/>
-
-
-
-
-
-
-
-
-
-
 
     <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://source.unsplash.com/collection/983219/1600x900"/>
@@ -374,17 +360,17 @@ volumeBindingMode: Immediate</code></pre></div>
 
 <li><p>unique한 값이나 아래와 같은 방식으로 생성됨</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">    $ <span style="color:#007f7f"># https://github.com/kubernetes-csi/external-provisioner/blob/release-0.3.0/cmd/csi-provisioner/csi-provisioner.go#L99
-</span><span style="color:#007f7f"></span>    $ <span style="color:#007f7f"># identity := strconv.FormatInt(timeStamp, 10) + &#34;-&#34; + strconv.Itoa(rand.Intn(10000)) + &#34;-&#34; + *provisioner
-</span><span style="color:#007f7f"></span>    $ <span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#fff;font-weight:bold">$(($(</span>date +%s%N<span style="color:#fff;font-weight:bold">)</span>/<span style="color:#ff0;font-weight:bold">1000000</span><span style="color:#fff;font-weight:bold">))</span><span style="color:#0ff;font-weight:bold">-</span><span style="color:#fff;font-weight:bold">$((</span>$RANDOM%<span style="color:#ff0;font-weight:bold">10000</span><span style="color:#fff;font-weight:bold">))</span><span style="color:#0ff;font-weight:bold">-csi-rbdplugin&#34;</span>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">    $ <span style="color:#007f7f"># https://github.com/kubernetes-csi/external-provisioner/blob/release-0.3.0/cmd/csi-provisioner/csi-provisioner.go#L99</span>
+    $ <span style="color:#007f7f"># identity := strconv.FormatInt(timeStamp, 10) + &#34;-&#34; + strconv.Itoa(rand.Intn(10000)) + &#34;-&#34; + *provisioner</span>
+    $ <span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#fff;font-weight:bold">$(($(</span>date +%s%N<span style="color:#fff;font-weight:bold">)</span>/<span style="color:#ff0;font-weight:bold">1000000</span><span style="color:#fff;font-weight:bold">))</span><span style="color:#0ff;font-weight:bold">-</span><span style="color:#fff;font-weight:bold">$((</span>$RANDOM%<span style="color:#ff0;font-weight:bold">10000</span><span style="color:#fff;font-weight:bold">))</span><span style="color:#0ff;font-weight:bold">-csi-rbdplugin&#34;</span>
     </code></pre></div></li>
 
 <li><p>unique 한 값(e.g. UUID1)이면 됨</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">    $ <span style="color:#007f7f"># https://github.com/ceph/ceph-csi/blob/v0.1.0/pkg/rbd/controllerserver.go#L56-L61
-</span><span style="color:#007f7f"></span>    $ <span style="color:#007f7f"># uniqueID := uuid.NewUUID().String()
-</span><span style="color:#007f7f"></span>    $ <span style="color:#007f7f"># volumeID := &#34;csi-rbd-&#34; + uniqueID
-</span><span style="color:#007f7f"></span>    $ python -c <span style="color:#0ff;font-weight:bold">&#34;import uuid ; print(&#39;csi-rbd-&#39; + str(uuid.uuid1()))&#34;</span>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">    $ <span style="color:#007f7f"># https://github.com/ceph/ceph-csi/blob/v0.1.0/pkg/rbd/controllerserver.go#L56-L61</span>
+    $ <span style="color:#007f7f"># uniqueID := uuid.NewUUID().String()</span>
+    $ <span style="color:#007f7f"># volumeID := &#34;csi-rbd-&#34; + uniqueID</span>
+    $ python -c <span style="color:#0ff;font-weight:bold">&#34;import uuid ; print(&#39;csi-rbd-&#39; + str(uuid.uuid1()))&#34;</span>
     </code></pre></div></li>
 </ol>
 
@@ -476,8 +462,8 @@ $ <span style="color:#fff;font-weight:bold">read</span> POOL MONITOR ID SECRET S
 $ KEY=<span style="color:#fff;font-weight:bold">$(</span>kubectl get secret -n <span style="color:#0ff;font-weight:bold">${</span>SECRET_NS<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">${</span>SECRET<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">\
 </span><span style="color:#0ff;font-weight:bold"></span>    -o go-template=<span style="color:#0ff;font-weight:bold">&#39;{{ .data.key }}&#39;</span> | base64 -d<span style="color:#fff;font-weight:bold">)</span>
 
-<span style="color:#007f7f"># 이후 아래와 같이 사용
-</span><span style="color:#007f7f"></span>$ rbd --pool $POOL --id $ID -m $MONITOR --key=$KEY list</code></pre></div>
+<span style="color:#007f7f"># 이후 아래와 같이 사용</span>
+$ rbd --pool $POOL --id $ID -m $MONITOR --key=$KEY list</code></pre></div>
 
 <h3 id="csi-ceph-rbd의-rbd-커맨드">CSI Ceph RBD의 rbd 커맨드</h3>
 
@@ -498,8 +484,8 @@ $ ID=<span style="color:#fff;font-weight:bold">$(</span>kubectl get secret -n <s
 $ KEY=<span style="color:#fff;font-weight:bold">$(</span>kubectl get secret -n <span style="color:#0ff;font-weight:bold">${</span>SECRET_NS<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">${</span>SECRET<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">\
 </span><span style="color:#0ff;font-weight:bold"></span>    -o go-template=<span style="color:#0ff;font-weight:bold">&#39;{{ .data.&#39;</span>$ID<span style="color:#0ff;font-weight:bold">&#39; }}&#39;</span> | base64 -d<span style="color:#fff;font-weight:bold">)</span>
 
-<span style="color:#007f7f"># 이후 아래와 같이 사용
-</span><span style="color:#007f7f"></span>$ rbd --pool $POOL --id $ID -m $MONITOR --key=$KEY list</code></pre></div>
+<span style="color:#007f7f"># 이후 아래와 같이 사용</span>
+$ rbd --pool $POOL --id $ID -m $MONITOR --key=$KEY list</code></pre></div>
 
 <h1 id="how-to-migration">How to migration</h1>
 
@@ -653,8 +639,8 @@ $ KEY=<span style="color:#fff;font-weight:bold">$(</span>kubectl get secret -n <
 <div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">        $ kubectl get pv
         NAME                                      CAPACITY  ACCESS MODES  RECLAIM POLICY  STATUS  CLAIM            STORAGECLASS   REASON   AGE
         pvc-f1b328c9-b3f8-11e8-8946-fa163eadf2df  1Gi       RWO           Delete          Bound   kube-system/nx   ceph-rbd                6h
-        $ <span style="color:#007f7f"># retain으로 변경해서 지워지지 않도록 한다.
-</span><span style="color:#007f7f"></span>        $ kubectl get pv <span style="color:#0ff;font-weight:bold">${</span>PV<span style="color:#0ff;font-weight:bold">}</span> -o yaml | <span style="color:#0ff;font-weight:bold">\
+        $ <span style="color:#007f7f"># retain으로 변경해서 지워지지 않도록 한다.</span>
+        $ kubectl get pv <span style="color:#0ff;font-weight:bold">${</span>PV<span style="color:#0ff;font-weight:bold">}</span> -o yaml | <span style="color:#0ff;font-weight:bold">\
 </span><span style="color:#0ff;font-weight:bold"></span>            sed <span style="color:#0ff;font-weight:bold">&#39;s/persistentVolumeReclaimPolicy: Delete/persistentVolumeReclaimPolicy: Retain/g&#39;</span> | <span style="color:#0ff;font-weight:bold">\
 </span><span style="color:#0ff;font-weight:bold"></span>            kubectl replace -f -
         $ kubectl get pv
@@ -840,8 +826,8 @@ python csi-pvc.py <span style="color:#0ff;font-weight:bold">${</span>PVCNAME<spa
 
 kubectl delete pvc -n <span style="color:#0ff;font-weight:bold">${</span>NAMESPACE<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">${</span>PVCNAME<span style="color:#0ff;font-weight:bold">}</span>
 
-<span style="color:#007f7f"># start disconnect
-</span><span style="color:#007f7f"></span>kubectl delete pods -n <span style="color:#0ff;font-weight:bold">${</span>NAMESPACE<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">${</span>PODNAME<span style="color:#0ff;font-weight:bold">}</span>
+<span style="color:#007f7f"># start disconnect</span>
+kubectl delete pods -n <span style="color:#0ff;font-weight:bold">${</span>NAMESPACE<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">${</span>PODNAME<span style="color:#0ff;font-weight:bold">}</span>
 kubectl delete pv <span style="color:#0ff;font-weight:bold">${</span>PV<span style="color:#0ff;font-weight:bold">}</span>
 
 <span style="color:#fff;font-weight:bold">while</span> true; <span style="color:#fff;font-weight:bold">do</span>
@@ -892,7 +878,7 @@ kubectl get pv <span style="color:#0ff;font-weight:bold">${</span>NEWPVNAME<span
     
       <article>
         <div id="disqus_thread"></div>
-<script>
+<script type="application/javascript">
     var disqus_config = function () {
     
     

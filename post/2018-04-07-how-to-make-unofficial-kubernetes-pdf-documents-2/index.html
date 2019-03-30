@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-    <meta name="generator" content="Hugo 0.46" />
+    <meta name="generator" content="Hugo 0.54.0" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>how to make unofficial kubernetes pdf documents 2 | &gt; /dev/null</title>
@@ -29,21 +29,9 @@ docker build -t k8s-website-to-pdf . docker run -ti -v $PWD:/out3 k8s-website-to
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://leoh0.github.io/post/2018-04-07-how-to-make-unofficial-kubernetes-pdf-documents-2/" />
 
-
-
+<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322" />
 <meta property="article:published_time" content="2018-04-07T01:15:37&#43;09:00"/>
-
 <meta property="article:modified_time" content="2018-04-07T01:15:37&#43;09:00"/>
-
-
-
-
-
-
-
-
-
-
 
     <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
@@ -382,7 +370,7 @@ docker run -ti -v $PWD:/out3 k8s-website-to-pdf
 
 <p>우선 아래까지는 이전에도 설명한것과 비슷하게 website repository를 가져와서 필요없는 부분을 적당히 제거하고 jekyll로 빌드하고 빌드할 document의 list를 제작한다.</p>
 
-<p><div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
@@ -431,7 +419,7 @@ docker run -ti -v $PWD:/out3 k8s-website-to-pdf
 </span><span style="color:#0ff;font-weight:bold"></span>  grep <span style="color:#0ff;font-weight:bold">&#39;a class=&#34;item&#34;&#39;</span> | grep <span style="color:#0ff;font-weight:bold">&#39;href=&#34;/docs&#39;</span> | <span style="color:#0ff;font-weight:bold">\
 </span><span style="color:#0ff;font-weight:bold"></span>  uniq | cut -d<span style="color:#0ff;font-weight:bold">&#39;&#34;&#39;</span> -f6 &gt; <span style="color:#0ff;font-weight:bold">${</span>TARGET<span style="color:#0ff;font-weight:bold">}</span>/_site/list</code></pre></td></tr></table>
 </div>
-</div></p>
+</div>
 
 <p>이후엔 각 index.html이 web 기준이므로 로컬 파일 css, js를 참고 할 수 있게 경로 변경하고 wkhtmltopdf 로 pdf 생성한다.</p>
 
@@ -439,7 +427,7 @@ docker run -ti -v $PWD:/out3 k8s-website-to-pdf
 
 <p>이후에 ghostscript를 이용해서 letter size로 모든 pdf를 합친다. 나중에 합친 결과물 pdf를 뽑아내기 위해 커맨드를 세팅한다.</p>
 
-<p><div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
@@ -486,7 +474,7 @@ docker run -ti -v $PWD:/out3 k8s-website-to-pdf
 </span><span style="color:#f00">
 </span><span style="color:#f00"></span><span style="color:#fff;font-weight:bold">CMD</span><span style="color:#0ff;font-weight:bold"> [&#34;-c&#34;, &#34;cp /out2/out.pdf /out3/&#34;]</span></code></pre></td></tr></table>
 </div>
-</div></p>
+</div>
 
 <p>아무튼 이렇게 제작한 pdf는 2016페이지 이고 지난번 보다 200페이지가 증가했다.</p>
 
@@ -496,7 +484,7 @@ docker run -ti -v $PWD:/out3 k8s-website-to-pdf
     
       <article>
         <div id="disqus_thread"></div>
-<script>
+<script type="application/javascript">
     var disqus_config = function () {
     
     

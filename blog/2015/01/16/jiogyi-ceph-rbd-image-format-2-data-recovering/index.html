@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-    <meta name="generator" content="Hugo 0.46" />
+    <meta name="generator" content="Hugo 0.54.0" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ceph pg incomplete: rbd image-format 2 data recovery | &gt; /dev/null</title>
@@ -29,21 +29,9 @@ ceph을 사용한지 조금 되었지만 큰 문제가 한번도 없어서 일�
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://leoh0.github.io/blog/2015/01/16/jiogyi-ceph-rbd-image-format-2-data-recovering/" />
 
-
-
+<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322" />
 <meta property="article:published_time" content="2015-01-16T00:54:53&#43;09:00"/>
-
 <meta property="article:modified_time" content="2015-01-16T00:54:53&#43;09:00"/>
-
-
-
-
-
-
-
-
-
-
 
     <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
@@ -700,7 +688,7 @@ dumped all in format plain
 <p>아래와 같은 스크립트를 참고하면 편하다. 간단하게 파일번호로 offset 계산해서 합치는 스크립트 이다.<br />
 해당 스크립트는 로컬에 있는 파일리스트를 조회해서 합치는 것임으로 위에서 미리 찾아서 한 폴더로 몰아놓으면 편하다.</p>
 
-<p><div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
@@ -778,56 +766,56 @@ dumped all in format plain
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#0f0;font-weight:bold">#!/bin/sh
-</span><span style="color:#0f0;font-weight:bold"></span><span style="color:#007f7f">#
-</span><span style="color:#007f7f"># AUTHORS
-</span><span style="color:#007f7f"># Shawn Moore &lt;smmoore@catawba.edu&gt;
-</span><span style="color:#007f7f"># Rodney Rymer &lt;rrr@catawba.edu&gt;
-</span><span style="color:#007f7f">#
-</span><span style="color:#007f7f">#
-</span><span style="color:#007f7f"># REQUIREMENTS
-</span><span style="color:#007f7f"># GNU Awk (gawk)
-</span><span style="color:#007f7f">#
-</span><span style="color:#007f7f">#
-</span><span style="color:#007f7f"># NOTES
-</span><span style="color:#007f7f"># This utility assumes one copy of all object files needed to construct the rbd
-</span><span style="color:#007f7f"># are located in the present working direcory at the time of execution.  
-</span><span style="color:#007f7f"># For example all the rb.0.1032.5e69c215.* files.
-</span><span style="color:#007f7f">#
-</span><span style="color:#007f7f"># When listing the &#34;RBD_SIZE_IN_BYTES&#34;, be sure you list the full potential size, 
-</span><span style="color:#007f7f"># not just what it appears to be. If you do not know the true size of the rbd,
-</span><span style="color:#007f7f"># you can input a size in bytes that you know is larger than the disk could be
-</span><span style="color:#007f7f"># and it will be a large sparse file with un-partioned space at the end of the
-</span><span style="color:#007f7f"># disk.  In our tests, this doesn&#39;t occupy any more space/objects in the cluster
-</span><span style="color:#007f7f"># but the rbd could be resized from within the rbd (VM) to grow.  Once you bring
-</span><span style="color:#007f7f"># it up and are able to find the true size, you can resize with &#34;rbd resize ..&#34;.
-</span><span style="color:#007f7f">#
-</span><span style="color:#007f7f"># To obtain needed utility input information if not already known run:
-</span><span style="color:#007f7f"># rbd info RBD
-</span><span style="color:#007f7f">#
-</span><span style="color:#007f7f"># To find needed files we run the following command on all nodes that might have
-</span><span style="color:#007f7f"># copies of the rbd objects:
-</span><span style="color:#007f7f"># find /${CEPH} -type f -name rb.0.1032.5e69c215.*
-</span><span style="color:#007f7f"># Then copy the files to a single location from all nodes.  If using btrfs be
-</span><span style="color:#007f7f"># sure to pay attention to the btrfs snapshots that ceph takes on it&#39;s own.
-</span><span style="color:#007f7f"># You may want the &#34;current&#34; or one of the &#34;snaps&#34;.
-</span><span style="color:#007f7f">#
-</span><span style="color:#007f7f"># We are actually taking our own btrfs snapshots cluster osd wide at the same
-</span><span style="color:#007f7f"># time with parallel ssh and then using &#34;btrfs subvolume find-new&#34; command to
-</span><span style="color:#007f7f"># merge them all together for disaster recovery and also outside of ceph rbd
-</span><span style="color:#007f7f"># versioning.
-</span><span style="color:#007f7f">#
-</span><span style="color:#007f7f"># Hopefully once the btrfs send/recv functionality is stable we can switch to it.
-</span><span style="color:#007f7f">#
-</span><span style="color:#007f7f">#
-</span><span style="color:#007f7f"># This utility works for us but may not for you.  Always test with non-critical
-</span><span style="color:#007f7f"># data first.
-</span><span style="color:#007f7f">#
-</span><span style="color:#007f7f"></span>
-<span style="color:#007f7f"># Rados object size
-</span><span style="color:#007f7f"></span>obj_size=<span style="color:#ff0;font-weight:bold">4194304</span>
+</span><span style="color:#0f0;font-weight:bold"></span>#
+<span style="color:#007f7f"># AUTHORS</span>
+<span style="color:#007f7f"># Shawn Moore &lt;smmoore@catawba.edu&gt;</span>
+<span style="color:#007f7f"># Rodney Rymer &lt;rrr@catawba.edu&gt;</span>
+#
+#
+<span style="color:#007f7f"># REQUIREMENTS</span>
+<span style="color:#007f7f"># GNU Awk (gawk)</span>
+#
+#
+<span style="color:#007f7f"># NOTES</span>
+<span style="color:#007f7f"># This utility assumes one copy of all object files needed to construct the rbd</span>
+<span style="color:#007f7f"># are located in the present working direcory at the time of execution.</span>  
+<span style="color:#007f7f"># For example all the rb.0.1032.5e69c215.* files.</span>
+#
+<span style="color:#007f7f"># When listing the &#34;RBD_SIZE_IN_BYTES&#34;, be sure you list the full potential size,</span> 
+<span style="color:#007f7f"># not just what it appears to be. If you do not know the true size of the rbd,</span>
+<span style="color:#007f7f"># you can input a size in bytes that you know is larger than the disk could be</span>
+<span style="color:#007f7f"># and it will be a large sparse file with un-partioned space at the end of the</span>
+<span style="color:#007f7f"># disk.  In our tests, this doesn&#39;t occupy any more space/objects in the cluster</span>
+<span style="color:#007f7f"># but the rbd could be resized from within the rbd (VM) to grow.  Once you bring</span>
+<span style="color:#007f7f"># it up and are able to find the true size, you can resize with &#34;rbd resize ..&#34;.</span>
+#
+<span style="color:#007f7f"># To obtain needed utility input information if not already known run:</span>
+<span style="color:#007f7f"># rbd info RBD</span>
+#
+<span style="color:#007f7f"># To find needed files we run the following command on all nodes that might have</span>
+<span style="color:#007f7f"># copies of the rbd objects:</span>
+<span style="color:#007f7f"># find /${CEPH} -type f -name rb.0.1032.5e69c215.*</span>
+<span style="color:#007f7f"># Then copy the files to a single location from all nodes.  If using btrfs be</span>
+<span style="color:#007f7f"># sure to pay attention to the btrfs snapshots that ceph takes on it&#39;s own.</span>
+<span style="color:#007f7f"># You may want the &#34;current&#34; or one of the &#34;snaps&#34;.</span>
+#
+<span style="color:#007f7f"># We are actually taking our own btrfs snapshots cluster osd wide at the same</span>
+<span style="color:#007f7f"># time with parallel ssh and then using &#34;btrfs subvolume find-new&#34; command to</span>
+<span style="color:#007f7f"># merge them all together for disaster recovery and also outside of ceph rbd</span>
+<span style="color:#007f7f"># versioning.</span>
+#
+<span style="color:#007f7f"># Hopefully once the btrfs send/recv functionality is stable we can switch to it.</span>
+#
+#
+<span style="color:#007f7f"># This utility works for us but may not for you.  Always test with non-critical</span>
+<span style="color:#007f7f"># data first.</span>
+#
 
-<span style="color:#007f7f"># DD bs value
-</span><span style="color:#007f7f"></span>rebuild_block_size=<span style="color:#ff0;font-weight:bold">512</span>
+<span style="color:#007f7f"># Rados object size</span>
+obj_size=<span style="color:#ff0;font-weight:bold">4194304</span>
+
+<span style="color:#007f7f"># DD bs value</span>
+rebuild_block_size=<span style="color:#ff0;font-weight:bold">512</span>
 
 rbd=<span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>1<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span>
 base=<span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>2<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span>
@@ -842,16 +830,16 @@ base_files=<span style="color:#fff;font-weight:bold">$(</span>ls -1 <span style=
   <span style="color:#fff;font-weight:bold">exit</span>
 <span style="color:#fff;font-weight:bold">fi</span>
 
-<span style="color:#007f7f"># Create full size sparse image.  Could use truncate, but wanted
-</span><span style="color:#007f7f"># as few required files and dd what a must.
-</span><span style="color:#007f7f"></span>dd <span style="color:#fff;font-weight:bold">if</span>=/dev/zero of=<span style="color:#0ff;font-weight:bold">${</span>rbd<span style="color:#0ff;font-weight:bold">}</span> bs=<span style="color:#ff0;font-weight:bold">1</span> count=<span style="color:#ff0;font-weight:bold">0</span> seek=<span style="color:#0ff;font-weight:bold">${</span>rbd_size<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#ff0;font-weight:bold">2</span>&gt;/dev/null
+<span style="color:#007f7f"># Create full size sparse image.  Could use truncate, but wanted</span>
+<span style="color:#007f7f"># as few required files and dd what a must.</span>
+dd <span style="color:#fff;font-weight:bold">if</span>=/dev/zero of=<span style="color:#0ff;font-weight:bold">${</span>rbd<span style="color:#0ff;font-weight:bold">}</span> bs=<span style="color:#ff0;font-weight:bold">1</span> count=<span style="color:#ff0;font-weight:bold">0</span> seek=<span style="color:#0ff;font-weight:bold">${</span>rbd_size<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#ff0;font-weight:bold">2</span>&gt;/dev/null
 
 <span style="color:#fff;font-weight:bold">for</span> file_name in <span style="color:#fff;font-weight:bold">$(</span>ls -1 <span style="color:#0ff;font-weight:bold">${</span>base<span style="color:#0ff;font-weight:bold">}</span>.* <span style="color:#ff0;font-weight:bold">2</span>&gt;/dev/null<span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
   seek_loc=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">${</span>file_name<span style="color:#0ff;font-weight:bold">}</span> | awk -F_ <span style="color:#0ff;font-weight:bold">&#39;{print $1}&#39;</span> | awk -v os=<span style="color:#0ff;font-weight:bold">${</span>obj_size<span style="color:#0ff;font-weight:bold">}</span> -v rs=<span style="color:#0ff;font-weight:bold">${</span>rebuild_block_size<span style="color:#0ff;font-weight:bold">}</span> -F. <span style="color:#0ff;font-weight:bold">&#39;{print os*strtonum(&#34;0x&#34; $NF)/rs}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
   dd conv=notrunc <span style="color:#fff;font-weight:bold">if</span>=<span style="color:#0ff;font-weight:bold">${</span>file_name<span style="color:#0ff;font-weight:bold">}</span> of=<span style="color:#0ff;font-weight:bold">${</span>rbd<span style="color:#0ff;font-weight:bold">}</span> seek=<span style="color:#0ff;font-weight:bold">${</span>seek_loc<span style="color:#0ff;font-weight:bold">}</span> bs=<span style="color:#0ff;font-weight:bold">${</span>rebuild_block_size<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#ff0;font-weight:bold">2</span>&gt;/dev/null
 <span style="color:#fff;font-weight:bold">done</span></code></pre></td></tr></table>
 </div>
-</div></p>
+</div>
 
 <h3 id="5-mount-해서-테스트-해보기">5. mount 해서 테스트 해보기</h3>
 

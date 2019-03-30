@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-    <meta name="generator" content="Hugo 0.46" />
+    <meta name="generator" content="Hugo 0.54.0" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>draw openstack L2 network architecture automatically | &gt; /dev/null</title>
@@ -31,21 +31,9 @@ bridge-vlan   openvswitch-flat   openvswitch-vlan   이걸 graphviz 로 그리�
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://leoh0.github.io/blog/2015/04/03/draw-openstack-l2-network-architecture-automatically/" />
 
-
-
+<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322" />
 <meta property="article:published_time" content="2015-04-03T02:29:52&#43;09:00"/>
-
 <meta property="article:modified_time" content="2015-04-03T02:29:52&#43;09:00"/>
-
-
-
-
-
-
-
-
-
-
 
     <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
@@ -504,8 +492,8 @@ result=<span style="color:#0ff;font-weight:bold">&#34;&#34;</span>
 
 <span style="color:#fff;font-weight:bold">trap</span> <span style="color:#0ff;font-weight:bold">&#34;on_exit&#34;</span> EXIT
 
-<span style="color:#007f7f"># find ovs br &lt;-&gt; port
-</span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">if</span> [ <span style="color:#0ff;font-weight:bold">&#34;x</span><span style="color:#fff;font-weight:bold">$(</span>which ovs-vsctl<span style="color:#fff;font-weight:bold">)</span><span style="color:#0ff;font-weight:bold">&#34;</span> != <span style="color:#0ff;font-weight:bold">&#34;x&#34;</span> ]; <span style="color:#fff;font-weight:bold">then</span>
+<span style="color:#007f7f"># find ovs br &lt;-&gt; port</span>
+<span style="color:#fff;font-weight:bold">if</span> [ <span style="color:#0ff;font-weight:bold">&#34;x</span><span style="color:#fff;font-weight:bold">$(</span>which ovs-vsctl<span style="color:#fff;font-weight:bold">)</span><span style="color:#0ff;font-weight:bold">&#34;</span> != <span style="color:#0ff;font-weight:bold">&#34;x&#34;</span> ]; <span style="color:#fff;font-weight:bold">then</span>
   <span style="color:#fff;font-weight:bold">for</span> br in <span style="color:#fff;font-weight:bold">$(</span>sudo ovs-vsctl list-br<span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
     <span style="color:#fff;font-weight:bold">for</span> port in <span style="color:#fff;font-weight:bold">$(</span>sudo ovs-vsctl list-ports $br<span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
       result=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;</span>$result<span style="color:#0ff;font-weight:bold"> [</span>$port<span style="color:#0ff;font-weight:bold">]----&gt;[</span>$br<span style="color:#0ff;font-weight:bold">] [</span>$br<span style="color:#0ff;font-weight:bold">]----&gt;[</span>$port<span style="color:#0ff;font-weight:bold">] &#34;</span><span style="color:#fff;font-weight:bold">)</span>
@@ -513,15 +501,15 @@ result=<span style="color:#0ff;font-weight:bold">&#34;&#34;</span>
   <span style="color:#fff;font-weight:bold">done</span>
 <span style="color:#fff;font-weight:bold">fi</span>
 
-<span style="color:#007f7f"># find br &lt;-&gt; port
-</span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">for</span> br in <span style="color:#fff;font-weight:bold">$(</span>brctl show | sed <span style="color:#0ff;font-weight:bold">&#39;1d&#39;</span> | grep <span style="color:#0ff;font-weight:bold">&#39;^[a-z]&#39;</span> | awk <span style="color:#0ff;font-weight:bold">&#39;{print $1}&#39;</span><span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
+<span style="color:#007f7f"># find br &lt;-&gt; port</span>
+<span style="color:#fff;font-weight:bold">for</span> br in <span style="color:#fff;font-weight:bold">$(</span>brctl show | sed <span style="color:#0ff;font-weight:bold">&#39;1d&#39;</span> | grep <span style="color:#0ff;font-weight:bold">&#39;^[a-z]&#39;</span> | awk <span style="color:#0ff;font-weight:bold">&#39;{print $1}&#39;</span><span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
   <span style="color:#fff;font-weight:bold">for</span> port in <span style="color:#fff;font-weight:bold">$(</span>brctl show $br | sed <span style="color:#0ff;font-weight:bold">&#39;1d&#39;</span> | sed <span style="color:#0ff;font-weight:bold">&#39;s/.*\t.*\t.*\t\(.*\)/\1/g&#39;</span><span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
     result=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;</span>$result<span style="color:#0ff;font-weight:bold"> [</span>$port<span style="color:#0ff;font-weight:bold">]----&gt;[</span>$br<span style="color:#0ff;font-weight:bold">] [</span>$br<span style="color:#0ff;font-weight:bold">]----&gt;[</span>$port<span style="color:#0ff;font-weight:bold">] &#34;</span><span style="color:#fff;font-weight:bold">)</span>
   <span style="color:#fff;font-weight:bold">done</span>
 <span style="color:#fff;font-weight:bold">done</span>
 
-<span style="color:#007f7f"># ip namespace veth
-</span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">for</span> ns in <span style="color:#fff;font-weight:bold">$(</span>ip netns<span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
+<span style="color:#007f7f"># ip namespace veth</span>
+<span style="color:#fff;font-weight:bold">for</span> ns in <span style="color:#fff;font-weight:bold">$(</span>ip netns<span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
   <span style="color:#fff;font-weight:bold">for</span> interface in <span style="color:#fff;font-weight:bold">$(</span>ip netns <span style="color:#fff;font-weight:bold">exec</span> $ns ip a | cut -d<span style="color:#0ff;font-weight:bold">&#39;:&#39;</span> -f-2 | grep ^[<span style="color:#ff0;font-weight:bold">1</span>-9]<span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
     index=<span style="color:#fff;font-weight:bold">$(</span>ip netns <span style="color:#fff;font-weight:bold">exec</span> $ns ethtool -S $interface <span style="color:#ff0;font-weight:bold">2</span>&gt; /dev/null | grep peer_ifindex | awk <span style="color:#0ff;font-weight:bold">&#39;{print $2}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
     ifname=<span style="color:#fff;font-weight:bold">$(</span>ip netns <span style="color:#fff;font-weight:bold">exec</span> $ns ip a | grep <span style="color:#0ff;font-weight:bold">&#34;^</span>$index<span style="color:#0ff;font-weight:bold">:&#34;</span> | awk <span style="color:#0ff;font-weight:bold">&#39;{print $2}&#39;</span> | cut -d<span style="color:#0ff;font-weight:bold">&#39;:&#39;</span> -f1<span style="color:#fff;font-weight:bold">)</span>
@@ -535,8 +523,8 @@ result=<span style="color:#0ff;font-weight:bold">&#34;&#34;</span>
   <span style="color:#fff;font-weight:bold">done</span>
 <span style="color:#fff;font-weight:bold">done</span>
 
-<span style="color:#007f7f"># ip veth
-</span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">for</span> interface in <span style="color:#fff;font-weight:bold">$(</span>ip a | cut -d<span style="color:#0ff;font-weight:bold">&#39;:&#39;</span> -f-2 | grep ^[<span style="color:#ff0;font-weight:bold">1</span>-9]<span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
+<span style="color:#007f7f"># ip veth</span>
+<span style="color:#fff;font-weight:bold">for</span> interface in <span style="color:#fff;font-weight:bold">$(</span>ip a | cut -d<span style="color:#0ff;font-weight:bold">&#39;:&#39;</span> -f-2 | grep ^[<span style="color:#ff0;font-weight:bold">1</span>-9]<span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
   <span style="color:#fff;font-weight:bold">if</span> cat $EXCEPT | grep -q <span style="color:#0ff;font-weight:bold">&#34;^</span>$interface$<span style="color:#0ff;font-weight:bold">&#34;</span> ; <span style="color:#fff;font-weight:bold">then</span> <span style="color:#fff;font-weight:bold">continue</span> ; <span style="color:#fff;font-weight:bold">fi</span>
   index=<span style="color:#fff;font-weight:bold">$(</span>ethtool -S $interface <span style="color:#ff0;font-weight:bold">2</span>&gt; /dev/null | grep peer_ifindex | awk <span style="color:#0ff;font-weight:bold">&#39;{print $2}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
   ifname=<span style="color:#fff;font-weight:bold">$(</span>ip a | grep <span style="color:#0ff;font-weight:bold">&#34;^</span>$index<span style="color:#0ff;font-weight:bold">:&#34;</span> | awk <span style="color:#0ff;font-weight:bold">&#39;{print $2}&#39;</span> | cut -d<span style="color:#0ff;font-weight:bold">&#39;:&#39;</span> -f1<span style="color:#fff;font-weight:bold">)</span>
@@ -546,8 +534,8 @@ result=<span style="color:#0ff;font-weight:bold">&#34;&#34;</span>
   <span style="color:#fff;font-weight:bold">fi</span>
 <span style="color:#fff;font-weight:bold">done</span>
 
-<span style="color:#007f7f"># vm tap
-</span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">for</span> tap in <span style="color:#fff;font-weight:bold">$(</span>ip a | cut -d<span style="color:#0ff;font-weight:bold">&#39;:&#39;</span> -f-2 | grep ^[<span style="color:#ff0;font-weight:bold">1</span>-9]  | cut -d<span style="color:#0ff;font-weight:bold">&#39; &#39;</span> -f2 | grep <span style="color:#0ff;font-weight:bold">&#39;^tap&#39;</span><span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
+<span style="color:#007f7f"># vm tap</span>
+<span style="color:#fff;font-weight:bold">for</span> tap in <span style="color:#fff;font-weight:bold">$(</span>ip a | cut -d<span style="color:#0ff;font-weight:bold">&#39;:&#39;</span> -f-2 | grep ^[<span style="color:#ff0;font-weight:bold">1</span>-9]  | cut -d<span style="color:#0ff;font-weight:bold">&#39; &#39;</span> -f2 | grep <span style="color:#0ff;font-weight:bold">&#39;^tap&#39;</span><span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
   vmuuid=<span style="color:#fff;font-weight:bold">$(</span>grep -rl <span style="color:#0ff;font-weight:bold">&#34;</span>$tap<span style="color:#0ff;font-weight:bold">&#34;</span> /var/lib/nova/instances/*/libvirt.xml | cut -d<span style="color:#0ff;font-weight:bold">&#39;/&#39;</span> -f6<span style="color:#fff;font-weight:bold">)</span>
   <span style="color:#fff;font-weight:bold">if</span> [ <span style="color:#0ff;font-weight:bold">&#34;x</span>$vmuuid<span style="color:#0ff;font-weight:bold">&#34;</span> != <span style="color:#0ff;font-weight:bold">&#34;x&#34;</span> ]; <span style="color:#fff;font-weight:bold">then</span>
     result=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;</span>$result<span style="color:#0ff;font-weight:bold"> [</span>$tap<span style="color:#0ff;font-weight:bold">]----&gt;[VM-</span>$vmuuid<span style="color:#0ff;font-weight:bold">] [VM-</span>$vmuuid<span style="color:#0ff;font-weight:bold">]----&gt;[</span>$tap<span style="color:#0ff;font-weight:bold">] &#34;</span><span style="color:#fff;font-weight:bold">)</span>

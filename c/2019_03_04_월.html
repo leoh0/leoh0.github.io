@@ -4,8 +4,20 @@
 <head>
 <title>M</title>
 <body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/eligrey/FileSaver.js/5ed507ef8aa53d8ecfea96d96bc7214cd2476fd2/FileSaver.min.js"></script>
 
-<img src="http://pal-manager.com/_data/course-worksheet/1551679287_KakaoTalk_20190304_145638178_01.jpg">
+<script type="text/javascript">
+function download_1551679287_KakaoTalk_20190304_145638178_02() {
+  var save = document.getElementById("sample").value;
+  var blob = new Blob([save], {
+    type: "image/jpg"
+  });
+  saveAs(blob, "1551679287_KakaoTalk_20190304_145638178_02.jpg");
+}
+</script>
+
+<button id="button" onclick="download_1551679287_KakaoTalk_20190304_145638178_02();"><img src="http://pal-manager.com/_data/course-worksheet/1551679287_KakaoTalk_20190304_145638178_01.jpg"></button>
 <img src="http://pal-manager.com/_data/course-worksheet/1551679287_KakaoTalk_20190304_145638178_02.jpg">
 <img src="http://pal-manager.com/_data/course-worksheet/1551679288_KakaoTalk_20190304_145638178_03.jpg">
 <img src="http://pal-manager.com/_data/course-worksheet/1551679288_KakaoTalk_20190304_145638178_07.jpg">

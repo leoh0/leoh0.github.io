@@ -33,9 +33,13 @@ user의 token리스트를 관리하지 않으면 부담은 훨씬 줄어든다.
 diff --git a/keystone/token/persistence/backends/memcache.py b/keystone/token/persistence/backends/memcache.py index e6b0fca..3f0de68 100644 --- a/keystone/token/persistence/backends/memcache.py &#43;&#43;&#43; b/keystone/token/persistence/backends/memcache.py @@ -37,3 &#43;37,6 @@ class Token(kvs.Token): kwargs[&#39;memcached_expire_time&#39;] = CONF." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://leoh0.github.io/post/2016-09-29-cuga-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossda-dot/" />
+
+<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322" />
 <meta property="article:published_time" content="2016-09-29T23:30:20&#43;09:00"/>
 <meta property="article:modified_time" content="2016-09-29T23:30:20&#43;09:00"/>
-<meta name="twitter:card" content="summary"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
+
 <meta name="twitter:title" content="추가 - Keystone에서 Token Backend로 사용하는 Memcached가 Unbalanced되었다.."/>
 <meta name="twitter:description" content="예전에 아래글을 그냥 balancing 을 위해 id 를 잘 분배하자 라는식으로 결론 냈지만.
 Keystone에서 Token Backend로 사용하는 Memcached가 Unbalanced되었다..

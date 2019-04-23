@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-us">
 
 <head>
 	<meta charset="UTF-8">
@@ -43,8 +43,9 @@
 	<link rel="shortcut icon" href="/favicon.ico">
 
 	<title>Use Admin Token Instead of Cert In Admin.conf For Kubernetes</title>
-	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.31706917653d2b9e8410abd431f30ec4359a88a94fc87a63654779d87329edec.css" crossorigin="anonymous" integrity="sha256-MXBpF2U9K56EEKvUMfMOxDWaiKlPyHpjZUd52HMp7ew=">
+	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.c55a18cd81dc270c784f5003b9d03ad7e60f9f9465ac5e98b039c5bd82970c0a.css" crossorigin="anonymous" integrity="sha256-xVoYzYHcJwx4T1ADudA61+YPn5RlrF6YsDnFvYKXDAo=">
 	<style>.bg-img {background-image: url('https://kamsar.net/index.php/2017/10/All-about-xConnect-Security/cert-issuer.jpg');}</style>
+	<link rel="stylesheet" href="https://leoh0.github.io/css/prism.css">
 </head>
 
 <body id="page">
@@ -97,7 +98,7 @@
 
 <p>대충 결과물은 아래와 같습니다. 기존 <code>admin.conf</code>와 달리 user 아래 token을 사용하는걸 알 수 있습니다.</p>
 
-<pre><code>apiVersion: v1
+<pre><code class="language-yaml">apiVersion: v1
 clusters:
 - cluster:
     certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUN5RENDQWJDZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREFWTVJNd0VRWURWUVFERXdwcmRXSmwKY201bGRHVnpNQjRYRFRFNE1URXlNakUxTkRBeU1Wb1hEVEk0TVRFeE9URTFOREF5TVZvd0ZURVRNQkVHQTFVRQpBeE1LYTNWaVpYSnVaWFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBS3BZCnBSLzVnWkdNUmpKTUlWM0F4Rm1PaFdiTkhHZm5UUWxzRlh6TVpmaGxMNXA2VGZjc1dJb25TUUQ0S2YyZXI3STAKL21ZZ3EwbXBIV1I5MmNLZ1dRU0NDTDJRNTRLRVBaRGV5N3d4TXpreDJiQXFDWDRUbW05dHVwcmpCSVRFdDRNcQpTWUtNelhMWW04RVByUHA5cUU0MGxrZFlIdXZPdExHMnhWUGY4SDVwbWM4aVpiUHFUdFhpT3NjeHpjVjMveFF4CnQ5dDJDT25kbWNMWUFJVzlqcVMxb0xOVGRlV3RXdytsd1ZTWmw2clg4K3ROQldJdUFCeGdCYkEyakxud1hDbE8KdXE5V3hlNkc0R1IxUFVjTStscFNLQURuSjIyQmJ1VzhaRmlvYkxhNzIvOFlXcCtkS1pncDhpWDBwWXpGQ0JtTgp5WDk5MHZNT3NaWVp6TlIvWllrQ0F3RUFCYU1qTUNFd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWRFd0VCCi93UUZNQU1CQWY4d0RRWUpLb1pJaHZjTkJRRUxCUUFEZ2dFQkFESm01NDh1SEp1YWE0dlFKK1I3bytvSk50MkEKdm8zMzNlREtFclNkNjNPa0Rvc0k3NDlRa1FTV0lZb29Ed3JWUEtzT3FhYnFiODZRTm41Z2hGNElyQi80ZlpVSgpuZWhEVkpkMzM4M2d3RXlmRExldVRIMDJPTzltMGtsSTdXSFZ0WUJ6S2Z6ZzBKaDdCekJueDEwUmp0M2d5QXExCmNEbitSWFl2eDBlZVFNRUpUQlVOYXptWFh6b2RsTktOcDlYL1FwaEpIb2NnRVBCV3NucENnUFlnR3ZoRG5nK2EKRnRUbUxDSElxM1dBOVVXdlJ6cFZaSHJHWExBQ284cHhva084bXJlUXFXSEdmNE5zc3ZZWnhrbThUTDkraGZrYwpiZUVrMnJiMFFPN2RLY0lTVzBjZEUrMFhqOUQxM2xkR014UjRYUGVYQitWU0Y3a2pDUGZPZjlwbWRCVT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQ==
@@ -169,6 +170,7 @@ kubectl config use-context cluster-admin@${CLUSTER_NAME}
 	</main>
 
 	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<script src="/js/prism.js"></script>
 		<p>&copy; 2019 <a href="https://leoh0.github.io/"></a></p>
 		<p>
 			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/post/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>

@@ -38,7 +38,7 @@ Keystone에서 Token Backend로 사용하는 Memcached가 Unbalanced되었다..
 user의 token리스트를 관리하지 않으면 부담은 훨씬 줄어든다.
 물론 user의 password 변경 등으로 기존 모든 token을 revoke 시키는 경우때문에 이런 user 단위로 token리스트를 관리해야 하지만
 그걸 포기하면 그냥 코드 몇줄 추가로 간단하게 정리할 수 있다.
-diff --git a/keystone/token/persistence/backends/memcache.py b/keystone/token/persistence/backends/memcache.py index e6b0fca..3f0de68 100644 --- a/keystone/token/persistence/backends/memcache.py +++ b/keystone/token/persistence/backends/memcache.py @@ -37,3 +37,6 @@ class Token(kvs.Token):  kwargs[&amp;#39;memcached_expire_time&amp;#39;] = CONF.</description>
+diff --git a/keystone/token/persistence/backends/memcache.py b/keystone/token/persistence/backends/memcache.py index e6b0fca..3f0de68 100644 --- a/keystone/token/persistence/backends/memcache.py +++ b/keystone/token/persistence/backends/memcache.py @@ -37,3 +37,6 @@ class Token(kvs.Token): kwargs[&#39;memcached_expire_time&#39;] = CONF.</description>
     </item>
     
     <item>
@@ -128,7 +128,7 @@ bridge-vlan   openvswitch-flat   openvswitch-vlan   이걸 graphviz 로 그리�
       <description>우선은 nbd로 attach 하여 mount 해서 접근 가능하다.
 이후에 아래와 같이 key를 추가해도 되고 각 os 버전에 맞게 패스워드를 새로 해슁하여 /etc/shadow 를 변경해도 된다.
 물론 마지막에 dettach 를 꼭 신경써서 해줘야 한다.
-# attach disk qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/10794bbb-7856-4ed6-ab39-32afbc01156a/disk mount /dev/nbd0p1 /mnt # insert a new key to target user echo &amp;#39;&amp;#39;&amp;#39;NEWKEY&amp;#39;&amp;#39;&amp;#39; &amp;gt;&amp;gt; /mnt/home/USER/.ssh/authorized_keys # dettach disk umount /mnt qemu-nbd -d /dev/nbd0p1 하지만 이상하게도 저런 수정을 했을때 아예 접속이 불가능한 경우들이 생긴다.</description>
+# attach disk qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/10794bbb-7856-4ed6-ab39-32afbc01156a/disk mount /dev/nbd0p1 /mnt # insert a new key to target user echo &#39;&#39;&#39;NEWKEY&#39;&#39;&#39; &amp;gt;&amp;gt; /mnt/home/USER/.ssh/authorized_keys # dettach disk umount /mnt qemu-nbd -d /dev/nbd0p1  하지만 이상하게도 저런 수정을 했을때 아예 접속이 불가능한 경우들이 생긴다.</description>
     </item>
     
     <item>

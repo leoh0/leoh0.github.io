@@ -19,7 +19,7 @@ openstack rc file (normal version) 예를 들면 아래는 일반적으로 사�
 
 <meta itemprop="datePublished" content="2016-05-10T01:08:56&#43;09:00" />
 <meta itemprop="dateModified" content="2016-05-10T01:08:56&#43;09:00" />
-<meta itemprop="wordCount" content="773">
+<meta itemprop="wordCount" content="733">
 
 
 
@@ -216,21 +216,23 @@ $ cat $(brew --prefix pyenv)/pyenv.d/exec/openstack.bash
 $ cat ~/.pyenv/pyenv.d/exec/openstack.bash
 </code></pre>
 
-<p>해당 파일내용은 아래와 같다.
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">openstack_root=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">pwd</span> -P <span style="color:#ff0;font-weight:bold">2</span>&gt;/dev/null || <span style="color:#fff;font-weight:bold">command</span> <span style="color:#fff;font-weight:bold">pwd</span><span style="color:#fff;font-weight:bold">)</span>
-<span style="color:#fff;font-weight:bold">while</span> [ ! -e <span style="color:#0ff;font-weight:bold">&#34;</span>$openstack_root<span style="color:#0ff;font-weight:bold">/openrc&#34;</span> ];
-<span style="color:#fff;font-weight:bold">do</span>
-  openstack_root=<span style="color:#0ff;font-weight:bold">${</span>openstack_root%/*<span style="color:#0ff;font-weight:bold">}</span>
-  <span style="color:#fff;font-weight:bold">if</span> [ <span style="color:#0ff;font-weight:bold">&#34;</span>$openstack_root<span style="color:#0ff;font-weight:bold">&#34;</span> == <span style="color:#0ff;font-weight:bold">&#34;&#34;</span> ]; <span style="color:#fff;font-weight:bold">then</span>
-    <span style="color:#fff;font-weight:bold">break</span>
-  <span style="color:#fff;font-weight:bold">fi</span>
-<span style="color:#fff;font-weight:bold">done</span>
+<p>해당 파일내용은 아래와 같다.</p>
 
-<span style="color:#fff;font-weight:bold">if</span> [ <span style="color:#0ff;font-weight:bold">&#34;</span>$openstack_root<span style="color:#0ff;font-weight:bold">&#34;</span> != <span style="color:#0ff;font-weight:bold">&#34;&#34;</span> ]; <span style="color:#fff;font-weight:bold">then</span>
-  <span style="color:#fff;font-weight:bold">while</span> <span style="color:#fff;font-weight:bold">read</span> var; <span style="color:#fff;font-weight:bold">do</span> <span style="color:#fff;font-weight:bold">unset</span> <span style="color:#0ff;font-weight:bold">&#34;</span>$var<span style="color:#0ff;font-weight:bold">&#34;</span>; <span style="color:#fff;font-weight:bold">done</span>&lt; &lt;(env | awk -F= <span style="color:#0ff;font-weight:bold">&#39;/^OS_/{print $1}&#39;</span>)
+<pre><code class="language-bash">openstack_root=$(pwd -P 2&gt;/dev/null || command pwd)
+while [ ! -e &quot;$openstack_root/openrc&quot; ];
+do
+  openstack_root=${openstack_root%/*}
+  if [ &quot;$openstack_root&quot; == &quot;&quot; ]; then
+    break
+  fi
+done
 
-  . <span style="color:#0ff;font-weight:bold">&#34;</span>$openstack_root<span style="color:#0ff;font-weight:bold">/openrc&#34;</span>
-<span style="color:#fff;font-weight:bold">fi</span></code></pre></div></p>
+if [ &quot;$openstack_root&quot; != &quot;&quot; ]; then
+  while read var; do unset &quot;$var&quot;; done&lt; &lt;(env | awk -F= '/^OS_/{print $1}')
+
+  . &quot;$openstack_root/openrc&quot;
+fi
+</code></pre>
 
 <p>약간에 설명을 하자면 해당 커맨드를 실행하는 해당 디렉토리에 <code>openrc</code> 파일이 있으면 <code>OS_</code>로 시작하는 모든 환경 변수를 초기화(unset)하고 openrc 를 export 한다.<br />
 만약 해당 디렉토리에 해당 파일(openrc)가 없으면 상위 디렉토리가 존재할때까지 recursive 하게 올라간다.</p>
@@ -254,92 +256,47 @@ $ cat ~/.pyenv/pyenv.d/exec/openstack.bash
 
 <p>아래 스크립트를 이용하면 ubuntu에서 테스트 설치해서 테스트 가능하다.</p>
 
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">40
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#0f0;font-weight:bold">#!/usr/bin/env bash
-</span><span style="color:#0f0;font-weight:bold"></span>
-sudo apt-get install -qqy git make build-essential libssl-dev zlib1g-dev libbz2-dev <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>  libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>  libncursesw5-dev libxml2-dev libxslt1-dev libffi-dev
+<pre><code class="language-bash">#!/usr/bin/env bash
 
-curl -sL https://raw.github.com/yyuu/pyenv-installer/master/bin/pyenv-installer | <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>  bash
+sudo apt-get install -qqy git make build-essential libssl-dev zlib1g-dev libbz2-dev \
+  libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
+  libncursesw5-dev libxml2-dev libxslt1-dev libffi-dev
 
-<span style="color:#fff;font-weight:bold">export</span> PATH=<span style="color:#0ff;font-weight:bold">&#34;~/.pyenv/bin:</span>$PATH<span style="color:#0ff;font-weight:bold">&#34;</span>
-<span style="color:#fff;font-weight:bold">eval</span> <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#fff;font-weight:bold">$(</span>pyenv init -<span style="color:#fff;font-weight:bold">)</span><span style="color:#0ff;font-weight:bold">&#34;</span>
-<span style="color:#fff;font-weight:bold">eval</span> <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#fff;font-weight:bold">$(</span>pyenv virtualenv-init -<span style="color:#fff;font-weight:bold">)</span><span style="color:#0ff;font-weight:bold">&#34;</span>
+curl -sL https://raw.github.com/yyuu/pyenv-installer/master/bin/pyenv-installer | \
+  bash
 
-<span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#39;export PATH=&#34;~/.pyenv/bin:$PATH&#34;&#39;</span> &gt;&gt; ~/.bashrc
-<span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#39;eval &#34;$(pyenv init -)&#34;&#39;</span> &gt;&gt; ~/.bashrc
-<span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#39;eval &#34;$(pyenv virtualenv-init -)&#34;&#39;</span> &gt;&gt; ~/.bashrc
+export PATH=&quot;~/.pyenv/bin:$PATH&quot;
+eval &quot;$(pyenv init -)&quot;
+eval &quot;$(pyenv virtualenv-init -)&quot;
 
-PYTHON_CONFIGURE_OPTS=<span style="color:#0ff;font-weight:bold">&#34;--enable-unicode=ucs4&#34;</span> ~/.pyenv/bin/pyenv install <span style="color:#ff0;font-weight:bold">2</span>.7.9
+echo 'export PATH=&quot;~/.pyenv/bin:$PATH&quot;' &gt;&gt; ~/.bashrc
+echo 'eval &quot;$(pyenv init -)&quot;' &gt;&gt; ~/.bashrc
+echo 'eval &quot;$(pyenv virtualenv-init -)&quot;' &gt;&gt; ~/.bashrc
 
-~/.pyenv/bin/pyenv global <span style="color:#ff0;font-weight:bold">2</span>.7.9
+PYTHON_CONFIGURE_OPTS=&quot;--enable-unicode=ucs4&quot; ~/.pyenv/bin/pyenv install 2.7.9
 
-cat <span style="color:#0ff;font-weight:bold">&lt;&lt; OPENRC_CHOOSER &gt; ~/.pyenv/pyenv.d/exec/openstack.bash
-</span><span style="color:#0ff;font-weight:bold">openstack_root=\$(pwd -P 2&gt;/dev/null || command pwd)
-</span><span style="color:#0ff;font-weight:bold">while [ ! -e &#34;\$openstack_root/openrc&#34; ];
-</span><span style="color:#0ff;font-weight:bold">do
-</span><span style="color:#0ff;font-weight:bold">  openstack_root=\${openstack_root%/*}
-</span><span style="color:#0ff;font-weight:bold">  if [ &#34;\$openstack_root&#34; == &#34;&#34; ]; then
-</span><span style="color:#0ff;font-weight:bold">    break
-</span><span style="color:#0ff;font-weight:bold">  fi
-</span><span style="color:#0ff;font-weight:bold">done
-</span><span style="color:#0ff;font-weight:bold">
-</span><span style="color:#0ff;font-weight:bold">if [ &#34;\$openstack_root&#34; != &#34;&#34; ]; then
-</span><span style="color:#0ff;font-weight:bold">  while read var; do unset &#34;\$var&#34;; done&lt; &lt;(env | awk -F= &#39;/^OS_/{print \$1}&#39;)
-</span><span style="color:#0ff;font-weight:bold">
-</span><span style="color:#0ff;font-weight:bold">  . &#34;\$openstack_root/openrc&#34;
-</span><span style="color:#0ff;font-weight:bold">fi
-</span><span style="color:#0ff;font-weight:bold">OPENRC_CHOOSER</span>
+~/.pyenv/bin/pyenv global 2.7.9
 
-<span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#39;need relogin&#39;</span>
-exit</code></pre></td></tr></table>
-</div>
-</div>
+cat &lt;&lt; OPENRC_CHOOSER &gt; ~/.pyenv/pyenv.d/exec/openstack.bash
+openstack_root=\$(pwd -P 2&gt;/dev/null || command pwd)
+while [ ! -e &quot;\$openstack_root/openrc&quot; ];
+do
+  openstack_root=\${openstack_root%/*}
+  if [ &quot;\$openstack_root&quot; == &quot;&quot; ]; then
+    break
+  fi
+done
+
+if [ &quot;\$openstack_root&quot; != &quot;&quot; ]; then
+  while read var; do unset &quot;\$var&quot;; done&lt; &lt;(env | awk -F= '/^OS_/{print \$1}')
+
+  . &quot;\$openstack_root/openrc&quot;
+fi
+OPENRC_CHOOSER
+
+echo 'need relogin'
+exit
+</code></pre>
 
 <h2 id="결론">결론<a href="#결론" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 

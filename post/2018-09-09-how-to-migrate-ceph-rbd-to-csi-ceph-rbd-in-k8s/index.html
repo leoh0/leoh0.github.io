@@ -14,7 +14,7 @@
 
 <meta itemprop="datePublished" content="2018-09-09T11:43:14&#43;09:00" />
 <meta itemprop="dateModified" content="2018-09-09T11:43:14&#43;09:00" />
-<meta itemprop="wordCount" content="2261">
+<meta itemprop="wordCount" content="2262">
 
   <meta itemprop="image" content="https://source.unsplash.com/collection/983219/1600x900">
 
@@ -123,7 +123,7 @@
 
 <p>기존의 Ceph RBD의 storage class는 아래와 같습니다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get sc ceph-rbd -o yaml
+<pre><code class="language-bash">$ kubectl get sc ceph-rbd -o yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -133,18 +133,19 @@ parameters:
   adminSecretName: ceph-secret
   adminSecretNamespace: kube-system
   imageFeatures: layering
-  imageFormat: <span style="color:#0ff;font-weight:bold">&#34;2&#34;</span>
+  imageFormat: &quot;2&quot;
   monitors: MON1:6789,MON2:6789,MON3:6789
   pool: kube-pool
   userId: user
   userSecretName: ceph-secret-user
 provisioner: ceph.com/rbd
 reclaimPolicy: Delete
-volumeBindingMode: Immediate</code></pre></div>
+volumeBindingMode: Immediate
+</code></pre>
 
 <p>CSI용 Ceph RBD는 아래와 같습니다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kubectl get sc csi-rbd -o yaml
+<pre><code class="language-bash">$ kubectl get sc csi-rbd -o yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -155,12 +156,13 @@ parameters:
   csiProvisionerSecretName: csi-rbd-secret
   csiProvisionerSecretNamespace: kube-system
   imageFeatures: layering
-  imageFormat: <span style="color:#0ff;font-weight:bold">&#34;2&#34;</span>
+  imageFormat: &quot;2&quot;
   monitors: MON1:6789,MON2:6789,MON3:6789
   pool: kube-pool
 provisioner: csi-rbdplugin
 reclaimPolicy: Delete
-volumeBindingMode: Immediate</code></pre></div>
+volumeBindingMode: Immediate
+</code></pre>
 
 <p>userId, userSecretName 와 같이 범용적이지 못한 부분이 제거되고 csiNodePublishSecretName와 같은 식으로 변경 되었습니다. 자세한 CSI spec은 <a href="https://github.com/container-storage-interface/spec/blob/master/spec.md">여기</a>를 참고하면 됩니다.</p>
 
@@ -196,32 +198,33 @@ volumeBindingMode: Immediate</code></pre></div>
 
 <li><p>unique한 값이나 아래와 같은 방식으로 생성됨</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">    $ <span style="color:#007f7f"># https://github.com/kubernetes-csi/external-provisioner/blob/release-0.3.0/cmd/csi-provisioner/csi-provisioner.go#L99</span>
-    $ <span style="color:#007f7f"># identity := strconv.FormatInt(timeStamp, 10) + &#34;-&#34; + strconv.Itoa(rand.Intn(10000)) + &#34;-&#34; + *provisioner</span>
-    $ <span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#fff;font-weight:bold">$(($(</span>date +%s%N<span style="color:#fff;font-weight:bold">)</span>/<span style="color:#ff0;font-weight:bold">1000000</span><span style="color:#fff;font-weight:bold">))</span><span style="color:#0ff;font-weight:bold">-</span><span style="color:#fff;font-weight:bold">$((</span>$RANDOM%<span style="color:#ff0;font-weight:bold">10000</span><span style="color:#fff;font-weight:bold">))</span><span style="color:#0ff;font-weight:bold">-csi-rbdplugin&#34;</span>
-    </code></pre></div></li>
+<pre><code class="language-bash">$ # https://github.com/kubernetes-csi/external-provisioner/blob/release-0.3.0/cmd/csi-provisioner/csi-provisioner.go#L99
+$ # identity := strconv.FormatInt(timeStamp, 10) + &quot;-&quot; + strconv.Itoa(rand.Intn(10000)) + &quot;-&quot; + *provisioner
+$ echo &quot;$(($(date +%s%N)/1000000))-$(($RANDOM%10000))-csi-rbdplugin&quot;
+</code></pre></li>
 
 <li><p>unique 한 값(e.g. UUID1)이면 됨</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">    $ <span style="color:#007f7f"># https://github.com/ceph/ceph-csi/blob/v0.1.0/pkg/rbd/controllerserver.go#L56-L61</span>
-    $ <span style="color:#007f7f"># uniqueID := uuid.NewUUID().String()</span>
-    $ <span style="color:#007f7f"># volumeID := &#34;csi-rbd-&#34; + uniqueID</span>
-    $ python -c <span style="color:#0ff;font-weight:bold">&#34;import uuid ; print(&#39;csi-rbd-&#39; + str(uuid.uuid1()))&#34;</span>
-    </code></pre></div></li>
+<pre><code class="language-bash">$ # https://github.com/ceph/ceph-csi/blob/v0.1.0/pkg/rbd/controllerserver.go#L56-L61
+$ # uniqueID := uuid.NewUUID().String()
+$ # volumeID := &quot;csi-rbd-&quot; + uniqueID
+$ python -c &quot;import uuid ; print('csi-rbd-' + str(uuid.uuid1()))&quot;
+</code></pre></li>
 </ol>
 
 <p>참고. GO의 UUID는 UUID1을 쓰기때문에 아래와 같이 uuid로 부터 timestamp를 뽑아 낼 수 있습니다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ <span style="color:#fff;font-weight:bold">echo</span> -n <span style="color:#0ff;font-weight:bold">&#39;207db805-ab31-11e8-9798-b4969112d5e4&#39;</span> | <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>  python -c <span style="color:#0ff;font-weight:bold">&#39;&#39;&#39;
-</span><span style="color:#0ff;font-weight:bold">import uuid,sys
-</span><span style="color:#0ff;font-weight:bold">from datetime import datetime, timedelta, timezone
-</span><span style="color:#0ff;font-weight:bold">data = sys.stdin.readline()
-</span><span style="color:#0ff;font-weight:bold">u=uuid.UUID(str(data))
-</span><span style="color:#0ff;font-weight:bold">date = datetime(1582, 10, 15) + timedelta(microseconds=u.time//10)
-</span><span style="color:#0ff;font-weight:bold">print(date.replace(tzinfo=timezone.utc))
-</span><span style="color:#0ff;font-weight:bold">&#39;&#39;&#39;</span>
-<span style="color:#ff0;font-weight:bold">2018</span>-08-29 <span style="color:#ff0;font-weight:bold">02</span>:13:32.165734+00:00</code></pre></div>
+<pre><code class="language-bash">$ echo -n '207db805-ab31-11e8-9798-b4969112d5e4' | \
+  python -c '''
+import uuid,sys
+from datetime import datetime, timedelta, timezone
+data = sys.stdin.readline()
+u=uuid.UUID(str(data))
+date = datetime(1582, 10, 15) + timedelta(microseconds=u.time//10)
+print(date.replace(tzinfo=timezone.utc))
+'''
+2018-08-29 02:13:32.165734+00:00
+</code></pre>
 
 <h2 id="persistent-volume-claim-비교">Persistent Volume Claim 비교<a href="#persistent-volume-claim-비교" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 
@@ -264,43 +267,45 @@ volumeBindingMode: Immediate</code></pre></div>
 
 <p>storage class가 맞는지 <code>CEPH_RBD</code>에 넣어서 사용하면 됩니다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ CEPH_RBD=<span style="color:#0ff;font-weight:bold">${</span>CEPH_RBD<span style="color:#fff;font-weight:bold">:-</span>ceph-rbd<span style="color:#0ff;font-weight:bold">}</span>
+<pre><code class="language-bash">$ CEPH_RBD=${CEPH_RBD:-ceph-rbd}
 
-$ <span style="color:#fff;font-weight:bold">read</span> POOL MONITOR ID SECRET SECRET_NS &lt;&lt;&lt; <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>  <span style="color:#fff;font-weight:bold">$(</span>kubectl get storageclass <span style="color:#0ff;font-weight:bold">${</span>CEPH_RBD<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>    -o go-template=<span style="color:#0ff;font-weight:bold">&#39;{{ .parameters.pool }}
-</span><span style="color:#0ff;font-weight:bold"> {{ .parameters.monitors }}
-</span><span style="color:#0ff;font-weight:bold"> {{ .parameters.adminId }}
-</span><span style="color:#0ff;font-weight:bold"> {{ .parameters.adminSecretName }}
-</span><span style="color:#0ff;font-weight:bold"> {{ .parameters.adminSecretNamespace }}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
+$ read POOL MONITOR ID SECRET SECRET_NS &lt;&lt;&lt; \
+  $(kubectl get storageclass ${CEPH_RBD} \
+    -o go-template='{{ .parameters.pool }}
+ {{ .parameters.monitors }}
+ {{ .parameters.adminId }}
+ {{ .parameters.adminSecretName }}
+ {{ .parameters.adminSecretNamespace }}')
 
-$ KEY=<span style="color:#fff;font-weight:bold">$(</span>kubectl get secret -n <span style="color:#0ff;font-weight:bold">${</span>SECRET_NS<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">${</span>SECRET<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>    -o go-template=<span style="color:#0ff;font-weight:bold">&#39;{{ .data.key }}&#39;</span> | base64 -d<span style="color:#fff;font-weight:bold">)</span>
+$ KEY=$(kubectl get secret -n ${SECRET_NS} ${SECRET} \
+    -o go-template='{{ .data.key }}' | base64 -d)
 
-<span style="color:#007f7f"># 이후 아래와 같이 사용</span>
-$ rbd --pool $POOL --id $ID -m $MONITOR --key=$KEY list</code></pre></div>
+# 이후 아래와 같이 사용
+$ rbd --pool $POOL --id $ID -m $MONITOR --key=$KEY list
+</code></pre>
 
 <h3 id="csi-ceph-rbd의-rbd-커맨드">CSI Ceph RBD의 rbd 커맨드<a href="#csi-ceph-rbd의-rbd-커맨드" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 
 <p>비슷하게 CSI ceph rbd는 아래와 같이 확인 하면 됩니다. 이것도 <code>CSI_CEPH_RBD</code>를 넣어서 사용하면 됩니다. 이전과 바뀐건 adminId 같이 ID를 저장 안하고 secret의 key값에 계정이름을 넣는 다는 것입니다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ CSI_CEPH_RBD=<span style="color:#0ff;font-weight:bold">${</span>CSI_CEPH_RBD<span style="color:#fff;font-weight:bold">:-</span>csi-rbd<span style="color:#0ff;font-weight:bold">}</span>
+<pre><code class="language-bash">$ CSI_CEPH_RBD=${CSI_CEPH_RBD:-csi-rbd}
 
-$ <span style="color:#fff;font-weight:bold">read</span> POOL MONITOR SECRET SECRET_NS &lt;&lt;&lt; <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>  <span style="color:#fff;font-weight:bold">$(</span>kubectl get storageclass <span style="color:#0ff;font-weight:bold">${</span>CSI_CEPH_RBD<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>    -o go-template=<span style="color:#0ff;font-weight:bold">&#39;{{ .parameters.pool }}
-</span><span style="color:#0ff;font-weight:bold"> {{ .parameters.monitors }}
-</span><span style="color:#0ff;font-weight:bold"> {{ .parameters.csiProvisionerSecretName }}
-</span><span style="color:#0ff;font-weight:bold"> {{ .parameters.csiProvisionerSecretNamespace }}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
+$ read POOL MONITOR SECRET SECRET_NS &lt;&lt;&lt; \
+  $(kubectl get storageclass ${CSI_CEPH_RBD} \
+    -o go-template='{{ .parameters.pool }}
+ {{ .parameters.monitors }}
+ {{ .parameters.csiProvisionerSecretName }}
+ {{ .parameters.csiProvisionerSecretNamespace }}')
 
-$ ID=<span style="color:#fff;font-weight:bold">$(</span>kubectl get secret -n <span style="color:#0ff;font-weight:bold">${</span>SECRET_NS<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">${</span>SECRET<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>    -o go-template=<span style="color:#0ff;font-weight:bold">&#39;{{ range $key, $value := .data }}{{ $key }}{{ end }}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
+$ ID=$(kubectl get secret -n ${SECRET_NS} ${SECRET} \
+    -o go-template='{{ range $key, $value := .data }}{{ $key }}{{ end }}')
 
-$ KEY=<span style="color:#fff;font-weight:bold">$(</span>kubectl get secret -n <span style="color:#0ff;font-weight:bold">${</span>SECRET_NS<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">${</span>SECRET<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>    -o go-template=<span style="color:#0ff;font-weight:bold">&#39;{{ .data.&#39;</span>$ID<span style="color:#0ff;font-weight:bold">&#39; }}&#39;</span> | base64 -d<span style="color:#fff;font-weight:bold">)</span>
+$ KEY=$(kubectl get secret -n ${SECRET_NS} ${SECRET} \
+    -o go-template='{{ .data.'$ID' }}' | base64 -d)
 
-<span style="color:#007f7f"># 이후 아래와 같이 사용</span>
-$ rbd --pool $POOL --id $ID -m $MONITOR --key=$KEY list</code></pre></div>
+# 이후 아래와 같이 사용
+$ rbd --pool $POOL --id $ID -m $MONITOR --key=$KEY list
+</code></pre>
 
 <h1 id="how-to-migration">How to migration<a href="#how-to-migration" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
 
@@ -363,11 +368,11 @@ $ rbd --pool $POOL --id $ID -m $MONITOR --key=$KEY list</code></pre></div>
 <ul>
 <li><p>CSI Ceph의 storageclass를 준비해 둡니다. 아래와 같이 기존에 ceph-rbd외에도 csi-rbd를 설정합니다. 이때 전략적으로 default storageclass를 조정하면 기존에 만약 storageclass없이 생성했던 PVC들을 이후부터는 csi-rbd로 붙일 수 있습니다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">        $ kubectl get sc
-        NAME                 PROVISIONER                    AGE
-        ceph-rbd             ceph.com/rbd                   33d
-        csi-rbd (default)    csi-rbdplugin                  17d
-        </code></pre></div>
+<pre><code class="language-bash">$ kubectl get sc
+NAME                 PROVISIONER                    AGE
+ceph-rbd             ceph.com/rbd                   33d
+csi-rbd (default)    csi-rbdplugin                  17d
+</code></pre>
 
 <ul>
 <li>CSI ceph은 아래 링크들을 확인하면 구축할 수 있습니다.</li>
@@ -383,22 +388,22 @@ $ rbd --pool $POOL --id $ID -m $MONITOR --key=$KEY list</code></pre></div>
 <ul>
 <li><p>작업할 PV를 설정합니다. 앞으로 모든 <code>rbd-image</code>&lt;-&gt;<code>pv</code>&lt;-&gt;<code>pvc</code>&lt;-&gt;<code>pod</code>의 기준을 이 PV기준으로 수집합니다. 이후 <code>${PV}</code> 의 값으로 사용합니다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">        PV=pvc-f1b328c9-b3f8-11e8-8946-fa163eadf2df
-        </code></pre></div></li>
+<pre><code class="language-bash">PV=pvc-f1b328c9-b3f8-11e8-8946-fa163eadf2df
+</code></pre></li>
 
 <li><p>우선 기존의 PV들을 <code>delete</code> 이면 <code>retain</code>으로 변경해서 PV가 삭제되도 ceph에서 삭제가 안되도록 합니다. 왜냐하면 이후에 PV를 지우고 CSI용 PV로 재생성 해야하기 때문입니다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">        $ kubectl get pv
-        NAME                                      CAPACITY  ACCESS MODES  RECLAIM POLICY  STATUS  CLAIM            STORAGECLASS   REASON   AGE
-        pvc-f1b328c9-b3f8-11e8-8946-fa163eadf2df  1Gi       RWO           Delete          Bound   kube-system/nx   ceph-rbd                6h
-        $ <span style="color:#007f7f"># retain으로 변경해서 지워지지 않도록 한다.</span>
-        $ kubectl get pv <span style="color:#0ff;font-weight:bold">${</span>PV<span style="color:#0ff;font-weight:bold">}</span> -o yaml | <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>            sed <span style="color:#0ff;font-weight:bold">&#39;s/persistentVolumeReclaimPolicy: Delete/persistentVolumeReclaimPolicy: Retain/g&#39;</span> | <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>            kubectl replace -f -
-        $ kubectl get pv
-        NAME                                      CAPACITY  ACCESS MODES  RECLAIM POLICY  STATUS  CLAIM            STORAGECLASS   REASON   AGE
-        pvc-f1b328c9-b3f8-11e8-8946-fa163eadf2df  1Gi       RWO           Retain          Bound   kube-system/nx   ceph-rbd                6h
-        </code></pre></div></li>
+<pre><code class="language-bash">$ kubectl get pv
+NAME                                      CAPACITY  ACCESS MODES  RECLAIM POLICY  STATUS  CLAIM            STORAGECLASS   REASON   AGE
+pvc-f1b328c9-b3f8-11e8-8946-fa163eadf2df  1Gi       RWO           Delete          Bound   kube-system/nx   ceph-rbd                6h
+$ # retain으로 변경해서 지워지지 않도록 한다.
+$ kubectl get pv ${PV} -o yaml | \
+    sed 's/persistentVolumeReclaimPolicy: Delete/persistentVolumeReclaimPolicy: Retain/g' | \
+    kubectl replace -f -
+$ kubectl get pv
+NAME                                      CAPACITY  ACCESS MODES  RECLAIM POLICY  STATUS  CLAIM            STORAGECLASS   REASON   AGE
+pvc-f1b328c9-b3f8-11e8-8946-fa163eadf2df  1Gi       RWO           Retain          Bound   kube-system/nx   ceph-rbd                6h
+</code></pre></li>
 </ul></li>
 
 <li><p>작업될 <code>rbd-image</code>, <code>pvc</code>, <code>pod</code>을 알아냄</p>
@@ -406,44 +411,44 @@ $ rbd --pool $POOL --id $ID -m $MONITOR --key=$KEY list</code></pre></div>
 <ul>
 <li><p>이후에 변경할 Ceph의 기존 volume 이름을 가져옵니다. <code>rbd-image</code>&lt;-&gt;<code>pv</code>&lt;-&gt;<code>pvc</code>&lt;-&gt;<code>pod</code>이 관계중 <code>rbd-image</code>에 해당합니다. 이 format은 <code>kubernetes-dynamic-pvc-${UUID1}</code>과 같은 포맷으로 구성되어 있습니다. 이후에 CSI 0.3.0 spec의 이름으로 변경 시켜야 합니다. 이후부터는 <code>${RBDIMAGENAME}</code>으로 사용합니다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">        $ RBDIMAGENAME=<span style="color:#fff;font-weight:bold">$(</span>kubectl get pv <span style="color:#0ff;font-weight:bold">${</span>PV<span style="color:#0ff;font-weight:bold">}</span> -o go-template=<span style="color:#0ff;font-weight:bold">&#39;{{ .spec.rbd.image }}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
-        $ <span style="color:#fff;font-weight:bold">echo</span> $RBDIMAGENAME
-        kubernetes-dynamic-pvc-f201332c-b3f8-11e8-aeac-22581cfb0c23
-        </code></pre></div></li>
+<pre><code class="language-bash">$ RBDIMAGENAME=$(kubectl get pv ${PV} -o go-template='{{ .spec.rbd.image }}')
+$ echo $RBDIMAGENAME
+kubernetes-dynamic-pvc-f201332c-b3f8-11e8-aeac-22581cfb0c23
+</code></pre></li>
 
 <li><p>자신이 이후에 변경될 PV의 이름을 가져옵니다. 이후에 <code>${NEWPVNAME}</code>로 사용합니다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">        $ NEWPVNAME=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;pvc-</span><span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> $PV | cut -d<span style="color:#0ff;font-weight:bold">&#39;-&#39;</span> -f2,3,4 | sed <span style="color:#0ff;font-weight:bold">&#39;s/-//g&#39;</span><span style="color:#fff;font-weight:bold">)</span><span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#fff;font-weight:bold">)</span>
-        $ <span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">${</span>NEWPVNAME<span style="color:#0ff;font-weight:bold">}</span>
-        pvc-f1b328c9b3f811e8
-        </code></pre></div></li>
+<pre><code class="language-bash">$ NEWPVNAME=$(echo &quot;pvc-$(echo $PV | cut -d'-' -f2,3,4 | sed 's/-//g')&quot;)
+$ echo ${NEWPVNAME}
+pvc-f1b328c9b3f811e8
+</code></pre></li>
 
 <li><p>PV에 연결된 PVC의 이름을 가져옵니다. <code>rbd-image</code>&lt;-&gt;<code>pv</code>&lt;-&gt;<code>pvc</code>&lt;-&gt;<code>pod</code>의 관계중 <code>pvc</code>에 해당합니다. 이때 pvc, pod이 다 사용할 namespace도 얻어옵니다. 이후에 각각 <code>${NAMESPACE}</code>, <code>${PVCNAME}</code> 으로 사용합니다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">        $ <span style="color:#fff;font-weight:bold">read</span> NAMESPACE PVCNAME &lt;&lt;&lt; <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>          <span style="color:#fff;font-weight:bold">$(</span>kubectl get pv $PV <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>            -o go-template=<span style="color:#0ff;font-weight:bold">&#39;{{ .spec.claimRef.namespace }}
-</span><span style="color:#0ff;font-weight:bold">         {{ .spec.claimRef.name }}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
-        $ <span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">${</span>NAMESPACE<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">${</span>PVCNAME<span style="color:#0ff;font-weight:bold">}</span>
-        kube-system nx
-        </code></pre></div></li>
+<pre><code class="language-bash">$ read NAMESPACE PVCNAME &lt;&lt;&lt; \
+  $(kubectl get pv $PV \
+    -o go-template='{{ .spec.claimRef.namespace }}
+ {{ .spec.claimRef.name }}')
+$ echo ${NAMESPACE} ${PVCNAME}
+kube-system nx
+</code></pre></li>
 
 <li><p>PVC에 연결된 pod의 이름을 가져옵니다. k8s 1.12의 kubectl에는 <a href="https://github.com/kubernetes/kubernetes/pull/65837">이기능</a>이 포함되어 있어서 kubectl describe로 볼수 있지만 아닐시 그냥 모든 pod을 찾아서 pvc를 확인해서 찾습니다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">        $ PODNAME=<span style="color:#fff;font-weight:bold">$(</span>kubectl get pods -n $NAMESPACE -o go-template=<span style="color:#0ff;font-weight:bold">&#34;&#34;&#34;
-</span><span style="color:#0ff;font-weight:bold">          {{- range .items -}}
-</span><span style="color:#0ff;font-weight:bold">            {{\$metadata:=.metadata}}
-</span><span style="color:#0ff;font-weight:bold">            {{- range .spec.volumes -}}
-</span><span style="color:#0ff;font-weight:bold">              {{- if .persistentVolumeClaim -}}
-</span><span style="color:#0ff;font-weight:bold">                {{- if eq .persistentVolumeClaim.claimName \&#34;</span>$PVCNAME<span style="color:#0ff;font-weight:bold">\&#34; -}}
-</span><span style="color:#0ff;font-weight:bold">                  {{- printf \&#34;%s\\n\&#34; \$metadata.name -}}
-</span><span style="color:#0ff;font-weight:bold">                {{- end }}
-</span><span style="color:#0ff;font-weight:bold">              {{- end }}
-</span><span style="color:#0ff;font-weight:bold">            {{- end }}
-</span><span style="color:#0ff;font-weight:bold">          {{- end }}&#34;&#34;&#34;</span><span style="color:#fff;font-weight:bold">)</span>
-        $ <span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">${</span>PODNAME<span style="color:#0ff;font-weight:bold">}</span>
-        nx-86954666cb-g8v5k
-        </code></pre></div></li>
+<pre><code class="language-bash">$ PODNAME=$(kubectl get pods -n $NAMESPACE -o go-template=&quot;&quot;&quot;
+  {{- range .items -}}
+    {{\$metadata:=.metadata}}
+    {{- range .spec.volumes -}}
+      {{- if .persistentVolumeClaim -}}
+        {{- if eq .persistentVolumeClaim.claimName \&quot;$PVCNAME\&quot; -}}
+          {{- printf \&quot;%s\\n\&quot; \$metadata.name -}}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}&quot;&quot;&quot;)
+$ echo ${PODNAME}
+nx-86954666cb-g8v5k
+</code></pre></li>
 </ul></li>
 
 <li><p>변경할 PV와 PVC를 가져와서 csi version yaml로 생성 합니다.</p>
@@ -451,19 +456,19 @@ $ rbd --pool $POOL --id $ID -m $MONITOR --key=$KEY list</code></pre></div>
 <ul>
 <li><p>PV를 CSI 형태로 변경하기위한 아래의 스크립트를 이용하면 이후에 <code>csi-pv-${NEWPVNAME}.yaml</code> 형태 파일로 생성 됩니다. <code>python csi-pv.py ${PV}</code> 로 생성 하면 됩니다. 스크립트 안에 <code>CSIKEY</code>는 실제 csi에서 ceph admin key 저장된 이름입니다. 만약 그 secret 이름이 <code>csi-rbd-secret</code> 가 아니면 변경해야 됩니다. <code>CSIKEY_NS</code> 도 동일하게 secret의 namespace의 이름이니 만약 <code>kube-system</code>이 아니면 변경해야 합니다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">        $ curl -sO https://gist.githubusercontent.com/leoh0/03ca401d690579fdf65c222fa5bfccef/raw/c5439a500c46803b599a0bccfc0f36d11664bd3a/csi-pv.py
-        $ python csi-pv.py <span style="color:#0ff;font-weight:bold">${</span>PV<span style="color:#0ff;font-weight:bold">}</span>
-        check csi-pv-pvc-f1b328c9b3f811e8.yaml
-        </code></pre></div>
+<pre><code class="language-bash">$ curl -sO https://gist.githubusercontent.com/leoh0/03ca401d690579fdf65c222fa5bfccef/raw/c5439a500c46803b599a0bccfc0f36d11664bd3a/csi-pv.py
+$ python csi-pv.py ${PV}
+check csi-pv-pvc-f1b328c9b3f811e8.yaml
+</code></pre>
 
 <p><a href="https://gist.github.com/leoh0/03ca401d690579fdf65c222fa5bfccef">gist 참고</a></p></li>
 
 <li><p>PVC를 CSI 형태로 변경하기위한 아래의 스크립트를 이용하면 이후에 <code>csi-pvc-${NEWPVNAME}.yaml</code> 형태 파일로 생성 됩니다. <code>python csi-pvc.py ${PVCNAME} -n ${NAMESPACE}</code> 로 생성 하면 됩니다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">        $ curl -sO https://gist.githubusercontent.com/leoh0/cd17492cc5274ae7e41fdf56967e0177/raw/33269b4584a02caefc8640100592484f34494fe6/csi-pvc.py
-        $ python csi-pvc.py <span style="color:#0ff;font-weight:bold">${</span>PVCNAME<span style="color:#0ff;font-weight:bold">}</span> -n <span style="color:#0ff;font-weight:bold">${</span>NAMESPACE<span style="color:#0ff;font-weight:bold">}</span>
-        check csi-pvc-pvc-f1b328c9b3f811e8.yaml
-        </code></pre></div>
+<pre><code class="language-bash">$ curl -sO https://gist.githubusercontent.com/leoh0/cd17492cc5274ae7e41fdf56967e0177/raw/33269b4584a02caefc8640100592484f34494fe6/csi-pvc.py
+$ python csi-pvc.py ${PVCNAME} -n ${NAMESPACE}
+check csi-pvc-pvc-f1b328c9b3f811e8.yaml
+</code></pre>
 
 <p><a href="https://gist.github.com/leoh0/cd17492cc5274ae7e41fdf56967e0177">gist 참고</a></p></li>
 </ul></li>
@@ -473,8 +478,8 @@ $ rbd --pool $POOL --id $ID -m $MONITOR --key=$KEY list</code></pre></div>
 <ul>
 <li><p>실제 pvc를 삭제해도 바로 삭제 되지 않습니다. pod이 삭제될때까지 기다리는 상태이니 이상태까지는 우선 영향을 끼치진 않습니다. 다만 삭제를 시작하면 더이상 프로세스를 되돌리기 힘들기 때문에 여기서부터는 신중히 하는게 좋습니다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">        $ kubectl delete pvc -n <span style="color:#0ff;font-weight:bold">${</span>NAMESPACE<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">${</span>PVCNAME<span style="color:#0ff;font-weight:bold">}</span>
-        </code></pre></div></li>
+<pre><code class="language-bash">$ kubectl delete pvc -n ${NAMESPACE} ${PVCNAME}
+</code></pre></li>
 </ul></li>
 
 <li><p>이제 중요한 pod과 pv를 삭제시켜서 새로운 csi 형태로 붙일 준비를 합니다.</p>
@@ -484,9 +489,9 @@ $ rbd --pool $POOL --id $ID -m $MONITOR --key=$KEY list</code></pre></div>
 
 <li><p>pod을 삭제하기 전에 scheduling 시킬 곳을 지정하여 그곳에 이미지를 새로 받아 놓으면 더욱 빨리 pod을 옮길 수 있습니다. 이건 여러 가지 전략들이 너무 긴 이야기라 나중에 따로 정리할 생각입니다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">        $ kubectl delete pods -n <span style="color:#0ff;font-weight:bold">${</span>NAMESPACE<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">${</span>PODNAME<span style="color:#0ff;font-weight:bold">}</span>
-        $ kubectl delete pv <span style="color:#0ff;font-weight:bold">${</span>PV<span style="color:#0ff;font-weight:bold">}</span>
-        </code></pre></div></li>
+<pre><code class="language-bash">$ kubectl delete pods -n ${NAMESPACE} ${PODNAME}
+$ kubectl delete pv ${PV}
+</code></pre></li>
 </ul></li>
 
 <li><p>rbd이름을 변경합니다.</p>
@@ -494,13 +499,13 @@ $ rbd --pool $POOL --id $ID -m $MONITOR --key=$KEY list</code></pre></div>
 <ul>
 <li><p>미리 준비한 RBD 커맨드로 pv가 pod으로 부터 unmount, unmap 되어 떨어져서 rbd를 변경할 수 있는 상태인지 체크하여 이름을 변경 시킵니다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">        $ <span style="color:#fff;font-weight:bold">while</span> true; <span style="color:#fff;font-weight:bold">do</span>
-          rbd --pool <span style="color:#0ff;font-weight:bold">${</span>POOL<span style="color:#0ff;font-weight:bold">}</span> --id <span style="color:#0ff;font-weight:bold">${</span>ID<span style="color:#0ff;font-weight:bold">}</span> -m <span style="color:#0ff;font-weight:bold">${</span>MONITOR<span style="color:#0ff;font-weight:bold">}</span> --key=<span style="color:#0ff;font-weight:bold">${</span>KEY<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>            status <span style="color:#0ff;font-weight:bold">${</span>RBDIMAGENAME<span style="color:#0ff;font-weight:bold">}</span> | grep -q <span style="color:#0ff;font-weight:bold">&#39;watcher=&#39;</span> || <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>            rbd --pool <span style="color:#0ff;font-weight:bold">${</span>POOL<span style="color:#0ff;font-weight:bold">}</span> --id <span style="color:#0ff;font-weight:bold">${</span>ID<span style="color:#0ff;font-weight:bold">}</span> -m <span style="color:#0ff;font-weight:bold">${</span>MONITOR<span style="color:#0ff;font-weight:bold">}</span> --key=<span style="color:#0ff;font-weight:bold">${</span>KEY<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>            mv <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>POOL<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">/</span><span style="color:#0ff;font-weight:bold">${</span>RBDIMAGENAME<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span> <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>POOL<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">/</span><span style="color:#0ff;font-weight:bold">${</span>NEWPVNAME<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span>
-          <span style="color:#fff;font-weight:bold">done</span>
-        </code></pre></div></li>
+<pre><code class="language-bash">$ while true; do
+  rbd --pool ${POOL} --id ${ID} -m ${MONITOR} --key=${KEY} \
+    status ${RBDIMAGENAME} | grep -q 'watcher=' || \
+    rbd --pool ${POOL} --id ${ID} -m ${MONITOR} --key=${KEY} \
+    mv &quot;${POOL}/${RBDIMAGENAME}&quot; &quot;${POOL}/${NEWPVNAME}&quot;
+  done
+</code></pre></li>
 </ul></li>
 
 <li><p>csi 형태 pv와 pvc를 재생성 합니다.</p>
@@ -508,9 +513,9 @@ $ rbd --pool $POOL --id $ID -m $MONITOR --key=$KEY list</code></pre></div>
 <ul>
 <li><p>미리 위에서 준비한 yaml를 이용하여 csi형태로 pv와 pvc를 생성합니다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">        $ kubectl create -f csi-pv-<span style="color:#0ff;font-weight:bold">${</span>NEWPVNAME<span style="color:#0ff;font-weight:bold">}</span>.yaml
-        $ kubectl create -f csi-pvc-<span style="color:#0ff;font-weight:bold">${</span>NEWPVNAME<span style="color:#0ff;font-weight:bold">}</span>.yaml -n <span style="color:#0ff;font-weight:bold">${</span>NAMESPACE<span style="color:#0ff;font-weight:bold">}</span>
-        </code></pre></div></li>
+<pre><code class="language-bash">$ kubectl create -f csi-pv-${NEWPVNAME}.yaml
+$ kubectl create -f csi-pvc-${NEWPVNAME}.yaml -n ${NAMESPACE}
+</code></pre></li>
 </ul></li>
 
 <li><p>pod이 잘 뜨는지 확인합니다.</p>
@@ -524,100 +529,101 @@ $ rbd --pool $POOL --id $ID -m $MONITOR --key=$KEY list</code></pre></div>
 
 <p><a href="https://gist.github.com/leoh0/418a4598e7ea8541eddead5a9f87622e">gist 참고</a></p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#0f0;font-weight:bold">#!/usr/bin/env bash
-</span><span style="color:#0f0;font-weight:bold"></span>
-CEPH_RBD=<span style="color:#0ff;font-weight:bold">${</span>CEPH_RBD<span style="color:#fff;font-weight:bold">:-</span>ceph-rbd<span style="color:#0ff;font-weight:bold">}</span>
+<pre><code class="language-bash">#!/usr/bin/env bash
 
-<span style="color:#fff;font-weight:bold">read</span> POOL MONITOR ID SECRET SECRET_NS &lt;&lt;&lt; <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>  <span style="color:#fff;font-weight:bold">$(</span>kubectl get storageclass <span style="color:#0ff;font-weight:bold">${</span>CEPH_RBD<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>    -o go-template=<span style="color:#0ff;font-weight:bold">&#39;{{ .parameters.pool }}
-</span><span style="color:#0ff;font-weight:bold"> {{ .parameters.monitors }}
-</span><span style="color:#0ff;font-weight:bold"> {{ .parameters.adminId }}
-</span><span style="color:#0ff;font-weight:bold"> {{ .parameters.adminSecretName }}
-</span><span style="color:#0ff;font-weight:bold"> {{ .parameters.adminSecretNamespace }}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
+CEPH_RBD=${CEPH_RBD:-ceph-rbd}
 
-KEY=<span style="color:#fff;font-weight:bold">$(</span>kubectl get secret -n <span style="color:#0ff;font-weight:bold">${</span>SECRET_NS<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">${</span>SECRET<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>    -o go-template=<span style="color:#0ff;font-weight:bold">&#39;{{ .data.key }}&#39;</span> | base64 -d<span style="color:#fff;font-weight:bold">)</span>
+read POOL MONITOR ID SECRET SECRET_NS &lt;&lt;&lt; \
+  $(kubectl get storageclass ${CEPH_RBD} \
+    -o go-template='{{ .parameters.pool }}
+ {{ .parameters.monitors }}
+ {{ .parameters.adminId }}
+ {{ .parameters.adminSecretName }}
+ {{ .parameters.adminSecretNamespace }}')
+
+KEY=$(kubectl get secret -n ${SECRET_NS} ${SECRET} \
+    -o go-template='{{ .data.key }}' | base64 -d)
 
 PV=$1
 
-kubectl get pv <span style="color:#0ff;font-weight:bold">${</span>PV<span style="color:#0ff;font-weight:bold">}</span> -o yaml | <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>    sed <span style="color:#0ff;font-weight:bold">&#39;s/persistentVolumeReclaimPolicy: Delete/persistentVolumeReclaimPolicy: Retain/g&#39;</span> | <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>    kubectl replace -f -
+kubectl get pv ${PV} -o yaml | \
+    sed 's/persistentVolumeReclaimPolicy: Delete/persistentVolumeReclaimPolicy: Retain/g' | \
+    kubectl replace -f -
 
-RBDIMAGENAME=<span style="color:#fff;font-weight:bold">$(</span>kubectl get pv <span style="color:#0ff;font-weight:bold">${</span>PV<span style="color:#0ff;font-weight:bold">}</span> -o go-template=<span style="color:#0ff;font-weight:bold">&#39;{{ .spec.rbd.image }}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
+RBDIMAGENAME=$(kubectl get pv ${PV} -o go-template='{{ .spec.rbd.image }}')
 
-NEWPVNAME=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;pvc-</span><span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> $PV | cut -d<span style="color:#0ff;font-weight:bold">&#39;-&#39;</span> -f2,3,4 | sed <span style="color:#0ff;font-weight:bold">&#39;s/-//g&#39;</span><span style="color:#fff;font-weight:bold">)</span><span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#fff;font-weight:bold">)</span>
+NEWPVNAME=$(echo &quot;pvc-$(echo $PV | cut -d'-' -f2,3,4 | sed 's/-//g')&quot;)
 
-<span style="color:#fff;font-weight:bold">read</span> NAMESPACE PVCNAME &lt;&lt;&lt; <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>  <span style="color:#fff;font-weight:bold">$(</span>kubectl get pv $PV <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>    -o go-template=<span style="color:#0ff;font-weight:bold">&#39;{{ .spec.claimRef.namespace }}
-</span><span style="color:#0ff;font-weight:bold"> {{ .spec.claimRef.name }}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
+read NAMESPACE PVCNAME &lt;&lt;&lt; \
+  $(kubectl get pv $PV \
+    -o go-template='{{ .spec.claimRef.namespace }}
+ {{ .spec.claimRef.name }}')
 
-PODNAME=<span style="color:#fff;font-weight:bold">$(</span>kubectl get pods -n $NAMESPACE -o go-template=<span style="color:#0ff;font-weight:bold">&#34;&#34;&#34;
-</span><span style="color:#0ff;font-weight:bold">  {{- range .items -}}
-</span><span style="color:#0ff;font-weight:bold">    {{\$metadata:=.metadata}}
-</span><span style="color:#0ff;font-weight:bold">    {{- range .spec.volumes -}}
-</span><span style="color:#0ff;font-weight:bold">      {{- if .persistentVolumeClaim -}}
-</span><span style="color:#0ff;font-weight:bold">        {{- if eq .persistentVolumeClaim.claimName \&#34;</span>$PVCNAME<span style="color:#0ff;font-weight:bold">\&#34; -}}
-</span><span style="color:#0ff;font-weight:bold">          {{- printf \&#34;%s\\n\&#34; \$metadata.name -}}
-</span><span style="color:#0ff;font-weight:bold">        {{- end }}
-</span><span style="color:#0ff;font-weight:bold">      {{- end }}
-</span><span style="color:#0ff;font-weight:bold">    {{- end }}
-</span><span style="color:#0ff;font-weight:bold">  {{- end }}&#34;&#34;&#34;</span><span style="color:#fff;font-weight:bold">)</span>
+PODNAME=$(kubectl get pods -n $NAMESPACE -o go-template=&quot;&quot;&quot;
+  {{- range .items -}}
+    {{\$metadata:=.metadata}}
+    {{- range .spec.volumes -}}
+      {{- if .persistentVolumeClaim -}}
+        {{- if eq .persistentVolumeClaim.claimName \&quot;$PVCNAME\&quot; -}}
+          {{- printf \&quot;%s\\n\&quot; \$metadata.name -}}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}&quot;&quot;&quot;)
 
-<span style="color:#fff;font-weight:bold">if</span> [ ! -f csi-pv.py ]; <span style="color:#fff;font-weight:bold">then</span>
+if [ ! -f csi-pv.py ]; then
     curl -sO https://gist.githubusercontent.com/leoh0/03ca401d690579fdf65c222fa5bfccef/raw/c5439a500c46803b599a0bccfc0f36d11664bd3a/csi-pv.py
-<span style="color:#fff;font-weight:bold">fi</span>
-python csi-pv.py <span style="color:#0ff;font-weight:bold">${</span>PV<span style="color:#0ff;font-weight:bold">}</span>
+fi
+python csi-pv.py ${PV}
 
-<span style="color:#fff;font-weight:bold">if</span> [ ! -f csi-pvc.py ]; <span style="color:#fff;font-weight:bold">then</span>
+if [ ! -f csi-pvc.py ]; then
     curl -sO https://gist.githubusercontent.com/leoh0/cd17492cc5274ae7e41fdf56967e0177/raw/33269b4584a02caefc8640100592484f34494fe6/csi-pvc.py
-<span style="color:#fff;font-weight:bold">fi</span>
-python csi-pvc.py <span style="color:#0ff;font-weight:bold">${</span>PVCNAME<span style="color:#0ff;font-weight:bold">}</span> -n <span style="color:#0ff;font-weight:bold">${</span>NAMESPACE<span style="color:#0ff;font-weight:bold">}</span>
+fi
+python csi-pvc.py ${PVCNAME} -n ${NAMESPACE}
 
-kubectl delete pvc -n <span style="color:#0ff;font-weight:bold">${</span>NAMESPACE<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">${</span>PVCNAME<span style="color:#0ff;font-weight:bold">}</span>
+kubectl delete pvc -n ${NAMESPACE} ${PVCNAME}
 
-<span style="color:#007f7f"># start disconnect</span>
-kubectl delete pods -n <span style="color:#0ff;font-weight:bold">${</span>NAMESPACE<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">${</span>PODNAME<span style="color:#0ff;font-weight:bold">}</span>
-kubectl delete pv <span style="color:#0ff;font-weight:bold">${</span>PV<span style="color:#0ff;font-weight:bold">}</span>
+# start disconnect
+kubectl delete pods -n ${NAMESPACE} ${PODNAME}
+kubectl delete pv ${PV}
 
-<span style="color:#fff;font-weight:bold">while</span> true; <span style="color:#fff;font-weight:bold">do</span>
-  rbd --pool <span style="color:#0ff;font-weight:bold">${</span>POOL<span style="color:#0ff;font-weight:bold">}</span> --id <span style="color:#0ff;font-weight:bold">${</span>ID<span style="color:#0ff;font-weight:bold">}</span> -m <span style="color:#0ff;font-weight:bold">${</span>MONITOR<span style="color:#0ff;font-weight:bold">}</span> --key=<span style="color:#0ff;font-weight:bold">${</span>KEY<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>    status <span style="color:#0ff;font-weight:bold">${</span>RBDIMAGENAME<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#ff0;font-weight:bold">2</span>&gt;/dev/null | grep -q <span style="color:#0ff;font-weight:bold">&#39;watcher=&#39;</span> || <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>    rbd --pool <span style="color:#0ff;font-weight:bold">${</span>POOL<span style="color:#0ff;font-weight:bold">}</span> --id <span style="color:#0ff;font-weight:bold">${</span>ID<span style="color:#0ff;font-weight:bold">}</span> -m <span style="color:#0ff;font-weight:bold">${</span>MONITOR<span style="color:#0ff;font-weight:bold">}</span> --key=<span style="color:#0ff;font-weight:bold">${</span>KEY<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>    mv <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>POOL<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">/</span><span style="color:#0ff;font-weight:bold">${</span>RBDIMAGENAME<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span> <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>POOL<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">/</span><span style="color:#0ff;font-weight:bold">${</span>NEWPVNAME<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span> <span style="color:#ff0;font-weight:bold">2</span>&gt;/dev/null &amp;&amp; <span style="color:#fff;font-weight:bold">break</span>
-<span style="color:#fff;font-weight:bold">done</span>
+while true; do
+  rbd --pool ${POOL} --id ${ID} -m ${MONITOR} --key=${KEY} \
+    status ${RBDIMAGENAME} 2&gt;/dev/null | grep -q 'watcher=' || \
+    rbd --pool ${POOL} --id ${ID} -m ${MONITOR} --key=${KEY} \
+    mv &quot;${POOL}/${RBDIMAGENAME}&quot; &quot;${POOL}/${NEWPVNAME}&quot; 2&gt;/dev/null &amp;&amp; break
+done
 
-<span style="color:#fff;font-weight:bold">while</span> true; <span style="color:#fff;font-weight:bold">do</span>
-    kubectl create -f csi-pv-<span style="color:#0ff;font-weight:bold">${</span>NEWPVNAME<span style="color:#0ff;font-weight:bold">}</span>.yaml &amp;&amp; <span style="color:#fff;font-weight:bold">break</span>
-<span style="color:#fff;font-weight:bold">done</span>
-<span style="color:#fff;font-weight:bold">while</span> true; <span style="color:#fff;font-weight:bold">do</span>
-    kubectl create -f csi-pvc-<span style="color:#0ff;font-weight:bold">${</span>NEWPVNAME<span style="color:#0ff;font-weight:bold">}</span>.yaml -n <span style="color:#0ff;font-weight:bold">${</span>NAMESPACE<span style="color:#0ff;font-weight:bold">}</span> &amp;&amp; <span style="color:#fff;font-weight:bold">break</span>
-<span style="color:#fff;font-weight:bold">done</span>
+while true; do
+    kubectl create -f csi-pv-${NEWPVNAME}.yaml &amp;&amp; break
+done
+while true; do
+    kubectl create -f csi-pvc-${NEWPVNAME}.yaml -n ${NAMESPACE} &amp;&amp; break
+done
 
-NEWPODNAME=<span style="color:#fff;font-weight:bold">$(</span>kubectl get pods --field-selector status.phase!=Terminating -n $NAMESPACE -o go-template=<span style="color:#0ff;font-weight:bold">&#34;&#34;&#34;
-</span><span style="color:#0ff;font-weight:bold">  {{- range .items -}}
-</span><span style="color:#0ff;font-weight:bold">    {{\$metadata:=.metadata}}
-</span><span style="color:#0ff;font-weight:bold">    {{- if ne .metadata.name \&#34;</span>$PODNAME<span style="color:#0ff;font-weight:bold">\&#34; -}}
-</span><span style="color:#0ff;font-weight:bold">      {{- range .spec.volumes -}}
-</span><span style="color:#0ff;font-weight:bold">        {{- if .persistentVolumeClaim -}}
-</span><span style="color:#0ff;font-weight:bold">          {{- if eq .persistentVolumeClaim.claimName \&#34;</span>$PVCNAME<span style="color:#0ff;font-weight:bold">\&#34; -}}
-</span><span style="color:#0ff;font-weight:bold">            {{- printf \&#34;%s\\n\&#34; \$metadata.name -}}
-</span><span style="color:#0ff;font-weight:bold">          {{- end }}
-</span><span style="color:#0ff;font-weight:bold">        {{- end }}
-</span><span style="color:#0ff;font-weight:bold">      {{- end }}
-</span><span style="color:#0ff;font-weight:bold">    {{- end }}
-</span><span style="color:#0ff;font-weight:bold">  {{- end }}&#34;&#34;&#34;</span><span style="color:#fff;font-weight:bold">)</span>
+NEWPODNAME=$(kubectl get pods --field-selector status.phase!=Terminating -n $NAMESPACE -o go-template=&quot;&quot;&quot;
+  {{- range .items -}}
+    {{\$metadata:=.metadata}}
+    {{- if ne .metadata.name \&quot;$PODNAME\&quot; -}}
+      {{- range .spec.volumes -}}
+        {{- if .persistentVolumeClaim -}}
+          {{- if eq .persistentVolumeClaim.claimName \&quot;$PVCNAME\&quot; -}}
+            {{- printf \&quot;%s\\n\&quot; \$metadata.name -}}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}&quot;&quot;&quot;)
 
 
-kubectl get pods -n <span style="color:#0ff;font-weight:bold">${</span>NAMESPACE<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#0ff;font-weight:bold">${</span>NEWPODNAME<span style="color:#0ff;font-weight:bold">}</span>
+kubectl get pods -n ${NAMESPACE} ${NEWPODNAME}
 
-kubectl get pv <span style="color:#0ff;font-weight:bold">${</span>NEWPVNAME<span style="color:#0ff;font-weight:bold">}</span> -o yaml | <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>    sed <span style="color:#0ff;font-weight:bold">&#39;s/persistentVolumeReclaimPolicy: Retain/persistentVolumeReclaimPolicy: Delete/g&#39;</span> | <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>    kubectl replace -f -
+kubectl get pv ${NEWPVNAME} -o yaml | \
+    sed 's/persistentVolumeReclaimPolicy: Retain/persistentVolumeReclaimPolicy: Delete/g' | \
+    kubectl replace -f -
 
-<span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;kubectl get pods -n </span><span style="color:#0ff;font-weight:bold">${</span>NAMESPACE<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold"> </span><span style="color:#0ff;font-weight:bold">${</span>NEWPODNAME<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span></code></pre></div>
+echo &quot;kubectl get pods -n ${NAMESPACE} ${NEWPODNAME}&quot;
+</code></pre>
 
 <h1 id="정리">정리<a href="#정리" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
 

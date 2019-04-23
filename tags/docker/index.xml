@@ -30,7 +30,7 @@
 아래와 같이 사용할시 pdf를 뽑아 낼 수 있다.
 docker run -ti -v $PWD:/out3 leoh0/k8s-website-to-pdf  아니면 아래 dockerfile로 새로 제작해서 뽑아내면 된다. 참고
 docker build -t k8s-website-to-pdf . docker run -ti -v $PWD:/out3 k8s-website-to-pdf  우선 전체 dockerfile은 아래와 같다.
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44  # 참고 https://github.</description>
+# 참고 https://github.</description>
     </item>
     
     <item>

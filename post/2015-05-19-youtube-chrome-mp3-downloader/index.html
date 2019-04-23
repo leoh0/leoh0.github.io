@@ -120,12 +120,13 @@ youtube-dl -t --extract-audio --audio-format mp3 $YOUTUBEURL
 
 <p>그리고 그냥 아래 같은 방법을 쓰면 chrome 에서 열려 있는 유튜브 페이지들을 전부 조회해서 mp3로 다운로드 할 수 있다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#fff;font-weight:bold">function</span> yd(){
-  <span style="color:#fff;font-weight:bold">for</span> l in <span style="color:#fff;font-weight:bold">$(</span>chrome-cli list tabs | grep YouTube | cut -d <span style="color:#0ff;font-weight:bold">&#39;[&#39;</span> -f2- | cut -d<span style="color:#0ff;font-weight:bold">&#39;:&#39;</span> -f2- | cut -d<span style="color:#0ff;font-weight:bold">&#39;]&#39;</span> -f1<span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
-    url=<span style="color:#fff;font-weight:bold">$(</span>chrome-cli info -t $l | grep <span style="color:#0ff;font-weight:bold">&#39;^Url: &#39;</span> | cut -d<span style="color:#0ff;font-weight:bold">&#39; &#39;</span> -f2<span style="color:#fff;font-weight:bold">)</span>
-    (<span style="color:#fff;font-weight:bold">cd</span> /want/to/download/mp3; youtube-dl -t --extract-audio --audio-format mp3 $url)
-  <span style="color:#fff;font-weight:bold">done</span>
-}</code></pre></div>
+<pre><code class="language-bash">function yd(){
+  for l in $(chrome-cli list tabs | grep YouTube | cut -d '[' -f2- | cut -d':' -f2- | cut -d']' -f1); do
+    url=$(chrome-cli info -t $l | grep '^Url: ' | cut -d' ' -f2)
+    (cd /want/to/download/mp3; youtube-dl -t --extract-audio --audio-format mp3 $url)
+  done
+}
+</code></pre>
 
 		</div>
 		<div id="comments" class="thin">

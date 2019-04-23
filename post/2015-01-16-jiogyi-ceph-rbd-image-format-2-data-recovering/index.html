@@ -18,7 +18,7 @@ ceph을 사용한지 조금 되었지만 큰 문제가 한번도 없어서 일�
 
 <meta itemprop="datePublished" content="2015-01-16T00:54:53&#43;09:00" />
 <meta itemprop="dateModified" content="2015-01-16T00:54:53&#43;09:00" />
-<meta itemprop="wordCount" content="2964">
+<meta itemprop="wordCount" content="2794">
 
 
 
@@ -160,31 +160,33 @@ If you see this state, report a bug, and try to start any failed OSDs that may c
 
 <h3 id="rbd-image-format-1">rbd image format 1<a href="#rbd-image-format-1" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#007f7f">/*
-</span><span style="color:#007f7f"> * old-style rbd image &#39;foo&#39; consists of objects
-</span><span style="color:#007f7f"> *   foo.rbd      - image metadata
-</span><span style="color:#007f7f"> *   rb.&lt;idhi&gt;.&lt;idlo&gt;.00000000
-</span><span style="color:#007f7f"> *   rb.&lt;idhi&gt;.&lt;idlo&gt;.00000001
-</span><span style="color:#007f7f"> *   ...          - data
-</span><span style="color:#007f7f"> */</span>
+<pre><code class="language-c">/*
+ * old-style rbd image 'foo' consists of objects
+ *   foo.rbd      - image metadata
+ *   rb.&lt;idhi&gt;.&lt;idlo&gt;.00000000
+ *   rb.&lt;idhi&gt;.&lt;idlo&gt;.00000001
+ *   ...          - data
+ */
 
-<span style="color:#0f0;font-weight:bold">#define RBD_SUFFIX	 	&#34;.rbd&#34;
-</span><span style="color:#0f0;font-weight:bold">#define RBD_DIRECTORY           &#34;rbd_directory&#34;
-</span><span style="color:#0f0;font-weight:bold">#define RBD_INFO                &#34;rbd_info&#34;</span></code></pre></div>
+#define RBD_SUFFIX	 	&quot;.rbd&quot;
+#define RBD_DIRECTORY           &quot;rbd_directory&quot;
+#define RBD_INFO                &quot;rbd_info&quot;
+</code></pre>
 
 <h3 id="rbd-image-format-2">rbd image format 2<a href="#rbd-image-format-2" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#007f7f">/* New-style rbd image &#39;foo&#39; consists of objects
-</span><span style="color:#007f7f"> *   rbd_id.foo              - id of image
-</span><span style="color:#007f7f"> *   rbd_header.&lt;id&gt;         - image metadata
-</span><span style="color:#007f7f"> *   rbd_data.&lt;id&gt;.00000000
-</span><span style="color:#007f7f"> *   rbd_data.&lt;id&gt;.00000001
-</span><span style="color:#007f7f"> *   ...                     - data
-</span><span style="color:#007f7f"> */</span>
+<pre><code class="language-c">/* New-style rbd image 'foo' consists of objects
+ *   rbd_id.foo              - id of image
+ *   rbd_header.&lt;id&gt;         - image metadata
+ *   rbd_data.&lt;id&gt;.00000000
+ *   rbd_data.&lt;id&gt;.00000001
+ *   ...                     - data
+ */
 
-<span style="color:#0f0;font-weight:bold">#define RBD_HEADER_PREFIX      &#34;rbd_header.&#34;
-</span><span style="color:#0f0;font-weight:bold">#define RBD_DATA_PREFIX        &#34;rbd_data.&#34;
-</span><span style="color:#0f0;font-weight:bold">#define RBD_ID_PREFIX          &#34;rbd_id.&#34;</span></code></pre></div>
+#define RBD_HEADER_PREFIX      &quot;rbd_header.&quot;
+#define RBD_DATA_PREFIX        &quot;rbd_data.&quot;
+#define RBD_ID_PREFIX          &quot;rbd_id.&quot;
+</code></pre>
 
 <p>우선 이글은 현재 사용중인 <code>rbd image format 2</code>의 포맷의 복구 방법에 대해서 설명할 계획이다.</p>
 
@@ -321,210 +323,106 @@ osdmap e53074 pool 'images' (35) object 'rbd_data.b0e882ae8944a.0000000000000134
 <p>아래 python코드는 ceph에서 사용하는 <a href="http://burtleburtle.net/bob/hash/evahash.html">robert jenkins hash</a> 를 <a href="http://stackoverflow.com/a/3611698">포팅</a>한 스크립트 이다.<br />
 물론 rjenkins hash 아니면 linux hash이나 기본이 rjenkins hash 이다.</p>
 
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">40
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">41
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">42
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">43
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">44
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">45
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">46
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">47
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">48
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">49
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">50
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">51
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">52
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">53
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">54
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">55
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">56
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">57
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">58
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">59
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">60
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">61
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">62
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">63
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">64
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">65
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">66
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">67
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">68
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">69
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">70
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">71
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">72
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">73
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">74
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">75
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">76
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">77
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">78
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">79
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">80
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">81
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">82
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">83
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">84
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">85
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">86
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">87
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">88
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">89
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">90
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">91
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">92
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">93
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">94
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">95
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">96
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">97
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">98
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">99
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#0ff;font-weight:bold">&#39;&#39;&#39;Implements a straight Jenkins lookup hash - http://burtleburtle.net/bob/hash/doobs.html
-</span><span style="color:#0ff;font-weight:bold">
-</span><span style="color:#0ff;font-weight:bold">Usage: 
-</span><span style="color:#0ff;font-weight:bold">    from jhash import jhash
-</span><span style="color:#0ff;font-weight:bold">    print jhash(&#39;My hovercraft is full of eels&#39;)
-</span><span style="color:#0ff;font-weight:bold">
-</span><span style="color:#0ff;font-weight:bold">Returns: unsigned 32 bit integer value
-</span><span style="color:#0ff;font-weight:bold">
-</span><span style="color:#0ff;font-weight:bold">Prereqs: None
-</span><span style="color:#0ff;font-weight:bold">
-</span><span style="color:#0ff;font-weight:bold">Tested with Python 2.6.
-</span><span style="color:#0ff;font-weight:bold">Version 1.00 - der@dod.no - 23.08.2010
-</span><span style="color:#0ff;font-weight:bold">
-</span><span style="color:#0ff;font-weight:bold">Partly based on the Perl module Digest::JHash
-</span><span style="color:#0ff;font-weight:bold">http://search.cpan.org/~shlomif/Digest-JHash-0.06/lib/Digest/JHash.pm
-</span><span style="color:#0ff;font-weight:bold">
-</span><span style="color:#0ff;font-weight:bold">Original copyright notice:
-</span><span style="color:#0ff;font-weight:bold">    By Bob Jenkins, 1996.  bob_jenkins@burtleburtle.net.  You may use this
-</span><span style="color:#0ff;font-weight:bold">    code any way you wish, private, educational, or commercial.  It&#39;s free.
-</span><span style="color:#0ff;font-weight:bold">
-</span><span style="color:#0ff;font-weight:bold">    See http://burtleburtle.net/bob/hash/evahash.html
-</span><span style="color:#0ff;font-weight:bold">    Use for hash table lookup, or anything where one collision in 2^^32 is
-</span><span style="color:#0ff;font-weight:bold">    acceptable.  Do NOT use for cryptographic purposes.
-</span><span style="color:#0ff;font-weight:bold">&#39;&#39;&#39;</span>
+<pre><code class="language-python">'''Implements a straight Jenkins lookup hash - http://burtleburtle.net/bob/hash/doobs.html
 
-<span style="color:#fff;font-weight:bold">def</span> mix(a, b, c):
-    <span style="color:#0ff;font-weight:bold">&#39;&#39;&#39;mix() -- mix 3 32-bit values reversibly.
-</span><span style="color:#0ff;font-weight:bold">For every delta with one or two bits set, and the deltas of all three
-</span><span style="color:#0ff;font-weight:bold">  high bits or all three low bits, whether the original value of a,b,c
-</span><span style="color:#0ff;font-weight:bold">  is almost all zero or is uniformly distributed,
-</span><span style="color:#0ff;font-weight:bold">* If mix() is run forward or backward, at least 32 bits in a,b,c
-</span><span style="color:#0ff;font-weight:bold">  have at least 1/4 probability of changing.
-</span><span style="color:#0ff;font-weight:bold">* If mix() is run forward, every bit of c will change between 1/3 and
-</span><span style="color:#0ff;font-weight:bold">  2/3 of the time.  (Well, 22/100 and 78/100 for some 2-bit deltas.)&#39;&#39;&#39;</span>
-    <span style="color:#007f7f"># Need to constrain U32 to only 32 bits using the &amp; 0xffffffff </span>
-    <span style="color:#007f7f"># since Python has no native notion of integers limited to 32 bit</span>
-    <span style="color:#007f7f"># http://docs.python.org/library/stdtypes.html#numeric-types-int-float-long-complex</span>
-    a &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>; b &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>; c &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>
-    a -= b; a -= c; a ^= (c&gt;&gt;<span style="color:#ff0;font-weight:bold">13</span>); a &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>
-    b -= c; b -= a; b ^= (a&lt;&lt;<span style="color:#ff0;font-weight:bold">8</span>); b &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>
-    c -= a; c -= b; c ^= (b&gt;&gt;<span style="color:#ff0;font-weight:bold">13</span>); c &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>
-    a -= b; a -= c; a ^= (c&gt;&gt;<span style="color:#ff0;font-weight:bold">12</span>); a &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>
-    b -= c; b -= a; b ^= (a&lt;&lt;<span style="color:#ff0;font-weight:bold">16</span>); b &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>
-    c -= a; c -= b; c ^= (b&gt;&gt;<span style="color:#ff0;font-weight:bold">5</span>); c &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>
-    a -= b; a -= c; a ^= (c&gt;&gt;<span style="color:#ff0;font-weight:bold">3</span>); a &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>
-    b -= c; b -= a; b ^= (a&lt;&lt;<span style="color:#ff0;font-weight:bold">10</span>); b &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>
-    c -= a; c -= b; c ^= (b&gt;&gt;<span style="color:#ff0;font-weight:bold">15</span>); c &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>
-    <span style="color:#fff;font-weight:bold">return</span> a, b, c
+Usage: 
+    from jhash import jhash
+    print jhash('My hovercraft is full of eels')
 
-<span style="color:#fff;font-weight:bold">def</span> jhash(data, initval = <span style="color:#ff0;font-weight:bold">0</span>):
-    <span style="color:#0ff;font-weight:bold">&#39;&#39;&#39;hash() -- hash a variable-length key into a 32-bit value
-</span><span style="color:#0ff;font-weight:bold">  data    : the key (the unaligned variable-length array of bytes)
-</span><span style="color:#0ff;font-weight:bold">  initval : can be any 4-byte value, defaults to 0
-</span><span style="color:#0ff;font-weight:bold">Returns a 32-bit value.  Every bit of the key affects every bit of
-</span><span style="color:#0ff;font-weight:bold">the return value.  Every 1-bit and 2-bit delta achieves avalanche.&#39;&#39;&#39;</span>
-    length = lenpos = <span style="color:#fff;font-weight:bold">len</span>(data)
+Returns: unsigned 32 bit integer value
 
-    <span style="color:#007f7f"># empty string returns 0</span>
-    <span style="color:#fff;font-weight:bold">if</span> length == <span style="color:#ff0;font-weight:bold">0</span>:
-        <span style="color:#fff;font-weight:bold">return</span> <span style="color:#ff0;font-weight:bold">0</span>
+Prereqs: None
 
-    <span style="color:#007f7f"># Set up the internal state</span>
-    a = b = <span style="color:#ff0;font-weight:bold">0x9e3779b9</span> <span style="color:#007f7f"># the golden ratio; an arbitrary value</span>
-    c = initval        <span style="color:#007f7f"># the previous hash value</span>
-    p = <span style="color:#ff0;font-weight:bold">0</span>              <span style="color:#007f7f"># string offset</span>
+Tested with Python 2.6.
+Version 1.00 - der@dod.no - 23.08.2010
 
-    <span style="color:#007f7f"># ------------------------- handle most of the key in 12 byte chunks</span>
-    <span style="color:#fff;font-weight:bold">while</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">12</span>:
-        a += (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">0</span>]) + (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">1</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">8</span>) + (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">2</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">16</span>) + (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">3</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">24</span>))
-        b += (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">4</span>]) + (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">5</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">8</span>) + (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">6</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">16</span>) + (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">7</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">24</span>))
-        c += (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">8</span>]) + (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">9</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">8</span>) + (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">10</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">16</span>) + (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">11</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">24</span>))
+Partly based on the Perl module Digest::JHash
+http://search.cpan.org/~shlomif/Digest-JHash-0.06/lib/Digest/JHash.pm
+
+Original copyright notice:
+    By Bob Jenkins, 1996.  bob_jenkins@burtleburtle.net.  You may use this
+    code any way you wish, private, educational, or commercial.  It's free.
+
+    See http://burtleburtle.net/bob/hash/evahash.html
+    Use for hash table lookup, or anything where one collision in 2^^32 is
+    acceptable.  Do NOT use for cryptographic purposes.
+'''
+
+def mix(a, b, c):
+    '''mix() -- mix 3 32-bit values reversibly.
+For every delta with one or two bits set, and the deltas of all three
+  high bits or all three low bits, whether the original value of a,b,c
+  is almost all zero or is uniformly distributed,
+* If mix() is run forward or backward, at least 32 bits in a,b,c
+  have at least 1/4 probability of changing.
+* If mix() is run forward, every bit of c will change between 1/3 and
+  2/3 of the time.  (Well, 22/100 and 78/100 for some 2-bit deltas.)'''
+    # Need to constrain U32 to only 32 bits using the &amp; 0xffffffff 
+    # since Python has no native notion of integers limited to 32 bit
+    # http://docs.python.org/library/stdtypes.html#numeric-types-int-float-long-complex
+    a &amp;= 0xffffffff; b &amp;= 0xffffffff; c &amp;= 0xffffffff
+    a -= b; a -= c; a ^= (c&gt;&gt;13); a &amp;= 0xffffffff
+    b -= c; b -= a; b ^= (a&lt;&lt;8); b &amp;= 0xffffffff
+    c -= a; c -= b; c ^= (b&gt;&gt;13); c &amp;= 0xffffffff
+    a -= b; a -= c; a ^= (c&gt;&gt;12); a &amp;= 0xffffffff
+    b -= c; b -= a; b ^= (a&lt;&lt;16); b &amp;= 0xffffffff
+    c -= a; c -= b; c ^= (b&gt;&gt;5); c &amp;= 0xffffffff
+    a -= b; a -= c; a ^= (c&gt;&gt;3); a &amp;= 0xffffffff
+    b -= c; b -= a; b ^= (a&lt;&lt;10); b &amp;= 0xffffffff
+    c -= a; c -= b; c ^= (b&gt;&gt;15); c &amp;= 0xffffffff
+    return a, b, c
+
+def jhash(data, initval = 0):
+    '''hash() -- hash a variable-length key into a 32-bit value
+  data    : the key (the unaligned variable-length array of bytes)
+  initval : can be any 4-byte value, defaults to 0
+Returns a 32-bit value.  Every bit of the key affects every bit of
+the return value.  Every 1-bit and 2-bit delta achieves avalanche.'''
+    length = lenpos = len(data)
+
+    # empty string returns 0
+    if length == 0:
+        return 0
+
+    # Set up the internal state
+    a = b = 0x9e3779b9 # the golden ratio; an arbitrary value
+    c = initval        # the previous hash value
+    p = 0              # string offset
+
+    # ------------------------- handle most of the key in 12 byte chunks
+    while lenpos &gt;= 12:
+        a += (ord(data[p+0]) + (ord(data[p+1])&lt;&lt;8) + (ord(data[p+2])&lt;&lt;16) + (ord(data[p+3])&lt;&lt;24))
+        b += (ord(data[p+4]) + (ord(data[p+5])&lt;&lt;8) + (ord(data[p+6])&lt;&lt;16) + (ord(data[p+7])&lt;&lt;24))
+        c += (ord(data[p+8]) + (ord(data[p+9])&lt;&lt;8) + (ord(data[p+10])&lt;&lt;16) + (ord(data[p+11])&lt;&lt;24))
         a, b, c = mix(a, b, c)
-        p += <span style="color:#ff0;font-weight:bold">12</span>
-        lenpos -= <span style="color:#ff0;font-weight:bold">12</span>
+        p += 12
+        lenpos -= 12
 
-    <span style="color:#007f7f"># ------------------------- handle the last 11 bytes</span>
+    # ------------------------- handle the last 11 bytes
     c += length
-    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">11</span>: c += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">10</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">24</span>
-    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">10</span>: c += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">9</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">16</span>
-    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">9</span>:  c += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">8</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">8</span>
-    <span style="color:#007f7f"># the first byte of c is reserved for the length</span>
-    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">8</span>:  b += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">7</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">24</span>
-    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">7</span>:  b += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">6</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">16</span>
-    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">6</span>:  b += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">5</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">8</span>
-    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">5</span>:  b += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">4</span>])
-    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">4</span>:  a += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">3</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">24</span>
-    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">3</span>:  a += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">2</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">16</span>
-    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">2</span>:  a += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">1</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">8</span>
-    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">1</span>:  a += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">0</span>])
+    if lenpos &gt;= 11: c += ord(data[p+10])&lt;&lt;24
+    if lenpos &gt;= 10: c += ord(data[p+9])&lt;&lt;16
+    if lenpos &gt;= 9:  c += ord(data[p+8])&lt;&lt;8
+    # the first byte of c is reserved for the length
+    if lenpos &gt;= 8:  b += ord(data[p+7])&lt;&lt;24
+    if lenpos &gt;= 7:  b += ord(data[p+6])&lt;&lt;16
+    if lenpos &gt;= 6:  b += ord(data[p+5])&lt;&lt;8
+    if lenpos &gt;= 5:  b += ord(data[p+4])
+    if lenpos &gt;= 4:  a += ord(data[p+3])&lt;&lt;24
+    if lenpos &gt;= 3:  a += ord(data[p+2])&lt;&lt;16
+    if lenpos &gt;= 2:  a += ord(data[p+1])&lt;&lt;8
+    if lenpos &gt;= 1:  a += ord(data[p+0])
     a, b, c = mix(a, b, c)
 
-    <span style="color:#007f7f"># ------------------------- report the result</span>
-    <span style="color:#fff;font-weight:bold">return</span> c
+    # ------------------------- report the result
+    return c
 
-<span style="color:#fff;font-weight:bold">if</span> __name__ == <span style="color:#0ff;font-weight:bold">&#34;__main__&#34;</span>:
-    hashstr = sys.argv[<span style="color:#ff0;font-weight:bold">1</span>]
+if __name__ == &quot;__main__&quot;:
+    hashstr = sys.argv[1]
     myhash = jhash(hashstr)
-    myhash2 = myhash % <span style="color:#fff;font-weight:bold">int</span>(sys.argv[<span style="color:#ff0;font-weight:bold">2</span>])
-    <span style="color:#fff;font-weight:bold">print</span> <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">%x</span><span style="color:#0ff;font-weight:bold">&#34;</span> % myhash2</code></pre></td></tr></table>
-</div>
-</div>
+    myhash2 = myhash % int(sys.argv[2])
+    print &quot;%x&quot; % myhash2
+</code></pre>
 
 <p>즉, 위와 같이 스크립트로 해슁하면 <code>rbd_data.b0e882ae8944a.0000000000000134</code> 값이 <code>67</code> 임을 찾을 수 있을 것이다.
 35번 pool 임을 알고 있으니 35.67 pg 인것을 확인 가능하다.
@@ -556,158 +454,80 @@ dumped all in format plain
 <p>아래와 같은 스크립트를 참고하면 편하다. 간단하게 파일번호로 offset 계산해서 합치는 스크립트 이다.<br />
 해당 스크립트는 로컬에 있는 파일리스트를 조회해서 합치는 것임으로 위에서 미리 찾아서 한 폴더로 몰아놓으면 편하다.</p>
 
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">40
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">41
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">42
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">43
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">44
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">45
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">46
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">47
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">48
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">49
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">50
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">51
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">52
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">53
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">54
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">55
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">56
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">57
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">58
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">59
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">60
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">61
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">62
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">63
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">64
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">65
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">66
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">67
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">68
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">69
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">70
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">71
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">72
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">73
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#0f0;font-weight:bold">#!/bin/sh
-</span><span style="color:#0f0;font-weight:bold"></span>#
-<span style="color:#007f7f"># AUTHORS</span>
-<span style="color:#007f7f"># Shawn Moore &lt;smmoore@catawba.edu&gt;</span>
-<span style="color:#007f7f"># Rodney Rymer &lt;rrr@catawba.edu&gt;</span>
+<pre><code class="language-bash">#!/bin/sh
+#
+# AUTHORS
+# Shawn Moore &lt;smmoore@catawba.edu&gt;
+# Rodney Rymer &lt;rrr@catawba.edu&gt;
 #
 #
-<span style="color:#007f7f"># REQUIREMENTS</span>
-<span style="color:#007f7f"># GNU Awk (gawk)</span>
+# REQUIREMENTS
+# GNU Awk (gawk)
 #
 #
-<span style="color:#007f7f"># NOTES</span>
-<span style="color:#007f7f"># This utility assumes one copy of all object files needed to construct the rbd</span>
-<span style="color:#007f7f"># are located in the present working direcory at the time of execution.</span>  
-<span style="color:#007f7f"># For example all the rb.0.1032.5e69c215.* files.</span>
+# NOTES
+# This utility assumes one copy of all object files needed to construct the rbd
+# are located in the present working direcory at the time of execution.  
+# For example all the rb.0.1032.5e69c215.* files.
 #
-<span style="color:#007f7f"># When listing the &#34;RBD_SIZE_IN_BYTES&#34;, be sure you list the full potential size,</span> 
-<span style="color:#007f7f"># not just what it appears to be. If you do not know the true size of the rbd,</span>
-<span style="color:#007f7f"># you can input a size in bytes that you know is larger than the disk could be</span>
-<span style="color:#007f7f"># and it will be a large sparse file with un-partioned space at the end of the</span>
-<span style="color:#007f7f"># disk.  In our tests, this doesn&#39;t occupy any more space/objects in the cluster</span>
-<span style="color:#007f7f"># but the rbd could be resized from within the rbd (VM) to grow.  Once you bring</span>
-<span style="color:#007f7f"># it up and are able to find the true size, you can resize with &#34;rbd resize ..&#34;.</span>
+# When listing the &quot;RBD_SIZE_IN_BYTES&quot;, be sure you list the full potential size, 
+# not just what it appears to be. If you do not know the true size of the rbd,
+# you can input a size in bytes that you know is larger than the disk could be
+# and it will be a large sparse file with un-partioned space at the end of the
+# disk.  In our tests, this doesn't occupy any more space/objects in the cluster
+# but the rbd could be resized from within the rbd (VM) to grow.  Once you bring
+# it up and are able to find the true size, you can resize with &quot;rbd resize ..&quot;.
 #
-<span style="color:#007f7f"># To obtain needed utility input information if not already known run:</span>
-<span style="color:#007f7f"># rbd info RBD</span>
+# To obtain needed utility input information if not already known run:
+# rbd info RBD
 #
-<span style="color:#007f7f"># To find needed files we run the following command on all nodes that might have</span>
-<span style="color:#007f7f"># copies of the rbd objects:</span>
-<span style="color:#007f7f"># find /${CEPH} -type f -name rb.0.1032.5e69c215.*</span>
-<span style="color:#007f7f"># Then copy the files to a single location from all nodes.  If using btrfs be</span>
-<span style="color:#007f7f"># sure to pay attention to the btrfs snapshots that ceph takes on it&#39;s own.</span>
-<span style="color:#007f7f"># You may want the &#34;current&#34; or one of the &#34;snaps&#34;.</span>
+# To find needed files we run the following command on all nodes that might have
+# copies of the rbd objects:
+# find /${CEPH} -type f -name rb.0.1032.5e69c215.*
+# Then copy the files to a single location from all nodes.  If using btrfs be
+# sure to pay attention to the btrfs snapshots that ceph takes on it's own.
+# You may want the &quot;current&quot; or one of the &quot;snaps&quot;.
 #
-<span style="color:#007f7f"># We are actually taking our own btrfs snapshots cluster osd wide at the same</span>
-<span style="color:#007f7f"># time with parallel ssh and then using &#34;btrfs subvolume find-new&#34; command to</span>
-<span style="color:#007f7f"># merge them all together for disaster recovery and also outside of ceph rbd</span>
-<span style="color:#007f7f"># versioning.</span>
+# We are actually taking our own btrfs snapshots cluster osd wide at the same
+# time with parallel ssh and then using &quot;btrfs subvolume find-new&quot; command to
+# merge them all together for disaster recovery and also outside of ceph rbd
+# versioning.
 #
-<span style="color:#007f7f"># Hopefully once the btrfs send/recv functionality is stable we can switch to it.</span>
+# Hopefully once the btrfs send/recv functionality is stable we can switch to it.
 #
 #
-<span style="color:#007f7f"># This utility works for us but may not for you.  Always test with non-critical</span>
-<span style="color:#007f7f"># data first.</span>
+# This utility works for us but may not for you.  Always test with non-critical
+# data first.
 #
 
-<span style="color:#007f7f"># Rados object size</span>
-obj_size=<span style="color:#ff0;font-weight:bold">4194304</span>
+# Rados object size
+obj_size=4194304
 
-<span style="color:#007f7f"># DD bs value</span>
-rebuild_block_size=<span style="color:#ff0;font-weight:bold">512</span>
+# DD bs value
+rebuild_block_size=512
 
-rbd=<span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>1<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span>
-base=<span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>2<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span>
-rbd_size=<span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>3<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span>
-<span style="color:#fff;font-weight:bold">if</span> [ <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>1<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span> = <span style="color:#0ff;font-weight:bold">&#34;-h&#34;</span> -o <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>1<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span> = <span style="color:#0ff;font-weight:bold">&#34;--help&#34;</span> -o <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>rbd<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span> = <span style="color:#0ff;font-weight:bold">&#34;&#34;</span> -o <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>base<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span> = <span style="color:#0ff;font-weight:bold">&#34;&#34;</span> -o <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>rbd_size<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span> = <span style="color:#0ff;font-weight:bold">&#34;&#34;</span> ]; <span style="color:#fff;font-weight:bold">then</span>
-  <span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;USAGE: </span><span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">${</span>0<span style="color:#0ff;font-weight:bold">}</span> | awk -F/ <span style="color:#0ff;font-weight:bold">&#39;{print $NF}&#39;</span><span style="color:#fff;font-weight:bold">)</span><span style="color:#0ff;font-weight:bold"> RESTORE_RBD BLOCK_PREFIX RBD_SIZE_IN_BYTES&#34;</span>
-  <span style="color:#fff;font-weight:bold">exit</span> <span style="color:#ff0;font-weight:bold">1</span>
-<span style="color:#fff;font-weight:bold">fi</span>
-base_files=<span style="color:#fff;font-weight:bold">$(</span>ls -1 <span style="color:#0ff;font-weight:bold">${</span>base<span style="color:#0ff;font-weight:bold">}</span>.* <span style="color:#ff0;font-weight:bold">2</span>&gt;/dev/null | wc -l | awk <span style="color:#0ff;font-weight:bold">&#39;{print $1}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
-<span style="color:#fff;font-weight:bold">if</span> [ <span style="color:#0ff;font-weight:bold">${</span>base_files<span style="color:#0ff;font-weight:bold">}</span> -lt <span style="color:#ff0;font-weight:bold">1</span> ]; <span style="color:#fff;font-weight:bold">then</span>
-  <span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;COULD NOT FIND FILES FOR </span><span style="color:#0ff;font-weight:bold">${</span>base<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold"> IN </span><span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">pwd</span><span style="color:#fff;font-weight:bold">)</span><span style="color:#0ff;font-weight:bold">&#34;</span>
-  <span style="color:#fff;font-weight:bold">exit</span>
-<span style="color:#fff;font-weight:bold">fi</span>
+rbd=&quot;${1}&quot;
+base=&quot;${2}&quot;
+rbd_size=&quot;${3}&quot;
+if [ &quot;${1}&quot; = &quot;-h&quot; -o &quot;${1}&quot; = &quot;--help&quot; -o &quot;${rbd}&quot; = &quot;&quot; -o &quot;${base}&quot; = &quot;&quot; -o &quot;${rbd_size}&quot; = &quot;&quot; ]; then
+  echo &quot;USAGE: $(echo ${0} | awk -F/ '{print $NF}') RESTORE_RBD BLOCK_PREFIX RBD_SIZE_IN_BYTES&quot;
+  exit 1
+fi
+base_files=$(ls -1 ${base}.* 2&gt;/dev/null | wc -l | awk '{print $1}')
+if [ ${base_files} -lt 1 ]; then
+  echo &quot;COULD NOT FIND FILES FOR ${base} IN $(pwd)&quot;
+  exit
+fi
 
-<span style="color:#007f7f"># Create full size sparse image.  Could use truncate, but wanted</span>
-<span style="color:#007f7f"># as few required files and dd what a must.</span>
-dd <span style="color:#fff;font-weight:bold">if</span>=/dev/zero of=<span style="color:#0ff;font-weight:bold">${</span>rbd<span style="color:#0ff;font-weight:bold">}</span> bs=<span style="color:#ff0;font-weight:bold">1</span> count=<span style="color:#ff0;font-weight:bold">0</span> seek=<span style="color:#0ff;font-weight:bold">${</span>rbd_size<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#ff0;font-weight:bold">2</span>&gt;/dev/null
+# Create full size sparse image.  Could use truncate, but wanted
+# as few required files and dd what a must.
+dd if=/dev/zero of=${rbd} bs=1 count=0 seek=${rbd_size} 2&gt;/dev/null
 
-<span style="color:#fff;font-weight:bold">for</span> file_name in <span style="color:#fff;font-weight:bold">$(</span>ls -1 <span style="color:#0ff;font-weight:bold">${</span>base<span style="color:#0ff;font-weight:bold">}</span>.* <span style="color:#ff0;font-weight:bold">2</span>&gt;/dev/null<span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
-  seek_loc=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">${</span>file_name<span style="color:#0ff;font-weight:bold">}</span> | awk -F_ <span style="color:#0ff;font-weight:bold">&#39;{print $1}&#39;</span> | awk -v os=<span style="color:#0ff;font-weight:bold">${</span>obj_size<span style="color:#0ff;font-weight:bold">}</span> -v rs=<span style="color:#0ff;font-weight:bold">${</span>rebuild_block_size<span style="color:#0ff;font-weight:bold">}</span> -F. <span style="color:#0ff;font-weight:bold">&#39;{print os*strtonum(&#34;0x&#34; $NF)/rs}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
-  dd conv=notrunc <span style="color:#fff;font-weight:bold">if</span>=<span style="color:#0ff;font-weight:bold">${</span>file_name<span style="color:#0ff;font-weight:bold">}</span> of=<span style="color:#0ff;font-weight:bold">${</span>rbd<span style="color:#0ff;font-weight:bold">}</span> seek=<span style="color:#0ff;font-weight:bold">${</span>seek_loc<span style="color:#0ff;font-weight:bold">}</span> bs=<span style="color:#0ff;font-weight:bold">${</span>rebuild_block_size<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#ff0;font-weight:bold">2</span>&gt;/dev/null
-<span style="color:#fff;font-weight:bold">done</span></code></pre></td></tr></table>
-</div>
-</div>
+for file_name in $(ls -1 ${base}.* 2&gt;/dev/null); do
+  seek_loc=$(echo ${file_name} | awk -F_ '{print $1}' | awk -v os=${obj_size} -v rs=${rebuild_block_size} -F. '{print os*strtonum(&quot;0x&quot; $NF)/rs}')
+  dd conv=notrunc if=${file_name} of=${rbd} seek=${seek_loc} bs=${rebuild_block_size} 2&gt;/dev/null
+done
+</code></pre>
 
 <h3 id="5-mount-해서-테스트-해보기">5. mount 해서 테스트 해보기<a href="#5-mount-해서-테스트-해보기" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 

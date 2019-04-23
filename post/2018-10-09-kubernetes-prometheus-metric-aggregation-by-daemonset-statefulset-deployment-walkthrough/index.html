@@ -108,21 +108,22 @@
 
 <p>실제 grafana dashboard들을 참고하면 마땅히 위와 같은 방식으로 aggregation한 대쉬보드를 많이 찾을 수가 없을 것입니다. 아래는 grafana dashboard 중에서 kubernetes와 관련된 그래프들을 중 다운로드 수가 높은 순으로 정렬해봤습니다. 이중 높은 순위 10개가 아래와 같습니다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ (<span style="color:#fff;font-weight:bold">echo</span> -e <span style="color:#0ff;font-weight:bold">&#34;Download@Link@Name&#34;</span> ; <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>   curl -s <span style="color:#0ff;font-weight:bold">&#39;https://grafana.com/api/dashboards?orderBy=name&amp;includeLogo=1&amp;page=1&amp;pageSize=100000&amp;filter=kubernetes&#39;</span> | <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>   jq -cr <span style="color:#0ff;font-weight:bold">&#39;.items | sort_by(.downloads)[] | ((.downloads | tostring) + &#34;@https://grafana.com/dashboards/&#34; + (.id | tostring) + &#34;@&#34; + (.name))&#39;</span> | tail -n10) | <span style="color:#0ff;font-weight:bold">\
-</span><span style="color:#0ff;font-weight:bold"></span>   column -s <span style="color:#0ff;font-weight:bold">&#39;@&#39;</span> -t
+<pre><code class="language-bash">$ (echo -e &quot;Download@Link@Name&quot; ; \
+   curl -s 'https://grafana.com/api/dashboards?orderBy=name&amp;includeLogo=1&amp;page=1&amp;pageSize=100000&amp;filter=kubernetes' | \
+   jq -cr '.items | sort_by(.downloads)[] | ((.downloads | tostring) + &quot;@https://grafana.com/dashboards/&quot; + (.id | tostring) + &quot;@&quot; + (.name))' | tail -n10) | \
+   column -s '@' -t
 Download  Link                                 Name
-<span style="color:#ff0;font-weight:bold">4603</span>      https://grafana.com/dashboards/747   Kubernetes Pod Metrics
-<span style="color:#ff0;font-weight:bold">5430</span>      https://grafana.com/dashboards/162   Kubernetes cluster monitoring (via Prometheus)
-<span style="color:#ff0;font-weight:bold">5904</span>      https://grafana.com/dashboards/5303  Kubernetes Deployment (Prometheus)
-<span style="color:#ff0;font-weight:bold">6215</span>      https://grafana.com/dashboards/3320  Kubernetes Node Exporter Full
-<span style="color:#ff0;font-weight:bold">6288</span>      https://grafana.com/dashboards/3131  Kubernetes All Nodes
-<span style="color:#ff0;font-weight:bold">6466</span>      https://grafana.com/dashboards/3119  Kubernetes cluster monitoring (via Prometheus)
-<span style="color:#ff0;font-weight:bold">7760</span>      https://grafana.com/dashboards/5309  Kubernetes Capacity (Prometheus)
-<span style="color:#ff0;font-weight:bold">10884</span>     https://grafana.com/dashboards/315   Kubernetes cluster monitoring (via Prometheus)
-<span style="color:#ff0;font-weight:bold">12866</span>     https://grafana.com/dashboards/6663  Kubernetes pod and cluster monitoring (via Prometheus)
-<span style="color:#ff0;font-weight:bold">29231</span>     https://grafana.com/dashboards/1621  Kubernetes cluster monitoring (via Prometheus)</code></pre></div>
+4603      https://grafana.com/dashboards/747   Kubernetes Pod Metrics
+5430      https://grafana.com/dashboards/162   Kubernetes cluster monitoring (via Prometheus)
+5904      https://grafana.com/dashboards/5303  Kubernetes Deployment (Prometheus)
+6215      https://grafana.com/dashboards/3320  Kubernetes Node Exporter Full
+6288      https://grafana.com/dashboards/3131  Kubernetes All Nodes
+6466      https://grafana.com/dashboards/3119  Kubernetes cluster monitoring (via Prometheus)
+7760      https://grafana.com/dashboards/5309  Kubernetes Capacity (Prometheus)
+10884     https://grafana.com/dashboards/315   Kubernetes cluster monitoring (via Prometheus)
+12866     https://grafana.com/dashboards/6663  Kubernetes pod and cluster monitoring (via Prometheus)
+29231     https://grafana.com/dashboards/1621  Kubernetes cluster monitoring (via Prometheus)
+</code></pre>
 
 <p>이런 데이터를 몇개 보시면 알겠지만 대부분 node 혹은 pod의 이름으로만 검색해서 보도록 되어 있습니다.</p>
 
@@ -253,19 +254,20 @@ container_cpu_usage_seconds_total{
 
 <p>예를 들면 아래와 같이 <code>metadata.ownerReferences</code> 를 참고하시면 이게 해당 pod이 어떤 object(daemonset, statefulset, deployment)에 속해 있는지 알 수 있습니다. 예를 들면 이걸 기준으로 아래와 같이 <code>calico-node</code> 라는 <code>daemonset</code>은 아래의 pod을 가지고(관리하고) 있다고 알 수 있고 우리는 이런 기준으로 aggregation 가능함을 알게 됩니다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">apiVersion: v1
+<pre><code class="language-yaml">apiVersion: v1
 kind: Pod
 metadata:
   ownerReferences:
   - apiVersion: apps/v1
-    blockOwnerDeletion: <span style="color:#fff;font-weight:bold">true</span>
-    controller: <span style="color:#fff;font-weight:bold">true</span>
+    blockOwnerDeletion: true
+    controller: true
     kind: DaemonSet
     name: calico-node
     ...
 spec:
   containers:
-...</code></pre></div>
+...
+</code></pre>
 
 <p>즉, 이런 ownerReferences를 갖는 pod들은 모두 해당 daemonset에 포함됨으로 이런 ownerReferences를 갖는 pod들을 aggregation하게 되면 그것이 이 daemonset의 데이터가 됨을 알 수 있습니다.</p>
 

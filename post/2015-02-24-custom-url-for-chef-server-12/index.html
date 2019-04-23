@@ -12,7 +12,7 @@
 <meta itemprop="description" content="chef server ssl verification 때문에 그냥 domain 인증서를 제대로 적용하려고 했는데 엄청 삽질했다. 아마 chef 11 에서 chef 12 로 올라가면서 config 위치가 변경된거 같다.
 여기에서 관련 정보를 얻을 수 있었는데 차이점은 /etc/chef-server/chef-server.rb 가 아닌 /etc/opscode/chef-server.rb 파일을 수정해서 적용 가능했다.
 아래 처럼 해당 파일을 수정한다.
-... server_name = &#34;chef.yourdomain.com&#34; api_fqdn = server_name bookshelf[&#39;vip&#39;] = server_name nginx[&#39;url&#39;] = &#34;https://#{server_name}&#34; nginx[&#39;server_name&#39;] = server_name nginx[&#39;ssl_certificate&#39;] = &#34;/var/opt/chef-server/nginx/ca/#{server_name}.crt&#34; nginx[&#39;ssl_certificate_key&#39;] = &#34;/var/opt/chef-server/nginx/ca/#{server_name}.key&#34; lb[&#39;fqdn&#39;] = server_name 이후에 해당 컨피그 내용으로 적용한다.">
+... server_name = &quot;chef.yourdomain.com&quot; api_fqdn = server_name bookshelf[&#39;vip&#39;] = server_name nginx[&#39;url&#39;] = &quot;https://#{server_name}&quot; nginx[&#39;server_name&#39;] = server_name nginx[&#39;ssl_certificate&#39;] = &quot;/var/opt/chef-server/nginx/ca/#{server_name}.crt&quot; nginx[&#39;ssl_certificate_key&#39;] = &quot;/var/opt/chef-server/nginx/ca/#{server_name}.key&quot; lb[&#39;fqdn&#39;] = server_name  이후에 해당 컨피그 내용으로 적용한다.">
 
 
 <meta itemprop="datePublished" content="2015-02-24T23:29:19&#43;09:00" />
@@ -26,7 +26,7 @@
 <meta property="og:description" content="chef server ssl verification 때문에 그냥 domain 인증서를 제대로 적용하려고 했는데 엄청 삽질했다. 아마 chef 11 에서 chef 12 로 올라가면서 config 위치가 변경된거 같다.
 여기에서 관련 정보를 얻을 수 있었는데 차이점은 /etc/chef-server/chef-server.rb 가 아닌 /etc/opscode/chef-server.rb 파일을 수정해서 적용 가능했다.
 아래 처럼 해당 파일을 수정한다.
-... server_name = &#34;chef.yourdomain.com&#34; api_fqdn = server_name bookshelf[&#39;vip&#39;] = server_name nginx[&#39;url&#39;] = &#34;https://#{server_name}&#34; nginx[&#39;server_name&#39;] = server_name nginx[&#39;ssl_certificate&#39;] = &#34;/var/opt/chef-server/nginx/ca/#{server_name}.crt&#34; nginx[&#39;ssl_certificate_key&#39;] = &#34;/var/opt/chef-server/nginx/ca/#{server_name}.key&#34; lb[&#39;fqdn&#39;] = server_name 이후에 해당 컨피그 내용으로 적용한다." />
+... server_name = &quot;chef.yourdomain.com&quot; api_fqdn = server_name bookshelf[&#39;vip&#39;] = server_name nginx[&#39;url&#39;] = &quot;https://#{server_name}&quot; nginx[&#39;server_name&#39;] = server_name nginx[&#39;ssl_certificate&#39;] = &quot;/var/opt/chef-server/nginx/ca/#{server_name}.crt&quot; nginx[&#39;ssl_certificate_key&#39;] = &quot;/var/opt/chef-server/nginx/ca/#{server_name}.key&quot; lb[&#39;fqdn&#39;] = server_name  이후에 해당 컨피그 내용으로 적용한다." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://leoh0.github.io/post/2015-02-24-custom-url-for-chef-server-12/" />
 
@@ -40,7 +40,7 @@
 <meta name="twitter:description" content="chef server ssl verification 때문에 그냥 domain 인증서를 제대로 적용하려고 했는데 엄청 삽질했다. 아마 chef 11 에서 chef 12 로 올라가면서 config 위치가 변경된거 같다.
 여기에서 관련 정보를 얻을 수 있었는데 차이점은 /etc/chef-server/chef-server.rb 가 아닌 /etc/opscode/chef-server.rb 파일을 수정해서 적용 가능했다.
 아래 처럼 해당 파일을 수정한다.
-... server_name = &#34;chef.yourdomain.com&#34; api_fqdn = server_name bookshelf[&#39;vip&#39;] = server_name nginx[&#39;url&#39;] = &#34;https://#{server_name}&#34; nginx[&#39;server_name&#39;] = server_name nginx[&#39;ssl_certificate&#39;] = &#34;/var/opt/chef-server/nginx/ca/#{server_name}.crt&#34; nginx[&#39;ssl_certificate_key&#39;] = &#34;/var/opt/chef-server/nginx/ca/#{server_name}.key&#34; lb[&#39;fqdn&#39;] = server_name 이후에 해당 컨피그 내용으로 적용한다."/>
+... server_name = &quot;chef.yourdomain.com&quot; api_fqdn = server_name bookshelf[&#39;vip&#39;] = server_name nginx[&#39;url&#39;] = &quot;https://#{server_name}&quot; nginx[&#39;server_name&#39;] = server_name nginx[&#39;ssl_certificate&#39;] = &quot;/var/opt/chef-server/nginx/ca/#{server_name}.crt&quot; nginx[&#39;ssl_certificate_key&#39;] = &quot;/var/opt/chef-server/nginx/ca/#{server_name}.key&quot; lb[&#39;fqdn&#39;] = server_name  이후에 해당 컨피그 내용으로 적용한다."/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -93,15 +93,16 @@
 
 <p>아래 처럼 해당 파일을 수정한다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">...
-server_name = <span style="color:#0ff;font-weight:bold">&#34;chef.yourdomain.com&#34;</span>
+<pre><code class="language-ruby">...
+server_name = &quot;chef.yourdomain.com&quot;
 api_fqdn = server_name
-bookshelf[<span style="color:#0ff;font-weight:bold">&#39;vip&#39;</span>] = server_name
-nginx[<span style="color:#0ff;font-weight:bold">&#39;url&#39;</span>] = <span style="color:#0ff;font-weight:bold">&#34;https://</span><span style="color:#0ff;font-weight:bold">#{</span>server_name<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span>
-nginx[<span style="color:#0ff;font-weight:bold">&#39;server_name&#39;</span>] = server_name
-nginx[<span style="color:#0ff;font-weight:bold">&#39;ssl_certificate&#39;</span>] = <span style="color:#0ff;font-weight:bold">&#34;/var/opt/chef-server/nginx/ca/</span><span style="color:#0ff;font-weight:bold">#{</span>server_name<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">.crt&#34;</span>
-nginx[<span style="color:#0ff;font-weight:bold">&#39;ssl_certificate_key&#39;</span>] = <span style="color:#0ff;font-weight:bold">&#34;/var/opt/chef-server/nginx/ca/</span><span style="color:#0ff;font-weight:bold">#{</span>server_name<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">.key&#34;</span>
-lb[<span style="color:#0ff;font-weight:bold">&#39;fqdn&#39;</span>] = server_name</code></pre></div>
+bookshelf['vip'] = server_name
+nginx['url'] = &quot;https://#{server_name}&quot;
+nginx['server_name'] = server_name
+nginx['ssl_certificate'] = &quot;/var/opt/chef-server/nginx/ca/#{server_name}.crt&quot;
+nginx['ssl_certificate_key'] = &quot;/var/opt/chef-server/nginx/ca/#{server_name}.key&quot;
+lb['fqdn'] = server_name
+</code></pre>
 
 <p>이후에 해당 컨피그 내용으로 적용한다.</p>
 

@@ -12,7 +12,7 @@
 <meta itemprop="description" content="우선은 nbd로 attach 하여 mount 해서 접근 가능하다.
 이후에 아래와 같이 key를 추가해도 되고 각 os 버전에 맞게 패스워드를 새로 해슁하여 /etc/shadow 를 변경해도 된다.
 물론 마지막에 dettach 를 꼭 신경써서 해줘야 한다.
-# attach disk qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/10794bbb-7856-4ed6-ab39-32afbc01156a/disk mount /dev/nbd0p1 /mnt # insert a new key to target user echo &#39;&#39;&#39;NEWKEY&#39;&#39;&#39; &gt;&gt; /mnt/home/USER/.ssh/authorized_keys # dettach disk umount /mnt qemu-nbd -d /dev/nbd0p1 하지만 이상하게도 저런 수정을 했을때 아예 접속이 불가능한 경우들이 생긴다.">
+# attach disk qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/10794bbb-7856-4ed6-ab39-32afbc01156a/disk mount /dev/nbd0p1 /mnt # insert a new key to target user echo &#39;&#39;&#39;NEWKEY&#39;&#39;&#39; &gt;&gt; /mnt/home/USER/.ssh/authorized_keys # dettach disk umount /mnt qemu-nbd -d /dev/nbd0p1  하지만 이상하게도 저런 수정을 했을때 아예 접속이 불가능한 경우들이 생긴다.">
 
 
 <meta itemprop="datePublished" content="2015-03-14T22:00:57&#43;09:00" />
@@ -26,7 +26,7 @@
 <meta property="og:description" content="우선은 nbd로 attach 하여 mount 해서 접근 가능하다.
 이후에 아래와 같이 key를 추가해도 되고 각 os 버전에 맞게 패스워드를 새로 해슁하여 /etc/shadow 를 변경해도 된다.
 물론 마지막에 dettach 를 꼭 신경써서 해줘야 한다.
-# attach disk qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/10794bbb-7856-4ed6-ab39-32afbc01156a/disk mount /dev/nbd0p1 /mnt # insert a new key to target user echo &#39;&#39;&#39;NEWKEY&#39;&#39;&#39; &gt;&gt; /mnt/home/USER/.ssh/authorized_keys # dettach disk umount /mnt qemu-nbd -d /dev/nbd0p1 하지만 이상하게도 저런 수정을 했을때 아예 접속이 불가능한 경우들이 생긴다." />
+# attach disk qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/10794bbb-7856-4ed6-ab39-32afbc01156a/disk mount /dev/nbd0p1 /mnt # insert a new key to target user echo &#39;&#39;&#39;NEWKEY&#39;&#39;&#39; &gt;&gt; /mnt/home/USER/.ssh/authorized_keys # dettach disk umount /mnt qemu-nbd -d /dev/nbd0p1  하지만 이상하게도 저런 수정을 했을때 아예 접속이 불가능한 경우들이 생긴다." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://leoh0.github.io/post/2015-03-14-if-you-forget-your-password-or-key/" />
 
@@ -40,7 +40,7 @@
 <meta name="twitter:description" content="우선은 nbd로 attach 하여 mount 해서 접근 가능하다.
 이후에 아래와 같이 key를 추가해도 되고 각 os 버전에 맞게 패스워드를 새로 해슁하여 /etc/shadow 를 변경해도 된다.
 물론 마지막에 dettach 를 꼭 신경써서 해줘야 한다.
-# attach disk qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/10794bbb-7856-4ed6-ab39-32afbc01156a/disk mount /dev/nbd0p1 /mnt # insert a new key to target user echo &#39;&#39;&#39;NEWKEY&#39;&#39;&#39; &gt;&gt; /mnt/home/USER/.ssh/authorized_keys # dettach disk umount /mnt qemu-nbd -d /dev/nbd0p1 하지만 이상하게도 저런 수정을 했을때 아예 접속이 불가능한 경우들이 생긴다."/>
+# attach disk qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/10794bbb-7856-4ed6-ab39-32afbc01156a/disk mount /dev/nbd0p1 /mnt # insert a new key to target user echo &#39;&#39;&#39;NEWKEY&#39;&#39;&#39; &gt;&gt; /mnt/home/USER/.ssh/authorized_keys # dettach disk umount /mnt qemu-nbd -d /dev/nbd0p1  하지만 이상하게도 저런 수정을 했을때 아예 접속이 불가능한 경우들이 생긴다."/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -91,16 +91,17 @@
 이후에 아래와 같이 key를 추가해도 되고 각 os 버전에 맞게 패스워드를 새로 해슁하여 <code>/etc/shadow</code> 를 변경해도 된다.<br />
 물론 마지막에 dettach 를 꼭 신경써서 해줘야 한다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007f7f"># attach disk</span>
+<pre><code class="language-bash"># attach disk
 qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/10794bbb-7856-4ed6-ab39-32afbc01156a/disk
 mount /dev/nbd0p1 /mnt
 
-<span style="color:#007f7f"># insert a new key to target user</span>
-<span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#39;&#39;&#39;NEWKEY&#39;&#39;&#39;</span> &gt;&gt; /mnt/home/USER/.ssh/authorized_keys
+# insert a new key to target user
+echo '''NEWKEY''' &gt;&gt; /mnt/home/USER/.ssh/authorized_keys
 
-<span style="color:#007f7f"># dettach disk</span>
+# dettach disk
 umount /mnt
-qemu-nbd -d /dev/nbd0p1</code></pre></div>
+qemu-nbd -d /dev/nbd0p1
+</code></pre>
 
 <p>하지만 이상하게도 저런 수정을 했을때 아예 접속이 불가능한 경우들이 생긴다. sshd config가 잘못되었는지 고치기 시작하면 아예 ssh 조차도 뜨질 못한다.<br />
 그이유는 아래와 같이 selinux의 보안 설정으로 위변조된 파일 사용시 차단되는 보안이 설정되어 있기 때문이다.</p>
@@ -108,32 +109,34 @@ qemu-nbd -d /dev/nbd0p1</code></pre></div>
 <p>즉, selinux를 살펴 봤을때 아래 같이 selinux가 세팅되어 있을 수 있다.<br />
 그렇다면 위와 같이 edit 했을때 관련 키, 계정들을 접근 못하게 된다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007f7f"># This file controls the state of SELinux on the system.</span>
-<span style="color:#007f7f"># SELINUX= can take one of these three values:</span>
-<span style="color:#007f7f">#     enforcing - SELinux security policy is enforced.</span>
-<span style="color:#007f7f">#     permissive - SELinux prints warnings instead of enforcing.</span>
-<span style="color:#007f7f">#     disabled - No SELinux policy is loaded.</span>
+<pre><code class="language-bash"># This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
 SELINUX=enforcing
-<span style="color:#007f7f"># SELINUXTYPE= can take one of these two values:</span>
-<span style="color:#007f7f">#     targeted - Targeted processes are protected,</span>
-<span style="color:#007f7f">#     mls - Multi Level Security protection.</span>
-SELINUXTYPE=targeted</code></pre></div>
+# SELINUXTYPE= can take one of these two values:
+#     targeted - Targeted processes are protected,
+#     mls - Multi Level Security protection.
+SELINUXTYPE=targeted
+</code></pre>
 
 <p>그렇기 때문에 이런 케이스는 아래와 같이 <code>selinux</code>를 <em>disable</em> 해줘야 한다.</p>
 
-<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007f7f"># attach disk</span>
+<pre><code class="language-bash"># attach disk
 qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/10794bbb-7856-4ed6-ab39-32afbc01156a/disk
 mount /dev/nbd0p1 /mnt
 
-<span style="color:#007f7f"># insert a new key to target user</span>
-<span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#39;&#39;&#39;NEWKEY&#39;&#39;&#39;</span> &gt;&gt; /mnt/home/USER/.ssh/authorized_keys
+# insert a new key to target user
+echo '''NEWKEY''' &gt;&gt; /mnt/home/USER/.ssh/authorized_keys
 
-<span style="color:#007f7f"># disable selinux</span>
-sed -i <span style="color:#0ff;font-weight:bold">&#39;s/^SELINUX=.*$/SELINUX=disabled/g&#39;</span> /mnt/etc/selinux/config
+# disable selinux
+sed -i 's/^SELINUX=.*$/SELINUX=disabled/g' /mnt/etc/selinux/config
 
-<span style="color:#007f7f"># dettach disk</span>
+# dettach disk
 umount /mnt
-qemu-nbd -d /dev/nbd0p1</code></pre></div>
+qemu-nbd -d /dev/nbd0p1
+</code></pre>
 
 		</div>
 		<div id="comments" class="thin">

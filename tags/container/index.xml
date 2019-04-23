@@ -50,7 +50,8 @@ kubernetes 로 openstack mitaka를 설치해 봤습니다.
 대략 31분 정도 걸려서 minikube 구성 부터 전체 셋업 및 vm 2개 띄워서 로그인 테스트 합니다.
 그리고 저는 macos Sierra 에서 xhyve 로 8G 머신을 만들어서 사용을 했습니다.
 linux 머신이 있으면 kvm을 이용하시는 것도 좋을것 같습니다.
-windows 환경에선 xhyve 외에도 virtual box 등을 이용하셔도 좋을 것 같습니다.</description>
+windows 환경에선 xhyve 외에도 virtual box 등을 이용하셔도 좋을 것 같습니다.
+셋업할때 kubernetes-cli 는 1.</description>
     </item>
     
   </channel>

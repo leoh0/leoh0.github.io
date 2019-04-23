@@ -47,9 +47,7 @@ diff --git a/keystone/token/persistence/backends/memcache.py b/keystone/token/pe
 이런 상황을 디버깅 했던 경험을 정리해 본다.
 아래는 문제가 되었던 memcached host의 in/out bound 그래프이다.
 수치는 가려서 스케일만 감으로 볼 수 있게 남겼다.
-A 서버   A 서버  
-B 서버   B 서버  
-최초엔 keystone과 memcached connection 이 unbalance 할것이라고 생각했으나 그런 정황은 없었다.</description>
+A 서버   A 서버   B 서버   B 서버   최초엔 keystone과 memcached connection 이 unbalance 할것이라고 생각했으나 그런 정황은 없었다.</description>
     </item>
     
   </channel>

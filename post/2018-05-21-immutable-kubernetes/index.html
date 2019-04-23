@@ -1,178 +1,13 @@
 <!DOCTYPE html>
 <html lang="en-US">
-  <head>
-    <meta name="generator" content="Hugo 0.54.0" />
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>immutable kubernetes by linuxkit | &gt; /dev/null</title>
-    <meta name="description" content="linuxkit with kubernetes    &hellip; As a developer and sometimes system administrator, one of the scariest things I ever encounter is a server that’s been running for ages which has seen multiple upgrades of system and application software. &hellip; Need to upgrade? No problem. Build a new, upgraded system and throw the old one away. New app revision? Same thing. Build a server (or image) with a new revision and throw away the old ones.">
-    <meta name="keywords" content="linuxkit, docker, kubernetes, k8s, weave, cilium, calico, gcp, aws">
-    
-    
-    
-    
-    
 
-  <meta name="author" content="leoh0">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#111111">
+	<meta name="msapplication-TileColor" content="#111111">
 
-
-    <meta property="og:title" content="immutable kubernetes by linuxkit" />
-<meta property="og:description" content="linuxkit with kubernetes    &hellip; As a developer and sometimes system administrator, one of the scariest things I ever encounter is a server that’s been running for ages which has seen multiple upgrades of system and application software. &hellip; Need to upgrade? No problem. Build a new, upgraded system and throw the old one away. New app revision? Same thing. Build a server (or image) with a new revision and throw away the old ones." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://leoh0.github.io/post/2018-05-21-immutable-kubernetes/" />
-
-<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322" />
-<meta property="article:published_time" content="2018-05-21T00:55:10&#43;09:00"/>
-<meta property="article:modified_time" content="2018-05-21T00:55:10&#43;09:00"/>
-
-    <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
-
-<meta name="twitter:title" content="immutable kubernetes by linuxkit"/>
-<meta name="twitter:description" content="linuxkit with kubernetes    &hellip; As a developer and sometimes system administrator, one of the scariest things I ever encounter is a server that’s been running for ages which has seen multiple upgrades of system and application software. &hellip; Need to upgrade? No problem. Build a new, upgraded system and throw the old one away. New app revision? Same thing. Build a server (or image) with a new revision and throw away the old ones."/>
-
-    
-
-
-
-  <meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322">
-
-
-    
-
-    <meta name="theme-color" content="#000">
-
-    
-    
-  <meta name="referrer" content="same-origin">
-
-
-    
-  
-    
-
-  <meta title="mod:fractal-forest" content="status:enabled">
-  
-    <script async src=/js/bpgdec8a.js integrity=sha384-8PG0go3BW8hLm63KbTxk/hNcehaoSbrAhKzsmy2Jhs/KY8QdiKKkjhdeyHY/Q/0I&#10;></script>
-  
-
-
-  
-  
-
-
-    
-    <link rel="canonical" href="https://leoh0.github.io/post/2018-05-21-immutable-kubernetes/">
-    <link href="http://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
-    
-    
-    <link rel="icon" sizes="any" href="data:image/svg+xml,%3Csvg%20viewBox='0%200%2046%2045'%20xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EAfter%20Dark%3C/title%3E%3Cpath%20d='M.708%2045L23%20.416%2045.292%2045H.708zM35%2038L23%2019%2011%2038h24z'%20fill='%23000'/%3E%3C/svg%3E">
-
-    
-
-
-  
-  
-  
-  
-  
-  
-  
-    
-      <style>html{font-size:12px}*{box-sizing:border-box;text-rendering:geometricPrecision}body{font-size:1rem;line-height:1.5rem;margin:0;font-family:Menlo,'Noto Sans KR',Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;word-wrap:break-word}h1,h2,h3,h4,h5,h6{line-height:1.3em}fieldset{border:none;padding:0;margin:0}pre{padding:2rem;margin:1.75rem 0;background-color:#fff;border:1px solid #ccc;overflow:auto}code[class*=language-],pre[class*=language-],pre code{font-weight:100;text-shadow:none;margin:1.75rem 0}a{cursor:pointer;color:#ff2e88;text-decoration:none;border-bottom:1px solid #ff2e88}a:hover{background-color:#ff2e88;color:#fff}.grid{display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap}.grid.\-top{-ms-flex-align:start;align-items:flex-start}.grid.\-middle{-ms-flex-align:center;align-items:center}.grid.\-bottom{-ms-flex-align:end;align-items:flex-end}.grid.\-stretch{-ms-flex-align:stretch;align-items:stretch}.grid.\-baseline{-ms-flex-align:baseline;align-items:baseline}.grid.\-left{-ms-flex-pack:start;justify-content:flex-start}.grid.\-center{-ms-flex-pack:center;justify-content:center}.grid.\-right{-ms-flex-pack:end;justify-content:flex-end}.grid.\-between{-ms-flex-pack:justify;justify-content:space-between}.grid.\-around{-ms-flex-pack:distribute;justify-content:space-around}.cell{-ms-flex:1;flex:1;box-sizing:border-box}@media screen and (min-width:768px){.cell.\-1of12{-ms-flex:0 0 8.33333%;flex:0 0 8.33333%}.cell.\-2of12{-ms-flex:0 0 16.66667%;flex:0 0 16.66667%}.cell.\-3of12{-ms-flex:0 0 25%;flex:0 0 25%}.cell.\-4of12{-ms-flex:0 0 33.33333%;flex:0 0 33.33333%}.cell.\-5of12{-ms-flex:0 0 41.66667%;flex:0 0 41.66667%}.cell.\-6of12{-ms-flex:0 0 50%;flex:0 0 50%}.cell.\-7of12{-ms-flex:0 0 58.33333%;flex:0 0 58.33333%}.cell.\-8of12{-ms-flex:0 0 66.66667%;flex:0 0 66.66667%}.cell.\-9of12{-ms-flex:0 0 75%;flex:0 0 75%}.cell.\-10of12{-ms-flex:0 0 83.33333%;flex:0 0 83.33333%}.cell.\-11of12{-ms-flex:0 0 91.66667%;flex:0 0 91.66667%}}@media screen and (max-width:768px){.grid{-ms-flex-direction:column;flex-direction:column}.cell{-ms-flex:0 0 auto;flex:0 0 auto}}.hack,.hack blockquote,.hack code,.hack em,.hack h1,.hack h2,.hack h3,.hack h4,.hack h5,.hack h6,.hack strong{font-size:1rem;font-style:normal;font-family:Menlo,'Noto Sans KR',Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif}.hack blockquote,.hack code,.hack em,.hack strong{line-height:20px}.hack blockquote,.hack code,.hack footer,.hack h1,.hack h2,.hack h3,.hack h4,.hack h5,.hack h6,.hack header,.hack li,.hack ol,.hack p,.hack section,.hack ul{float:none;margin:0;padding:0}.hack blockquote,.hack h1,.hack ol,.hack p,.hack ul{margin-top:20px;margin-bottom:20px}.hack h1{position:relative;display:inline-block;display:table-cell;padding:20px 0 30px;margin:0;overflow:hidden}.hack h1:after{content:"====================================================================================================";position:absolute;bottom:10px;left:0}.hack h1+*{margin-top:0}.hack h2,.hack h3,.hack h4,.hack h5,.hack h6{position:relative;margin-bottom:1.75rem}.hack h2:before,.hack h3:before,.hack h4:before,.hack h5:before,.hack h6:before{display:inline}.hack h2:before{content:"## "}.hack h3:before{content:"### "}.hack h4:before{content:"#### "}.hack h5:before{content:"##### "}.hack h6:before{content:"###### "}.hack li{position:relative;display:block;padding-left:20px}.hack li:after{position:absolute;top:0;left:0}.hack ul>li:after{content:"-"}.hack ol{counter-reset:a}.hack ol>li:after{content:counter(a) ".";counter-increment:a}.hack ol li:nth-child(n+10):after{left:-7px}.hack blockquote{position:relative;padding-left:17px;padding-left:2ch;overflow:hidden}.hack blockquote:after{content:">\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>";white-space:pre;position:absolute;top:0;left:0;line-height:20px}.hack em:after,.hack em:before{content:"*";display:inline}.hack pre code:after,.hack pre code:before{content:""}.hack code{font-weight:700}.hack code:after,.hack code:before{content:"`";display:inline}.hack hr{position:relative;height:20px;overflow:hidden;border:0;margin:20px 0}.hack hr:after{content:"----------------------------------------------------------------------------------------------------";position:absolute;top:0;left:0;line-height:20px;width:100%;word-wrap:break-word}@-moz-document url-prefix(){.hack h1{display:block}}.hack-ones ol>li:after{content:"1."}p{margin:0 0 1.75rem}.container{max-width:70rem}.container,.container-fluid{margin:0 auto;padding:0 1rem}.inner{padding:1rem}.inner2x{padding:2rem}.pull-left{float:left}.pull-right{float:right}.progress-bar{height:8px;opacity:.8;background-color:#ccc;margin-top:12px}.progress-bar.progress-bar-show-percent{margin-top:38px}.progress-bar-filled{background-color:gray;height:100%;transition:width .3s ease;position:relative;width:0}.progress-bar-filled:before{content:"";border:6px solid transparent;border-top-color:gray;position:absolute;top:-12px;right:-6px}.progress-bar-filled:after{color:gray;content:attr(data-filled);display:block;font-size:12px;white-space:nowrap;position:absolute;border:6px solid transparent;top:-38px;right:0;-ms-transform:translateX(50%);transform:translateX(50%)}table{width:100%;border-collapse:collapse;margin:1.75rem 0;color:#778087}table td,table th{vertical-align:top;border:1px solid #ccc;line-height:15px;padding:10px}table thead th{font-size:10px}table tbody td:first-child{font-weight:700;color:#333}.form{width:30rem}.form-group{margin-bottom:1.75rem;overflow:auto}.form-group label{border-bottom:2px solid #ccc;color:#333;width:10rem;display:inline-block;height:38px;line-height:38px;padding:0;float:left;position:relative}.form-group.form-success label{color:#4caf50!important;border-color:#4caf50!important}.form-group.form-warning label{color:#ff9800!important;border-color:#ff9800!important}.form-group.form-error label{color:#f44336!important;border-color:#f44336!important}.form-control{outline:none;border:none;border-bottom:2px solid #ccc;padding:.5rem 0;width:20rem;height:38px;background-color:transparent}.form-control:focus{border-color:#555}.form-group.form-textarea label:after{position:absolute;content:"";width:2px;background-color:#fff;right:-2px;top:0;bottom:0}textarea.form-control{height:auto;resize:none;padding:1rem 0;border-bottom:2px solid #ccc;border-left:2px solid #ccc;padding:.5rem}select.form-control{border-radius:0;background-color:transparent;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none}.help-block{color:#999;margin-top:.5rem}.form-actions{margin-bottom:1.75rem}.btn{display:-ms-inline-flexbox;display:inline-flex;-ms-flex-align:center;align-items:center;-ms-flex-pack:center;justify-content:center;cursor:pointer;outline:none;padding:.65rem 2rem;font-size:1rem;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;position:relative;z-index:1}.btn:active{box-shadow:inset 0 1px 3px rgba(0,0,0,.12)}.btn.btn-ghost{border-color:#757575;color:#757575;background-color:transparent}.btn.btn-ghost:focus,.btn.btn-ghost:hover{border-color:#424242;color:#424242;z-index:2}.btn.btn-ghost:hover{background-color:transparent}.btn-block{width:100%;display:-ms-flexbox;display:flex}.btn-default{color:#fff;background-color:#e0e0e0;border:1px solid #e0e0e0;color:#333}.btn-default:focus:not(.btn-ghost),.btn-default:hover{background-color:#dcdcdc;border-color:#dcdcdc}.btn-success{color:#fff;background-color:#4caf50;border:1px solid #4caf50}.btn-success:focus:not(.btn-ghost),.btn-success:hover{background-color:#43a047;border-color:#43a047}.btn-success.btn-ghost{border-color:#4caf50;color:#4caf50}.btn-success.btn-ghost:focus,.btn-success.btn-ghost:hover{border-color:#388e3c;color:#388e3c;z-index:2}.btn-error{color:#fff;background-color:#f44336;border:1px solid #f44336}.btn-error:focus:not(.btn-ghost),.btn-error:hover{background-color:#e53935;border-color:#e53935}.btn-error.btn-ghost{border-color:#f44336;color:#f44336}.btn-error.btn-ghost:focus,.btn-error.btn-ghost:hover{border-color:#d32f2f;color:#d32f2f;z-index:2}.btn-warning{color:#fff;background-color:#ff9800;border:1px solid #ff9800}.btn-warning:focus:not(.btn-ghost),.btn-warning:hover{background-color:#fb8c00;border-color:#fb8c00}.btn-warning.btn-ghost{border-color:#ff9800;color:#ff9800}.btn-warning.btn-ghost:focus,.btn-warning.btn-ghost:hover{border-color:#f57c00;color:#f57c00;z-index:2}.btn-info{color:#fff;background-color:#00bcd4;border:1px solid #00bcd4}.btn-info:focus:not(.btn-ghost),.btn-info:hover{background-color:#00acc1;border-color:#00acc1}.btn-info.btn-ghost{border-color:#00bcd4;color:#00bcd4}.btn-info.btn-ghost:focus,.btn-info.btn-ghost:hover{border-color:#0097a7;color:#0097a7;z-index:2}.btn-primary{color:#fff;background-color:#2196f3;border:1px solid #2196f3}.btn-primary:focus:not(.btn-ghost),.btn-primary:hover{background-color:#1e88e5;border-color:#1e88e5}.btn-primary.btn-ghost{border-color:#2196f3;color:#2196f3}.btn-primary.btn-ghost:focus,.btn-primary.btn-ghost:hover{border-color:#1976d2;color:#1976d2;z-index:2}.btn-group{overflow:auto}.btn-group .btn{float:left}.btn-group .btn-ghost:not(:first-child){margin-left:-1px}.card{border:1px solid #ccc}.card .card-header{color:#333;text-align:center;background-color:#ddd;padding:.5rem 0}.alert{color:#ccc;padding:1rem;border:1px solid #ccc;margin-bottom:1.75rem}.alert-success{color:#4caf50;border-color:#4caf50}.alert-error{color:#f44336;border-color:#f44336}.alert-info{color:#00bcd4;border-color:#00bcd4}.alert-warning{color:#ff9800;border-color:#ff9800}.media:not(:last-child){margin-bottom:1.25rem}.media-left{padding-right:1rem}.media-left,.media-right{display:table-cell;vertical-align:top}.media-right{padding-left:1rem}.media-body{display:table-cell;vertical-align:top}.media-heading{font-size:1.16667rem;font-weight:700}.media-content{margin-top:.3rem}.avatarholder,.placeholder{background-color:#f0f0f0;text-align:center;color:#b9b9b9;font-size:1rem;border:1px solid #f0f0f0}.avatarholder{width:48px;height:48px;line-height:46px;font-size:2rem;background-size:cover;background-position:50%;background-repeat:no-repeat}.avatarholder.rounded{border-radius:33px}.loading{display:inline-block;content:"&nbsp;";height:20px;width:20px;margin:0 .5rem;animation:a .6s infinite linear;border:2px solid #e91e63;border-right-color:transparent;border-radius:50%}.btn .loading{margin-bottom:0;width:14px;height:14px}.btn div.loading{float:left}.alert .loading{margin-bottom:-5px}@keyframes a{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}.menu{width:100%}.menu .menu-item{display:block;color:#616161;border-color:#616161}.menu .menu-item.active,.menu .menu-item:hover{color:#000;border-color:#000;background-color:transparent}@media screen and (max-width:768px){.form-group label{display:block;border-bottom:none;width:100%}.form-group.form-textarea label:after{display:none}.form-control{width:100%}textarea.form-control{border-left:none;padding:.5rem 0}pre::-webkit-scrollbar{height:3px}}@media screen and (max-width:480px){.form{width:100%}}.dark{color:#ccc}.dark,.dark pre{background-color:#000}.dark pre{padding:0;border:none}.dark pre code{color:#00bcd4}.dark h1 a,.dark h2 a,.dark h3 a,.dark h4 a,.dark h5 a{color:#ccc}.dark code,.dark strong{color:#fff}.dark code{font-weight:100}.dark table{color:#ccc}.dark table td,.dark table th{border-color:#444}.dark table tbody td:first-child{color:#fff}.dark .form-group label{color:#ccc;border-color:rgba(95,95,95,.78)}.dark .form-group.form-textarea label:after{background-color:#000}.dark .form-control{color:#ccc;border-color:rgba(95,95,95,.78)}.dark .form-control:focus{border-color:#ccc;color:#ccc}.dark textarea.form-control{color:#ccc}.dark .card{border-color:rgba(95,95,95,.78)}.dark .card .card-header{background-color:transparent;color:#ccc;border-bottom:1px solid rgba(95,95,95,.78)}.dark .btn.btn-ghost.btn-default{border-color:#ababab;color:#ababab}.dark .btn.btn-ghost.btn-default:focus,.dark .btn.btn-ghost.btn-default:hover{border-color:#9c9c9c;color:#9c9c9c;z-index:1}.dark .btn.btn-ghost.btn-default:focus,.dark .btn.btn-ghost.btn-default:hover{border-color:#e0e0e0;color:#e0e0e0}.dark .btn.btn-ghost.btn-primary:focus,.dark .btn.btn-ghost.btn-primary:hover{border-color:#64b5f6;color:#64b5f6}.dark .btn.btn-ghost.btn-success:focus,.dark .btn.btn-ghost.btn-success:hover{border-color:#81c784;color:#81c784}.dark .btn.btn-ghost.btn-info:focus,.dark .btn.btn-ghost.btn-info:hover{border-color:#4dd0e1;color:#4dd0e1}.dark .btn.btn-ghost.btn-error:focus,.dark .btn.btn-ghost.btn-error:hover{border-color:#e57373;color:#e57373}.dark .btn.btn-ghost.btn-warning:focus,.dark .btn.btn-ghost.btn-warning:hover{border-color:#ffb74d;color:#ffb74d}.dark .avatarholder,.dark .placeholder{background-color:transparent;border-color:#333}.dark .menu .menu-item{color:#ccc;border-color:rgba(95,95,95,.78)}.dark .menu .menu-item.active,.dark .menu .menu-item:hover{color:#fff;border-color:#ccc}:root{--screen-size-small: 30em}@keyframes intro{0%{opacity:0}; 100%{opacity:1}}.blur-up{-webkit-filter:blur(5px);filter:blur(5px);transition:filter 400ms,-webkit-filter 400ms}.blur-up.lazyloaded{-webkit-filter:blur(0);filter:blur(0)}.hack .readmore{margin-bottom:2.2em}.responsive-iframe{position:relative;padding-bottom:56.25%;padding-top:25px;height:0}.responsive-iframe iframe{position:absolute;top:0;left:0;width:100%;height:100%}iframe{border:0}main,footer{animation:intro .3s both;animation-delay:.15s}footer time[datetime$=M]:before{content:"\2013\0020"}@media only screen and (max-width:30em){footer time[datetime$=M]{display:none}}blockquote cite{display:block}blockquote cite::before{content:"\2014"}:target{color:#fff}.hack li ul{margin:0}.main{padding:20px 10px}input.form-control{border-radius:0;background-color:transparent;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none}input.form-control{font-size:initial}.hack .help-block{font-size:1rem}html{font-size:13px}.hack pre{font-size:17px}.hack .form input,.hack .form textarea,.hack .form button,.hack .form label{font-size:1rem}article [itemprop=description]{margin-bottom:20px;margin-top:20px}article header img{width:100%;border-radius:3px}@media screen and (min-width:768px){html{font-size:1em}.container{max-width:50rem}}[v-cloak]{display:none}a[href*="://"]::after,
-a[rel*="external"] {
-  content: " " url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20class='i-external'%20viewBox='0%200%2032%2032'%20width='14'%20height='14'%20fill='none'%20stroke='%23ff9800'%20stroke-linecap='round'%20stroke-linejoin='round'%20stroke-width='9.38%'%3E%3Cpath%20d='M14%209%20L3%209%203%2029%2023%2029%2023%2018%20M18%204%20L28%204%2028%2014%20M28%204%20L14%2018'/%3E%3C/svg%3E");
-}
-figure a[href*="://"]::after,
-figure a[rel*="external"] {
-  content: "";
-}
-nav a.active {
-  background-color: #ff2e88;
-  color: #fff;
-}
-a[itemprop="url"] {
-  color: #ff9800;
-}
-a[itemprop="url"]:hover {
-  color: #fff;
-}
-.muted, .help-block {
-  opacity: 0.70;
-}
-.hack .muted,
-.hack .help-block {
-  color: #e0e0e0;
-}
-
-canvas {
-  margin: auto;
-  display: block;
-}
-figure {
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
-figure img {
-  max-width: 80%;
-}
-figure a {
-  border-bottom: none !important;
-}
-figure a:hover {
-  background-color: inherit !important;
-}
-
-img {
-  max-width: 90%;
-}
-
-.highlight,pre.highlight{background:#282c34;color:#abb2bf}.highlight pre{background:#282c34}.highlight .ge{font-style:italic}.highlight .gs{font-weight:700}.highlight .ow{font-weight:700}.highlight .n,.highlight .nf,.highlight .nn,.highlight .o,.highlight .p{color:#abb2bf}.highlight .c,.highlight .c1,.highlight .cm,.highlight .cp,.highlight .cs{color:#5c6370;font-style:italic}.highlight .sr,.highlight .ss{color:#56b6c2}.highlight .k,.highlight .kc,.highlight .kd,.highlight .kn,.highlight .kp,.highlight .kr,.highlight .kt{color:#c678dd}.highlight .l,.highlight .ld,.highlight .s,.highlight .s1,.highlight .s2,.highlight .sb,.highlight .sc,.highlight .sd,.highlight .se,.highlight .sh,.highlight .si,.highlight .sx{color:#98c379}.highlight .nt,.highlight .nx,.highlight .vi{color:#e06c75}.highlight .il,.highlight .m,.highlight .mf,.highlight .mh,.highlight .mi,.highlight .mo,.highlight .na{color:#d19a66}.highlight .bp,.highlight .nb,.highlight .nc,.highlight .nd,.highlight .ne,.highlight .ni,.highlight .nl,.highlight .no,.highlight .nv,.highlight .py,.highlight .vc,.highlight .vg{color:#e5c07b}.highlight .err{color:#fff;background-color:#e05252}.highlight .gd{color:#e05252}.highlight .gi{color:#43d08a}.highlight .w{color:#f8f8f2}.highlight .cpf{color:navy}.highlight .gu{color:#75715e}.highlight .lineno{color:#636d83;user-select:none}.highlight .ln{color:#636d83;user-select:none}.highlight .ln:after{content:" "}.highlight .hll{color:#abb2bf;background-color:#3a3f4b}.highlight .hl{color:#abb2bf;background-color:#3a3f4b}.highlight .language-json .w+.s2{color:#e06c75}.highlight .language-json .kc{color:#56b6c2}
-</style>
-    
-  
-
-
-    <script async src=/js/lazysizes.min.js></script>
-
-
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-46519012-1', 'auto');
-ga('send', 'pageview');
-</script>
-
-
-  </head>
-  
-  
-  
-  <body class="hack dark main container">
-    <header>
-  
-  <nav itemscope itemtype="http://schema.org/SiteNavigationElement">
-    
-    
-      <a itemprop="url" class="" href="/"><span itemprop="name">Home</span></a>
-    
-      <a itemprop="url" class="active" href="/post/"><span itemprop="name">Posts</span></a>
-    
-      <a itemprop="url" class="" href="/about/aboutme"><span itemprop="name">AboutMe</span></a>
-    
-      <a itemprop="url" class="" href="/blog/"><span itemprop="name">.</span></a>
-    
-  </nav>
-
-
-</header>
-    <main>
-  <article itemscope itemtype="http://schema.org/BlogPosting">
-    
 <meta itemprop="name" content="immutable kubernetes by linuxkit">
 <meta itemprop="description" content="linuxkit with kubernetes    &hellip; As a developer and sometimes system administrator, one of the scariest things I ever encounter is a server that’s been running for ages which has seen multiple upgrades of system and application software. &hellip; Need to upgrade? No problem. Build a new, upgraded system and throw the old one away. New app revision? Same thing. Build a server (or image) with a new revision and throw away the old ones.">
 
@@ -184,55 +19,73 @@ ga('send', 'pageview');
 
 
 <meta itemprop="keywords" content="linuxkit,docker,kubernetes,k8s,weave,cilium,calico,gcp,aws," />
+<meta property="og:title" content="immutable kubernetes by linuxkit" />
+<meta property="og:description" content="linuxkit with kubernetes    &hellip; As a developer and sometimes system administrator, one of the scariest things I ever encounter is a server that’s been running for ages which has seen multiple upgrades of system and application software. &hellip; Need to upgrade? No problem. Build a new, upgraded system and throw the old one away. New app revision? Same thing. Build a server (or image) with a new revision and throw away the old ones." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://leoh0.github.io/post/2018-05-21-immutable-kubernetes/" />
 
-    <header>
-      <h1 itemprop="headline">immutable kubernetes by linuxkit</h1>
-      <p class="muted">
-        <svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>11 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
+<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322" />
+<meta property="article:published_time" content="2018-05-21T00:55:10&#43;09:00"/>
+<meta property="article:modified_time" content="2018-05-21T00:55:10&#43;09:00"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 
-  Published: <time datetime="2018-05-21T00:55:10&#43;09:00">21 May, 2018</time>
+<meta name="twitter:title" content="immutable kubernetes by linuxkit"/>
+<meta name="twitter:description" content="linuxkit with kubernetes    &hellip; As a developer and sometimes system administrator, one of the scariest things I ever encounter is a server that’s been running for ages which has seen multiple upgrades of system and application software. &hellip; Need to upgrade? No problem. Build a new, upgraded system and throw the old one away. New app revision? Same thing. Build a server (or image) with a new revision and throw away the old ones."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>immutable kubernetes by linuxkit</title>
+	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.31706917653d2b9e8410abd431f30ec4359a88a94fc87a63654779d87329edec.css" integrity="sha256-MXBpF2U9K56EEKvUMfMOxDWaiKlPyHpjZUd52HMp7ew=">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://leoh0.github.io/">&gt; /dev/null</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					<a href="https://leoh0.github.io/">Home</a>
+					<a href="https://leoh0.github.io/post/">Posts</a>
+					<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
+					<a href="https://leoh0.github.io/blog/">.</a>
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://leoh0.github.io/">Home</a></li>
+			<li><a href="https://leoh0.github.io/post/">Posts</a></li>
+			<li><a href="https://leoh0.github.io/about/aboutme">AboutMe</a></li>
+			<li><a href="https://leoh0.github.io/blog/">.</a></li>
+		</ul>
+	</div>
 
 
-      </p>
-      
-      
-    </header>
-    
-
-    <div itemprop="articleBody">
-      
-
-
-
-
-
-
-
-
-
-
-
+	<main class="site-main section-inner thin animated fadeIn faster">
+		<h1>immutable kubernetes by linuxkit</h1>
+		<div class="content">
+			
 
 <figure>
-  
-    
-      <img class="lazyload" data-src="/images/lk-k8s.png"  />
-    
-  
-  
-  <figcaption>
-    <header><b>linuxkit with kubernetes</b></header>
-    
-  </figcaption>
-  
+    <img src="/images/lk-k8s.png"/> <figcaption>
+            <h4>linuxkit with kubernetes</h4>
+        </figcaption>
 </figure>
+
 
 <blockquote>
 <p>&hellip;
@@ -248,27 +101,12 @@ Need to upgrade? No problem. Build a new, upgraded system and throw the old one 
 
 <p>컨테이너 기술이 발전하며 이런 immutable한 이미지를 만들기 위한 여러가지 방법론들이 있었으나 개인적인 취향이나 상황에 맞게 쓸만하지 못했으나 최근 시간이 남아서 새롭게 조사하다 linuxkit이 많은 안정화를 가져온것을 확인해서 삽질을 시작했다.</p>
 
-<h1 id="linuxkit">linuxkit</h1>
+<h1 id="linuxkit">linuxkit<a href="#linuxkit" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
 
-<p>
-
-
-
-
-
-
-
-
-
-
-<figure>
-  
-    
-      <img class="lazyload" data-src="http://www.adelzaalouk.me/assets/linuxkit_post//linuxkit.png"  />
-    
-  
-  
+<p><figure>
+    <img src="http://www.adelzaalouk.me/assets/linuxkit_post//linuxkit.png"/> 
 </figure>
+
 FROM <a href="http://www.adelzaalouk.me/2017/moby-linuxkit/">Demystifying Moby: From OCI to Linuxkit</a></p>
 
 <p><strong><a href="https://github.com/linuxkit/linuxkit">linuxkit</a></strong> 은 아주 간단히 말해서 컨테이너를 위한 커스텀 리눅스 배포판을 만들고, 배포하고, 실행하기 위한 툴이다.</p>
@@ -293,39 +131,21 @@ FROM <a href="http://www.adelzaalouk.me/2017/moby-linuxkit/">Demystifying Moby: 
 
 <p>간단한 예제들이 많이 있으니 직접 돌려보면 이해가 쉬울 것 같다.</p>
 
-<h3 id="kubernetes를-좀-더-쉽게-관리하려면">kubernetes를 좀 더 쉽게 관리하려면</h3>
-
-
-
-
-
-
-
-
-
-
-
+<h3 id="kubernetes를-좀-더-쉽게-관리하려면">kubernetes를 좀 더 쉽게 관리하려면<a href="#kubernetes를-좀-더-쉽게-관리하려면" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 
 <figure>
-  
-    
-      <img class="lazyload" data-src="/images/module_01_cluster.svg"  />
-    
-  
-  
-  <figcaption>
-    <header><b>kubernetes</b></header>
-    
-  </figcaption>
-  
+    <img src="/images/module_01_cluster.svg"/> <figcaption>
+            <h4>kubernetes</h4>
+        </figcaption>
 </figure>
+
 
 <p>From <a href="https://kubernetes.io/docs/tutorials/kubernetes-basics/create-cluster/cluster-intro/">Using Minikube to Create a Cluster
 </a></p>
 
 <p>kubernetes를 관리한다고 생각하면 수많은 오퍼레이션을 생각하게 되지만 만약 배포를 간단하게 만든다면(eg. golden image, linuxkit 등) 생각보다 많은 어려운 작업들을 심플하게 만들 수 있다. 예를 들면 다음과 같다.</p>
 
-<h4 id="전통적인-kubernetes-upgrade-방법">전통적인 kubernetes upgrade 방법</h4>
+<h4 id="전통적인-kubernetes-upgrade-방법">전통적인 kubernetes upgrade 방법<a href="#전통적인-kubernetes-upgrade-방법" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
 
 <p>예를 들어서 <a href="https://kubernetes.io/docs/tasks/administer-cluster/upgrade-downgrade/kubeadm-upgrade-1-9/">kubernetes upgrade</a>는 크게 2가지로 이루어져 있다.</p>
 
@@ -344,7 +164,7 @@ FROM <a href="http://www.adelzaalouk.me/2017/moby-linuxkit/">Demystifying Moby: 
 
 <p>위와 같은 작업을 하게되면 새로추가되는 노드는 필요없지만 <code>migration 비용이 크고</code>, <code>작업이 길어지고</code>, <code>롤백이 힘들어지고</code>, <code>과거로부터 지속된 업그레이드로 인한 문제(A-&gt;B-&gt;C 로 업그레이드 한것과 B-&gt;C 만 업그레이드한것이 다른 경우)</code> 등에서 자유롭지 못하다.</p>
 
-<h4 id="노드-추가를-통한-kubernetes-upgrade-방법">노드 추가를 통한 kubernetes upgrade 방법</h4>
+<h4 id="노드-추가를-통한-kubernetes-upgrade-방법">노드 추가를 통한 kubernetes upgrade 방법<a href="#노드-추가를-통한-kubernetes-upgrade-방법" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
 
 <ol>
 <li><p><code>control plane(apiserver, controller manager, scheduler)</code> upgrade</p>
@@ -388,32 +208,14 @@ kubectl set image deploy/kube-controller-manager \
 
 <p>즉, <code>self hosted kubernetes</code>를 적용하면 master와 node 이미지를 별개로 이미지를 준비하고, 작업을 따로 준비 하지 않아도 된다. 결국 node image만 준비하면 되고 이건 kubelet agent들이 있는 이미지만 준비하면 된다는 것이다.</p>
 
-<h3 id="에스칼레이터-발판-같은-kubernetes-노드-관리">에스칼레이터 발판 같은 kubernetes 노드 관리</h3>
-
-
-
-
-
-
-
-
-
-
-
+<h3 id="에스칼레이터-발판-같은-kubernetes-노드-관리">에스칼레이터 발판 같은 kubernetes 노드 관리<a href="#에스칼레이터-발판-같은-kubernetes-노드-관리" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 
 <figure>
-  
-    
-      <img class="lazyload" data-src="http://www.madehow.com/images/hpm_0000_0003_0_img0050.jpg"  />
-    
-  
-  
-  <figcaption>
-    <header><b>escalator</b></header>
-    
-  </figcaption>
-  
+    <img src="http://www.madehow.com/images/hpm_0000_0003_0_img0050.jpg"/> <figcaption>
+            <h4>escalator</h4>
+        </figcaption>
 </figure>
+
 
 <p>From <a href="http://www.madehow.com/Volume-3/Escalator.html">Escalator Background</a></p>
 
@@ -422,34 +224,16 @@ kubectl set image deploy/kube-controller-manager \
 
 <p>앞에서 kubernetes upgrade를 통해서 설명하려고 한것도 이와 비슷하게 kubernetes node도 이런 life cycle을 갖게한다고 보면 된다.</p>
 
-
-
-
-
-
-
-
-
-
-
-
 <figure>
-  
-    
-      <img class="lazyload" data-src="/images/swapable-w.png"  />
-    
-  
-  
-  <figcaption>
-    <header><b>swapable nodes</b></header>
-    
-  </figcaption>
-  
+    <img src="/images/swapable-w.png"/> <figcaption>
+            <h4>swapable nodes</h4>
+        </figcaption>
 </figure>
+
 
 <p>즉, 에스칼레이터나 캐터필러와 같이 계속 업그레이드, docker version 업데이트등과 같은 작업이나 확장등은 신규 노드를 추가하고 옛날 노드를 삭제한다. 그래서 여기에 사용되는 노드들을 빠르게 추가하고 안전하게 관리하기 위해서 linuxkit과 같은 immutable한 이미지 사용을 고려했다.</p>
 
-<h1 id="linuxkit-kubernetes">linuxkit + kubernetes</h1>
+<h1 id="linuxkit-kubernetes">linuxkit + kubernetes<a href="#linuxkit-kubernetes" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
 
 <p><a href="https://github.com/leoh0/kubernetes">leoh0/kubernetes</a></p>
 
@@ -461,9 +245,9 @@ kubectl set image deploy/kube-controller-manager \
 
 <p>물론 이것을 보더라도 만약 이런 정보들이 처음이면 삽질하는데 엄청난 시간이 들어갈 수 밖에 없다. 왜냐하면 우선 debug할 수 있는 수단이 제한적이고 모든 것이 컨테이너이기 때문에 각각이 네임스페이스에 갇혀있고 디스크의 마운트 구조를 이해하지 못하면 어떤 파일들이 어디에 있는지 조차도 파악하기가 힘들다. 하지만 모든건 시간이 해결 해 줄 것이다.</p>
 
-<h2 id="사용-가능한-platform들">사용 가능한 platform들</h2>
+<h2 id="사용-가능한-platform들">사용 가능한 platform들<a href="#사용-가능한-platform들" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 
-<h3 id="mac-xhyve">mac(xhyve)</h3>
+<h3 id="mac-xhyve">mac(xhyve)<a href="#mac-xhyve" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 
 <p>만약 mac이 있다면 우선 제일 쉽게 시작할 수 있다. <code>brew</code>나 <code>go</code>를 통해서 binary(linuxkit)을 쉽게 얻을 수 있고 설치 생성시 바로 성공을 경험 할 수 있다. <a href="https://github.com/linuxkit/kubernetes">README</a> 대로 따라하면 된다.</p>
 
@@ -471,7 +255,7 @@ kubectl set image deploy/kube-controller-manager \
 
 <p>그 이상을 할 수가 없다는 것을 알게 된다. 만약 본인이 L2 네트워크나 L3 네트워크를 컨트롤 하고 싶어져도, hyperkit과 vpnkit을 조작할 수 없고 심지어 dhcp 도 컨트롤 할 수 없다는 사실이 답답하게 느껴질 것이다. 그리고 또한 호스트의 16G 정도의 메모리로는 4G instance를 2-3개 정도 밖에 못쓴다. 4G 메모리가 필요한 이유는 cilium를 사용할 때이며 이때 eBPF map을 관리하는데 4G 정도가 들어가기 때문이다. 물론, calico나 weave를 쓰면 더 많은 노드를 띄울 수 있다.</p>
 
-<h3 id="qemu-ubuntu">qemu(ubuntu)</h3>
+<h3 id="qemu-ubuntu">qemu(ubuntu)<a href="#qemu-ubuntu" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 
 <p>사실 메모리가 많은 하이퍼바이저만 구할 여유가 된다면 이 방법이 가장 좋을 수도 있다. 물론 하지만 본인이 linux의 internel network을 조작하는데 익숙 하지 않다면 간단하지 않을 수 있다. <a href="https://github.com/linuxkit/kubernetes#linux">README</a>에 설명되어 있으나 저정도로는 간단하지 않다. 특히 qemu로 띄웠을때는 서로 vm들끼리 공유되지 않는 네트워크 상태이지 않기때문에 아래같은 스크립트로 internel network을 생성해서 사용해야 한다.</p>
 
@@ -767,7 +551,7 @@ go get -u github.com/linuxkit/linuxkit/src/cmd/linuxkit
 다만 큰 메모리에 하이퍼바이저를 구하기가 쉽지 않을 수 있다. 현재로서는 gce에서 요새 <a href="https://cloud.google.com/compute/docs/instances/enable-nested-virtualization-vm-instances">nested-virtualization</a>
 을 지원하는 vm을 만들 수 있어서 이곳이 가장 용의 할 것 같다.</p>
 
-<h3 id="gcp">gcp</h3>
+<h3 id="gcp">gcp<a href="#gcp" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 
 <p>구글 클라우드 플랫폼은 설정만 다 되면 쓰기에 좋은 편이다. 현재 커널 4.14.x가 동작하지 않는것만 알면 우선 작동이 어렵진 않다. 다만 작은 문제들이 있는데 예를 들면 다음과 같다.</p>
 
@@ -797,7 +581,7 @@ linuxkit run gcp -project alproj -keys 'key.json' \
 touch /etc/kubernetes/kubelet.conf
 </code></pre>
 
-<h3 id="aws">aws</h3>
+<h3 id="aws">aws<a href="#aws" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 
 <p>aws는 결론만 놓고 이야기 했을때 현재 성공하지 못했다. 마지막으로 확인한것은 모든 network acl을 풀었으나 kubelet 노드의 apiserver에 대한 request들이 실패하는 로그들과 함께 실패했다. 다만 4.14.x 대역의 커널도 지원하고 있어서 삽질을 더 하면 사용가능 할 듯 하다. 여기도 추가적인 문제점은 다음과 같다.</p>
 
@@ -809,59 +593,41 @@ touch /etc/kubernetes/kubelet.conf
 <li><p>metadata도 현재 사용 불가능 하다.</p></li>
 </ol>
 
-<h2 id="사용가능한-네트워크-구조들">사용가능한 네트워크 구조들</h2>
+<h2 id="사용가능한-네트워크-구조들">사용가능한 네트워크 구조들<a href="#사용가능한-네트워크-구조들" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 
-<h3 id="weave">weave</h3>
+<h3 id="weave">weave<a href="#weave" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 
 <p>weave는 아무런 준비없이 사용하기 좋은 터널링 네트워크이다. 다만 현재 <a href="https://github.com/linuxkit/kubernetes/issues/80">4.14.39 커널까지는 vxlan interface에 문제가 있어서 멀티노드로 띄울 시 문제</a>가 있다. 그래서 현재 패치를 제출한 상태인데 아직 머지는 안된 상태이다. 커널을 4.14.40 이상이면 vxlan 문제는 해결 된다.</p>
 
-<h3 id="calico">calico</h3>
+<h3 id="calico">calico<a href="#calico" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 
 <p>calico는 역시 weave 다음으로 설정이 간단하다. 다만 weave와 달리 calico 부터는 네트워크의 메터데이터 저장이 필요하고 이 때문에 <code>etcd</code> 혹은 <code>K8S Custom resource definition</code>가 필요하다. 이 때문에 모든 노드에서 접근 가능한 etcd 설정이 필요하다. 하지만 kubeadm으로 설정시 아직은 127.0.0.1과 같이 etcd가 설치되기때문에 <a href="https://github.com/leoh0/kubernetes/blob/master/pkg/kubelet/kubeadm-init.sh#L17-L59">멀티노드에서 접근 가능한 etcd가 미리 준비</a>되어야 한다. 이걸 staticpod으로 생성시켜 kubeadm 에서 생성되지 않고 bypass 하도록 구성시켜야 한다. 이후엔 메모리도 적은 간편하고 성능 좋은 네트워크를 갖을 수 있다.</p>
 
-<h3 id="cilium">cilium</h3>
+<h3 id="cilium">cilium<a href="#cilium" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 
 <p>cilium은 eBPF를 구동시켜보고 싶은 분들에게는 아주 희망적이고 간단한 테스트 방법이 될거라고 생각한다. 다만 노드당 4G이상의 메모리가 필요하다는것 그리고 cilium의 docker 이미지가 ubuntu base 이기 때문에 <a href="https://github.com/leoh0/cilium/commit/3c71dec31e970a9e48bfa4f80f2fd30cc13f24c4">alpine base 의 이미지</a>의 바이너리가 필요하다. 왜냐하면 이 바이너리를 cilium-node에서 node로 복사해서 해당 cni를 사용할 수 있게 해주기 때문이다. 또한 etcd가 필요하기에 etcd를 멀티노드에서 접근 가능한 방법으로 구성해야 한다.</p>
 
-<h1 id="demo">demo</h1>
+<h1 id="demo">demo<a href="#demo" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
 
 <p>linuxkit + kubernetes + cilium을 mac에서 테스트한 것 입니다.</p>
 
-<p><a href="https://asciinema.org/a/182500?autoplay=1">
+<p><a href="https://asciinema.org/a/182500?autoplay=1"><figure>
+    <img src="https://asciinema.org/a/182500.png"/> <figcaption>
+            <h4>demo</h4>
+        </figcaption>
+</figure>
+</a></p>
 
-
-
-
-
-
-
-
-
-
-<figure>
-  
-    
-      <img class="lazyload" data-src="https://asciinema.org/a/182500.png"  />
-    
-  
-  
-  <figcaption>
-    <header><b>demo</b></header>
-    
-  </figcaption>
-  
-</figure></a></p>
-
-<h1 id="마지막으로">마지막으로</h1>
+<h1 id="마지막으로">마지막으로<a href="#마지막으로" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
 
 <p>사실 아직까지 production에 사용하는 것은 여러가지로 한계들이 충분히 있습니다. 왜냐하면 저희가 가지고 있는 환경들도 제약적인 부분들이 많기에 힘든부분들이 많다고 생각합니다. 하지만 조금더 후엔 기존에 rpm으로 kubernetes package가 나오는것들이 이런 이미지 형태로 kubernetes 에서 제공될것이라고 생각합니다. 그때에서도 이런 부분들이 충분히 실험적일 수도 있지만 인프라가 가야하는 방향중에 한가지라고 생각하기에 제가 한달간 조사하고 삽질 한것을 많은 분들게 공유하려고 정리 했습니다.</p>
 
 <p>개인적으로 기존 제가 테스트 할때 사용하는 클러스터는 이런 방식으로 전환해서 사용하려고 계획하고 있습니다. 사용하면 할 수록 매력적인 부분들이 있는것 같네요. 다른 분들도 이런 즐거움을 느낄 수 있었으면 좋겠습니다.</p>
 
-    </div>
-    
-      <article>
-        <div id="disqus_thread"></div>
+		</div>
+		<div id="comments" class="thin">
+			
+<div id="disqus_thread"></div>
 <script type="application/javascript">
     var disqus_config = function () {
     
@@ -881,58 +647,31 @@ touch /etc/kubernetes/kubelet.conf
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-      </article>
-    
-    <footer>
-      <hr>
-      <p>
-  Published
-  
-    
-      by <span itemprop="author">leoh0</span>
-    
-  
-  <time itemprop="datePublished" datetime="2018-05-21T00:55:10&#43;09:00">
-    21 May, 2018
-  </time>
-  
-    in <span itemprop="articleSection"><a href="/categories/technology/">technology</a></span>
-  
-  
-    and tagged <a href="/tags/aws/">aws</a>, <a href="/tags/calico/">calico</a>, <a href="/tags/cilium/">cilium</a>, <a href="/tags/docker/">docker</a>, <a href="/tags/gcp/">gcp</a>, <a href="/tags/k8s/">k8s</a>, <a href="/tags/kubernetes/">kubernetes</a>, <a href="/tags/linuxkit/">linuxkit</a> and <a href="/tags/weave/">weave</a>
-  
-  using <span itemprop="wordCount">2298</span> words.
-</p>
 
-      
+		</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2019 <a href="https://leoh0.github.io/"></a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
 
 
-  <aside>
-    <header>Related Content</header>
-    <ul>
-      
-        <li><a href="/post/2018-04-07-how-to-make-unofficial-kubernetes-pdf-documents-2/">how to make unofficial kubernetes pdf documents 2</a>
-        <time datetime="3M">3 minutes</time>
-      
-        <li><a href="/post/2017-10-23-how-to-make-unofficial-kubernetes-pdf-documents/">how to make unofficial kubernetes pdf documents</a>
-        <time datetime="3M">3 minutes</time>
-      
-        <li><a href="/post/2017-07-27-k8s-tools-for-watching-log-and-login-multiple-containers/">k8s tools for watching log and login to multiple containers</a>
-        <time datetime="2M">2 minutes</time>
-      
-        <li><a href="/post/2016-10-13-install-openstack-on-macos-sierra-using-kolla-kubernetes-and-xhyve/">Install openstack on macos Sierra using kolla-kubernetes with xhyve</a>
-        <time datetime="1M">1 minutes</time>
-      
-    </ul>
-  </aside>
+	<script src="https://leoh0.github.io/js/main.min.784417f5847151f848c339cf0acb13a06cbb648b1483435a28ed4556c4ead69b.js" integrity="sha256-eEQX9YRxUfhIwznPCssToGy7ZIsUg0NaKO1FVsTq1ps="></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-46519012-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
-    </footer>
-  </article>
-</main>
-    <footer>
-  
+</body>
 
-</footer>
-  </body>
 </html>

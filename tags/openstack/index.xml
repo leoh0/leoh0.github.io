@@ -23,7 +23,8 @@ kubernetes 로 openstack mitaka를 설치해 봤습니다.
 대략 31분 정도 걸려서 minikube 구성 부터 전체 셋업 및 vm 2개 띄워서 로그인 테스트 합니다.
 그리고 저는 macos Sierra 에서 xhyve 로 8G 머신을 만들어서 사용을 했습니다.
 linux 머신이 있으면 kvm을 이용하시는 것도 좋을것 같습니다.
-windows 환경에선 xhyve 외에도 virtual box 등을 이용하셔도 좋을 것 같습니다.</description>
+windows 환경에선 xhyve 외에도 virtual box 등을 이용하셔도 좋을 것 같습니다.
+셋업할때 kubernetes-cli 는 1.</description>
     </item>
     
     <item>
@@ -65,9 +66,7 @@ openstack rc file (normal version) 예를 들면 아래는 일반적으로 사�
 이런 상황을 디버깅 했던 경험을 정리해 본다.
 아래는 문제가 되었던 memcached host의 in/out bound 그래프이다.
 수치는 가려서 스케일만 감으로 볼 수 있게 남겼다.
-A 서버   A 서버  
-B 서버   B 서버  
-최초엔 keystone과 memcached connection 이 unbalance 할것이라고 생각했으나 그런 정황은 없었다.</description>
+A 서버   A 서버   B 서버   B 서버   최초엔 keystone과 memcached connection 이 unbalance 할것이라고 생각했으나 그런 정황은 없었다.</description>
     </item>
     
     <item>

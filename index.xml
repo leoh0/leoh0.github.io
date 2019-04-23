@@ -39,7 +39,8 @@
       <pubDate>Tue, 09 Oct 2018 01:42:33 +0900</pubDate>
       
       <guid>https://leoh0.github.io/post/2018-10-09-kubernetes-prometheus-metric-aggregation-by-daemonset-statefulset-deployment-walkthrough/</guid>
-      <description>Kubernetes Aggregation Metrics    kubernetes and prometheus 최근 kubernetes에서 metric을 관리하는 것중 가장 유명한 것은 prometheus라고 할 수 있습니다. metric 관리방법으로 heapster를 사용할때 까지는 influxdb를 많이 사용하는 추세 였으나 앞으로 대채될 metrics-server는 현재 in-memory sink밖에 없어서 우선 기존에 influxdb를 사용하던것을 많이 안쓰게 될것 같습니다. 더욱이 custom metric들에 대한 예제들이 prometheus로 제공되고 있어서 prometheus로 metric관리가 통합될것으로 기대하고 있습니다.
+      <description>Kubernetes Aggregation Metrics
+  kubernetes and prometheus 최근 kubernetes에서 metric을 관리하는 것중 가장 유명한 것은 prometheus라고 할 수 있습니다. metric 관리방법으로 heapster를 사용할때 까지는 influxdb를 많이 사용하는 추세 였으나 앞으로 대채될 metrics-server는 현재 in-memory sink밖에 없어서 우선 기존에 influxdb를 사용하던것을 많이 안쓰게 될것 같습니다. 더욱이 custom metric들에 대한 예제들이 prometheus로 제공되고 있어서 prometheus로 metric관리가 통합될것으로 기대하고 있습니다.
 이러한 prometheus로 kubernetes metric들을 수집하는 것은 대체로 크게 2가지 케이스 입니다.</description>
     </item>
     
@@ -146,7 +147,8 @@ kubernetes 로 openstack mitaka를 설치해 봤습니다.
 대략 31분 정도 걸려서 minikube 구성 부터 전체 셋업 및 vm 2개 띄워서 로그인 테스트 합니다.
 그리고 저는 macos Sierra 에서 xhyve 로 8G 머신을 만들어서 사용을 했습니다.
 linux 머신이 있으면 kvm을 이용하시는 것도 좋을것 같습니다.
-windows 환경에선 xhyve 외에도 virtual box 등을 이용하셔도 좋을 것 같습니다.</description>
+windows 환경에선 xhyve 외에도 virtual box 등을 이용하셔도 좋을 것 같습니다.
+셋업할때 kubernetes-cli 는 1.</description>
     </item>
     
     <item>
@@ -209,9 +211,7 @@ openstack rc file (normal version) 예를 들면 아래는 일반적으로 사�
 이런 상황을 디버깅 했던 경험을 정리해 본다.
 아래는 문제가 되었던 memcached host의 in/out bound 그래프이다.
 수치는 가려서 스케일만 감으로 볼 수 있게 남겼다.
-A 서버   A 서버  
-B 서버   B 서버  
-최초엔 keystone과 memcached connection 이 unbalance 할것이라고 생각했으나 그런 정황은 없었다.</description>
+A 서버   A 서버   B 서버   B 서버   최초엔 keystone과 memcached connection 이 unbalance 할것이라고 생각했으나 그런 정황은 없었다.</description>
     </item>
     
     <item>
@@ -414,7 +414,7 @@ RIP 20150115 http://leoh0.blogspot.kr
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://leoh0.github.io/about/aboutme/</guid>
-      <description>    My name is leoh0.
+      <description>   My name is leoh0.
 My world is metaphor and hommage.
  </description>
     </item>

@@ -25,13 +25,9 @@
 #!/usr/bin/env bash if mount | grep -q &#39;ntfs&#39; ; then if ! mount | grep -q &#39;read-only&#39; ; then echo -e &quot;\033[01;36mExist already in /etc/fstab.\033[00m&quot; VOLUME=$(mount | grep &quot;(ntfs, &quot; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(.*\) (ntfs,.*$|\1|g&#39;) open &quot;$VOLUME&quot; exit fi DISK=$(mount | grep &#39;read-only&#39; | awk &#39;{print $1}&#39;) UUID=$(diskutil info $DISK | grep UUID | awk &#39;{print $3}&#39;) echo -e &quot;\033[01;36mRegistry into /etc/fstab.\033[00m&quot; echo &quot;UUID=$UUID none ntfs rw,auto,nobrowse&quot; | sudo tee -a /etc/fstab &gt; /dev/null diskutil umount $DISK diskutil mount $DISK VOLUME=$(mount | grep &quot;(ntfs, &quot; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://leoh0.github.io/post/2015-11-03-maceseo-ntfs-diske-write-hagi/" />
-
-<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322" />
 <meta property="article:published_time" content="2015-11-03T09:38:22&#43;09:00"/>
 <meta property="article:modified_time" content="2015-11-03T09:38:22&#43;09:00"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
-
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="mac에서 ntfs disk에 write 하기"/>
 <meta name="twitter:description" content="GPT 일때 가능
 #!/usr/bin/env bash if mount | grep -q &#39;ntfs&#39; ; then if ! mount | grep -q &#39;read-only&#39; ; then echo -e &quot;\033[01;36mExist already in /etc/fstab.\033[00m&quot; VOLUME=$(mount | grep &quot;(ntfs, &quot; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(.*\) (ntfs,.*$|\1|g&#39;) open &quot;$VOLUME&quot; exit fi DISK=$(mount | grep &#39;read-only&#39; | awk &#39;{print $1}&#39;) UUID=$(diskutil info $DISK | grep UUID | awk &#39;{print $3}&#39;) echo -e &quot;\033[01;36mRegistry into /etc/fstab.\033[00m&quot; echo &quot;UUID=$UUID none ntfs rw,auto,nobrowse&quot; | sudo tee -a /etc/fstab &gt; /dev/null diskutil umount $DISK diskutil mount $DISK VOLUME=$(mount | grep &quot;(ntfs, &quot; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(."/>

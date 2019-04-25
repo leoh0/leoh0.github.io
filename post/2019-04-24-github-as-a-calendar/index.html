@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+
+<meta itemprop="name" content="Github as a Calendar">
+<meta itemprop="description" content="play with your github contribution 개발자들이라면 일반적으로 github 링크를 공유할일 들이 있습니다. 그런데 아무래도 github의 contribution calendar를 이쁘게 잘 채워놓는 것은 쉬운일이 아니라고 생각합니다. 이럴때 평소면 상관없지만 github 링크를 적는일이 있다면 신경쓰일수 밖에 없어집니다.
+하지만 git은 commit 시간을 지정해서 작성 가능하기 때문에 원하는 시간에 맞게 commit들을 생성가능 하고 이를 통해서 github contribution을 꾸밀 수 있습니다.
+그리고 이런것들을 쉽게 도와 주는 다양한 툴들이 있습니다.
+ github-contributions github-spray  만약 이런걸 모르는 사람이 있다면 적어도 당신에게 흥미로워 할것같습니다.">
+
+
+<meta itemprop="datePublished" content="2019-04-24T08:55:44&#43;09:00" />
+<meta itemprop="dateModified" content="2019-04-24T08:55:44&#43;09:00" />
+<meta itemprop="wordCount" content="718">
+
+  <meta itemprop="image" content="http://leoh0.github.io/images/2019-04-24-085809_650x202_scrot.png">
+
+
+
+<meta itemprop="keywords" content="git,github,calendar," />
+<meta property="og:title" content="Github as a Calendar" />
+<meta property="og:description" content="play with your github contribution 개발자들이라면 일반적으로 github 링크를 공유할일 들이 있습니다. 그런데 아무래도 github의 contribution calendar를 이쁘게 잘 채워놓는 것은 쉬운일이 아니라고 생각합니다. 이럴때 평소면 상관없지만 github 링크를 적는일이 있다면 신경쓰일수 밖에 없어집니다.
+하지만 git은 commit 시간을 지정해서 작성 가능하기 때문에 원하는 시간에 맞게 commit들을 생성가능 하고 이를 통해서 github contribution을 꾸밀 수 있습니다.
+그리고 이런것들을 쉽게 도와 주는 다양한 툴들이 있습니다.
+ github-contributions github-spray  만약 이런걸 모르는 사람이 있다면 적어도 당신에게 흥미로워 할것같습니다." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://leoh0.github.io/post/2019-04-24-github-as-a-calendar/" />
+
+<meta property="og:image" content="http://leoh0.github.io/images/2019-04-24-085809_650x202_scrot.png" />
+<meta property="article:published_time" content="2019-04-24T08:55:44&#43;09:00"/>
+<meta property="article:modified_time" content="2019-04-24T08:55:44&#43;09:00"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://leoh0.github.io/images/2019-04-24-085809_650x202_scrot.png"/>
+
+<meta name="twitter:title" content="Github as a Calendar"/>
+<meta name="twitter:description" content="play with your github contribution 개발자들이라면 일반적으로 github 링크를 공유할일 들이 있습니다. 그런데 아무래도 github의 contribution calendar를 이쁘게 잘 채워놓는 것은 쉬운일이 아니라고 생각합니다. 이럴때 평소면 상관없지만 github 링크를 적는일이 있다면 신경쓰일수 밖에 없어집니다.
+하지만 git은 commit 시간을 지정해서 작성 가능하기 때문에 원하는 시간에 맞게 commit들을 생성가능 하고 이를 통해서 github contribution을 꾸밀 수 있습니다.
+그리고 이런것들을 쉽게 도와 주는 다양한 툴들이 있습니다.
+ github-contributions github-spray  만약 이런걸 모르는 사람이 있다면 적어도 당신에게 흥미로워 할것같습니다."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>Github as a Calendar</title>
+	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.cf317e8e759e34ff58587ff7fca05f8b77531a61ee8e63c887a46eb43ebad966.css" crossorigin="anonymous" integrity="sha256-zzF+jnWeNP9YWH/3/KBfi3dTGmHujmPIh6RutD662WY=">
+	<style>.bg-img {background-image: url('http://leoh0.github.io/images/2019-04-24-085809_650x202_scrot.png');}</style>
+	<link rel="stylesheet" href="https://leoh0.github.io/css/prism.css">
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://leoh0.github.io/">&gt; /dev/null</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					<a href="https://leoh0.github.io/">Home</a>
+					<a href="https://leoh0.github.io/post/">Posts</a>
+					<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
+					<a href="https://leoh0.github.io/blog/">.</a>
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="img-btn" class="hdr-btn" title="Featured Image"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg></button><span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://leoh0.github.io/">Home</a></li>
+			<li><a href="https://leoh0.github.io/post/">Posts</a></li>
+			<li><a href="https://leoh0.github.io/about/aboutme">AboutMe</a></li>
+			<li><a href="https://leoh0.github.io/blog/">.</a></li>
+		</ul>
+	</div>
+
+
+	<div class="bg-img"></div>
+	<main class="site-main section-inner thin animated fadeIn faster">
+		<h1>Github as a Calendar</h1>
+		<div class="content">
+			
+
+<figure>
+    <img src="http://leoh0.github.io/images/2019-04-24-085809_650x202_scrot.png"/> 
+</figure>
+
+
+<h1 id="play-with-your-github-contribution">play with your github contribution<a href="#play-with-your-github-contribution" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
+
+<p>개발자들이라면 일반적으로 github 링크를 공유할일 들이 있습니다.
+그런데 아무래도 github의 contribution calendar를 이쁘게 잘 채워놓는 것은 쉬운일이 아니라고 생각합니다.
+이럴때 평소면 상관없지만 github 링크를 적는일이 있다면 신경쓰일수 밖에 없어집니다.</p>
+
+<p>하지만 git은 commit 시간을 지정해서 작성 가능하기 때문에 원하는 시간에 맞게 commit들을 생성가능 하고 이를 통해서 github contribution을 꾸밀 수 있습니다.</p>
+
+<p>그리고 이런것들을 쉽게 도와 주는 다양한 툴들이 있습니다.</p>
+
+<ul>
+<li><a href="https://github.com/IonicaBizau/github-contributions">github-contributions</a></li>
+<li><a href="https://github.com/Annihil/github-spray">github-spray</a></li>
+</ul>
+
+<p>만약 이런걸 모르는 사람이 있다면 적어도 당신에게 흥미로워 할것같습니다.</p>
+
+<h1 id="github-as-a-calendar">github as a calendar<a href="#github-as-a-calendar" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
+
+<p>그렇다면 재미를 위해 이걸 이용해서 오늘의 날짜를 표현해주는 script를 공유해봅니다.</p>
+
+<p>아래 스크립트는 debian 계열에서 우선 동작하도록 되어 있는데 <code>timezone</code> 패키지만 설치되어 있으면 다른곳에서도 동작 가능 합니다.</p>
+
+<h3 id="설정">설정<a href="#설정" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+
+<p>스크립트를 사용하기 전 아래 5개의 환경변수를 셋업 해야 합니다.</p>
+
+<ul>
+<li><p>COMMIT_USERNAME</p>
+
+<p>COMMIT_USERNAME 은 커밋에 적힐 username입니다.</p>
+
+<pre><code>export COMMIT_USERNAME=&quot;Eohyung Lee&quot;
+</code></pre></li>
+
+<li><p>COMMIT_USEREMAIL</p>
+
+<p>COMMIT_USEREMAIL 은 커밋에 적힐 email입니다. github에 등록되어 있는 email을 사용하는게 좋습니다.</p>
+
+<pre><code>export COMMIT_USEREMAIL=liquidnuker@gmail.com
+</code></pre></li>
+
+<li><p>GITHUB_USERNAME</p>
+
+<p>GITHUB_USERNAME 은 github계정입니다.</p>
+
+<pre><code>export GITHUB_USERNAME=leoh0
+</code></pre></li>
+
+<li><p>GITHUB_REPOSITORY</p>
+
+<p>GITHUB_REPOSITORY 은 이 가짜 커밋 데이터들을 생성할 레포지토리 입니다.
+<strong>이 레포지토리는 매번 github calendar를 깨끗히 초기화 시키기 위해 생성전에 삭제합니다.</strong></p>
+
+<pre><code>export COMMIT_USERNAME=&quot;Eohyung Lee&quot;
+</code></pre></li>
+
+<li><p>GITHUB_APITOKEN</p>
+
+<p>GITHUB_APITOKEN 은 github을 API로 이용하기 위한 token입니다.
+<a href="https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line">이 링크</a>를 참고하시면 token 생성방법을 확인 가능합니다.</p>
+
+<p><strong>이 토큰은 반드시 <code>delete_repo</code>, <code>repo</code>의 권한을 가지고 있어야 합니다.</strong></p>
+
+<pre><code>export GITHUB_APITOKEN=*******************************************
+</code></pre></li>
+
+<li><p>옵션</p>
+
+<p>추가로 <code>export USEPRIVATE=true</code>를 사용하면 private repository를 이용할 수 있습니다. private repository를 이용하는 이유는 쓸데없이 follower 들에게 알람이 가지 않도록 하기 위함 입니다. 다만 이 옵션을 사용할 경우엔 contribution settings 에서 아래와 같이 <code>Private contributions</code> 옵션을 켜줘야 합니다.</p>
+
+<figure>
+    <img src="http://leoh0.github.io/images/2019-04-25-103218_755x242_scrot.png"/> 
+</figure>
+</li>
+</ul>
+
+<h3 id="실행">실행<a href="#실행" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+
+<p>저는 이런 것들을 돌리기 위해서 gcp 에서 <a href="https://cloud.google.com/free/docs/gcp-free-tier#always-free-usage-limits">always free</a>인 자원을 사용합니다. <code>f1-micro</code>에 특정 지역인 경우 무료이기 때문에 이런 장난감을 돌리기 용의 합니다. 그래서 우선 gcp 에서 us-east1 리전에서 f1-micro에 ubuntu-18.04 이미지로 사용했습니다.</p>
+
+<p>부팅 이후 아래와 같이 실행하면 cron이 등록 됩니다. 이후 <code>밤 12시 정각부터 cron으로 구동되어 github contribution을 업데이트</code> 해주게 됩니다. 보통 정각에 구동되면 반영되기 까지 1-2분 정도 소요됩니다.</p>
+
+<p>다른 환경에서 구동시키려면 아래 스크립트를 돌리기 전에 스크립트 내용을 아시면 좋습니다.</p>
+
+<pre><code>curl https://gist.githubusercontent.com/leoh0/06f763c23b46e1f07c05a4df7c9abdc2/raw/fd90af927cbd264c233998ca3ee4483fa78aa6ff/github-contribution-as-a-calendar.sh | bash
+</code></pre>
+
+<h3 id="review-code">Review code<a href="#review-code" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+
+<p><a href="https://gist.github.com/leoh0/06f763c23b46e1f07c05a4df7c9abdc2">gist link</a></p>
+
+<pre><code class="language-bash">#!/bin/bash
+
+set -e
+set -o pipefail
+
+USEPRIVATE=${USEPRIVATE:-false}
+
+if [[ -z &quot;$COMMIT_USERNAME&quot; \
+    || -z &quot;$COMMIT_USEREMAIL&quot; \
+    || -z &quot;$GITHUB_USERNAME&quot; \
+    || -z &quot;$GITHUB_REPOSITORY&quot; \
+    || -z &quot;$GITHUB_APITOKEN&quot; ]]; then
+    echo &quot;You need set below variables before run this script&quot;
+    echo
+    echo &quot;# COMMIT_USERNAME is for your commit user name&quot;
+    echo &quot;export COMMIT_USERNAME=&quot;
+    echo
+    echo &quot;# COMMIT_USEREMAIL is for your commit email&quot;
+    echo &quot;export COMMIT_USEREMAIL=&quot;
+    echo
+    echo &quot;# GITHUB_USERNAME is for github user name&quot;
+    echo &quot;export GITHUB_USERNAME=&quot;
+    echo
+    echo &quot;# GITHUB_REPOSITORY is for pushed dummy datas which included commits for github contribution calendar.&quot;
+    echo &quot;# Attention!: This repository is always *DELETED* before it is created because of cleansing github contribution calendar. So please use disposable repository.&quot;
+    echo &quot;export GITHUB_REPOSITORY=&quot;
+    echo
+    echo &quot;# GITHUB_APITOKEN is for github API&quot;
+    echo &quot;# This token MUST include follow permissions. delete_repo, repo&quot;
+    echo &quot;# https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line&quot;
+    echo &quot;export GITHUB_APITOKEN=&quot;
+
+    exit 1
+fi
+
+# setup date for using timezone
+if [ ! -d &quot;/usr/share/zoneinfo&quot; ]; then
+    export DEBIAN_FRONTEND=noninteractive
+    ERROR=&quot;ERROR: Installing timezone package is failed so you need to install &quot;
+    ERROR=&quot;$ERROR timezone package by yourself before run this script.&quot;
+    sudo apt update
+    sudo apt install -y tzdata || ( echo &quot;$ERROR&quot; ; exit 1 )
+fi
+
+# setup github-contribution bin
+mkdir -p &quot;$HOME/bin&quot;
+
+if [[ &quot;$USEPRIVATE&quot; == true ]]; then
+    PRIVATE=&quot;, \\\&quot;private\\\&quot;: true&quot;
+fi
+
+cat &lt;&lt; EOF &gt; &quot;$HOME/bin/update-github-contribution.sh&quot;
+#!/bin/bash
+
+set -e
+set -o pipefail
+
+if [[ &quot;\$(env TZ=Asia/Seoul date +%H)&quot; != &quot;00&quot; ]]; then
+    echo &quot;Only working at KST(Asia/Seoul) midnight&quot;
+    exit 0
+fi
+
+curl -s -S -n -XDELETE \\
+    &quot;https://api.github.com/repos/$GITHUB_USERNAME/$GITHUB_REPOSITORY&quot;
+
+curl -s -S -f -n -XPOST \\
+    -d &quot;{\&quot;name\&quot;: \&quot;$GITHUB_REPOSITORY\&quot;$PRIVATE}&quot; \\
+    &quot;https://api.github.com/user/repos&quot;
+
+docker run \\
+        --rm \\
+        --name github-spray \\
+        -i \\
+        -e &quot;USERNAME=$COMMIT_USERNAME&quot; \\
+        -e &quot;USEREMAIL=$COMMIT_USEREMAIL&quot; \\
+        -v $HOME/.netrc:/root/.netrc \\
+        leoh0/github-spray \\
+        -t &quot;\$(env TZ=Asia/Seoul date '+%x')&quot; \\
+        --multiplier 10 \\
+        --push \\
+        --origin https://github.com/$GITHUB_USERNAME/$GITHUB_REPOSITORY.git
+EOF
+
+chmod +x &quot;$HOME/bin/update-github-contribution.sh&quot;
+
+# setup netrc
+cat &lt;&lt; EOF &gt; &quot;$HOME/.netrc&quot;
+machine github.com
+  login $GITHUB_USERNAME
+  password $GITHUB_APITOKEN
+
+machine api.github.com
+  login $GITHUB_USERNAME
+  password $GITHUB_APITOKEN
+EOF
+
+# setup cron
+if ! crontab -l | grep -q update-github-contribution.sh; then
+    # ensure exist
+    sudo touch &quot;/var/spool/cron/crontabs/$USER&quot;
+    sudo chmod 600 &quot;/var/spool/cron/crontabs/$USER&quot;
+    sudo chown &quot;$USER&quot;.crontab &quot;/var/spool/cron/crontabs/$USER&quot;
+
+    # add to cron
+    crontab -l &gt; tempcron
+
+    # work every our for supporting different timezone
+    echo &quot;0 * * * * $HOME/bin/update-github-contribution.sh 2&gt;&amp;1 | \
+/usr/bin/logger -t github-contribution&quot; &gt;&gt; tempcron
+
+    crontab tempcron
+    rm -f tempcron
+fi
+
+# setup docker
+if ! command -v docker &gt;/dev/null ; then
+    curl https://releases.rancher.com/install-docker/18.09.sh | sh
+
+    sudo usermod -aG docker &quot;$USER&quot;
+fi
+</code></pre>
+
+		</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<script src="/js/prism.js"></script>
+		<p>&copy; 2019 <a href="https://leoh0.github.io/"></a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/post/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+	<script src="https://leoh0.github.io/js/main.min.784417f5847151f848c339cf0acb13a06cbb648b1483435a28ed4556c4ead69b.js" integrity="sha256-eEQX9YRxUfhIwznPCssToGy7ZIsUg0NaKO1FVsTq1ps="></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-46519012-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</body>
+
+</html>

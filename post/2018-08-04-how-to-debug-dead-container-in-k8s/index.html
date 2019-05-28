@@ -136,11 +136,12 @@
 
 <ul>
 <li><a href="https://kubernetes.io/docs/tasks/configure-pod-container/share-process-namespace/">Share Process Namespace between Containers in a Pod</a> 를 이용해서 debugging할 container를 namespace에 sharing 시킴</li>
-<li>향후엔 <code>debug</code> 커맨드를 지원해서 아래와 같은 커맨드로 임시적으로 debugger를 붙여서 디버깅을 할 수 있게 함. <a href="https://github.com/kubernetes/community/blob/master/contributors/design-proposals/node/troubleshoot-running-pods.md">Troubleshoot Running Pods</a></li>
-</ul>
 
-<pre><code>   kubectl debug  --image=&lt;your-debugger-image&gt; &lt;your-application-pod&gt;
-</code></pre>
+<li><p>향후엔 <code>debug</code> 커맨드를 지원해서 아래와 같은 커맨드로 임시적으로 debugger를 붙여서 디버깅을 할 수 있게 함. <a href="https://github.com/kubernetes/community/blob/master/contributors/design-proposals/node/troubleshoot-running-pods.md">Troubleshoot Running Pods</a></p>
+
+<pre><code>kubectl debug  --image=&lt;your-debugger-image&gt; &lt;your-application-pod&gt;
+</code></pre></li>
+</ul>
 
 <p>자세한 내용은 위 블로그에서 확인 가능합니다.</p>
 

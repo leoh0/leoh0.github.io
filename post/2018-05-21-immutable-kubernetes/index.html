@@ -189,16 +189,16 @@ FROM <a href="http://www.adelzaalouk.me/2017/moby-linuxkit/">Demystifying Moby: 
 <li><p><code>control plane(apiserver, controller manager, scheduler)</code> upgrade</p>
 
 <ul>
-<li>control plane은 apiserver는 daemonset, controller manager, scheduler는 deployment가 되기 때문에 image 교체정도로 업그레이드가 끝나게 된다.</li>
-</ul>
+<li><p>control plane은 apiserver는 daemonset, controller manager, scheduler는 deployment가 되기 때문에 image 교체정도로 업그레이드가 끝나게 된다.</p>
 
 <pre><code>kubectl set image ds/kube-apiserver \
-    kube-apiserver=gcr.io/google_containers/kube-apiserver-amd64:v1.10.0
+kube-apiserver=gcr.io/google_containers/kube-apiserver-amd64:v1.10.0
 kubectl set image deploy/kube-scheduler \
-    kube-scheduler=gcr.io/google_containers/kube-scheduler-amd64:v1.10.0
+kube-scheduler=gcr.io/google_containers/kube-scheduler-amd64:v1.10.0
 kubectl set image deploy/kube-controller-manager \
-    kube-controller-manager=gcr.io/google_containers/kube-controller-manager-amd64:v1.10.0
+kube-controller-manager=gcr.io/google_containers/kube-controller-manager-amd64:v1.10.0
 </code></pre></li>
+</ul></li>
 
 <li><p><code>node agent(kubelet)</code> upgrade</p>
 
@@ -431,15 +431,15 @@ linuxkit run gcp -project alproj -keys 'key.json' \
 
 <li><p>생성할때 disk를 추가해 줘야 한다. 이건 문제라기 보단 당연한 건데 gcp, aws들은 이미지를 raw타입을 쓰고 이미지의 사이즈에서 resize(<a href="https://github.com/linuxkit/linuxkit/tree/master/pkg/extend">extend</a> 하지 않으면 디스크 사이즈가 아예 없다고 봐도 된다. 그래서 추가디스크(eg. sdb)로 용량을 확보(eg. docker image가 저장되는 /var/lib 등)해서 사용 할 수 있다.</p></li>
 
-<li><p>metadata를 linuxkit command로 넣을 수 없다.. 아직 기능부족으로 문제가 된다. 수동으로 <code>kubeadm join</code> 커맨드를 돌려서 작동 시킬 수 있다. 하지만 <code>kubeadm join</code>커맨드를 돌리면 <code>/etc/kubernetes/bootstrap-kubelet.conf</code> 만 생성된다. 원래 kubelet이 떠있으면 이 파일이 생성되면서 자동으로 kubelet이 이파일로 노드 등록을 하게 되나 linuxkit은 kubelet service가 systemd 등과 같은 툴로 실패해도 지속적으로 구동되도록 트라이 하지 못함으로 특정 파일이 생길때까지 wait을 해놓은 상태이다. 그래서 특정 파일을 생성해 줘야 kubelet 서비스가 뜰 수 있다. 이걸 코드로 표현 하면 다음과 같다.</p></li>
-</ol>
+<li><p>metadata를 linuxkit command로 넣을 수 없다.. 아직 기능부족으로 문제가 된다. 수동으로 <code>kubeadm join</code> 커맨드를 돌려서 작동 시킬 수 있다. 하지만 <code>kubeadm join</code>커맨드를 돌리면 <code>/etc/kubernetes/bootstrap-kubelet.conf</code> 만 생성된다. 원래 kubelet이 떠있으면 이 파일이 생성되면서 자동으로 kubelet이 이파일로 노드 등록을 하게 되나 linuxkit은 kubelet service가 systemd 등과 같은 툴로 실패해도 지속적으로 구동되도록 트라이 하지 못함으로 특정 파일이 생길때까지 wait을 해놓은 상태이다. 그래서 특정 파일을 생성해 줘야 kubelet 서비스가 뜰 수 있다. 이걸 코드로 표현 하면 다음과 같다.</p>
 
 <pre><code>kubeadm join 10.140.0.2:6443 \
-    --ignore-preflight-errors=all \
-    --token gitpj4.gtok7zsm3tfrlh64 \
-    --discovery-token-ca-cert-hash sha256:773e83472b9809473cde237246227dfc2cd795a5848f127de11b3a5fb6550fb9
+--ignore-preflight-errors=all \
+--token gitpj4.gtok7zsm3tfrlh64 \
+--discovery-token-ca-cert-hash sha256:773e83472b9809473cde237246227dfc2cd795a5848f127de11b3a5fb6550fb9
 touch /etc/kubernetes/kubelet.conf
-</code></pre>
+</code></pre></li>
+</ol>
 
 <h3 id="aws">aws<a href="#aws" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 

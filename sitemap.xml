@@ -120,18 +120,18 @@
   </url>
   
   <url>
+    <loc>https://leoh0.github.io/tags/daemonset/</loc>
+    <lastmod>2018-10-09T01:42:33+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://leoh0.github.io/post/2018-10-09-kubernetes-prometheus-metric-aggregation-by-daemonset-statefulset-deployment-walkthrough/</loc>
     <lastmod>2018-10-09T01:42:33+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://leoh0.github.io/tags/aggregation/</loc>
-    <lastmod>2018-10-09T01:42:33+09:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://leoh0.github.io/tags/daemonset/</loc>
     <lastmod>2018-10-09T01:42:33+09:00</lastmod>
     <priority>0</priority>
   </url>

@@ -6,10 +6,23 @@
     <description>Recent content in technology on &gt; /dev/null</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Apr 2019 08:55:44 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 24 Sep 2019 20:55:44 +0900</lastBuildDate>
     
 	<atom:link href="https://leoh0.github.io/categories/technology/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How to use static ip in kubernetes nginx ingress without default backend</title>
+      <link>https://leoh0.github.io/post/2019-09-24-how-to-use-static-ip-in-kubernetes-nginx-ingress-without-default-backend/</link>
+      <pubDate>Tue, 24 Sep 2019 20:55:44 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/post/2019-09-24-how-to-use-static-ip-in-kubernetes-nginx-ingress-without-default-backend/</guid>
+      <description>kubernetes ingress는 일반적으로 virtual host, virtual path등을 위한 서비스들을 제공하고 이는 DNS기반으로 작동되게 되어 있습니다.
+만약 이런 ingress를 ip기반으로 사용하고 싶다고 하더라도 일반적으로 ingress validation에 막혀있습니다.
+그래서 일반적으로는 nginx ingress static-ip example이런 예제와 같이 default backend를 통해 ip로 들어오는 리퀘스트가 처리 됩니다.
+그렇다면 진짜로 ip로 들어오는 리퀘스트를 default backend가 아닌 다른 service로 연결할 수 없을까요? 물론 이 포스트를 쓰는 목적이지만 제한적이지만 답은 있습니다.
+우선 힌트는 위의 ingress validation 라고 할 수 있는데, 뭐냐하면 사실 위에서 ParseIP를 통해 ip address가 파싱되는지를 확인해서 이로 설정되는 것을 막고 있지만 실제 ip address는 다양한 방법으로 표기 가능합니다.</description>
+    </item>
     
     <item>
       <title>Github as a Calendar</title>

@@ -7,7 +7,6 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="theme-color" content="#494f5c">
 	<meta name="msapplication-TileColor" content="#494f5c">
-
 <meta itemprop="name" content="immutable kubernetes by linuxkit">
 <meta itemprop="description" content="linuxkit with kubernetes    &hellip; As a developer and sometimes system administrator, one of the scariest things I ever encounter is a server that’s been running for ages which has seen multiple upgrades of system and application software. &hellip; Need to upgrade? No problem. Build a new, upgraded system and throw the old one away. New app revision? Same thing. Build a server (or image) with a new revision and throw away the old ones.">
 
@@ -25,8 +24,8 @@
 <meta property="og:url" content="https://leoh0.github.io/post/2018-05-21-immutable-kubernetes/" />
 
 <meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322" />
-<meta property="article:published_time" content="2018-05-21T00:55:10&#43;09:00"/>
-<meta property="article:modified_time" content="2018-05-21T00:55:10&#43;09:00"/>
+<meta property="article:published_time" content="2018-05-21T00:55:10+09:00" />
+<meta property="article:modified_time" content="2018-05-21T00:55:10+09:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 
@@ -266,14 +265,14 @@ kube-controller-manager=gcr.io/google_containers/kube-controller-manager-amd64:v
 <li><code>docker</code>, <code>qemu</code>, <code>golang</code> 설치</li>
 <li>vm이 사용할 bridge 생성 및 이에 대한 dhcp 설정</li>
 <li>해당 bridge의 vm이 nat로 인터넷 연결 할 수 있도록 설정</li>
-<li>linuxkit 설치 및 접속할 sshkey 생성</li>
-</ol>
+
+<li><p>linuxkit 설치 및 접속할 sshkey 생성</p>
 
 <pre><code class="language-bash">#!/bin/sh
 
 if [ &quot;$(id -u)&quot; != &quot;0&quot; ]; then
-   echo &quot;This script must be run as root&quot; 1&gt;&amp;2
-   exit 1
+echo &quot;This script must be run as root&quot; 1&gt;&amp;2
+exit 1
 fi
 
 set -ex
@@ -287,8 +286,8 @@ apt-key fingerprint 0EBFCD88
 #   stable&quot;
 # 18.04는 repo가 아직 없어서 artful을 이용해야 한다.
 add-apt-repository    &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   artful \
-   stable&quot;
+artful \
+stable&quot;
 apt update
 apt install -y docker-ce uml-utilities qemu-kvm bridge-utils virtinst libvirt-bin golang-go
 
@@ -381,9 +380,9 @@ EOF
 systemctl start dnsmasq@virbr10.service
 
 echo '''Host *
-    StrictHostKeyChecking no
-    UserKnownHostsFile /dev/null
-    User root''' &gt; /root/.ssh/config
+StrictHostKeyChecking no
+UserKnownHostsFile /dev/null
+User root''' &gt; /root/.ssh/config
 
 export PATH=~/go/bin:$PATH
 export PATH=/usr/libexec:$PATH
@@ -402,10 +401,11 @@ echo '''
 make all
 KUBE_CLEAR_STATE=true KUBE_MAC=8a:a0:33:57:08:0a KUBE_NETWORKING=&quot;bridge,virbr10&quot; ./boot.sh
 KUBE_CLEAR_STATE=true KUBE_MAC=8a:a0:33:57:08:0b KUBE_NETWORKING=&quot;bridge,virbr10&quot; ./boot.sh 1 \
-    10.0.0.2:6443 --token 3wkfov.fj3ywmkva55nr4p7 --discovery-token-ca-cert-hash \
-    sha256:ee14b16af5775cfa65215cff0f6fe2807d35b23a4a3dd8a72507e93292fcd8f1
+10.0.0.2:6443 --token 3wkfov.fj3ywmkva55nr4p7 --discovery-token-ca-cert-hash \
+sha256:ee14b16af5775cfa65215cff0f6fe2807d35b23a4a3dd8a72507e93292fcd8f1
 '''
-</code></pre>
+</code></pre></li>
+</ol>
 
 <p>이와 같은 설치시 내부 네트워크 조작등 가장 강력하게 테스트를 해볼수 있다.
 다만 큰 메모리에 하이퍼바이저를 구하기가 쉽지 않을 수 있다. 현재로서는 gce에서 요새 <a href="https://cloud.google.com/compute/docs/instances/enable-nested-virtualization-vm-instances">nested-virtualization</a>

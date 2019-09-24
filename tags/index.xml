@@ -6,10 +6,55 @@
     <description>Recent content in Tags on &gt; /dev/null</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Apr 2019 08:55:44 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 24 Sep 2019 20:55:44 +0900</lastBuildDate>
     
 	<atom:link href="https://leoh0.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ingress</title>
+      <link>https://leoh0.github.io/tags/ingress/</link>
+      <pubDate>Tue, 24 Sep 2019 20:55:44 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/ingress/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ip</title>
+      <link>https://leoh0.github.io/tags/ip/</link>
+      <pubDate>Tue, 24 Sep 2019 20:55:44 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/ip/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>k8s</title>
+      <link>https://leoh0.github.io/tags/k8s/</link>
+      <pubDate>Tue, 24 Sep 2019 20:55:44 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/k8s/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kubernetes</title>
+      <link>https://leoh0.github.io/tags/kubernetes/</link>
+      <pubDate>Tue, 24 Sep 2019 20:55:44 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>static</title>
+      <link>https://leoh0.github.io/tags/static/</link>
+      <pubDate>Tue, 24 Sep 2019 20:55:44 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/static/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>calendar</title>
@@ -44,24 +89,6 @@
       <pubDate>Thu, 03 Jan 2019 22:33:17 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/immutable/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>k8s</title>
-      <link>https://leoh0.github.io/tags/k8s/</link>
-      <pubDate>Thu, 03 Jan 2019 22:33:17 +0900</pubDate>
-      
-      <guid>https://leoh0.github.io/tags/k8s/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>kubernetes</title>
-      <link>https://leoh0.github.io/tags/kubernetes/</link>
-      <pubDate>Thu, 03 Jan 2019 22:33:17 +0900</pubDate>
-      
-      <guid>https://leoh0.github.io/tags/kubernetes/</guid>
       <description></description>
     </item>
     
@@ -120,20 +147,20 @@
     </item>
     
     <item>
-      <title>Daemonset</title>
-      <link>https://leoh0.github.io/tags/daemonset/</link>
-      <pubDate>Tue, 09 Oct 2018 01:42:33 +0900</pubDate>
-      
-      <guid>https://leoh0.github.io/tags/daemonset/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>aggregation</title>
       <link>https://leoh0.github.io/tags/aggregation/</link>
       <pubDate>Tue, 09 Oct 2018 01:42:33 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/aggregation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Daemonset</title>
+      <link>https://leoh0.github.io/tags/daemonset/</link>
+      <pubDate>Tue, 09 Oct 2018 01:42:33 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/daemonset/</guid>
       <description></description>
     </item>
     
@@ -228,20 +255,20 @@
     </item>
     
     <item>
-      <title>CrashLoopBackOff</title>
-      <link>https://leoh0.github.io/tags/crashloopbackoff/</link>
-      <pubDate>Wed, 08 Aug 2018 04:09:48 +0900</pubDate>
-      
-      <guid>https://leoh0.github.io/tags/crashloopbackoff/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>container</title>
       <link>https://leoh0.github.io/tags/container/</link>
       <pubDate>Wed, 08 Aug 2018 04:09:48 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/container/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>CrashLoopBackOff</title>
+      <link>https://leoh0.github.io/tags/crashloopbackoff/</link>
+      <pubDate>Wed, 08 Aug 2018 04:09:48 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/tags/crashloopbackoff/</guid>
       <description></description>
     </item>
     
@@ -800,15 +827,6 @@
       <pubDate>Fri, 24 Apr 2015 01:08:16 +0900</pubDate>
       
       <guid>https://leoh0.github.io/tags/qemu/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>ip</title>
-      <link>https://leoh0.github.io/tags/ip/</link>
-      <pubDate>Fri, 24 Apr 2015 00:28:38 +0900</pubDate>
-      
-      <guid>https://leoh0.github.io/tags/ip/</guid>
       <description></description>
     </item>
     

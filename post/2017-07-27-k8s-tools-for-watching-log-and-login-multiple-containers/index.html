@@ -7,7 +7,6 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="theme-color" content="#494f5c">
 	<meta name="msapplication-TileColor" content="#494f5c">
-
 <meta itemprop="name" content="k8s tools for watching log and login to multiple containers">
 <meta itemprop="description" content="k8s 사용하면서 개인 취향에 맞게 작성한 자작 스크립트 몇가지 소개해 드리려고 합니다.
 watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일일치다보니 불편했는데 kubetail이란 프로젝트가 있었습니다.
@@ -35,8 +34,8 @@ watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일�
 <meta property="og:url" content="https://leoh0.github.io/post/2017-07-27-k8s-tools-for-watching-log-and-login-multiple-containers/" />
 
 <meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322" />
-<meta property="article:published_time" content="2017-07-27T00:58:28&#43;09:00"/>
-<meta property="article:modified_time" content="2017-07-27T00:58:28&#43;09:00"/>
+<meta property="article:published_time" content="2017-07-27T00:58:28+09:00" />
+<meta property="article:modified_time" content="2017-07-27T00:58:28+09:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 
@@ -112,37 +111,36 @@ watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일�
 <p>아래들이 대표적인 기능 입니다.</p>
 
 <ul>
-<li>선택된것과 같은 pod들을 전체 log tailing 하고 변화가 있을시 auto reload 함<br />
-(다만 예외적으로 안되는 케이스 들이 아직 있긴 합니다..)</li>
-</ul>
+<li><p>선택된것과 같은 pod들을 전체 log tailing 하고 변화가 있을시 auto reload 함<br />
+(다만 예외적으로 안되는 케이스 들이 아직 있긴 합니다..)</p>
 
-<pre><code class="language-bash">  $ kt
+<pre><code class="language-bash">$ kt
 </code></pre>
 
 <ul>
-<li><p>자세한 영상은 <a href="http://showterm.io/df8a9f96e761012d3bb2c">여기</a>를 참고하시면 됩니다.<br />
+<li>자세한 영상은 <a href="http://showterm.io/df8a9f96e761012d3bb2c">여기</a>를 참고하시면 됩니다.<br />
 <figure>
     <img src="/images/kt.gif"/> 
 </figure>
-</p></li>
+</li>
+</ul></li>
 
-<li><p><code>-m</code> 옵션시 자신이 원하는 pod들을 선택해서 log tailing 함. 다만, auto reload는 지원 하지 않음</p></li>
-</ul>
+<li><p><code>-m</code> 옵션시 자신이 원하는 pod들을 선택해서 log tailing 함. 다만, auto reload는 지원 하지 않음</p>
 
-<pre><code class="language-bash">  $ kt -m
+<pre><code class="language-bash">$ kt -m
 </code></pre>
 
 <ul>
-<li><p>자세한 영상은 <a href="http://showterm.io/f4ab6a8ed080700ece976">여기</a>를 참고하시면 됩니다.<br />
+<li>자세한 영상은 <a href="http://showterm.io/f4ab6a8ed080700ece976">여기</a>를 참고하시면 됩니다.<br />
 <figure>
     <img src="/images/ktm.gif"/> 
 </figure>
-</p></li>
+</li>
+</ul></li>
 
-<li><p><code>-l</code> 옵션시 선택한 pod의 전체 로그를 본다. fzf를 이용해서 log를 탐색 한다.</p></li>
-</ul>
+<li><p><code>-l</code> 옵션시 선택한 pod의 전체 로그를 본다. fzf를 이용해서 log를 탐색 한다.</p>
 
-<pre><code class="language-bash">  $ kt -l
+<pre><code class="language-bash">$ kt -l
 </code></pre>
 
 <ul>
@@ -151,19 +149,18 @@ watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일�
     <img src="/images/ktl.gif"/> 
 </figure>
 </li>
+</ul></li>
 </ul>
 
 <p>준비물은 아래와 같습니다.</p>
 
 <ul>
-<li><strong>fzf</strong></li>
-</ul>
+<li><p><strong>fzf</strong></p>
 
-<pre><code class="language-bash">  $ brew install fzf
-</code></pre>
+<pre><code class="language-bash">$ brew install fzf
+</code></pre></li>
 
-<ul>
-<li><strong>kubectl</strong>
+<li><p><strong>kubectl</strong></p>
 
 <ul>
 <li><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">https://kubernetes.io/docs/tasks/tools/install-kubectl/</a></li>

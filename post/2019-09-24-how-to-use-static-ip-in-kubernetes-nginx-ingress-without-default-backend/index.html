@@ -12,12 +12,13 @@
 만약 이런 ingress를 ip기반으로 사용하고 싶다고 하더라도 일반적으로 ingress validation에 막혀있습니다.
 그래서 일반적으로는 nginx ingress static-ip example이런 예제와 같이 default backend를 통해 ip로 들어오는 리퀘스트가 처리 됩니다.
 그렇다면 진짜로 ip로 들어오는 리퀘스트를 default backend가 아닌 다른 service로 연결할 수 없을까요? 물론 이 포스트를 쓰는 목적이지만 제한적이지만 답은 있습니다.
-우선 힌트는 위의 ingress validation 라고 할 수 있는데, 뭐냐하면 사실 위에서 ParseIP를 통해 ip address가 파싱되는지를 확인해서 이로 설정되는 것을 막고 있지만 실제 ip address는 다양한 방법으로 표기 가능합니다.">
+여기서부터는 해설 입니다.
+해설 우선 힌트는 위의 ingress validation 라고 할 수 있는데, 뭐냐하면 사실 위에서 ParseIP를 통해 ip address가 파싱되는지를 확인해서 이로 설정되는 것을 막고 있지만 실제 ip address는 다양한 방법으로 표기 가능합니다.">
 
 
 <meta itemprop="datePublished" content="2019-09-24T20:55:44&#43;09:00" />
 <meta itemprop="dateModified" content="2019-09-24T20:55:44&#43;09:00" />
-<meta itemprop="wordCount" content="476">
+<meta itemprop="wordCount" content="481">
 
   <meta itemprop="image" content="https://source.unsplash.com/collection/983219/1600x900">
 
@@ -29,7 +30,8 @@
 만약 이런 ingress를 ip기반으로 사용하고 싶다고 하더라도 일반적으로 ingress validation에 막혀있습니다.
 그래서 일반적으로는 nginx ingress static-ip example이런 예제와 같이 default backend를 통해 ip로 들어오는 리퀘스트가 처리 됩니다.
 그렇다면 진짜로 ip로 들어오는 리퀘스트를 default backend가 아닌 다른 service로 연결할 수 없을까요? 물론 이 포스트를 쓰는 목적이지만 제한적이지만 답은 있습니다.
-우선 힌트는 위의 ingress validation 라고 할 수 있는데, 뭐냐하면 사실 위에서 ParseIP를 통해 ip address가 파싱되는지를 확인해서 이로 설정되는 것을 막고 있지만 실제 ip address는 다양한 방법으로 표기 가능합니다." />
+여기서부터는 해설 입니다.
+해설 우선 힌트는 위의 ingress validation 라고 할 수 있는데, 뭐냐하면 사실 위에서 ParseIP를 통해 ip address가 파싱되는지를 확인해서 이로 설정되는 것을 막고 있지만 실제 ip address는 다양한 방법으로 표기 가능합니다." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://leoh0.github.io/post/2019-09-24-how-to-use-static-ip-in-kubernetes-nginx-ingress-without-default-backend/" />
 
@@ -44,7 +46,8 @@
 만약 이런 ingress를 ip기반으로 사용하고 싶다고 하더라도 일반적으로 ingress validation에 막혀있습니다.
 그래서 일반적으로는 nginx ingress static-ip example이런 예제와 같이 default backend를 통해 ip로 들어오는 리퀘스트가 처리 됩니다.
 그렇다면 진짜로 ip로 들어오는 리퀘스트를 default backend가 아닌 다른 service로 연결할 수 없을까요? 물론 이 포스트를 쓰는 목적이지만 제한적이지만 답은 있습니다.
-우선 힌트는 위의 ingress validation 라고 할 수 있는데, 뭐냐하면 사실 위에서 ParseIP를 통해 ip address가 파싱되는지를 확인해서 이로 설정되는 것을 막고 있지만 실제 ip address는 다양한 방법으로 표기 가능합니다."/>
+여기서부터는 해설 입니다.
+해설 우선 힌트는 위의 ingress validation 라고 할 수 있는데, 뭐냐하면 사실 위에서 ParseIP를 통해 ip address가 파싱되는지를 확인해서 이로 설정되는 것을 막고 있지만 실제 ip address는 다양한 방법으로 표기 가능합니다."/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -102,6 +105,10 @@
 <p>그래서 일반적으로는 <a href="https://github.com/kubernetes/ingress-nginx/tree/master/docs/examples/static-ip">nginx ingress static-ip example</a>이런 예제와 같이 default backend를 통해 ip로 들어오는 리퀘스트가 처리 됩니다.</p>
 
 <p>그렇다면 진짜로 ip로 들어오는 리퀘스트를 default backend가 아닌 다른 service로 연결할 수 없을까요? 물론 이 포스트를 쓰는 목적이지만 제한적이지만 답은 있습니다.</p>
+
+<p>여기서부터는 해설 입니다.</p>
+
+<h1 id="해설">해설<a href="#해설" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
 
 <p>우선 힌트는 위의 <a href="https://github.com/kubernetes/kubernetes/blob/release-1.16/pkg/apis/networking/validation/validation.go#L247">ingress validation</a> 라고 할 수 있는데, 뭐냐하면 사실 위에서 ParseIP를 통해 ip address가 파싱되는지를 확인해서 이로 설정되는 것을 막고 있지만 실제 ip address는 다양한 방법으로 표기 가능합니다.</p>
 
@@ -203,7 +210,7 @@ $ curl 2886795270
 apple
 </code></pre>
 
-<h1 id="해설">해설<a href="#해설" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
+<h1 id="추가-해설">추가 해설<a href="#추가-해설" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
 
 <p>사실 이게 가능한건 curl의 특성때문입니다. 실제 <code>http://2886795270</code>를 브라우저에서 호출하면 <code>default backend - 404</code>를 호출합니다.
 하지만 curl에서 작동하는 이유는 <code>2886795270</code>와 같이 기본 ip address가 아닌 표기법(notation)을 이용할 시 ip로 자동으로 변환해서 호출하며 Host header에 해당 host 이름을 넣어주기 때문입니다.

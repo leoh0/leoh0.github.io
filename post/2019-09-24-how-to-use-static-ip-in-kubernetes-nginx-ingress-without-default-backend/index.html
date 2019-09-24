@@ -17,7 +17,7 @@
 
 <meta itemprop="datePublished" content="2019-09-24T20:55:44&#43;09:00" />
 <meta itemprop="dateModified" content="2019-09-24T20:55:44&#43;09:00" />
-<meta itemprop="wordCount" content="376">
+<meta itemprop="wordCount" content="476">
 
   <meta itemprop="image" content="https://source.unsplash.com/collection/983219/1600x900">
 
@@ -139,6 +139,60 @@ default backend - 404
 NAME     HOSTS        ADDRESS   PORTS   AGE
 nginx    172.17.6               80      53m
 nginx2   2886795270             80      52m
+$ kubectl get ing nginx -o yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {&quot;apiVersion&quot;:&quot;extensions/v1beta1&quot;,&quot;kind&quot;:&quot;Ingress&quot;,&quot;metadata&quot;:{&quot;annotations&quot;:{},&quot;name&quot;:&quot;nginx&quot;,&quot;namespace&quot;:&quot;default&quot;},&quot;spec&quot;:{&quot;rules&quot;:[{&quot;host&quot;:&quot;172.17.6&quot;,&quot;http&quot;:{&quot;paths&quot;:[{&quot;backend&quot;:{&quot;serviceName&quot;:&quot;nginx&quot;,&quot;servicePort&quot;:80},&quot;path&quot;:&quot;/&quot;}]}}]}}
+  creationTimestamp: &quot;2019-09-24T10:53:27Z&quot;
+  generation: 3
+  name: nginx
+  namespace: default
+  resourceVersion: &quot;3708&quot;
+  selfLink: /apis/extensions/v1beta1/namespaces/default/ingresses/nginx
+  uid: ce22f2d5-1954-47b1-aaeb-72b929a20d12
+spec:
+  rules:
+  - host: 172.17.6
+    http:
+      paths:
+      - backend:
+          serviceName: apple-service
+          servicePort: 5678
+        path: /
+status:
+  loadBalancer:
+    ingress:
+    - {}
+$ kubectl get ing nginx2 -o yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {&quot;apiVersion&quot;:&quot;extensions/v1beta1&quot;,&quot;kind&quot;:&quot;Ingress&quot;,&quot;metadata&quot;:{&quot;annotations&quot;:{},&quot;name&quot;:&quot;nginx2&quot;,&quot;namespace&quot;:&quot;default&quot;},&quot;spec&quot;:{&quot;rules&quot;:[{&quot;host&quot;:&quot;2886795270&quot;,&quot;http&quot;:{&quot;paths&quot;:[{&quot;backend&quot;:{&quot;serviceName&quot;:&quot;nginx&quot;,&quot;servicePort&quot;:80},&quot;path&quot;:&quot;/&quot;}]}}]}}
+  creationTimestamp: &quot;2019-09-24T10:54:57Z&quot;
+  generation: 3
+  name: nginx2
+  namespace: default
+  resourceVersion: &quot;3813&quot;
+  selfLink: /apis/extensions/v1beta1/namespaces/default/ingresses/nginx2
+  uid: 202b025b-8b2f-44f2-8f4a-272edbff3a96
+spec:
+  rules:
+  - host: &quot;2886795270&quot;
+    http:
+      paths:
+      - backend:
+          serviceName: apple-service
+          servicePort: 5678
+        path: /
+status:
+  loadBalancer:
+    ingress:
+    - {}
 </code></pre>
 
 <p>아래와 같이 바로 ip만으로도 정상적인 응답을 하게 됩니다.</p>

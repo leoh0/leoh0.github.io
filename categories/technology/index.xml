@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>technology on &gt; /dev/null</title>
+    <title>Technology on &gt; /dev/null</title>
     <link>https://leoh0.github.io/categories/technology/</link>
-    <description>Recent content in technology on &gt; /dev/null</description>
+    <description>Recent content in Technology on &gt; /dev/null</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 24 Sep 2019 20:55:44 +0900</lastBuildDate>
@@ -65,8 +65,7 @@
       <pubDate>Tue, 09 Oct 2018 01:42:33 +0900</pubDate>
       
       <guid>https://leoh0.github.io/post/2018-10-09-kubernetes-prometheus-metric-aggregation-by-daemonset-statefulset-deployment-walkthrough/</guid>
-      <description>Kubernetes Aggregation Metrics
-  kubernetes and prometheus 최근 kubernetes에서 metric을 관리하는 것중 가장 유명한 것은 prometheus라고 할 수 있습니다. metric 관리방법으로 heapster를 사용할때 까지는 influxdb를 많이 사용하는 추세 였으나 앞으로 대채될 metrics-server는 현재 in-memory sink밖에 없어서 우선 기존에 influxdb를 사용하던것을 많이 안쓰게 될것 같습니다. 더욱이 custom metric들에 대한 예제들이 prometheus로 제공되고 있어서 prometheus로 metric관리가 통합될것으로 기대하고 있습니다.
+      <description>Kubernetes Aggregation Metrics   kubernetes and prometheus 최근 kubernetes에서 metric을 관리하는 것중 가장 유명한 것은 prometheus라고 할 수 있습니다. metric 관리방법으로 heapster를 사용할때 까지는 influxdb를 많이 사용하는 추세 였으나 앞으로 대채될 metrics-server는 현재 in-memory sink밖에 없어서 우선 기존에 influxdb를 사용하던것을 많이 안쓰게 될것 같습니다. 더욱이 custom metric들에 대한 예제들이 prometheus로 제공되고 있어서 prometheus로 metric관리가 통합될것으로 기대하고 있습니다.
 이러한 prometheus로 kubernetes metric들을 수집하는 것은 대체로 크게 2가지 케이스 입니다.</description>
     </item>
     
@@ -164,8 +163,7 @@ kubernetes 로 openstack mitaka를 설치해 봤습니다.
 대략 31분 정도 걸려서 minikube 구성 부터 전체 셋업 및 vm 2개 띄워서 로그인 테스트 합니다.
 그리고 저는 macos Sierra 에서 xhyve 로 8G 머신을 만들어서 사용을 했습니다.
 linux 머신이 있으면 kvm을 이용하시는 것도 좋을것 같습니다.
-windows 환경에선 xhyve 외에도 virtual box 등을 이용하셔도 좋을 것 같습니다.
-셋업할때 kubernetes-cli 는 1.</description>
+windows 환경에선 xhyve 외에도 virtual box 등을 이용하셔도 좋을 것 같습니다.</description>
     </item>
     
     <item>
@@ -370,7 +368,9 @@ bridge-vlan   openvswitch-flat   openvswitch-vlan   이걸 graphviz 로 그리�
       <description>chef 12 client를 이용하면서 기존 recipe 들을 사용중 갑자기 작동 안하는 문제가 있었다.
 chef 12로 변화되며 추가된 기능인가 싶어 chef 12 release note를 뒤져보았지만 사실 관련된 부분을 찾지 못했다.
 대략 현상은 아래와 같다..
-chef &amp;gt; attributes_mode chef:attributes &amp;gt; default[&#39;haproxy&#39;][&#39;conf_dir&#39;] = &#39;aa&#39; chef:attributes &amp;gt; puts node[&#39;haproxy&#39;][&#39;conf_dir&#39;] aa chef:attributes &amp;gt; puts node[:haproxy][:conf_dir] aa chef:attributes &amp;gt; node.set[&#39;haproxy&#39;][&#39;conf_dir&#39;] = &#39;bb&#39; chef:attributes &amp;gt; puts node[&#39;haproxy&#39;][&#39;conf_dir&#39;] bb chef:attributes &amp;gt; puts node[:haproxy][:conf_dir] aa  위와 같이 string으로 된 hash와 symbol로 된 hash의 값이 merge가 안되는 문제이다.</description>
+``` ruby chef12 chef &amp;gt; attributes_mode chef:attributes &amp;gt; default[&amp;lsquo;haproxy&amp;rsquo;][&amp;lsquo;conf_dir&amp;rsquo;] = &amp;lsquo;aa&amp;rsquo; chef:attributes &amp;gt; puts node[&amp;lsquo;haproxy&amp;rsquo;][&amp;lsquo;conf_dir&amp;rsquo;] aa chef:attributes &amp;gt; puts node[:haproxy][:conf_dir] aa
+chef:attributes &amp;gt; node.set[&amp;lsquo;haproxy&amp;rsquo;][&amp;lsquo;conf_dir&amp;rsquo;] = &amp;lsquo;bb&amp;rsquo;
+chef:attributes &amp;gt; puts node[&amp;lsquo;haproxy&amp;rsquo;][&amp;lsquo;conf_dir&amp;rsquo;] bb chef:attributes &amp;gt; puts node[:haproxy][:conf_dir] aa</description>
     </item>
     
     <item>

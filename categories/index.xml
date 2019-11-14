@@ -6,13 +6,21 @@
     <description>Recent content in Categories on &gt; /dev/null</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Sep 2019 20:55:44 +0900</lastBuildDate>
     
 	<atom:link href="https://leoh0.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>technology</title>
+      <title>Me</title>
+      <link>https://leoh0.github.io/categories/me/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://leoh0.github.io/categories/me/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Technology</title>
       <link>https://leoh0.github.io/categories/technology/</link>
       <pubDate>Tue, 24 Sep 2019 20:55:44 +0900</pubDate>
       
@@ -26,15 +34,6 @@
       <pubDate>Thu, 15 Jan 2015 17:58:18 +0900</pubDate>
       
       <guid>https://leoh0.github.io/categories/%EC%9E%A1%EB%8B%B4/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>me</title>
-      <link>https://leoh0.github.io/categories/me/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://leoh0.github.io/categories/me/</guid>
       <description></description>
     </item>
     

@@ -14,18 +14,14 @@
 그렇다면 진짜로 ip로 들어오는 리퀘스트를 default backend가 아닌 다른 service로 연결할 수 없을까요? 물론 이 포스트를 쓰는 목적이지만 제한적이지만 답은 있습니다.
 여기서부터는 해설 입니다.
 해설 우선 힌트는 위의 ingress validation 라고 할 수 있는데, 뭐냐하면 사실 위에서 ParseIP를 통해 ip address가 파싱되는지를 확인해서 이로 설정되는 것을 막고 있지만 실제 ip address는 다양한 방법으로 표기 가능합니다.">
-
-
 <meta itemprop="datePublished" content="2019-09-24T20:55:44&#43;09:00" />
 <meta itemprop="dateModified" content="2019-09-24T20:55:44&#43;09:00" />
 <meta itemprop="wordCount" content="481">
-
-  <meta itemprop="image" content="https://source.unsplash.com/collection/983219/1600x900">
-
+<meta itemprop="image" content="https://source.unsplash.com/collection/983219/1600x900">
 
 
-<meta itemprop="keywords" content="k8s,kubernetes,ingress,static,ip," />
-<meta property="og:title" content="How to use static ip in kubernetes nginx ingress without default backend" />
+
+<meta itemprop="keywords" content="k8s,kubernetes,ingress,static,ip," /><meta property="og:title" content="How to use static ip in kubernetes nginx ingress without default backend" />
 <meta property="og:description" content="kubernetes ingress는 일반적으로 virtual host, virtual path등을 위한 서비스들을 제공하고 이는 DNS기반으로 작동되게 되어 있습니다.
 만약 이런 ingress를 ip기반으로 사용하고 싶다고 하더라도 일반적으로 ingress validation에 막혀있습니다.
 그래서 일반적으로는 nginx ingress static-ip example이런 예제와 같이 default backend를 통해 ip로 들어오는 리퀘스트가 처리 됩니다.
@@ -34,7 +30,6 @@
 해설 우선 힌트는 위의 ingress validation 라고 할 수 있는데, 뭐냐하면 사실 위에서 ParseIP를 통해 ip address가 파싱되는지를 확인해서 이로 설정되는 것을 막고 있지만 실제 ip address는 다양한 방법으로 표기 가능합니다." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://leoh0.github.io/post/2019-09-24-how-to-use-static-ip-in-kubernetes-nginx-ingress-without-default-backend/" />
-
 <meta property="og:image" content="https://source.unsplash.com/collection/983219/1600x900" />
 <meta property="article:published_time" content="2019-09-24T20:55:44+09:00" />
 <meta property="article:modified_time" content="2019-09-24T20:55:44+09:00" />
@@ -57,28 +52,30 @@
 	<link rel="shortcut icon" href="/favicon.ico">
 
 	<title>How to use static ip in kubernetes nginx ingress without default backend</title>
-	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.cf317e8e759e34ff58587ff7fca05f8b77531a61ee8e63c887a46eb43ebad966.css" crossorigin="anonymous" integrity="sha256-zzF+jnWeNP9YWH/3/KBfi3dTGmHujmPIh6RutD662WY=">
+	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
 	<style>.bg-img {background-image: url('https://source.unsplash.com/collection/983219/1600x900');}</style>
 	<link rel="stylesheet" href="https://leoh0.github.io/css/prism.css">
 </head>
 
 <body id="page">
 	
-	<header id="site-header" class="animated slideInUp faster">
+	<header id="site-header" class="animated slideInUp">
 		<div class="hdr-wrapper section-inner">
 			<div class="hdr-left">
 				<div class="site-branding">
 					<a href="https://leoh0.github.io/">&gt; /dev/null</a>
 				</div>
 				<nav class="site-nav hide-in-mobile">
-					<a href="https://leoh0.github.io/">Home</a>
-					<a href="https://leoh0.github.io/post/">Posts</a>
-					<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
-					<a href="https://leoh0.github.io/blog/">.</a>
+					
+				<a href="https://leoh0.github.io/">Home</a>
+				<a href="https://leoh0.github.io/post/">Posts</a>
+				<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
+				<a href="https://leoh0.github.io/blog/">.</a>
+
 				</nav>
 			</div>
 			<div class="hdr-right hdr-icons">
-				<button id="img-btn" class="hdr-btn" title="Featured Image"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg></button><span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+				<button id="img-btn" class="hdr-btn" title="Featured Image"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg></button><span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
 			</div>
 		</div>
 	</header>
@@ -96,52 +93,33 @@
 	<main class="site-main section-inner thin animated fadeIn faster">
 		<h1>How to use static ip in kubernetes nginx ingress without default backend</h1>
 		<div class="content">
-			
-
-<p>kubernetes ingress는 일반적으로 virtual host, virtual path등을 위한 서비스들을 제공하고 이는 DNS기반으로 작동되게 되어 있습니다.</p>
-
+			<p>kubernetes ingress는 일반적으로 virtual host, virtual path등을 위한 서비스들을 제공하고 이는 DNS기반으로 작동되게 되어 있습니다.</p>
 <p>만약 이런 ingress를 ip기반으로 사용하고 싶다고 하더라도 일반적으로 <a href="https://github.com/kubernetes/kubernetes/blob/release-1.16/pkg/apis/networking/validation/validation.go#L247">ingress validation</a>에 막혀있습니다.</p>
-
 <p>그래서 일반적으로는 <a href="https://github.com/kubernetes/ingress-nginx/tree/master/docs/examples/static-ip">nginx ingress static-ip example</a>이런 예제와 같이 default backend를 통해 ip로 들어오는 리퀘스트가 처리 됩니다.</p>
-
 <p>그렇다면 진짜로 ip로 들어오는 리퀘스트를 default backend가 아닌 다른 service로 연결할 수 없을까요? 물론 이 포스트를 쓰는 목적이지만 제한적이지만 답은 있습니다.</p>
-
 <p>여기서부터는 해설 입니다.</p>
-
 <h1 id="해설">해설<a href="#해설" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-
 <p>우선 힌트는 위의 <a href="https://github.com/kubernetes/kubernetes/blob/release-1.16/pkg/apis/networking/validation/validation.go#L247">ingress validation</a> 라고 할 수 있는데, 뭐냐하면 사실 위에서 ParseIP를 통해 ip address가 파싱되는지를 확인해서 이로 설정되는 것을 막고 있지만 실제 ip address는 다양한 방법으로 표기 가능합니다.</p>
-
 <p>예를 들어서 172.17.0.6 이라는 ip가 있다면 다음과 같은 방법들이 가능합니다.</p>
-
 <ul>
 <li>172.17.6</li>
-<li>2886795270 (172*256*256*256+17*256*256+0*256+6)</li>
+<li>2886795270 (172<em>256</em>256<em>256+17</em>256<em>256+0</em>256+6)</li>
 <li>0xac.0x11.0x0.0x6</li>
 <li>0xac.0x11.0x6</li>
 <li>0xac110006</li>
 <li>0254.0021.0.0006</li>
 </ul>
-
 <p>그리고 이 모든 방법으로 호스트 등록이 가능합니다.</p>
-
 <p>예를 들면 아래와 같이 <code>172.17.0.6</code> 와 같이 daemonset 으로 nginx ingress 가 hostnetwork로 열어서 생성했다고 했을때.</p>
-
 <pre><code>$ kubectl get pods -o wide
 NAME                                                  READY   STATUS    RESTARTS   AGE   IP            NODE                 NOMINATED NODE   READINESS GATES
 apple-app                                             1/1     Running   0          33m   10.244.0.13   kind-control-plane   &lt;none&gt;           &lt;none&gt;
 test-nginx-ingress-controller-hmr7q                   1/1     Running   0          60m   172.17.0.6    kind-control-plane   &lt;none&gt;           &lt;none&gt;
 test-nginx-ingress-default-backend-559589ff74-8pk5b   1/1     Running   0          60m   10.244.0.4    kind-control-plane   &lt;none&gt;           &lt;none&gt;
-</code></pre>
-
-<p>만약 이 ingress를 ip에 바로 request를 던질시 default backend의 404가 응답됩니다.</p>
-
+</code></pre><p>만약 이 ingress를 ip에 바로 request를 던질시 default backend의 404가 응답됩니다.</p>
 <pre><code>$ curl 172.17.0.6
 default backend - 404
-</code></pre>
-
-<p>하지만 아래 처럼 ingress들을 생성했다고 한다면</p>
-
+</code></pre><p>하지만 아래 처럼 ingress들을 생성했다고 한다면</p>
 <pre><code>$ kubectl get ing 
 NAME     HOSTS        ADDRESS   PORTS   AGE
 nginx    172.17.6               80      53m
@@ -200,22 +178,15 @@ status:
   loadBalancer:
     ingress:
     - {}
-</code></pre>
-
-<p>아래와 같이 바로 ip만으로도 정상적인 응답을 하게 됩니다.</p>
-
+</code></pre><p>아래와 같이 바로 ip만으로도 정상적인 응답을 하게 됩니다.</p>
 <pre><code>$ curl 172.17.6
 apple
 $ curl 2886795270 
 apple
-</code></pre>
-
-<h1 id="추가-해설">추가 해설<a href="#추가-해설" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-
+</code></pre><h1 id="추가-해설">추가 해설<a href="#추가-해설" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
 <p>사실 이게 가능한건 curl의 특성때문입니다. 실제 <code>http://2886795270</code>를 브라우저에서 호출하면 <code>default backend - 404</code>를 호출합니다.
 하지만 curl에서 작동하는 이유는 <code>2886795270</code>와 같이 기본 ip address가 아닌 표기법(notation)을 이용할 시 ip로 자동으로 변환해서 호출하며 Host header에 해당 host 이름을 넣어주기 때문입니다.
 그래서 curl로는 쉽게 작동되지요, 물론 이처럼 다른 방법들도 전부 해당 ip address를 호출될시 Host header를 집어 넣는 방법으로 작동 가능합니다.</p>
-
 <pre><code>$ curl 2886795270 -v
 *   Trying 172.17.0.6:80...
 * TCP_NODELAY set
@@ -237,23 +208,22 @@ apple
 &lt; 
 apple
 * Connection #0 to host 2886795270 left intact
-</code></pre>
-
-<p>재미로 보셨길! :)</p>
+</code></pre><p>재미로 보셨길! :)</p>
 
 		</div>
 	</main>
 
 	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
-		<script src="/js/prism.js"></script>
-		<p>&copy; 2019 <a href="https://leoh0.github.io/"></a></p>
+		<p>&copy; 2020 <a href="https://leoh0.github.io/"></a></p>
 		<p>
-			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/post/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
 		</p>
 	</footer>
 
 
-	<script src="https://leoh0.github.io/js/main.min.784417f5847151f848c339cf0acb13a06cbb648b1483435a28ed4556c4ead69b.js" integrity="sha256-eEQX9YRxUfhIwznPCssToGy7ZIsUg0NaKO1FVsTq1ps="></script>
+
+	<script src="https://leoh0.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
 <script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {

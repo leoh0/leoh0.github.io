@@ -13,16 +13,14 @@ ceph을 사용한지 조금 되었지만 큰 문제가 한번도 없어서 일�
 하지만 근래에 급작스런 몇가지 문제로 ceph의 placement group(pg) 들이 incomplete 상태로 떨어졌고..
 말그대로 절망했다.
 왜냐하면 incomplete 상태로 떨어진 pg들이 절대 다른 상태로 돌아올수 없으며 해당 pg에 접근하는 모든 request는 slow request화 되며 응답을 주지 않는다.">
-
-
 <meta itemprop="datePublished" content="2015-01-16T00:54:53&#43;09:00" />
 <meta itemprop="dateModified" content="2015-01-16T00:54:53&#43;09:00" />
 <meta itemprop="wordCount" content="2794">
+<meta itemprop="image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 
 
 
-<meta itemprop="keywords" content="openstack,block storage,ceph,pg,incomplete," />
-<meta property="og:title" content="ceph pg incomplete: rbd image-format 2 data recovery" />
+<meta itemprop="keywords" content="openstack,block storage,ceph,pg,incomplete," /><meta property="og:title" content="ceph pg incomplete: rbd image-format 2 data recovery" />
 <meta property="og:description" content="ceph: pg incomplete is worst nightmare   2014 open user survey block storage   2014년 유저 설문조사에서 찾을 수 있듯이 ceph은 openstack의 block storage의 de facto standard 라고 말할 수 있다.
 ceph을 사용한지 조금 되었지만 큰 문제가 한번도 없어서 일명 믿음의 ceph이라고 칭송하며 내부구조도 살필일 없이 블랙박스로 두고 잘 쓰고 있었었다.
 하지만 근래에 급작스런 몇가지 문제로 ceph의 placement group(pg) 들이 incomplete 상태로 떨어졌고..
@@ -30,8 +28,7 @@ ceph을 사용한지 조금 되었지만 큰 문제가 한번도 없어서 일�
 왜냐하면 incomplete 상태로 떨어진 pg들이 절대 다른 상태로 돌아올수 없으며 해당 pg에 접근하는 모든 request는 slow request화 되며 응답을 주지 않는다." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://leoh0.github.io/blog/2015/01/16/jiogyi-ceph-rbd-image-format-2-data-recovering/" />
-
-<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322" />
+<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 <meta property="article:published_time" content="2015-01-16T00:54:53+09:00" />
 <meta property="article:modified_time" content="2015-01-16T00:54:53+09:00" />
 <meta name="twitter:card" content="summary_large_image"/>
@@ -52,28 +49,30 @@ ceph을 사용한지 조금 되었지만 큰 문제가 한번도 없어서 일�
 	<link rel="shortcut icon" href="/favicon.ico">
 
 	<title>ceph pg incomplete: rbd image-format 2 data recovery</title>
-	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.cf317e8e759e34ff58587ff7fca05f8b77531a61ee8e63c887a46eb43ebad966.css" crossorigin="anonymous" integrity="sha256-zzF+jnWeNP9YWH/3/KBfi3dTGmHujmPIh6RutD662WY=">
+	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
 	
 	<link rel="stylesheet" href="https://leoh0.github.io/css/prism.css">
 </head>
 
 <body id="page">
 	
-	<header id="site-header" class="animated slideInUp faster">
+	<header id="site-header" class="animated slideInUp">
 		<div class="hdr-wrapper section-inner">
 			<div class="hdr-left">
 				<div class="site-branding">
 					<a href="https://leoh0.github.io/">&gt; /dev/null</a>
 				</div>
 				<nav class="site-nav hide-in-mobile">
-					<a href="https://leoh0.github.io/">Home</a>
-					<a href="https://leoh0.github.io/post/">Posts</a>
-					<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
-					<a href="https://leoh0.github.io/blog/">.</a>
+					
+				<a href="https://leoh0.github.io/">Home</a>
+				<a href="https://leoh0.github.io/post/">Posts</a>
+				<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
+				<a href="https://leoh0.github.io/blog/">.</a>
+
 				</nav>
 			</div>
 			<div class="hdr-right hdr-icons">
-				<span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+				<span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
 			</div>
 		</div>
 	</header>
@@ -90,475 +89,382 @@ ceph을 사용한지 조금 되었지만 큰 문제가 한번도 없어서 일�
 	<main class="site-main section-inner thin animated fadeIn faster">
 		<h1>ceph pg incomplete: rbd image-format 2 data recovery</h1>
 		<div class="content">
-			
-
-<h2 id="ceph-pg-incomplete-is-worst-nightmare">ceph: pg incomplete is worst nightmare<a href="#ceph-pg-incomplete-is-worst-nightmare" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
+			<h2 id="ceph-pg-incomplete-is-worst-nightmare">ceph: pg incomplete is worst nightmare<a href="#ceph-pg-incomplete-is-worst-nightmare" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <figure>
     <img src="http://a1.res.cloudinary.com/hqq9ey1mh/image/upload/c_limit,w_793/v1414983220/z3vn1zndif6v7q2u08w1.png"/> <figcaption>
             <h4>2014 open user survey block storage</h4>
         </figcaption>
 </figure>
 
-
 <p><a href="http://superuser.openstack.org/articles/openstack-user-survey-insights-november-2014">2014년 유저 설문조사</a>에서 찾을 수 있듯이 <strong>ceph</strong>은 openstack의 block storage의 de facto standard 라고 말할 수 있다.</p>
-
 <p>ceph을 사용한지 조금 되었지만 큰 문제가 한번도 없어서 일명 <strong>믿음의 ceph</strong>이라고 칭송하며 내부구조도 살필일 없이 블랙박스로 두고 잘 쓰고 있었었다.</p>
-
 <p>하지만 근래에 급작스런 몇가지 문제로 ceph의 <code>placement group(pg)</code> 들이 <code>incomplete</code> 상태로 떨어졌고..</p>
-
 <p>말그대로 절망했다.</p>
-
 <p>왜냐하면 <code>incomplete</code> 상태로 떨어진 pg들이 절대 다른 상태로 돌아올수 없으며 해당 pg에 접근하는 모든 request는 slow request화 되며 응답을 주지 않는다. 그렇기 때문에 해당 pg가 있는 pool은 모든 request가 hang에 걸릴 수 있게 되어 pool 전체가 사용불능 상태로 변하게 된다.</p>
-
 <h2 id="incomplete">incomplete?<a href="#incomplete" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
 <p>조금 더 <code>incomplete</code>가 어떤 상태인지를 잠깐 이해해야 할것 같다. 우선 <code>incomplete</code>의 정의를 살펴보면 ceph documents의 <a href="http://ceph.com/docs/master/rados/operations/pg-states/">pg-states</a>에서 찾아볼 수 있다.</p>
-
 <blockquote>
 <p>Ceph detects that a placement group is missing a necessary period of history from its log.
 If you see this state, report a bug, and try to start any failed OSDs that may contain the needed information.</p>
 </blockquote>
-
-<p>즉, 해당 pg 가 log에서 특정 부분 히스토리를 잃어 버렸을때 발생하는 것이고, 만약 이 일이 일어나면 해당 정보를 가지고 있을만한 실패한 OSD들을 시작하라고 설명이 되어 있다.(버그 리포트는 덤..)<br />
+<p>즉, 해당 pg 가 log에서 특정 부분 히스토리를 잃어 버렸을때 발생하는 것이고, 만약 이 일이 일어나면 해당 정보를 가지고 있을만한 실패한 OSD들을 시작하라고 설명이 되어 있다.(버그 리포트는 덤..)  <br>
 그래서 위의 설명처럼 <code>incomplete</code> 상태는 OSD를 중지했을때도 잠깐 발생할 수 있는데 여기서 말하는 <code>incomplete</code>는 그런게 아니라 무슨짓을 해도 다시 <code>incomplete</code>로 돌아오는 상태를 말한다..</p>
-
-<p>이 의미를 조금 더 의미있게 해석하면 pg가 <code>incomplete</code> 상태로 떨어졌을때 <code>peering</code>을 할 수 있는 상태로 돌아오지 못한다는 것은 이미 복구 불가능한 pg가 생겼고 이는 복구 불가능한 조각이 생겼다는 것을 의미한다.<br />
-그러므로 전체 파일중 특정 조각이 문제가 되고 이 파일을 접근하는 모든 client request는 hang이 걸리게 된다.<br />
+<p>이 의미를 조금 더 의미있게 해석하면 pg가 <code>incomplete</code> 상태로 떨어졌을때 <code>peering</code>을 할 수 있는 상태로 돌아오지 못한다는 것은 이미 복구 불가능한 pg가 생겼고 이는 복구 불가능한 조각이 생겼다는 것을 의미한다.<br>
+그러므로 전체 파일중 특정 조각이 문제가 되고 이 파일을 접근하는 모든 client request는 hang이 걸리게 된다.<br>
 볼륨같은 큰 데이터(많은 조각을 갖는 데이터)는 몇 개의 pg만 <code>incomplete</code>로 떨어져도 결국 모든 client의 request가 hang이 걸리게 된다.</p>
-
 <figure>
     <img src="/images/ceph.png"/> <figcaption>
             <h4>ceph logical flow</h4>
         </figcaption>
 </figure>
 
-
-<p>그러므로 <code>incomplete</code> 된 pg가 있으면 pool 전체를 사용할 수 가 없다.(pool을 초기화 하기 전까지..)<br />
-왜냐하면 어떠한 rbd object는 rados object로 분할되고 rados object들은 해당 pool에 분할 되어져서 들어간다.<br />
-해당 pool은 pg 들로 이루어 지는데 그중 한 pg 조각만 문제가 있어도 그 pg 조각에 들어간 한 rados object에 접근이 안되고 그렇기 때문에 rbd object 자체를 쓸수가 없게 되기 때문에 해당 pool을 쓸 수 없게 된다.<br />
+<p>그러므로 <code>incomplete</code> 된 pg가 있으면 pool 전체를 사용할 수 가 없다.(pool을 초기화 하기 전까지..)<br>
+왜냐하면 어떠한 rbd object는 rados object로 분할되고 rados object들은 해당 pool에 분할 되어져서 들어간다.<br>
+해당 pool은 pg 들로 이루어 지는데 그중 한 pg 조각만 문제가 있어도 그 pg 조각에 들어간 한 rados object에 접근이 안되고 그렇기 때문에 rbd object 자체를 쓸수가 없게 되기 때문에 해당 pool을 쓸 수 없게 된다.<br>
 온갖 메일링 리스트와 구글에서 검색한 방법을 사용했지만 효과는 없었고 다음에 이 상태로 빠지지 않을 수 있는 교훈만 얻을 수 있었다.</p>
-
-<p>이 글을 보면 이게 얼마나 간단하지 않은 일인지 알게 된다..<br />
+<p>이 글을 보면 이게 얼마나 간단하지 않은 일인지 알게 된다..<br>
 <a href="https://www.mail-archive.com/ceph-users@lists.ceph.com/msg15916.html">Ceph PG Incomplete = Cluster unusable</a></p>
-
-<p>현재로서는 여기 <a href="http://tracker.ceph.com/issues/10098">feature 요청</a> 같이 데이터를 포기하더라도 pg를 재생성할 수 있는 기능이 추가되기를 기대해야 하는 상황이다.<br />
+<p>현재로서는 여기 <a href="http://tracker.ceph.com/issues/10098">feature 요청</a> 같이 데이터를 포기하더라도 pg를 재생성할 수 있는 기능이 추가되기를 기대해야 하는 상황이다.<br>
 (현재는 <code>ceph pg force_create_pg</code>를 사용해도 <code>creating</code> 상태에서 <code>incomplete</code> 상태로 되돌아 온다..)</p>
-
-<p>물론 이상태까지 오게 하지 않는게 최선의 방법이지만 이미 이런 복구 불가능한 데이터가 생기면<br />
-그리고 그 데이터가 볼륨인데 pg 한조각이 유실되면 해당 데이터를 사용할 수 없게 된다.(read write중 hang)<br />
-그렇기 때문에 결국 이런 볼륨을 살려내기 위해서는 강제로 볼륨 데이터를 <code>export</code>하고 이를 바탕으로 새로운 풀을 제작해서 다시 <code>import</code>할 수 밖에 없다.<br />
+<p>물론 이상태까지 오게 하지 않는게 최선의 방법이지만 이미 이런 복구 불가능한 데이터가 생기면<br>
+그리고 그 데이터가 볼륨인데 pg 한조각이 유실되면 해당 데이터를 사용할 수 없게 된다.(read write중 hang)<br>
+그렇기 때문에 결국 이런 볼륨을 살려내기 위해서는 강제로 볼륨 데이터를 <code>export</code>하고 이를 바탕으로 새로운 풀을 제작해서 다시 <code>import</code>할 수 밖에 없다.<br>
 물론 볼륨 데이터를 <code>export</code> 하면 hang이 걸려서 이 내용과 같이 특수한 방법이 필요하다.</p>
-
 <p>그래서 오늘의 주제는 <code>incomplete</code> 와 같이 pool 전체를 사용할 수 없는 상태에서 최대한 데이터를 복구해 내는 방법을 소개하고자 한다.</p>
-
 <h2 id="image-format">image format<a href="#image-format" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
-<p>우선 이 방법을 이해하기 위해서는 기본적으로 <code>rbd image format</code>을 이해해야한다.<br />
-우선 <a href="http://blog.bit-isle.jp/bird/2014/06/10">Ceph 아키텍처 해설</a>에서 기본적인 지식을 습득할 수 있다.<br />
+<p>우선 이 방법을 이해하기 위해서는 기본적으로 <code>rbd image format</code>을 이해해야한다.<br>
+우선 <a href="http://blog.bit-isle.jp/bird/2014/06/10">Ceph 아키텍처 해설</a>에서 기본적인 지식을 습득할 수 있다.<br>
 우선 <code>rbd image format</code>의 종류는 아래와 같이 2가지 종류이고 위의 글에서 2가지 포맷의 제한점을 알 수 있다.</p>
-
 <h3 id="rbd-image-format-1">rbd image format 1<a href="#rbd-image-format-1" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#007f7f">/*
+</span><span style="color:#007f7f"> * old-style rbd image &#39;foo&#39; consists of objects
+</span><span style="color:#007f7f"> *   foo.rbd      - image metadata
+</span><span style="color:#007f7f"> *   rb.&lt;idhi&gt;.&lt;idlo&gt;.00000000
+</span><span style="color:#007f7f"> *   rb.&lt;idhi&gt;.&lt;idlo&gt;.00000001
+</span><span style="color:#007f7f"> *   ...          - data
+</span><span style="color:#007f7f"> */</span>
 
-<pre><code class="language-c">/*
- * old-style rbd image 'foo' consists of objects
- *   foo.rbd      - image metadata
- *   rb.&lt;idhi&gt;.&lt;idlo&gt;.00000000
- *   rb.&lt;idhi&gt;.&lt;idlo&gt;.00000001
- *   ...          - data
- */
+<span style="color:#0f0;font-weight:bold">#define RBD_SUFFIX	 	&#34;.rbd&#34;
+</span><span style="color:#0f0;font-weight:bold">#define RBD_DIRECTORY           &#34;rbd_directory&#34;
+</span><span style="color:#0f0;font-weight:bold">#define RBD_INFO                &#34;rbd_info&#34;
+</span></code></pre></div><h3 id="rbd-image-format-2">rbd image format 2<a href="#rbd-image-format-2" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#007f7f">/* New-style rbd image &#39;foo&#39; consists of objects
+</span><span style="color:#007f7f"> *   rbd_id.foo              - id of image
+</span><span style="color:#007f7f"> *   rbd_header.&lt;id&gt;         - image metadata
+</span><span style="color:#007f7f"> *   rbd_data.&lt;id&gt;.00000000
+</span><span style="color:#007f7f"> *   rbd_data.&lt;id&gt;.00000001
+</span><span style="color:#007f7f"> *   ...                     - data
+</span><span style="color:#007f7f"> */</span>
 
-#define RBD_SUFFIX	 	&quot;.rbd&quot;
-#define RBD_DIRECTORY           &quot;rbd_directory&quot;
-#define RBD_INFO                &quot;rbd_info&quot;
-</code></pre>
-
-<h3 id="rbd-image-format-2">rbd image format 2<a href="#rbd-image-format-2" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
-<pre><code class="language-c">/* New-style rbd image 'foo' consists of objects
- *   rbd_id.foo              - id of image
- *   rbd_header.&lt;id&gt;         - image metadata
- *   rbd_data.&lt;id&gt;.00000000
- *   rbd_data.&lt;id&gt;.00000001
- *   ...                     - data
- */
-
-#define RBD_HEADER_PREFIX      &quot;rbd_header.&quot;
-#define RBD_DATA_PREFIX        &quot;rbd_data.&quot;
-#define RBD_ID_PREFIX          &quot;rbd_id.&quot;
-</code></pre>
-
-<p>우선 이글은 현재 사용중인 <code>rbd image format 2</code>의 포맷의 복구 방법에 대해서 설명할 계획이다.</p>
-
+<span style="color:#0f0;font-weight:bold">#define RBD_HEADER_PREFIX      &#34;rbd_header.&#34;
+</span><span style="color:#0f0;font-weight:bold">#define RBD_DATA_PREFIX        &#34;rbd_data.&#34;
+</span><span style="color:#0f0;font-weight:bold">#define RBD_ID_PREFIX          &#34;rbd_id.&#34;
+</span></code></pre></div><p>우선 이글은 현재 사용중인 <code>rbd image format 2</code>의 포맷의 복구 방법에 대해서 설명할 계획이다.</p>
 <h2 id="image-format-2-분석">image format 2 분석<a href="#image-format-2-분석" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
-<p>만약 당신이 glance나 cinder를 사용중이라면 uuid 형태의 이름을 갖는 image와 volume들이 있을 것이다.<br />
+<p>만약 당신이 glance나 cinder를 사용중이라면 uuid 형태의 이름을 갖는 image와 volume들이 있을 것이다.<br>
 이 정보는 ceph rbd 안에서는 아래와 같이 조회 가능하다.</p>
-
-<pre><code class="language-bash"># rbd -p images ls
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007f7f"># rbd -p images ls</span>
 08909734-66fa-48e3-ab5e-2e2b8bb3a58c
-</code></pre>
-
-<p>위와 같이 image나 volume이 사용하고 있는 pool의 list를 조회해 보면 uuid 들이 나오는데 이 리스트 데이터들이 실제 image와 volume의 uuid 이다.
+</code></pre></div><p>위와 같이 image나 volume이 사용하고 있는 pool의 list를 조회해 보면 uuid 들이 나오는데 이 리스트 데이터들이 실제 image와 volume의 uuid 이다.
 그렇다면 이런 image와 volume을 조회하면 다음과 같다.</p>
-
-<pre><code class="language-bash"># rbd -p images info 08909734-66fa-48e3-ab5e-2e2b8bb3a58c
-rbd image '08909734-66fa-48e3-ab5e-2e2b8bb3a58c':
-    size 810 MB in 102 objects
-    order 23 (8192 kB objects)
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007f7f"># rbd -p images info 08909734-66fa-48e3-ab5e-2e2b8bb3a58c</span>
+rbd image <span style="color:#0ff;font-weight:bold">&#39;08909734-66fa-48e3-ab5e-2e2b8bb3a58c&#39;</span>:
+    size <span style="color:#ff0;font-weight:bold">810</span> MB in <span style="color:#ff0;font-weight:bold">102</span> objects
+    order <span style="color:#ff0;font-weight:bold">23</span> (<span style="color:#ff0;font-weight:bold">8192</span> kB objects)
     block_name_prefix: rbd_data.5a57484353d0cd
-    format: 2
+    format: <span style="color:#ff0;font-weight:bold">2</span>
     features: layering
-</code></pre>
-
-<p>이 내용은 실제 rbd에 저장된 uuid의 데이터가 어떤지 정보를 보여주는데<br />
-여기에서 <code>08909734-66fa-48e3-ab5e-2e2b8bb3a58c</code> 라는 uuid의 이미지는 <code>810 MB</code>의 크기를 가지며 <code>102</code>개의 조각이다.<br />
-그리고 <code>2**23=8192kB</code>의 크기로 쪼개져 있다. 즉, <code>810 MB</code>는 <code>약 8192kB * 102</code> 이다.<br />
-다음으로 <code>block_name_prefix: rbd_data.5a57484353d0cd</code>에서 <code>5a57484353d0cd</code>가 prefix 값이다.<br />
+</code></pre></div><p>이 내용은 실제 rbd에 저장된 uuid의 데이터가 어떤지 정보를 보여주는데<br>
+여기에서 <code>08909734-66fa-48e3-ab5e-2e2b8bb3a58c</code> 라는 uuid의 이미지는 <code>810 MB</code>의 크기를 가지며 <code>102</code>개의 조각이다.<br>
+그리고 <code>2**23=8192kB</code>의 크기로 쪼개져 있다. 즉, <code>810 MB</code>는 <code>약 8192kB * 102</code> 이다.<br>
+다음으로 <code>block_name_prefix: rbd_data.5a57484353d0cd</code>에서 <code>5a57484353d0cd</code>가 prefix 값이다.<br>
 format: 2 는 말그대로 image format 2 이고 features은 default값이다.</p>
-
 <p>rbd는 rados object들로 이루어져 있으며 위의 정보를 바탕으로 아래와 같이 3종류의 object로 구성된다.</p>
-
 <ul>
 <li><strong>rbd_id.08909734-66fa-48e3-ab5e-2e2b8bb3a58c</strong></li>
 <li><strong>rbd_header.5a57484353d0cd</strong></li>
 <li><strong>rbd_data.5a57484353d0cd.0000000000000000 ~ rbd_data.5a57484353d0cd.0000000000000021 (102개)</strong></li>
 </ul>
-
-<h3 id="rbd-id-08909734-66fa-48e3-ab5e-2e2b8bb3a58c">rbd_id.08909734-66fa-48e3-ab5e-2e2b8bb3a58c<a href="#rbd-id-08909734-66fa-48e3-ab5e-2e2b8bb3a58c" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
-<p>rbd_id.<uuid\> 파일을 다운받아서 열어보면 그 안에 <code>prefix</code> 값이 저장되어 있는 것을 알 수 있다.<br />
+<h3 id="rbd_id08909734-66fa-48e3-ab5e-2e2b8bb3a58c">rbd_id.08909734-66fa-48e3-ab5e-2e2b8bb3a58c<a href="#rbd_id08909734-66fa-48e3-ab5e-2e2b8bb3a58c" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>rbd_id.&lt;uuid&gt; 파일을 다운받아서 열어보면 그 안에 <code>prefix</code> 값이 저장되어 있는 것을 알 수 있다.<br>
 저 값은 random 값이 들어 있어서 이 방법이 아니면 찾을 수가 없는 값이다.</p>
-
-<pre><code class="language-bash"># cat rbd_id.08909734-66fa-48e3-ab5e-2e2b8bb3a58c
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007f7f"># cat rbd_id.08909734-66fa-48e3-ab5e-2e2b8bb3a58c</span>
 5a57484353d0cd
-</code></pre>
-
-<h3 id="rbd-header-5a57484353d0cd">rbd_header.5a57484353d0cd<a href="#rbd-header-5a57484353d0cd" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
-<p>rbd_header.<prefix\> 파일은 아무것도 내용이 없다. 실제 파일 내용이며 xattr 정보도 쓸만 한게 없다.<br />
+</code></pre></div><h3 id="rbd_header5a57484353d0cd">rbd_header.5a57484353d0cd<a href="#rbd_header5a57484353d0cd" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>rbd_header.&lt;prefix&gt; 파일은 아무것도 내용이 없다. 실제 파일 내용이며 xattr 정보도 쓸만 한게 없다.<br>
 하지만 이정보는 파일로 관리하기 위해 존재하는 가상의 정보이지 실제는 leveldb에 저장되어 있다.(구버전은 테스트를 못해서 구버전엔 xattr을 썻을 지도..)
 아무튼 이 안에서 features, object_prefix, order, size, snap_seq 를 뽑아 낼 수 있다.</p>
-
-<pre><code class="language-bash"># rados listomapvals -p images rbd_header.5a57484353d0cd
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007f7f"># rados listomapvals -p images rbd_header.5a57484353d0cd</span>
 features
-value: (8 bytes) :
-0000 : 01 00 00 00 00 00 00 00                         : ........
+value: (<span style="color:#ff0;font-weight:bold">8</span> bytes) :
+<span style="color:#ff0;font-weight:bold">0000</span> : <span style="color:#ff0;font-weight:bold">01</span> <span style="color:#ff0;font-weight:bold">00</span> <span style="color:#ff0;font-weight:bold">00</span> <span style="color:#ff0;font-weight:bold">00</span> <span style="color:#ff0;font-weight:bold">00</span> <span style="color:#ff0;font-weight:bold">00</span> <span style="color:#ff0;font-weight:bold">00</span> <span style="color:#ff0;font-weight:bold">00</span>                         : ........
 object_prefix
-value: (27 bytes) :
-0000 : 17 00 00 00 72 62 64 5f 64 61 74 61 2e 35 61 35 : ....rbd_data.5a5
-0010 : 37 34 38 34 33 35 33 64 30 63 64                : 7484353d0cd
+value: (<span style="color:#ff0;font-weight:bold">27</span> bytes) :
+<span style="color:#ff0;font-weight:bold">0000</span> : <span style="color:#ff0;font-weight:bold">17</span> <span style="color:#ff0;font-weight:bold">00</span> <span style="color:#ff0;font-weight:bold">00</span> <span style="color:#ff0;font-weight:bold">00</span> <span style="color:#ff0;font-weight:bold">72</span> <span style="color:#ff0;font-weight:bold">62</span> <span style="color:#ff0;font-weight:bold">64</span> 5f <span style="color:#ff0;font-weight:bold">64</span> <span style="color:#ff0;font-weight:bold">61</span> <span style="color:#ff0;font-weight:bold">74</span> <span style="color:#ff0;font-weight:bold">61</span> 2e <span style="color:#ff0;font-weight:bold">35</span> <span style="color:#ff0;font-weight:bold">61</span> <span style="color:#ff0;font-weight:bold">35</span> : ....rbd_data.5a5
+<span style="color:#ff0;font-weight:bold">0010</span> : <span style="color:#ff0;font-weight:bold">37</span> <span style="color:#ff0;font-weight:bold">34</span> <span style="color:#ff0;font-weight:bold">38</span> <span style="color:#ff0;font-weight:bold">34</span> <span style="color:#ff0;font-weight:bold">33</span> <span style="color:#ff0;font-weight:bold">35</span> <span style="color:#ff0;font-weight:bold">33</span> <span style="color:#ff0;font-weight:bold">64</span> <span style="color:#ff0;font-weight:bold">30</span> <span style="color:#ff0;font-weight:bold">63</span> <span style="color:#ff0;font-weight:bold">64</span>                : 7484353d0cd
 order
-value: (1 bytes) :
-0000 : 17                                              : .
+value: (<span style="color:#ff0;font-weight:bold">1</span> bytes) :
+<span style="color:#ff0;font-weight:bold">0000</span> : <span style="color:#ff0;font-weight:bold">17</span>                                              : .
 size
-value: (8 bytes) :
-0000 : 00 8c a3 32 00 00 00 00                         : ...2....
+value: (<span style="color:#ff0;font-weight:bold">8</span> bytes) :
+<span style="color:#ff0;font-weight:bold">0000</span> : <span style="color:#ff0;font-weight:bold">00</span> 8c a3 <span style="color:#ff0;font-weight:bold">32</span> <span style="color:#ff0;font-weight:bold">00</span> <span style="color:#ff0;font-weight:bold">00</span> <span style="color:#ff0;font-weight:bold">00</span> <span style="color:#ff0;font-weight:bold">00</span>                         : ...2....
 snap_seq
-value: (8 bytes) :
-0000 : 00 00 00 00 00 00 00 00                         : ........
-</code></pre>
-
-<h3 id="rbd-data-5a57484353d0cd-0000000000000000-rbd-data-5a57484353d0cd-0000000000000021-102개">rbd_data.5a57484353d0cd.0000000000000000 ~ rbd_data.5a57484353d0cd.0000000000000021 (102개)<a href="#rbd-data-5a57484353d0cd-0000000000000000-rbd-data-5a57484353d0cd-0000000000000021-102개" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
-<p>실제 데이터이며 이 정보를 이어 붙이면 우리가 원하는 데이터를 얻을 수 있다.<br />
+value: (<span style="color:#ff0;font-weight:bold">8</span> bytes) :
+<span style="color:#ff0;font-weight:bold">0000</span> : <span style="color:#ff0;font-weight:bold">00</span> <span style="color:#ff0;font-weight:bold">00</span> <span style="color:#ff0;font-weight:bold">00</span> <span style="color:#ff0;font-weight:bold">00</span> <span style="color:#ff0;font-weight:bold">00</span> <span style="color:#ff0;font-weight:bold">00</span> <span style="color:#ff0;font-weight:bold">00</span> <span style="color:#ff0;font-weight:bold">00</span>                         : ........
+</code></pre></div><h3 id="rbd_data5a57484353d0cd0000000000000000--rbd_data5a57484353d0cd0000000000000021-102개">rbd_data.5a57484353d0cd.0000000000000000 ~ rbd_data.5a57484353d0cd.0000000000000021 (102개)<a href="#rbd_data5a57484353d0cd0000000000000000--rbd_data5a57484353d0cd0000000000000021-102개" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>실제 데이터이며 이 정보를 이어 붙이면 우리가 원하는 데이터를 얻을 수 있다.<br>
 하지만 이 정보 들은 존재하지 않는 파일들도 있을 수도 있다.(안쓰는 블럭부분의 오브젝트는 생성안되어 있음)
 아무튼 뒤의 16진수 16자리 개수 만큼 데이터를 생성할 수 있다.
 우리는 102개의 오브젝트 인걸 알고 있으니 0000000000000000 ~ 0000000000000021 까지해서 102개 이다.</p>
-
-<h4 id="q-왜-rados-p-image-ls-같은-커맨드로-오브젝트의-정확한-리스트를-검사하지-않는가">Q. 왜 <code>rados -p image ls</code> 같은 커맨드로 오브젝트의 정확한 리스트를 검사하지 않는가?<a href="#q-왜-rados-p-image-ls-같은-커맨드로-오브젝트의-정확한-리스트를-검사하지-않는가" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
-
-<p>만약 incomplete 상태가 되면 <code>rados ls</code> 같은 커맨드는 incomplete 인 pg 에 request 를 던지고 그 request는 hang이 되기때문에 응답을 받기가 힘들것이다..<br />
+<h4 id="q-왜-rados--p-image-ls-같은-커맨드로-오브젝트의-정확한-리스트를-검사하지-않는가">Q. 왜 <code>rados -p image ls</code> 같은 커맨드로 오브젝트의 정확한 리스트를 검사하지 않는가?<a href="#q-왜-rados--p-image-ls-같은-커맨드로-오브젝트의-정확한-리스트를-검사하지-않는가" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
+<p>만약 incomplete 상태가 되면 <code>rados ls</code> 같은 커맨드는 incomplete 인 pg 에 request 를 던지고 그 request는 hang이 되기때문에 응답을 받기가 힘들것이다..<br>
 그렇기 때문에 이런 작업으로 실제 존재할 데이터를 추정해야 한다.</p>
-
 <h2 id="작업-순서">작업 순서<a href="#작업-순서" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
 <p>image나 volume 의 <code>uuid</code>이름과 <code>pool</code>의 이름을 알고 있으면 시작할 수 있다.</p>
-
-<h3 id="1-pool-이름-pool-번호-pg-개수">1. pool 이름 -&gt; pool 번호, pg 개수<a href="#1-pool-이름-pool-번호-pg-개수" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
+<h3 id="1-pool-이름---pool-번호-pg-개수">1. pool 이름 -&gt; pool 번호, pg 개수<a href="#1-pool-이름---pool-번호-pg-개수" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p>아래와 같은 정보에서 보면 <code>pool 35</code>와 <code>pg_num 512</code> 정보로 pool 번호가 <code>35</code>인것 그리고 pg 개수가 <code>512</code> 인것을 알 수 있다.
 추가로 <code>object_hash rjenkins</code>로 <code>rjenkins</code> 해쉬를 사용함을 알 수 있다.</p>
-
-<pre><code class="language-bash"># ceph osd dump
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007f7f"># ceph osd dump</span>
 ...
-pool 35 'images' replicated size 2 min_size 1 crush_ruleset 0 object_hash rjenkins pg_num 512 pgp_num 512 last_change 46681 flags hashpspool stripe_width 0
+pool <span style="color:#ff0;font-weight:bold">35</span> <span style="color:#0ff;font-weight:bold">&#39;images&#39;</span> replicated size <span style="color:#ff0;font-weight:bold">2</span> min_size <span style="color:#ff0;font-weight:bold">1</span> crush_ruleset <span style="color:#ff0;font-weight:bold">0</span> object_hash rjenkins pg_num <span style="color:#ff0;font-weight:bold">512</span> pgp_num <span style="color:#ff0;font-weight:bold">512</span> last_change <span style="color:#ff0;font-weight:bold">46681</span> flags hashpspool stripe_width <span style="color:#ff0;font-weight:bold">0</span>
 ...
-</code></pre>
-
-<h3 id="2-rbd-p-pool-info-uuid-prefix-파일-개수-사이즈">2. rbd -p <pool\> info <uuid\> -&gt; prefix, 파일 개수, 사이즈<a href="#2-rbd-p-pool-info-uuid-prefix-파일-개수-사이즈" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
+</code></pre></div><h3 id="2-rbd--p-pool-info-uuid---prefix-파일-개수-사이즈">2. rbd -p &lt;pool&gt; info &lt;uuid&gt; -&gt; prefix, 파일 개수, 사이즈<a href="#2-rbd--p-pool-info-uuid---prefix-파일-개수-사이즈" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p>앞에서 한번 설명했지만 다시 정리하면 아래와 같은 상황에서 prefix는 <code>5a57484353d0cd</code> 파일 개수는 <code>102</code> 파일 사이즈는 <code>8192 kB</code> 이다.</p>
-
-<pre><code class="language-bash"># rbd -p images info 08909734-66fa-48e3-ab5e-2e2b8bb3a58c
-rbd image '08909734-66fa-48e3-ab5e-2e2b8bb3a58c':
-    size 810 MB in 102 objects
-    order 23 (8192 kB objects)
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007f7f"># rbd -p images info 08909734-66fa-48e3-ab5e-2e2b8bb3a58c</span>
+rbd image <span style="color:#0ff;font-weight:bold">&#39;08909734-66fa-48e3-ab5e-2e2b8bb3a58c&#39;</span>:
+    size <span style="color:#ff0;font-weight:bold">810</span> MB in <span style="color:#ff0;font-weight:bold">102</span> objects
+    order <span style="color:#ff0;font-weight:bold">23</span> (<span style="color:#ff0;font-weight:bold">8192</span> kB objects)
     block_name_prefix: rbd_data.5a57484353d0cd
-    format: 2
+    format: <span style="color:#ff0;font-weight:bold">2</span>
     features: layering
-</code></pre>
-
-<p>물론 incomplete pg에 해당 header가 들어 있다면.. 그 파일은 포기해야 한다.</p>
-
-<h3 id="3-rbd-data-prefix-seq-파일-찾기">3. rbd_data.<prefix\>.<seq\> 파일 찾기<a href="#3-rbd-data-prefix-seq-파일-찾기" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
-<p>실제 데이터는 rbd_data.<prefix\>.<seq\> 파일을 연결하면 복구 할 수 있다.
+</code></pre></div><p>물론 incomplete pg에 해당 header가 들어 있다면.. 그 파일은 포기해야 한다.</p>
+<h3 id="3-rbd_dataprefixseq-파일-찾기">3. rbd_data.&lt;prefix&gt;.&lt;seq&gt; 파일 찾기<a href="#3-rbd_dataprefixseq-파일-찾기" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>실제 데이터는 rbd_data.&lt;prefix&gt;.&lt;seq&gt; 파일을 연결하면 복구 할 수 있다.
 그렇다면 어떻게 저 파일들을 찾을 수 있을까..</p>
-
-<p>우선 아래 커맨드로 찾을 수 있다. 저 아래정보에서 <code>-&gt;</code> 뒤편의 정보를 참고 하면 된다.<br />
-pg 35.9f6e4c67 는 35번 풀의 9f6e4c67 해쉬 값을 갖는 데이터를 말하며<br />
-9f6e4c67 값이 rbd_data.b0e882ae8944a.0000000000000134 를 해쉬 한 값이다.<br />
-그렇다면 67은 무엇이냐면 9f6e4c67 를 pg_num으로 <code>modular</code> 연산 해서 나온 값이다.<br />
-우리는 실제 디렉토리는 35.67을 사용하니까 저 값을 알 고 있으면 된다.<br />
+<p>우선 아래 커맨드로 찾을 수 있다. 저 아래정보에서 <code>-&gt;</code> 뒤편의 정보를 참고 하면 된다.<br>
+pg 35.9f6e4c67 는 35번 풀의 9f6e4c67 해쉬 값을 갖는 데이터를 말하며<br>
+9f6e4c67 값이 rbd_data.b0e882ae8944a.0000000000000134 를 해쉬 한 값이다.<br>
+그렇다면 67은 무엇이냐면 9f6e4c67 를 pg_num으로 <code>modular</code> 연산 해서 나온 값이다.<br>
+우리는 실제 디렉토리는 35.67을 사용하니까 저 값을 알 고 있으면 된다.<br>
 또한 뒤의 up 3,11 에서 3번 osd 11번 osd가 가지고 있는 것을 알 수 있다.</p>
-
-<pre><code class="language-bash"># ceph osd map images rbd_data.b0e882ae8944a.0000000000000134
-osdmap e53074 pool 'images' (35) object 'rbd_data.b0e882ae8944a.0000000000000134' -&gt; pg 35.9f6e4c67 (35.67) -&gt; up ([3,11], p3) acting ([3,11], p3)
-</code></pre>
-
-<p>다만 <code>ceph osd map ..</code> 커맨드는 <code>ceph pg dump</code> 와 같은 pg를 뒤져야 하는 부분이 있기 때문에 느릴 수 있다.<br />
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007f7f"># ceph osd map images rbd_data.b0e882ae8944a.0000000000000134</span>
+osdmap e53074 pool <span style="color:#0ff;font-weight:bold">&#39;images&#39;</span> (35) object <span style="color:#0ff;font-weight:bold">&#39;rbd_data.b0e882ae8944a.0000000000000134&#39;</span> -&gt; pg 35.9f6e4c67 (35.67) -&gt; up ([3,11], p3) acting ([3,11], p3)
+</code></pre></div><p>다만 <code>ceph osd map ..</code> 커맨드는 <code>ceph pg dump</code> 와 같은 pg를 뒤져야 하는 부분이 있기 때문에 느릴 수 있다.<br>
 이때문에 이 기능은 아래와 같이 pg dump에 대한 내용을 파일로 저장하고 아래 같이 해쉬 스크립트만 따로 돌리는게 훨씬 빠를 것이다.</p>
-
-<p>아래 python코드는 ceph에서 사용하는 <a href="http://burtleburtle.net/bob/hash/evahash.html">robert jenkins hash</a> 를 <a href="http://stackoverflow.com/a/3611698">포팅</a>한 스크립트 이다.<br />
+<p>아래 python코드는 ceph에서 사용하는 <a href="http://burtleburtle.net/bob/hash/evahash.html">robert jenkins hash</a> 를 <a href="http://stackoverflow.com/a/3611698">포팅</a>한 스크립트 이다.<br>
 물론 rjenkins hash 아니면 linux hash이나 기본이 rjenkins hash 이다.</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#0ff;font-weight:bold">&#39;&#39;&#39;Implements a straight Jenkins lookup hash - http://burtleburtle.net/bob/hash/doobs.html
+</span><span style="color:#0ff;font-weight:bold">
+</span><span style="color:#0ff;font-weight:bold">Usage: 
+</span><span style="color:#0ff;font-weight:bold">    from jhash import jhash
+</span><span style="color:#0ff;font-weight:bold">    print jhash(&#39;My hovercraft is full of eels&#39;)
+</span><span style="color:#0ff;font-weight:bold">
+</span><span style="color:#0ff;font-weight:bold">Returns: unsigned 32 bit integer value
+</span><span style="color:#0ff;font-weight:bold">
+</span><span style="color:#0ff;font-weight:bold">Prereqs: None
+</span><span style="color:#0ff;font-weight:bold">
+</span><span style="color:#0ff;font-weight:bold">Tested with Python 2.6.
+</span><span style="color:#0ff;font-weight:bold">Version 1.00 - der@dod.no - 23.08.2010
+</span><span style="color:#0ff;font-weight:bold">
+</span><span style="color:#0ff;font-weight:bold">Partly based on the Perl module Digest::JHash
+</span><span style="color:#0ff;font-weight:bold">http://search.cpan.org/~shlomif/Digest-JHash-0.06/lib/Digest/JHash.pm
+</span><span style="color:#0ff;font-weight:bold">
+</span><span style="color:#0ff;font-weight:bold">Original copyright notice:
+</span><span style="color:#0ff;font-weight:bold">    By Bob Jenkins, 1996.  bob_jenkins@burtleburtle.net.  You may use this
+</span><span style="color:#0ff;font-weight:bold">    code any way you wish, private, educational, or commercial.  It&#39;s free.
+</span><span style="color:#0ff;font-weight:bold">
+</span><span style="color:#0ff;font-weight:bold">    See http://burtleburtle.net/bob/hash/evahash.html
+</span><span style="color:#0ff;font-weight:bold">    Use for hash table lookup, or anything where one collision in 2^^32 is
+</span><span style="color:#0ff;font-weight:bold">    acceptable.  Do NOT use for cryptographic purposes.
+</span><span style="color:#0ff;font-weight:bold">&#39;&#39;&#39;</span>
 
-<pre><code class="language-python">'''Implements a straight Jenkins lookup hash - http://burtleburtle.net/bob/hash/doobs.html
+<span style="color:#fff;font-weight:bold">def</span> mix(a, b, c):
+    <span style="color:#0ff;font-weight:bold">&#39;&#39;&#39;mix() -- mix 3 32-bit values reversibly.
+</span><span style="color:#0ff;font-weight:bold">For every delta with one or two bits set, and the deltas of all three
+</span><span style="color:#0ff;font-weight:bold">  high bits or all three low bits, whether the original value of a,b,c
+</span><span style="color:#0ff;font-weight:bold">  is almost all zero or is uniformly distributed,
+</span><span style="color:#0ff;font-weight:bold">* If mix() is run forward or backward, at least 32 bits in a,b,c
+</span><span style="color:#0ff;font-weight:bold">  have at least 1/4 probability of changing.
+</span><span style="color:#0ff;font-weight:bold">* If mix() is run forward, every bit of c will change between 1/3 and
+</span><span style="color:#0ff;font-weight:bold">  2/3 of the time.  (Well, 22/100 and 78/100 for some 2-bit deltas.)&#39;&#39;&#39;</span>
+    <span style="color:#007f7f"># Need to constrain U32 to only 32 bits using the &amp; 0xffffffff </span>
+    <span style="color:#007f7f"># since Python has no native notion of integers limited to 32 bit</span>
+    <span style="color:#007f7f"># http://docs.python.org/library/stdtypes.html#numeric-types-int-float-long-complex</span>
+    a &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>; b &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>; c &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>
+    a -= b; a -= c; a ^= (c&gt;&gt;<span style="color:#ff0;font-weight:bold">13</span>); a &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>
+    b -= c; b -= a; b ^= (a&lt;&lt;<span style="color:#ff0;font-weight:bold">8</span>); b &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>
+    c -= a; c -= b; c ^= (b&gt;&gt;<span style="color:#ff0;font-weight:bold">13</span>); c &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>
+    a -= b; a -= c; a ^= (c&gt;&gt;<span style="color:#ff0;font-weight:bold">12</span>); a &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>
+    b -= c; b -= a; b ^= (a&lt;&lt;<span style="color:#ff0;font-weight:bold">16</span>); b &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>
+    c -= a; c -= b; c ^= (b&gt;&gt;<span style="color:#ff0;font-weight:bold">5</span>); c &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>
+    a -= b; a -= c; a ^= (c&gt;&gt;<span style="color:#ff0;font-weight:bold">3</span>); a &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>
+    b -= c; b -= a; b ^= (a&lt;&lt;<span style="color:#ff0;font-weight:bold">10</span>); b &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>
+    c -= a; c -= b; c ^= (b&gt;&gt;<span style="color:#ff0;font-weight:bold">15</span>); c &amp;= <span style="color:#ff0;font-weight:bold">0xffffffff</span>
+    <span style="color:#fff;font-weight:bold">return</span> a, b, c
 
-Usage: 
-    from jhash import jhash
-    print jhash('My hovercraft is full of eels')
+<span style="color:#fff;font-weight:bold">def</span> jhash(data, initval = <span style="color:#ff0;font-weight:bold">0</span>):
+    <span style="color:#0ff;font-weight:bold">&#39;&#39;&#39;hash() -- hash a variable-length key into a 32-bit value
+</span><span style="color:#0ff;font-weight:bold">  data    : the key (the unaligned variable-length array of bytes)
+</span><span style="color:#0ff;font-weight:bold">  initval : can be any 4-byte value, defaults to 0
+</span><span style="color:#0ff;font-weight:bold">Returns a 32-bit value.  Every bit of the key affects every bit of
+</span><span style="color:#0ff;font-weight:bold">the return value.  Every 1-bit and 2-bit delta achieves avalanche.&#39;&#39;&#39;</span>
+    length = lenpos = <span style="color:#fff;font-weight:bold">len</span>(data)
 
-Returns: unsigned 32 bit integer value
+    <span style="color:#007f7f"># empty string returns 0</span>
+    <span style="color:#fff;font-weight:bold">if</span> length == <span style="color:#ff0;font-weight:bold">0</span>:
+        <span style="color:#fff;font-weight:bold">return</span> <span style="color:#ff0;font-weight:bold">0</span>
 
-Prereqs: None
+    <span style="color:#007f7f"># Set up the internal state</span>
+    a = b = <span style="color:#ff0;font-weight:bold">0x9e3779b9</span> <span style="color:#007f7f"># the golden ratio; an arbitrary value</span>
+    c = initval        <span style="color:#007f7f"># the previous hash value</span>
+    p = <span style="color:#ff0;font-weight:bold">0</span>              <span style="color:#007f7f"># string offset</span>
 
-Tested with Python 2.6.
-Version 1.00 - der@dod.no - 23.08.2010
-
-Partly based on the Perl module Digest::JHash
-http://search.cpan.org/~shlomif/Digest-JHash-0.06/lib/Digest/JHash.pm
-
-Original copyright notice:
-    By Bob Jenkins, 1996.  bob_jenkins@burtleburtle.net.  You may use this
-    code any way you wish, private, educational, or commercial.  It's free.
-
-    See http://burtleburtle.net/bob/hash/evahash.html
-    Use for hash table lookup, or anything where one collision in 2^^32 is
-    acceptable.  Do NOT use for cryptographic purposes.
-'''
-
-def mix(a, b, c):
-    '''mix() -- mix 3 32-bit values reversibly.
-For every delta with one or two bits set, and the deltas of all three
-  high bits or all three low bits, whether the original value of a,b,c
-  is almost all zero or is uniformly distributed,
-* If mix() is run forward or backward, at least 32 bits in a,b,c
-  have at least 1/4 probability of changing.
-* If mix() is run forward, every bit of c will change between 1/3 and
-  2/3 of the time.  (Well, 22/100 and 78/100 for some 2-bit deltas.)'''
-    # Need to constrain U32 to only 32 bits using the &amp; 0xffffffff 
-    # since Python has no native notion of integers limited to 32 bit
-    # http://docs.python.org/library/stdtypes.html#numeric-types-int-float-long-complex
-    a &amp;= 0xffffffff; b &amp;= 0xffffffff; c &amp;= 0xffffffff
-    a -= b; a -= c; a ^= (c&gt;&gt;13); a &amp;= 0xffffffff
-    b -= c; b -= a; b ^= (a&lt;&lt;8); b &amp;= 0xffffffff
-    c -= a; c -= b; c ^= (b&gt;&gt;13); c &amp;= 0xffffffff
-    a -= b; a -= c; a ^= (c&gt;&gt;12); a &amp;= 0xffffffff
-    b -= c; b -= a; b ^= (a&lt;&lt;16); b &amp;= 0xffffffff
-    c -= a; c -= b; c ^= (b&gt;&gt;5); c &amp;= 0xffffffff
-    a -= b; a -= c; a ^= (c&gt;&gt;3); a &amp;= 0xffffffff
-    b -= c; b -= a; b ^= (a&lt;&lt;10); b &amp;= 0xffffffff
-    c -= a; c -= b; c ^= (b&gt;&gt;15); c &amp;= 0xffffffff
-    return a, b, c
-
-def jhash(data, initval = 0):
-    '''hash() -- hash a variable-length key into a 32-bit value
-  data    : the key (the unaligned variable-length array of bytes)
-  initval : can be any 4-byte value, defaults to 0
-Returns a 32-bit value.  Every bit of the key affects every bit of
-the return value.  Every 1-bit and 2-bit delta achieves avalanche.'''
-    length = lenpos = len(data)
-
-    # empty string returns 0
-    if length == 0:
-        return 0
-
-    # Set up the internal state
-    a = b = 0x9e3779b9 # the golden ratio; an arbitrary value
-    c = initval        # the previous hash value
-    p = 0              # string offset
-
-    # ------------------------- handle most of the key in 12 byte chunks
-    while lenpos &gt;= 12:
-        a += (ord(data[p+0]) + (ord(data[p+1])&lt;&lt;8) + (ord(data[p+2])&lt;&lt;16) + (ord(data[p+3])&lt;&lt;24))
-        b += (ord(data[p+4]) + (ord(data[p+5])&lt;&lt;8) + (ord(data[p+6])&lt;&lt;16) + (ord(data[p+7])&lt;&lt;24))
-        c += (ord(data[p+8]) + (ord(data[p+9])&lt;&lt;8) + (ord(data[p+10])&lt;&lt;16) + (ord(data[p+11])&lt;&lt;24))
+    <span style="color:#007f7f"># ------------------------- handle most of the key in 12 byte chunks</span>
+    <span style="color:#fff;font-weight:bold">while</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">12</span>:
+        a += (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">0</span>]) + (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">1</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">8</span>) + (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">2</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">16</span>) + (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">3</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">24</span>))
+        b += (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">4</span>]) + (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">5</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">8</span>) + (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">6</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">16</span>) + (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">7</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">24</span>))
+        c += (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">8</span>]) + (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">9</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">8</span>) + (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">10</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">16</span>) + (<span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">11</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">24</span>))
         a, b, c = mix(a, b, c)
-        p += 12
-        lenpos -= 12
+        p += <span style="color:#ff0;font-weight:bold">12</span>
+        lenpos -= <span style="color:#ff0;font-weight:bold">12</span>
 
-    # ------------------------- handle the last 11 bytes
+    <span style="color:#007f7f"># ------------------------- handle the last 11 bytes</span>
     c += length
-    if lenpos &gt;= 11: c += ord(data[p+10])&lt;&lt;24
-    if lenpos &gt;= 10: c += ord(data[p+9])&lt;&lt;16
-    if lenpos &gt;= 9:  c += ord(data[p+8])&lt;&lt;8
-    # the first byte of c is reserved for the length
-    if lenpos &gt;= 8:  b += ord(data[p+7])&lt;&lt;24
-    if lenpos &gt;= 7:  b += ord(data[p+6])&lt;&lt;16
-    if lenpos &gt;= 6:  b += ord(data[p+5])&lt;&lt;8
-    if lenpos &gt;= 5:  b += ord(data[p+4])
-    if lenpos &gt;= 4:  a += ord(data[p+3])&lt;&lt;24
-    if lenpos &gt;= 3:  a += ord(data[p+2])&lt;&lt;16
-    if lenpos &gt;= 2:  a += ord(data[p+1])&lt;&lt;8
-    if lenpos &gt;= 1:  a += ord(data[p+0])
+    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">11</span>: c += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">10</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">24</span>
+    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">10</span>: c += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">9</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">16</span>
+    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">9</span>:  c += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">8</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">8</span>
+    <span style="color:#007f7f"># the first byte of c is reserved for the length</span>
+    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">8</span>:  b += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">7</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">24</span>
+    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">7</span>:  b += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">6</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">16</span>
+    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">6</span>:  b += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">5</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">8</span>
+    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">5</span>:  b += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">4</span>])
+    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">4</span>:  a += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">3</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">24</span>
+    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">3</span>:  a += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">2</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">16</span>
+    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">2</span>:  a += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">1</span>])&lt;&lt;<span style="color:#ff0;font-weight:bold">8</span>
+    <span style="color:#fff;font-weight:bold">if</span> lenpos &gt;= <span style="color:#ff0;font-weight:bold">1</span>:  a += <span style="color:#fff;font-weight:bold">ord</span>(data[p+<span style="color:#ff0;font-weight:bold">0</span>])
     a, b, c = mix(a, b, c)
 
-    # ------------------------- report the result
-    return c
+    <span style="color:#007f7f"># ------------------------- report the result</span>
+    <span style="color:#fff;font-weight:bold">return</span> c
 
-if __name__ == &quot;__main__&quot;:
-    hashstr = sys.argv[1]
+<span style="color:#fff;font-weight:bold">if</span> __name__ == <span style="color:#0ff;font-weight:bold">&#34;__main__&#34;</span>:
+    hashstr = sys.argv[<span style="color:#ff0;font-weight:bold">1</span>]
     myhash = jhash(hashstr)
-    myhash2 = myhash % int(sys.argv[2])
-    print &quot;%x&quot; % myhash2
-</code></pre>
-
-<p>즉, 위와 같이 스크립트로 해슁하면 <code>rbd_data.b0e882ae8944a.0000000000000134</code> 값이 <code>67</code> 임을 찾을 수 있을 것이다.
+    myhash2 = myhash % <span style="color:#fff;font-weight:bold">int</span>(sys.argv[<span style="color:#ff0;font-weight:bold">2</span>])
+    <span style="color:#fff;font-weight:bold">print</span> <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">%x</span><span style="color:#0ff;font-weight:bold">&#34;</span> % myhash2
+</code></pre></div><p>즉, 위와 같이 스크립트로 해슁하면 <code>rbd_data.b0e882ae8944a.0000000000000134</code> 값이 <code>67</code> 임을 찾을 수 있을 것이다.
 35번 pool 임을 알고 있으니 35.67 pg 인것을 확인 가능하다.
 아래 같이 <code>ceph pg dump</code> 는 파일로 저장해서 사용하는 것이 훨씬 빠를 것이다.. (물론 클러스터 변화를 주지 않는 상태에서.. )</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007f7f"># ceph pg dump &gt; /tmp/pgdump # just once</span>
 
-<pre><code class="language-bash"># ceph pg dump &gt; /tmp/pgdump # just once
-
-# cat /tmp/pgdump | grep ^35.67
+<span style="color:#007f7f"># cat /tmp/pgdump | grep ^35.67</span>
 dumped all in format plain
 35.67	0	0	0	0	0	2	2	active+clean	2015-01-15 06:48:51.979426	46681	53074:6358	[3,11]	0	[3,11]	0	46681	2015-01-15 06:48:51.979318	46681	2015-01-14 06:47:33.392701
-</code></pre>
-
-<p>그렇다면 실제 데이터는 어디에 저장될까..
+</code></pre></div><p>그렇다면 실제 데이터는 어디에 저장될까..
 대략 기본적으로 아래와 같은 경로에 저장된다.</p>
-
-<p>ceph-3 의 <code>3</code>은 osd 번호이며<br />
-<code>35.67</code>_head 는 위에서 계산한 hash 값에 pg_num으로 modular한 값이다.<br />
-<code>DIR_7</code> <code>DIR_6</code> <code>DIR_C</code> 는 뒤의 <code>9F6E4C67</code> 의 suffix 역순이다.(이 디렉토리는 파일 개수에 따라 생기고 없어질수도 있다.)<br />
-물론 <code>9F6E4C67</code>는 아까의 hash 값이다.<br />
+<p>ceph-3 의 <code>3</code>은 osd 번호이며<br>
+<code>35.67</code>_head 는 위에서 계산한 hash 값에 pg_num으로 modular한 값이다.<br>
+<code>DIR_7</code> <code>DIR_6</code> <code>DIR_C</code> 는 뒤의 <code>9F6E4C67</code> 의 suffix 역순이다.(이 디렉토리는 파일 개수에 따라 생기고 없어질수도 있다.)<br>
+물론 <code>9F6E4C67</code>는 아까의 hash 값이다.<br>
 마지막 __<code>23</code> 은 pool 번호 35의 16진수 값이다.</p>
-
-<pre><code class="language-bash">/var/lib/ceph/osd/ceph-3/current/35.67_head/DIR_7/DIR_6/DIR_C/rbd\udata.b0e882ae8944a.0000000000000134__head_9F6E4C67__23
-</code></pre>
-
-<p>중간에 DIR 과 같은 디렉토리가 들어가야 하기때문에 결국 이 파일을 찾으려면 find로 찾는게 간편하다.</p>
-
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/var/lib/ceph/osd/ceph-3/current/35.67_head/DIR_7/DIR_6/DIR_C/rbd<span style="color:#0ff;font-weight:bold">\u</span>data.b0e882ae8944a.0000000000000134__head_9F6E4C67__23
+</code></pre></div><p>중간에 DIR 과 같은 디렉토리가 들어가야 하기때문에 결국 이 파일을 찾으려면 find로 찾는게 간편하다.</p>
 <h3 id="4-파일-합치기">4. 파일 합치기<a href="#4-파일-합치기" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
-<p>아래와 같은 스크립트를 참고하면 편하다. 간단하게 파일번호로 offset 계산해서 합치는 스크립트 이다.<br />
+<p>아래와 같은 스크립트를 참고하면 편하다. 간단하게 파일번호로 offset 계산해서 합치는 스크립트 이다.   <br>
 해당 스크립트는 로컬에 있는 파일리스트를 조회해서 합치는 것임으로 위에서 미리 찾아서 한 폴더로 몰아놓으면 편하다.</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#0f0;font-weight:bold">#!/bin/sh
+</span><span style="color:#0f0;font-weight:bold"></span>#
+<span style="color:#007f7f"># AUTHORS</span>
+<span style="color:#007f7f"># Shawn Moore &lt;smmoore@catawba.edu&gt;</span>
+<span style="color:#007f7f"># Rodney Rymer &lt;rrr@catawba.edu&gt;</span>
+#
+#
+<span style="color:#007f7f"># REQUIREMENTS</span>
+<span style="color:#007f7f"># GNU Awk (gawk)</span>
+#
+#
+<span style="color:#007f7f"># NOTES</span>
+<span style="color:#007f7f"># This utility assumes one copy of all object files needed to construct the rbd</span>
+<span style="color:#007f7f"># are located in the present working direcory at the time of execution.</span>  
+<span style="color:#007f7f"># For example all the rb.0.1032.5e69c215.* files.</span>
+#
+<span style="color:#007f7f"># When listing the &#34;RBD_SIZE_IN_BYTES&#34;, be sure you list the full potential size,</span> 
+<span style="color:#007f7f"># not just what it appears to be. If you do not know the true size of the rbd,</span>
+<span style="color:#007f7f"># you can input a size in bytes that you know is larger than the disk could be</span>
+<span style="color:#007f7f"># and it will be a large sparse file with un-partioned space at the end of the</span>
+<span style="color:#007f7f"># disk.  In our tests, this doesn&#39;t occupy any more space/objects in the cluster</span>
+<span style="color:#007f7f"># but the rbd could be resized from within the rbd (VM) to grow.  Once you bring</span>
+<span style="color:#007f7f"># it up and are able to find the true size, you can resize with &#34;rbd resize ..&#34;.</span>
+#
+<span style="color:#007f7f"># To obtain needed utility input information if not already known run:</span>
+<span style="color:#007f7f"># rbd info RBD</span>
+#
+<span style="color:#007f7f"># To find needed files we run the following command on all nodes that might have</span>
+<span style="color:#007f7f"># copies of the rbd objects:</span>
+<span style="color:#007f7f"># find /${CEPH} -type f -name rb.0.1032.5e69c215.*</span>
+<span style="color:#007f7f"># Then copy the files to a single location from all nodes.  If using btrfs be</span>
+<span style="color:#007f7f"># sure to pay attention to the btrfs snapshots that ceph takes on it&#39;s own.</span>
+<span style="color:#007f7f"># You may want the &#34;current&#34; or one of the &#34;snaps&#34;.</span>
+#
+<span style="color:#007f7f"># We are actually taking our own btrfs snapshots cluster osd wide at the same</span>
+<span style="color:#007f7f"># time with parallel ssh and then using &#34;btrfs subvolume find-new&#34; command to</span>
+<span style="color:#007f7f"># merge them all together for disaster recovery and also outside of ceph rbd</span>
+<span style="color:#007f7f"># versioning.</span>
+#
+<span style="color:#007f7f"># Hopefully once the btrfs send/recv functionality is stable we can switch to it.</span>
+#
+#
+<span style="color:#007f7f"># This utility works for us but may not for you.  Always test with non-critical</span>
+<span style="color:#007f7f"># data first.</span>
+#
 
-<pre><code class="language-bash">#!/bin/sh
-#
-# AUTHORS
-# Shawn Moore &lt;smmoore@catawba.edu&gt;
-# Rodney Rymer &lt;rrr@catawba.edu&gt;
-#
-#
-# REQUIREMENTS
-# GNU Awk (gawk)
-#
-#
-# NOTES
-# This utility assumes one copy of all object files needed to construct the rbd
-# are located in the present working direcory at the time of execution.  
-# For example all the rb.0.1032.5e69c215.* files.
-#
-# When listing the &quot;RBD_SIZE_IN_BYTES&quot;, be sure you list the full potential size, 
-# not just what it appears to be. If you do not know the true size of the rbd,
-# you can input a size in bytes that you know is larger than the disk could be
-# and it will be a large sparse file with un-partioned space at the end of the
-# disk.  In our tests, this doesn't occupy any more space/objects in the cluster
-# but the rbd could be resized from within the rbd (VM) to grow.  Once you bring
-# it up and are able to find the true size, you can resize with &quot;rbd resize ..&quot;.
-#
-# To obtain needed utility input information if not already known run:
-# rbd info RBD
-#
-# To find needed files we run the following command on all nodes that might have
-# copies of the rbd objects:
-# find /${CEPH} -type f -name rb.0.1032.5e69c215.*
-# Then copy the files to a single location from all nodes.  If using btrfs be
-# sure to pay attention to the btrfs snapshots that ceph takes on it's own.
-# You may want the &quot;current&quot; or one of the &quot;snaps&quot;.
-#
-# We are actually taking our own btrfs snapshots cluster osd wide at the same
-# time with parallel ssh and then using &quot;btrfs subvolume find-new&quot; command to
-# merge them all together for disaster recovery and also outside of ceph rbd
-# versioning.
-#
-# Hopefully once the btrfs send/recv functionality is stable we can switch to it.
-#
-#
-# This utility works for us but may not for you.  Always test with non-critical
-# data first.
-#
+<span style="color:#007f7f"># Rados object size</span>
+obj_size=<span style="color:#ff0;font-weight:bold">4194304</span>
 
-# Rados object size
-obj_size=4194304
+<span style="color:#007f7f"># DD bs value</span>
+rebuild_block_size=<span style="color:#ff0;font-weight:bold">512</span>
 
-# DD bs value
-rebuild_block_size=512
+rbd=<span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>1<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span>
+base=<span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>2<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span>
+rbd_size=<span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>3<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span>
+<span style="color:#fff;font-weight:bold">if</span> [ <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>1<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span> = <span style="color:#0ff;font-weight:bold">&#34;-h&#34;</span> -o <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>1<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span> = <span style="color:#0ff;font-weight:bold">&#34;--help&#34;</span> -o <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>rbd<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span> = <span style="color:#0ff;font-weight:bold">&#34;&#34;</span> -o <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>base<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span> = <span style="color:#0ff;font-weight:bold">&#34;&#34;</span> -o <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>rbd_size<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span> = <span style="color:#0ff;font-weight:bold">&#34;&#34;</span> ]; <span style="color:#fff;font-weight:bold">then</span>
+  <span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;USAGE: </span><span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">${</span>0<span style="color:#0ff;font-weight:bold">}</span> | awk -F/ <span style="color:#0ff;font-weight:bold">&#39;{print $NF}&#39;</span><span style="color:#fff;font-weight:bold">)</span><span style="color:#0ff;font-weight:bold"> RESTORE_RBD BLOCK_PREFIX RBD_SIZE_IN_BYTES&#34;</span>
+  <span style="color:#fff;font-weight:bold">exit</span> <span style="color:#ff0;font-weight:bold">1</span>
+<span style="color:#fff;font-weight:bold">fi</span>
+base_files=<span style="color:#fff;font-weight:bold">$(</span>ls -1 <span style="color:#0ff;font-weight:bold">${</span>base<span style="color:#0ff;font-weight:bold">}</span>.* 2&gt;/dev/null | wc -l | awk <span style="color:#0ff;font-weight:bold">&#39;{print $1}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
+<span style="color:#fff;font-weight:bold">if</span> [ <span style="color:#0ff;font-weight:bold">${</span>base_files<span style="color:#0ff;font-weight:bold">}</span> -lt <span style="color:#ff0;font-weight:bold">1</span> ]; <span style="color:#fff;font-weight:bold">then</span>
+  <span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;COULD NOT FIND FILES FOR </span><span style="color:#0ff;font-weight:bold">${</span>base<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold"> IN </span><span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">pwd</span><span style="color:#fff;font-weight:bold">)</span><span style="color:#0ff;font-weight:bold">&#34;</span>
+  <span style="color:#fff;font-weight:bold">exit</span>
+<span style="color:#fff;font-weight:bold">fi</span>
 
-rbd=&quot;${1}&quot;
-base=&quot;${2}&quot;
-rbd_size=&quot;${3}&quot;
-if [ &quot;${1}&quot; = &quot;-h&quot; -o &quot;${1}&quot; = &quot;--help&quot; -o &quot;${rbd}&quot; = &quot;&quot; -o &quot;${base}&quot; = &quot;&quot; -o &quot;${rbd_size}&quot; = &quot;&quot; ]; then
-  echo &quot;USAGE: $(echo ${0} | awk -F/ '{print $NF}') RESTORE_RBD BLOCK_PREFIX RBD_SIZE_IN_BYTES&quot;
-  exit 1
-fi
-base_files=$(ls -1 ${base}.* 2&gt;/dev/null | wc -l | awk '{print $1}')
-if [ ${base_files} -lt 1 ]; then
-  echo &quot;COULD NOT FIND FILES FOR ${base} IN $(pwd)&quot;
-  exit
-fi
+<span style="color:#007f7f"># Create full size sparse image.  Could use truncate, but wanted</span>
+<span style="color:#007f7f"># as few required files and dd what a must.</span>
+dd <span style="color:#fff;font-weight:bold">if</span>=/dev/zero of=<span style="color:#0ff;font-weight:bold">${</span>rbd<span style="color:#0ff;font-weight:bold">}</span> bs=<span style="color:#ff0;font-weight:bold">1</span> count=<span style="color:#ff0;font-weight:bold">0</span> seek=<span style="color:#0ff;font-weight:bold">${</span>rbd_size<span style="color:#0ff;font-weight:bold">}</span> 2&gt;/dev/null
 
-# Create full size sparse image.  Could use truncate, but wanted
-# as few required files and dd what a must.
-dd if=/dev/zero of=${rbd} bs=1 count=0 seek=${rbd_size} 2&gt;/dev/null
-
-for file_name in $(ls -1 ${base}.* 2&gt;/dev/null); do
-  seek_loc=$(echo ${file_name} | awk -F_ '{print $1}' | awk -v os=${obj_size} -v rs=${rebuild_block_size} -F. '{print os*strtonum(&quot;0x&quot; $NF)/rs}')
-  dd conv=notrunc if=${file_name} of=${rbd} seek=${seek_loc} bs=${rebuild_block_size} 2&gt;/dev/null
-done
-</code></pre>
-
-<h3 id="5-mount-해서-테스트-해보기">5. mount 해서 테스트 해보기<a href="#5-mount-해서-테스트-해보기" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
-<p>아래 와 같이 loop device 를 이용해서 mount 해본다.<br />
+<span style="color:#fff;font-weight:bold">for</span> file_name in <span style="color:#fff;font-weight:bold">$(</span>ls -1 <span style="color:#0ff;font-weight:bold">${</span>base<span style="color:#0ff;font-weight:bold">}</span>.* 2&gt;/dev/null<span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
+  seek_loc=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">${</span>file_name<span style="color:#0ff;font-weight:bold">}</span> | awk -F_ <span style="color:#0ff;font-weight:bold">&#39;{print $1}&#39;</span> | awk -v os=<span style="color:#0ff;font-weight:bold">${</span>obj_size<span style="color:#0ff;font-weight:bold">}</span> -v rs=<span style="color:#0ff;font-weight:bold">${</span>rebuild_block_size<span style="color:#0ff;font-weight:bold">}</span> -F. <span style="color:#0ff;font-weight:bold">&#39;{print os*strtonum(&#34;0x&#34; $NF)/rs}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
+  dd conv=notrunc <span style="color:#fff;font-weight:bold">if</span>=<span style="color:#0ff;font-weight:bold">${</span>file_name<span style="color:#0ff;font-weight:bold">}</span> of=<span style="color:#0ff;font-weight:bold">${</span>rbd<span style="color:#0ff;font-weight:bold">}</span> seek=<span style="color:#0ff;font-weight:bold">${</span>seek_loc<span style="color:#0ff;font-weight:bold">}</span> bs=<span style="color:#0ff;font-weight:bold">${</span>rebuild_block_size<span style="color:#0ff;font-weight:bold">}</span> 2&gt;/dev/null
+<span style="color:#fff;font-weight:bold">done</span>
+</code></pre></div><h3 id="5-mount-해서-테스트-해보기">5. mount 해서 테스트 해보기<a href="#5-mount-해서-테스트-해보기" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>아래 와 같이 loop device 를 이용해서 mount 해본다.<br>
 하지만 partition 테이블이 망가져서 <code>/dev/mapper/loop0p1</code>를 못쓰고 그냥 <code>/dev/loop0</code> device로 mount 해야 할 수 도 있다.</p>
-
-<pre><code class="language-bash">v=&quot;volume-uuid&quot;
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">v=<span style="color:#0ff;font-weight:bold">&#34;volume-uuid&#34;</span>
 losetup /dev/loop0 $v
 kpartx -a /dev/loop0
 mkdir -p /mnt/$v
 mount /dev/mapper/loop0p1 /mnt/$v
-</code></pre>
-
-<p>물론 들어가보면 엄청나게 많은 파일, 폴더들이 깨져 있으므로.. <code>fsck -y /mnt/$v</code> 와 같이 파일 시스템 체크를 돌려서 살려내는것이 필요하다.</p>
-
+</code></pre></div><p>물론 들어가보면 엄청나게 많은 파일, 폴더들이 깨져 있으므로.. <code>fsck -y /mnt/$v</code> 와 같이 파일 시스템 체크를 돌려서 살려내는것이 필요하다.</p>
 <h2 id="결론">결론<a href="#결론" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
-<p>이런 정보를 바탕으로 우리는 3가지의 rados object들로 rbd 이미지를 재구성 할 수 있다.<br />
-하지만 이 방법은 운이 따라줘야 하는 부분들이 당연히 있다.<br />
+<p>이런 정보를 바탕으로 우리는 3가지의 rados object들로 rbd 이미지를 재구성 할 수 있다.<br>
+하지만 이 방법은 운이 따라줘야 하는 부분들이 당연히 있다.<br>
 예를 들어 아래 pg 들이 망가지면 복구가 불가능 할 수도 있다.</p>
-
 <ul>
 <li>rbd_header 파일이 있는 pg</li>
 <li>rbd_data에서 초반 super block이 있는 pg</li>
 </ul>
-
 <p>아무튼 이 글을 앞으로도 절망할 지 모르는 사람들을 위해 바친다.</p>
-
 <h2 id="ps">ps.<a href="#ps" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
-<p>마지막으로 firefly는 v0.80.8 package를 2015년 1월 13일에 release 했다.<br />
+<p>마지막으로 firefly는 v0.80.8 package를 2015년 1월 13일에 release 했다.<br>
 업그레이드 하는게 좋을것이다.</p>
 
 		</div>
@@ -589,15 +495,16 @@ mount /dev/mapper/loop0p1 /mnt/$v
 	</main>
 
 	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
-		<script src="/js/prism.js"></script>
-		<p>&copy; 2019 <a href="https://leoh0.github.io/"></a></p>
+		<p>&copy; 2020 <a href="https://leoh0.github.io/"></a></p>
 		<p>
-			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/post/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
 		</p>
 	</footer>
 
 
-	<script src="https://leoh0.github.io/js/main.min.784417f5847151f848c339cf0acb13a06cbb648b1483435a28ed4556c4ead69b.js" integrity="sha256-eEQX9YRxUfhIwznPCssToGy7ZIsUg0NaKO1FVsTq1ps="></script>
+
+	<script src="https://leoh0.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
 <script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {

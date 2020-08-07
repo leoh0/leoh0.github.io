@@ -9,22 +9,17 @@
 	<meta name="msapplication-TileColor" content="#494f5c">
 <meta itemprop="name" content="How to Debug Dead Container in K8s">
 <meta itemprop="description" content="till CrashLoopBackOff do us part">
-
-
 <meta itemprop="datePublished" content="2018-08-08T04:09:48&#43;09:00" />
 <meta itemprop="dateModified" content="2018-08-08T04:09:48&#43;09:00" />
-<meta itemprop="wordCount" content="2011">
-
-  <meta itemprop="image" content="https://source.unsplash.com/collection/983219/1600x900">
-
+<meta itemprop="wordCount" content="1997">
+<meta itemprop="image" content="https://source.unsplash.com/collection/983219/1600x900">
 
 
-<meta itemprop="keywords" content="k8s,kubernetes,dead,CrashLoopBackOff,container,debug," />
-<meta property="og:title" content="How to Debug Dead Container in K8s" />
+
+<meta itemprop="keywords" content="k8s,kubernetes,dead,CrashLoopBackOff,container,debug," /><meta property="og:title" content="How to Debug Dead Container in K8s" />
 <meta property="og:description" content="till CrashLoopBackOff do us part" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://leoh0.github.io/post/2018-08-04-how-to-debug-dead-container-in-k8s/" />
-
 <meta property="og:image" content="https://source.unsplash.com/collection/983219/1600x900" />
 <meta property="article:published_time" content="2018-08-08T04:09:48+09:00" />
 <meta property="article:modified_time" content="2018-08-08T04:09:48+09:00" />
@@ -42,28 +37,30 @@
 	<link rel="shortcut icon" href="/favicon.ico">
 
 	<title>How to Debug Dead Container in K8s</title>
-	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.cf317e8e759e34ff58587ff7fca05f8b77531a61ee8e63c887a46eb43ebad966.css" crossorigin="anonymous" integrity="sha256-zzF+jnWeNP9YWH/3/KBfi3dTGmHujmPIh6RutD662WY=">
+	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
 	<style>.bg-img {background-image: url('https://source.unsplash.com/collection/983219/1600x900');}</style>
 	<link rel="stylesheet" href="https://leoh0.github.io/css/prism.css">
 </head>
 
 <body id="page">
 	
-	<header id="site-header" class="animated slideInUp faster">
+	<header id="site-header" class="animated slideInUp">
 		<div class="hdr-wrapper section-inner">
 			<div class="hdr-left">
 				<div class="site-branding">
 					<a href="https://leoh0.github.io/">&gt; /dev/null</a>
 				</div>
 				<nav class="site-nav hide-in-mobile">
-					<a href="https://leoh0.github.io/">Home</a>
-					<a href="https://leoh0.github.io/post/">Posts</a>
-					<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
-					<a href="https://leoh0.github.io/blog/">.</a>
+					
+				<a href="https://leoh0.github.io/">Home</a>
+				<a href="https://leoh0.github.io/post/">Posts</a>
+				<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
+				<a href="https://leoh0.github.io/blog/">.</a>
+
 				</nav>
 			</div>
 			<div class="hdr-right hdr-icons">
-				<button id="img-btn" class="hdr-btn" title="Featured Image"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg></button><span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+				<button id="img-btn" class="hdr-btn" title="Featured Image"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg></button><span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
 			</div>
 		</div>
 	</header>
@@ -81,186 +78,121 @@
 	<main class="site-main section-inner thin animated fadeIn faster">
 		<h1>How to Debug Dead Container in K8s</h1>
 		<div class="content">
-			
-
-<figure>
+			<figure>
     <img src="/images/dead_docker.png"/> 
 </figure>
 
-
 <blockquote>
 <p>Bugs happen. That&rsquo;s a fact of life.</p>
-
 <p><a href="https://lkml.org/lkml/2018/8/3/621">&ldquo;ABSOLUTELY THE MOST IMPORTANT THING IN THE UNIVERSE WHEN IT COMES TO SOFTWARE DEVELOPMENT&rdquo;, linus</a></p>
 </blockquote>
-
 <h1 id="k8s에서-pod-을-debugging-하는-일반적인-방법들">k8s에서 pod 을 debugging 하는 일반적인 방법들<a href="#k8s에서-pod-을-debugging-하는-일반적인-방법들" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-
 <blockquote>
 <p>Everyone knows that debugging is twice as hard as writing a program in the first place.</p>
-
 <p>“The Elements of Programming Style”, 2nd edition</p>
 </blockquote>
-
 <p>우리는 소프트웨어는 언제나 문제가 생길 수 있다는 것을 알고 있고 많은 문제들을 debugging 을 통해서 해결합니다. container를 debugging 하는 것들은 준비여부(log, debugging tools, &hellip;)가 중요해서 쉽지 않은 경우들이 대부분입니다. 다행히도 container를 debugging 하기 위한 방법들은 많은 발전을 했습니다.</p>
-
 <p>그래서 이 글을 적을 때만 해도 이런 기술셋들 부터 정리 하려고 했는데 아래 글에서 아주 잘 정리해서 이를 대체 해도 될것 같습니다.</p>
-
 <p><a href="https://radu-matei.com/blog/state-of-debugging-microservices-on-k8s/">THE STATE OF DEBUGGING MICROSERVICES ON KUBERNETES</a></p>
-
 <p>위 블로그 내용을 대략 간추려보면 아래와 같습니다.</p>
-
 <p>public cloud에서는 아래와 같은 툴들을 지원해서 debugging 을 편하게 할수 있습니다.</p>
-
 <ul>
 <li>Azure의 <a href="https://docs.microsoft.com/ko-kr/azure/dev-spaces/azure-dev-spaces">dev spaces</a></li>
 <li>Google의 <a href="https://cloud.google.com/debugger/">stackdriver debugger</a></li>
 </ul>
-
 <p>원격 디버깅은 squash의 kubernetes 버전을 이용하면 됩니다.</p>
-
 <ul>
 <li><a href="https://github.com/solo-io/kubesquash">kubesquash</a></li>
 </ul>
-
 <p>어플리케이션 디버깅을 도울수 있는 도구들은 아래와 같습니다.</p>
-
 <ul>
 <li><a href="https://github.com/vapor-ware/ksync">KSync</a>: local filesystem를 k8s 내 container와 sync</li>
 <li><a href="https://github.com/telepresenceio/telepresence">Telepresence</a>: k8s cluster로 들어오는 traffic을 local로 redirect</li>
 <li><a href="https://github.com/Azure/draft">Draft</a> and <a href="https://github.com/GoogleContainerTools/skaffold">Skaffold</a>: 일관된 재배포 방법 제공</li>
 </ul>
-
 <p>k8s에서는 아래와 같은 기능들을 활용할 수 있습니다.</p>
-
 <ul>
-<li><a href="https://kubernetes.io/docs/tasks/configure-pod-container/share-process-namespace/">Share Process Namespace between Containers in a Pod</a> 를 이용해서 debugging할 container를 namespace에 sharing 시킴</li>
-
-<li><p>향후엔 <code>debug</code> 커맨드를 지원해서 아래와 같은 커맨드로 임시적으로 debugger를 붙여서 디버깅을 할 수 있게 함. <a href="https://github.com/kubernetes/community/blob/master/contributors/design-proposals/node/troubleshoot-running-pods.md">Troubleshoot Running Pods</a></p>
-
+<li>
+<p><a href="https://kubernetes.io/docs/tasks/configure-pod-container/share-process-namespace/">Share Process Namespace between Containers in a Pod</a> 를 이용해서 debugging할 container를 namespace에 sharing 시킴</p>
+</li>
+<li>
+<p>향후엔 <code>debug</code> 커맨드를 지원해서 아래와 같은 커맨드로 임시적으로 debugger를 붙여서 디버깅을 할 수 있게 함. <a href="https://github.com/kubernetes/community/blob/master/contributors/design-proposals/node/troubleshoot-running-pods.md">Troubleshoot Running Pods</a></p>
 <pre><code>kubectl debug  --image=&lt;your-debugger-image&gt; &lt;your-application-pod&gt;
 </code></pre></li>
 </ul>
-
 <p>자세한 내용은 위 블로그에서 확인 가능합니다.</p>
-
 <p>위에 정리한 글로 모든 문제를 해결하면 좋지만 실제로 서비스를 하다보면 위 정보들은 <code>살아 있는</code> 컨테이너를 디버깅 하기 위한 것임을 알게 됩니다. 그리고 <code>app</code>을 디버깅 하기위한 수단들이여서 뭔가 부족함을 알게됩니다.</p>
-
 <h1 id="crashloopbackoff-된-컨테이너를-어떻게-디버깅-할-것인가">CrashLoopBackOff 된 컨테이너를 어떻게 디버깅 할 것인가<a href="#crashloopbackoff-된-컨테이너를-어떻게-디버깅-할-것인가" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-
 <p><code>CrashLoopBackOff</code>가 되면 pod은 지속적으로 <code>start</code> -&gt; <code>crash</code> -&gt; <code>start</code> -&gt; <code>crash</code>를 반복하게 됩니다.</p>
-
 <p>예를 들면 아래 같이 지속적으로 계속 리스타트 되고 있는 팟들은 디버깅 하다보면 계속 리스타트 되서 테스트를 하기 힘듭니다.</p>
-
-<pre><code class="language-text">$ kubectl get pod --all-namespaces | grep -v Running
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">$ kubectl get pod --all-namespaces | grep -v Running
 NAMESPACE  NAME                         READY   STATUS             RESTARTS   AGE
 test       my-very-important-pod-pgzgb  0/1     CrashLoopBackOff   6761       17d
 ...
-</code></pre>
-
-<p>그리고 CrashLoopBackOff의 원인은 아주 여러가지기 때문에 user들이 자신의 pod이 CrashLoopBackOff 이 되어서 구글에 검색해봐도 답은 다음과 같습니다.</p>
-
+</code></pre></div><p>그리고 CrashLoopBackOff의 원인은 아주 여러가지기 때문에 user들이 자신의 pod이 CrashLoopBackOff 이 되어서 구글에 검색해봐도 답은 다음과 같습니다.</p>
 <blockquote>
 <p>log를 잘 보세요.</p>
 </blockquote>
-
 <p>사실 이말이 틀렸다고 할 수는 없으나(원론적으로는 가장 맞습니다.) 문제가 있는 상태에서 log로 해결하는건 쉬운일이 아닙니다.
 예를 들어 해결하고자 하면 <code>기존 코드에 log 추가</code> -&gt; <code>재빌드</code> -&gt; <code>재배포</code> -&gt; <code>문제가 아님을 확인</code> -&gt; <code>기존 코드에 log 추가</code> -&gt; <code>재빌드</code> -&gt; <code>재배포</code> 를 반복하게 됩니다.</p>
-
 <p>약간 더 추가하자면 <code>describe</code>까지 봐야 합니다. pods이 죽었을때 <code>message</code>와 <code>event</code>를 봐야 하기 때문입니다.</p>
-
 <p>그래서 이 글에서는 이런 컨테이너가 <code>CrashLoopBackOff</code> 되고 있는 이유 중 대표적인 2가지에 대해서 설명하고 이를 해결하기 위한 도구, 방법들을 설명하려고 합니다.</p>
-
 <ol>
 <li>liveness probe에 만족하지 못해서 pod이 리스타트 되는 경우</li>
 <li>k8s pod의 command가 exit 0 외의 code로 실패하고 있는 경우</li>
 </ol>
-
 <p>물론 이 2가지를 설명하기 전에 유저가 첫번째로 봐야하는 것은 로그입니다.</p>
-
 <p>일반적으로 아래와 같은 로그 확인 방법으로만 로그를 보지만 출력이 안될 경우</p>
-
 <pre><code>```
 kubectl -n &lt;namespace&gt; logs &lt;podname&gt; -c &lt;containername&gt;
 ```
 </code></pre>
-
 <p>아래와 같이 <code>-p(--previous)</code> 를 추가해서도 확인해 보면 좋습니다. 이전 컨테이너 로그를 볼시 문제를 확인할 가능성이 조금이라도 높아지기 때문입니다.</p>
-
 <pre><code>```
 kubectl -n &lt;namespace&gt; logs &lt;podname&gt; -c &lt;containername&gt; -p
 ```
 </code></pre>
-
 <p>그리고 만약 이런 케이스에 지속적으로 restart 시키고 싶지 않다면 <code>restartPolicy</code>을 <code>Always</code> 외의 값들을 살펴보는 것도 좋습니다.</p>
-
 <h2 id="liveness-probe에-만족하지-못해서-pod이-리스타트-되는-경우">liveness probe에 만족하지 못해서 pod이 리스타트 되는 경우<a href="#liveness-probe에-만족하지-못해서-pod이-리스타트-되는-경우" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
 <p>이 케이스는 즉 healthcheck가 실패해서 pod이 back-off 되고 있는 상태입니다. 그래서 간단하게 liveness probe를 제거함으로 pod의 리스타트를 막을 수 있습니다. 이 방법은 단순 무식하지만 잠시동안 시간을 벌어서 pod을 디버깅 할 수 있는 시간을 버는데는 아주 용이합니다.</p>
-
 <p>이 팁은 아주 간단하지만 굉장히 효과적입니다. 물론 실제 pod이 서비스 되고 있는 경우 사용하기가 꺼림직 하지만 그래도 잠깐이라도 시간을 벌어 디버깅 하기에 좋습니다.</p>
-
 <h2 id="k8s-pod의-command가-exit-0-외의-code로-실패하고-있는-경우">k8s pod의 command가 exit 0 외의 code로 실패하고 있는 경우<a href="#k8s-pod의-command가-exit-0-외의-code로-실패하고-있는-경우" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
 <p>사실은 이게 거의 이번 포스트의 핵심이라고 할 수 있습니다. 이런 상태가 되면 우선 pod(container)은 지속적으로 죽기때문에 <code>exec</code>등을 해볼 기회조차 없습니다.</p>
-
 <p>심지어 어떤 팟들은 exec를 하고 싶으나 debug tool은 커녕 <code>sh</code>도 없는 컨테이너들이 있습니다.</p>
-
 <p>예를 들면 아래는 heapster의 이미지 입니다. 보다시피 <code>scratch</code>로 되어 있어 아무런 툴들이 없습니다.</p>
-
-<pre><code class="language-dockerfile">FROM scratch
-
-COPY heapster eventer /
-COPY ca-certificates.crt /etc/ssl/certs/
-
-#   nobody:nobody
-USER 65534:65534
-ENTRYPOINT [&quot;/heapster&quot;]
-</code></pre>
-
-<p>이런 container들은 아래와 같이 <code>sh</code>도 사용할 수 없습니다.</p>
-
-<pre><code class="language-text">$ kubectl exec -ti heapster-heapster-65489b24b5-kjlk4 -n kube-system -c heapster sh
-OCI runtime exec failed: exec failed: container_linux.go:348: starting container process caused &quot;exec: \&quot;sh\&quot;: executable file not found in $PATH&quot;: unknown
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="color:#fff;font-weight:bold">FROM</span><span style="color:#0ff;font-weight:bold"> scratch</span><span style="color:#f00">
+</span><span style="color:#f00">
+</span><span style="color:#f00"></span><span style="color:#fff;font-weight:bold">COPY</span> heapster eventer /<span style="color:#f00">
+</span><span style="color:#f00"></span><span style="color:#fff;font-weight:bold">COPY</span> ca-certificates.crt /etc/ssl/certs/<span style="color:#f00">
+</span><span style="color:#f00">
+</span><span style="color:#f00"></span><span style="color:#007f7f">#   nobody:nobody</span><span style="color:#f00">
+</span><span style="color:#f00"></span><span style="color:#fff;font-weight:bold">USER</span><span style="color:#0ff;font-weight:bold"> 65534:65534</span><span style="color:#f00">
+</span><span style="color:#f00"></span><span style="color:#fff;font-weight:bold">ENTRYPOINT</span> [<span style="color:#0ff;font-weight:bold">&#34;/heapster&#34;</span>]<span style="color:#f00">
+</span></code></pre></div><p>이런 container들은 아래와 같이 <code>sh</code>도 사용할 수 없습니다.</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">$ kubectl exec -ti heapster-heapster-65489b24b5-kjlk4 -n kube-system -c heapster sh
+OCI runtime exec failed: exec failed: container_linux.go:348: starting container process caused &#34;exec: \&#34;sh\&#34;: executable file not found in $PATH&#34;: unknown
 command terminated with exit code 126
-</code></pre>
-
-<p>결국 2가지를 해결해야 합니다.</p>
-
+</code></pre></div><p>결국 2가지를 해결해야 합니다.</p>
 <ol>
 <li>scratch image에 debugging tool을 심는다.</li>
 <li>커맨드를 항상 성공하는 것으로 교체한다.</li>
 </ol>
-
 <p>그래서 여기서 잠깐 우선 1번째 <code>scratch image에 debugging tool을 심는다.</code>을 집고 넘어 갑니다.</p>
-
 <h3 id="scratch-image에-debugging-tool을-심는다">scratch image에 debugging tool을 심는다.<a href="#scratch-image에-debugging-tool을-심는다" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
 <p>우선 결론은 간단합니다. <a href="https://github.com/kubernetes/contrib/tree/master/scratch-debugger">scratch debugger</a>을 사용하면 됩니다. 현재 원본 레포의 코드가 망가진 상태여서 제가 수정한 <a href="https://gist.github.com/leoh0/a4f07c89ed41dca40ffb91b5e9ec1efd">gist</a>를 참고하시면 좋습니다.</p>
-
 <p>이 툴은 아래와 같이 <code>POD_NAME</code>, <code>POD_NAMESPACE</code>, <code>CONTAINER_NAME</code> 정도만 지정하면 해당 pod에 debugging tool(busybox)를 심습니다.</p>
-
 <pre><code>scratch-debugger/debug.sh POD_NAME [POD_NAMESPACE CONTAINER_NAME]
-</code></pre>
-
-<p>원리는 단순합니다. 특정 지정된 pod과 같은 node에 pod을 띄우는데 해당 pod이 docker socket을 마운트 해서 docker command를 이용해서 busybox 바이너리를 docker cp로 특정 지정된 pod에 심는 방법입니다. 이 방법을 이용하면 아무런 제약없이 binary를 심을 수 있습니다.</p>
-
+</code></pre><p>원리는 단순합니다. 특정 지정된 pod과 같은 node에 pod을 띄우는데 해당 pod이 docker socket을 마운트 해서 docker command를 이용해서 busybox 바이너리를 docker cp로 특정 지정된 pod에 심는 방법입니다. 이 방법을 이용하면 아무런 제약없이 binary를 심을 수 있습니다.</p>
 <p>하지만 이 방법도 현재 한계가 있습니다.</p>
-
 <ol>
 <li>죽은 컨테이너를 대상으로 테스트 할 수 없다.</li>
 <li>바이너리 인젝트를 하려면 해당 컨테이너가 바이너리를 바인드 마운트 해야 제대로 접근가능한 경우들이 있다.</li>
 </ol>
-
 <h4 id="죽은-컨테이너를-대상으로-테스트-할-수-없다">죽은 컨테이너를 대상으로 테스트 할 수 없다.<a href="#죽은-컨테이너를-대상으로-테스트-할-수-없다" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
-
 <p>말 그대로 죽은 컨테이너를 대상으로 쓸 수 없습니다. 그래서 <code>커맨드를 항상 성공하는 것으로 교체한다.</code>에서 이를 극복하는 방법을 소개 합니다.</p>
-
 <h4 id="바이너리-인젝트를-하려면-해당-컨테이너가-바이너리를-바인드-마운트-해야-제대로-접근가능한-경우들이-있다">바이너리 인젝트를 하려면 해당 컨테이너가 바이너리를 바인드 마운트 해야 제대로 접근가능한 경우들이 있다.<a href="#바이너리-인젝트를-하려면-해당-컨테이너가-바이너리를-바인드-마운트-해야-제대로-접근가능한-경우들이-있다" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
-
 <p>이 방법도 heapster(와 같은 scratch image)를 debugging 하려면 바로 돌리긴 힘듭니다.
 아래와 같이 /tmp/debug-tools/sh를 바로 사용할 수가 없기 때문입니다. 이건 바이너리 인젝트 방법을 바인드 마운트 방법을 쓰지 않아서 어쩔 수 없습니다.</p>
-
 <pre><code>$ debugk  heapster-heapster-65489b24b5-kjlk4 -n kube-system -c heapster
 Debug Target Container:
   Pod:          heapster-heapster-65489b24b5-kjlk4
@@ -287,24 +219,14 @@ Dumping you into the pod container now.
 
 OCI runtime exec failed: exec failed: container_linux.go:348: starting container process caused &quot;exec: \&quot;/tmp/debug-tools/sh\&quot;: stat /tmp/debug-tools/sh: no such file or directory&quot;: unknown
 command terminated with exit code 126
-</code></pre>
-
-<p>대신 아래와 같은 방법으로 <code>/tmp/debug-tools/busybox sh</code> 와 같은 방법으로 busybox를 바로 호출하는식으로 사용하면 접근이 가능합니다.</p>
-
+</code></pre><p>대신 아래와 같은 방법으로 <code>/tmp/debug-tools/busybox sh</code> 와 같은 방법으로 busybox를 바로 호출하는식으로 사용하면 접근이 가능합니다.</p>
 <pre><code>$ kubectl --namespace=kube-system exec -i -t heapster-heapster-65489b24b5-kjlk4 -c heapster -- /tmp/debug-tools/busybox sh
 / $
-</code></pre>
-
-<h3 id="커맨드를-항상-성공하는-것으로-교체한다">커맨드를 항상 성공하는 것으로 교체한다.<a href="#커맨드를-항상-성공하는-것으로-교체한다" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
+</code></pre><h3 id="커맨드를-항상-성공하는-것으로-교체한다">커맨드를 항상 성공하는 것으로 교체한다.<a href="#커맨드를-항상-성공하는-것으로-교체한다" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p>띄우기만 해도 실패하는 pod을 디버깅 하기 위해서는 커맨드를 교체해야 합니다. 우선 가장 효용성이 좋은건 아무래도 <code>sleep</code>입니다. sleep인 pod에 다른 자신이 원하는 커맨드들을 실행시켜서 결과를 보기 용이 하기 때문입니다.</p>
-
 <p>하지만 커맨드를 교체할때 <code>sleep</code>과 같은 커맨드가 있어야 함으로 미리 위와같이 debug tool을 심어야 하는 경우들이 있습니다.</p>
-
 <p>또한 커맨드를 교체하면 기존에 떠있는 팟들이 전체가 수정되야 하는 불편함이 있으니, 하나의 pod을 복사해서 새로 띄워서 사용하도록 합니다. 그리고 팟이 떴을때 문제가 될만한 소지가 있는 부분들을 수정, 제거 합니다.</p>
-
 <p>제거하는 값들은 다음과 같습니다.</p>
-
 <ul>
 <li>.metadata.ownerReferences (replica set 종속성에서 띄어내서 서비스에 속하지 않는 pod으로 설정하도록 함)</li>
 <li>.metadata.selfLink</li>
@@ -315,9 +237,7 @@ command terminated with exit code 126
 <li>.spec.containers[].readinessProbe</li>
 <li>.status</li>
 </ul>
-
 <p>수정하는 값들은 다음과 같습니다.</p>
-
 <ul>
 <li>.metadata.name (기존 pod과 이름을 다르게 함)</li>
 <li>.spec.initContainers (busybox binary inject)</li>
@@ -326,207 +246,195 @@ command terminated with exit code 126
 <li>.spec.volumes (busybox binary inject)</li>
 <li>.spec.volumes[].persistentVolumeClaim (pvc에 동시접근을 막도록 emptyDir로 변경)</li>
 </ul>
-
 <p>아래 스크립트는 <a href="https://gist.github.com/leoh0/0af21e5839a1ee7a799e8b2b40603ecd">여기</a>를 참고하셔도 됩니다.</p>
-
 <p>자세한 코드는 아래와 같습니다. 이 코드를 실행가능한 곳에 <code>debugdead.py</code> 와 같이 저장해 둡니다.</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#007f7f">#!/usr/bin/env python</span>
 
-<pre><code class="language-python">#!/usr/bin/env python
+<span style="color:#fff;font-weight:bold">import</span> argparse
+<span style="color:#fff;font-weight:bold">import</span> os
+<span style="color:#fff;font-weight:bold">import</span> subprocess
+<span style="color:#fff;font-weight:bold">import</span> sys
+<span style="color:#fff;font-weight:bold">import</span> uuid
+<span style="color:#fff;font-weight:bold">from</span> tempfile <span style="color:#fff;font-weight:bold">import</span> NamedTemporaryFile
 
-import argparse
-import os
-import subprocess
-import sys
-import uuid
-from tempfile import NamedTemporaryFile
-
-import yaml
+<span style="color:#fff;font-weight:bold">import</span> yaml
 
 
-def main():
-    parser = argparse.ArgumentParser(description='Dead container rising.')
-    parser.add_argument('pod', type=str,
-                        help='target pod name')
-    parser.add_argument('-n', '--namespace', type=str,
-                        default='default',
-                        help='target namespace (default: default)')
-    parser.add_argument('-c', '--container', type=str,
-                        default='',
-                        help='target container name')
-    parser.add_argument('-k', '--keep', action=&quot;store_true&quot;,
-                        help='keep yaml')
+<span style="color:#fff;font-weight:bold">def</span> main():
+    parser = argparse.ArgumentParser(description=<span style="color:#0ff;font-weight:bold">&#39;Dead container rising.&#39;</span>)
+    parser.add_argument(<span style="color:#0ff;font-weight:bold">&#39;pod&#39;</span>, <span style="color:#fff;font-weight:bold">type</span>=<span style="color:#fff;font-weight:bold">str</span>,
+                        help=<span style="color:#0ff;font-weight:bold">&#39;target pod name&#39;</span>)
+    parser.add_argument(<span style="color:#0ff;font-weight:bold">&#39;-n&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;--namespace&#39;</span>, <span style="color:#fff;font-weight:bold">type</span>=<span style="color:#fff;font-weight:bold">str</span>,
+                        default=<span style="color:#0ff;font-weight:bold">&#39;default&#39;</span>,
+                        help=<span style="color:#0ff;font-weight:bold">&#39;target namespace (default: default)&#39;</span>)
+    parser.add_argument(<span style="color:#0ff;font-weight:bold">&#39;-c&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;--container&#39;</span>, <span style="color:#fff;font-weight:bold">type</span>=<span style="color:#fff;font-weight:bold">str</span>,
+                        default=<span style="color:#0ff;font-weight:bold">&#39;&#39;</span>,
+                        help=<span style="color:#0ff;font-weight:bold">&#39;target container name&#39;</span>)
+    parser.add_argument(<span style="color:#0ff;font-weight:bold">&#39;-k&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;--keep&#39;</span>, action=<span style="color:#0ff;font-weight:bold">&#34;store_true&#34;</span>,
+                        help=<span style="color:#0ff;font-weight:bold">&#39;keep yaml&#39;</span>)
 
     args = parser.parse_args()
     container_name = args.container
 
     kwargs = {}
-    kwargs.setdefault('stdout', subprocess.PIPE)
-    kwargs.setdefault('stderr', subprocess.STDOUT)
-    kwargs.setdefault('encoding', 'utf8')
-    kwargs.setdefault('universal_newlines', True)
-    kwargs['env'] = os.environ.copy()
+    kwargs.setdefault(<span style="color:#0ff;font-weight:bold">&#39;stdout&#39;</span>, subprocess.PIPE)
+    kwargs.setdefault(<span style="color:#0ff;font-weight:bold">&#39;stderr&#39;</span>, subprocess.STDOUT)
+    kwargs.setdefault(<span style="color:#0ff;font-weight:bold">&#39;encoding&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;utf8&#39;</span>)
+    kwargs.setdefault(<span style="color:#0ff;font-weight:bold">&#39;universal_newlines&#39;</span>, True)
+    kwargs[<span style="color:#0ff;font-weight:bold">&#39;env&#39;</span>] = os.environ.copy()
 
-    command = ['kubectl', 'get', 'pods', '-n', args.namespace,
-               args.pod, &quot;--export=true&quot;, &quot;-o&quot;, &quot;yaml&quot;]
+    command = [<span style="color:#0ff;font-weight:bold">&#39;kubectl&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;get&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;pods&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;-n&#39;</span>, args.namespace,
+               args.pod, <span style="color:#0ff;font-weight:bold">&#34;--export=true&#34;</span>, <span style="color:#0ff;font-weight:bold">&#34;-o&#34;</span>, <span style="color:#0ff;font-weight:bold">&#34;yaml&#34;</span>]
     pipe = subprocess.Popen(command, **kwargs)
     output, _ = pipe.communicate()
 
-    try:
+    <span style="color:#fff;font-weight:bold">try</span>:
         data = yaml.load(output)
-    except yaml.YAMLError as exc:
-        print(exc)
+    <span style="color:#fff;font-weight:bold">except</span> yaml.YAMLError <span style="color:#fff;font-weight:bold">as</span> exc:
+        <span style="color:#fff;font-weight:bold">print</span>(exc)
 
-    if 'metadata' not in data:
-        print(&quot;There is no pod&quot;)
-        return
+    <span style="color:#fff;font-weight:bold">if</span> <span style="color:#0ff;font-weight:bold">&#39;metadata&#39;</span> not in data:
+        <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;There is no pod&#34;</span>)
+        <span style="color:#fff;font-weight:bold">return</span>
 
-    data['metadata'].pop('ownerReferences', None)
-    data['metadata'].pop('selfLink', None)
-    name = &quot;debug-&quot;
-    if 'generateName' in data['metadata']:
-        name += data['metadata']['generateName']
-        name += str(uuid.uuid4())[:5]
-    else:
-        name += data['metadata']['name']
-        name += str(uuid.uuid4())[:5]
-    data['metadata']['name'] = name
-    data['metadata'].pop('generateName', None)
-    if data['metadata'].get('labels'):
-        data['metadata']['labels'].pop('pod-template-hash', None)
+    data[<span style="color:#0ff;font-weight:bold">&#39;metadata&#39;</span>].pop(<span style="color:#0ff;font-weight:bold">&#39;ownerReferences&#39;</span>, None)
+    data[<span style="color:#0ff;font-weight:bold">&#39;metadata&#39;</span>].pop(<span style="color:#0ff;font-weight:bold">&#39;selfLink&#39;</span>, None)
+    name = <span style="color:#0ff;font-weight:bold">&#34;debug-&#34;</span>
+    <span style="color:#fff;font-weight:bold">if</span> <span style="color:#0ff;font-weight:bold">&#39;generateName&#39;</span> in data[<span style="color:#0ff;font-weight:bold">&#39;metadata&#39;</span>]:
+        name += data[<span style="color:#0ff;font-weight:bold">&#39;metadata&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;generateName&#39;</span>]
+        name += <span style="color:#fff;font-weight:bold">str</span>(uuid.uuid4())[:<span style="color:#ff0;font-weight:bold">5</span>]
+    <span style="color:#fff;font-weight:bold">else</span>:
+        name += data[<span style="color:#0ff;font-weight:bold">&#39;metadata&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>]
+        name += <span style="color:#fff;font-weight:bold">str</span>(uuid.uuid4())[:<span style="color:#ff0;font-weight:bold">5</span>]
+    data[<span style="color:#0ff;font-weight:bold">&#39;metadata&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>] = name
+    data[<span style="color:#0ff;font-weight:bold">&#39;metadata&#39;</span>].pop(<span style="color:#0ff;font-weight:bold">&#39;generateName&#39;</span>, None)
+    <span style="color:#fff;font-weight:bold">if</span> data[<span style="color:#0ff;font-weight:bold">&#39;metadata&#39;</span>].get(<span style="color:#0ff;font-weight:bold">&#39;labels&#39;</span>):
+        data[<span style="color:#0ff;font-weight:bold">&#39;metadata&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;labels&#39;</span>].pop(<span style="color:#0ff;font-weight:bold">&#39;pod-template-hash&#39;</span>, None)
 
-    if not data['spec'].get('initContainers'):
-        data['spec']['initContainers'] = []
+    <span style="color:#fff;font-weight:bold">if</span> not data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>].get(<span style="color:#0ff;font-weight:bold">&#39;initContainers&#39;</span>):
+        data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;initContainers&#39;</span>] = []
 
-    data['spec'].pop('nodeName', None)
+    data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>].pop(<span style="color:#0ff;font-weight:bold">&#39;nodeName&#39;</span>, None)
 
     initcontainer = {}
-    initcontainer['name'] = 'init-debugger'
-    initcontainer['image'] = 'busybox'
-    initcontainer['command'] = ['cp', '/bin/busybox', '/tmp/mydebug/busybox']
-    initcontainer['volumeMounts'] = [
-        {'name': 'mydebug', 'mountPath': '/tmp/mydebug/'}]
+    initcontainer[<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>] = <span style="color:#0ff;font-weight:bold">&#39;init-debugger&#39;</span>
+    initcontainer[<span style="color:#0ff;font-weight:bold">&#39;image&#39;</span>] = <span style="color:#0ff;font-weight:bold">&#39;busybox&#39;</span>
+    initcontainer[<span style="color:#0ff;font-weight:bold">&#39;command&#39;</span>] = [<span style="color:#0ff;font-weight:bold">&#39;cp&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;/bin/busybox&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;/tmp/mydebug/busybox&#39;</span>]
+    initcontainer[<span style="color:#0ff;font-weight:bold">&#39;volumeMounts&#39;</span>] = [
+        {<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;mydebug&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;mountPath&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;/tmp/mydebug/&#39;</span>}]
 
-    data['spec']['initContainers'].append(initcontainer)
+    data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;initContainers&#39;</span>].append(initcontainer)
 
-    real_command = ''
-    for c in data['spec']['containers']:
-        if container_name == '' or c['name'] == container_name:
-            if 'command' in c:
-                real_command = &quot; &quot;.join(c['command'])
+    real_command = <span style="color:#0ff;font-weight:bold">&#39;&#39;</span>
+    <span style="color:#fff;font-weight:bold">for</span> c in data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;containers&#39;</span>]:
+        <span style="color:#fff;font-weight:bold">if</span> container_name == <span style="color:#0ff;font-weight:bold">&#39;&#39;</span> or c[<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>] == container_name:
+            <span style="color:#fff;font-weight:bold">if</span> <span style="color:#0ff;font-weight:bold">&#39;command&#39;</span> in c:
+                real_command = <span style="color:#0ff;font-weight:bold">&#34; &#34;</span>.join(c[<span style="color:#0ff;font-weight:bold">&#39;command&#39;</span>])
 
-            c['command'] = [
-                '/bin/busybox',
-                'sh', '-c',
-                '/bin/busybox --install -s /tmp/mydebug/ &amp;&amp; '
-                '/tmp/mydebug/sleep 86400']
-            if 'volumeMounts' not in c:
-                c['volumeMounts'] = []
-            c['volumeMounts'].append(
-                {'name': 'insert-busybox', 'mountPath': '/tmp/mydebug/'})
-            c['volumeMounts'].append(
-                {'name': 'mydebug-busybox', 'mountPath': '/bin/busybox'})
+            c[<span style="color:#0ff;font-weight:bold">&#39;command&#39;</span>] = [
+                <span style="color:#0ff;font-weight:bold">&#39;/bin/busybox&#39;</span>,
+                <span style="color:#0ff;font-weight:bold">&#39;sh&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;-c&#39;</span>,
+                <span style="color:#0ff;font-weight:bold">&#39;/bin/busybox --install -s /tmp/mydebug/ &amp;&amp; &#39;</span>
+                <span style="color:#0ff;font-weight:bold">&#39;/tmp/mydebug/sleep 86400&#39;</span>]
+            <span style="color:#fff;font-weight:bold">if</span> <span style="color:#0ff;font-weight:bold">&#39;volumeMounts&#39;</span> not in c:
+                c[<span style="color:#0ff;font-weight:bold">&#39;volumeMounts&#39;</span>] = []
+            c[<span style="color:#0ff;font-weight:bold">&#39;volumeMounts&#39;</span>].append(
+                {<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;insert-busybox&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;mountPath&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;/tmp/mydebug/&#39;</span>})
+            c[<span style="color:#0ff;font-weight:bold">&#39;volumeMounts&#39;</span>].append(
+                {<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;mydebug-busybox&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;mountPath&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;/bin/busybox&#39;</span>})
 
-            c.pop('livenessProbe', None)
-            c.pop('readinessProbe', None)
-            if container_name == '':
-                container_name = c['name']
-            break
-    else:
-        print(&quot;Error: can not found %s&quot; % container_name)
+            c.pop(<span style="color:#0ff;font-weight:bold">&#39;livenessProbe&#39;</span>, None)
+            c.pop(<span style="color:#0ff;font-weight:bold">&#39;readinessProbe&#39;</span>, None)
+            <span style="color:#fff;font-weight:bold">if</span> container_name == <span style="color:#0ff;font-weight:bold">&#39;&#39;</span>:
+                container_name = c[<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>]
+            <span style="color:#fff;font-weight:bold">break</span>
+    <span style="color:#fff;font-weight:bold">else</span>:
+        <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;Error: can not found </span><span style="color:#0ff;font-weight:bold">%s</span><span style="color:#0ff;font-weight:bold">&#34;</span> % container_name)
 
-    if 'volumes' not in data['spec']:
-        data['spec']['volumes'] = []
-    for v in data['spec']['volumes']:
-        if v.get('persistentVolumeClaim', None):
-            v.pop('persistentVolumeClaim', None)
-            v['emptyDir'] = {}
+    <span style="color:#fff;font-weight:bold">if</span> <span style="color:#0ff;font-weight:bold">&#39;volumes&#39;</span> not in data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>]:
+        data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;volumes&#39;</span>] = []
+    <span style="color:#fff;font-weight:bold">for</span> v in data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;volumes&#39;</span>]:
+        <span style="color:#fff;font-weight:bold">if</span> v.get(<span style="color:#0ff;font-weight:bold">&#39;persistentVolumeClaim&#39;</span>, None):
+            v.pop(<span style="color:#0ff;font-weight:bold">&#39;persistentVolumeClaim&#39;</span>, None)
+            v[<span style="color:#0ff;font-weight:bold">&#39;emptyDir&#39;</span>] = {}
 
-    data['spec']['volumes'].append(
-        {'name': 'insert-busybox', 'emptyDir': {}})
-    data['spec']['volumes'].append(
-        {'name': 'mydebug', 'hostPath': {'path': '/tmp/mydebug/'}})
-    data['spec']['volumes'].append(
-        {'name': 'mydebug-busybox',
-         'hostPath': {'path': '/tmp/mydebug/busybox'}})
+    data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;volumes&#39;</span>].append(
+        {<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;insert-busybox&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;emptyDir&#39;</span>: {}})
+    data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;volumes&#39;</span>].append(
+        {<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;mydebug&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;hostPath&#39;</span>: {<span style="color:#0ff;font-weight:bold">&#39;path&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;/tmp/mydebug/&#39;</span>}})
+    data[<span style="color:#0ff;font-weight:bold">&#39;spec&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;volumes&#39;</span>].append(
+        {<span style="color:#0ff;font-weight:bold">&#39;name&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;mydebug-busybox&#39;</span>,
+         <span style="color:#0ff;font-weight:bold">&#39;hostPath&#39;</span>: {<span style="color:#0ff;font-weight:bold">&#39;path&#39;</span>: <span style="color:#0ff;font-weight:bold">&#39;/tmp/mydebug/busybox&#39;</span>}})
 
-    data.pop('status', None)
+    data.pop(<span style="color:#0ff;font-weight:bold">&#39;status&#39;</span>, None)
 
-    file = NamedTemporaryFile(suffix='.yaml', delete=False)
+    <span style="color:#fff;font-weight:bold">file</span> = NamedTemporaryFile(suffix=<span style="color:#0ff;font-weight:bold">&#39;.yaml&#39;</span>, delete=False)
 
     yamlfile = yaml.dump(data, None, canonical=True)
-    file.write(yamlfile.encode('utf8'))
-    file.close()
+    <span style="color:#fff;font-weight:bold">file</span>.write(yamlfile.encode(<span style="color:#0ff;font-weight:bold">&#39;utf8&#39;</span>))
+    <span style="color:#fff;font-weight:bold">file</span>.close()
 
-    command2 = ['kubectl', 'create', '-n', args.namespace, '-f', file.name]
+    command2 = [<span style="color:#0ff;font-weight:bold">&#39;kubectl&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;create&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;-n&#39;</span>, args.namespace, <span style="color:#0ff;font-weight:bold">&#39;-f&#39;</span>, <span style="color:#fff;font-weight:bold">file</span>.name]
     pipe = subprocess.Popen(command2, **kwargs)
     output, _ = pipe.communicate()
-    if args.keep:
-        print(&quot;Check this changed pod yaml:&quot;)
-        print(file.name)
-    else:
-        os.unlink(file.name)
+    <span style="color:#fff;font-weight:bold">if</span> args.keep:
+        <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;Check this changed pod yaml:&#34;</span>)
+        <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#fff;font-weight:bold">file</span>.name)
+    <span style="color:#fff;font-weight:bold">else</span>:
+        os.unlink(<span style="color:#fff;font-weight:bold">file</span>.name)
 
-    print(&quot;To debug %s, wait some second and run:&quot; % args.pod)
-    print(&quot;    kubectl exec -ti %s -n %s &quot;
-          &quot;-c %s -- /tmp/mydebug/sh &quot;
-          &quot;-c \&quot;PATH=\$PATH:/tmp/mydebug/ sh\&quot;&quot; %
+    <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;To debug </span><span style="color:#0ff;font-weight:bold">%s</span><span style="color:#0ff;font-weight:bold">, wait some second and run:&#34;</span> % args.pod)
+    <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;    kubectl exec -ti </span><span style="color:#0ff;font-weight:bold">%s</span><span style="color:#0ff;font-weight:bold"> -n </span><span style="color:#0ff;font-weight:bold">%s</span><span style="color:#0ff;font-weight:bold"> &#34;</span>
+          <span style="color:#0ff;font-weight:bold">&#34;-c </span><span style="color:#0ff;font-weight:bold">%s</span><span style="color:#0ff;font-weight:bold"> -- /tmp/mydebug/sh &#34;</span>
+          <span style="color:#0ff;font-weight:bold">&#34;-c </span><span style="color:#0ff;font-weight:bold">\&#34;</span><span style="color:#0ff;font-weight:bold">PATH=\$PATH:/tmp/mydebug/ sh</span><span style="color:#0ff;font-weight:bold">\&#34;</span><span style="color:#0ff;font-weight:bold">&#34;</span> %
           (name, args.namespace, container_name))
 
-    print(&quot;&quot;)
-    print(&quot;If you want to run %s container's command&quot;
-          &quot; then check below command&quot; % args.pod)
-    print(&quot;    &quot; + real_command)
-    print(&quot;&quot;)
-    print(&quot;After finish debugging please delete debugging container:&quot;)
-    print(&quot;    kubectl delete pods %s -n %s &quot; %
+    <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;&#34;</span>)
+    <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;If you want to run </span><span style="color:#0ff;font-weight:bold">%s</span><span style="color:#0ff;font-weight:bold"> container&#39;s command&#34;</span>
+          <span style="color:#0ff;font-weight:bold">&#34; then check below command&#34;</span> % args.pod)
+    <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;    &#34;</span> + real_command)
+    <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;&#34;</span>)
+    <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;After finish debugging please delete debugging container:&#34;</span>)
+    <span style="color:#fff;font-weight:bold">print</span>(<span style="color:#0ff;font-weight:bold">&#34;    kubectl delete pods </span><span style="color:#0ff;font-weight:bold">%s</span><span style="color:#0ff;font-weight:bold"> -n </span><span style="color:#0ff;font-weight:bold">%s</span><span style="color:#0ff;font-weight:bold"> &#34;</span> %
           (name, args.namespace))
 
 
-if __name__ == '__main__':
+<span style="color:#fff;font-weight:bold">if</span> __name__ == <span style="color:#0ff;font-weight:bold">&#39;__main__&#39;</span>:
     sys.exit(main())
-</code></pre>
-
-<p>위의 스크립트를 <code>debugdead.py</code>라고 준비해서 실행할 수 있게 해두고 아래와 같이 사용합니다.</p>
-
+</code></pre></div><p>위의 스크립트를 <code>debugdead.py</code>라고 준비해서 실행할 수 있게 해두고 아래와 같이 사용합니다.</p>
 <pre><code>```
 debugdead.py POD_NAME [-n POD_NAMESPACE -c CONTAINER_NAME];
 ```
 </code></pre>
-
 <p>실제 사용예 입니다. 저는 왠만한 모든 cli에 <a href="https://github.com/junegunn/fzf">fzf</a> 를 붙여서 UI(item select)로 사용합니다.</p>
-
 <p>아래와 같이 스크립트를 준비해서 사용합니다. 아래 커맨드는 pod들을 컨테이너가 기준으로 분리해서 상태가 running 인것과 아닌것을 출력시키고 이를 fzf 로 선택하도록 합니다.
 이 후 그 결과값을 위의 스크립트에 전달해서 사용합니다.</p>
-
-<pre><code class="language-bash">kdd ()
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kdd ()
 {
-    pods=$(kubectl get pods --all-namespaces -o=go-template='
-      {{ range .items }}
-        {{$metadata:=.metadata}}
-        {{$status:=.status}}
-        {{ range .spec.containers }}
-          {{$name:=.name}}
-          {{ range $status.containerStatuses }}
-            {{ if eq .name $name }}
-              {{ range $key, $value := .state }}
-                {{- printf &quot;%v %v %v %v\n&quot; $metadata.namespace $metadata.name $name $key }}
-              {{ end }}
-            {{ end }}
-          {{ end }}
-        {{ end }}
-      {{ end }}' | column -t | sed '1d' | \
-        fzf -x -e +s --reverse --no-mouse | awk '{print $1&quot;,&quot;$2&quot;,&quot;$3}');
-    if [[ $pods != &quot;&quot; ]]; then
-        namespace=$(echo ${pods} | cut -d',' -f1);
-        name=$(echo ${pods} | cut -d',' -f2);
-        container=$(echo ${pods} | cut -d',' -f3);
-        debugdead.py ${name} -n ${namespace} -c ${container} $@;
-    fi
+    pods=<span style="color:#fff;font-weight:bold">$(</span>kubectl get pods --all-namespaces -o=go-template=<span style="color:#0ff;font-weight:bold">&#39;
+</span><span style="color:#0ff;font-weight:bold">      {{ range .items }}
+</span><span style="color:#0ff;font-weight:bold">        {{$metadata:=.metadata}}
+</span><span style="color:#0ff;font-weight:bold">        {{$status:=.status}}
+</span><span style="color:#0ff;font-weight:bold">        {{ range .spec.containers }}
+</span><span style="color:#0ff;font-weight:bold">          {{$name:=.name}}
+</span><span style="color:#0ff;font-weight:bold">          {{ range $status.containerStatuses }}
+</span><span style="color:#0ff;font-weight:bold">            {{ if eq .name $name }}
+</span><span style="color:#0ff;font-weight:bold">              {{ range $key, $value := .state }}
+</span><span style="color:#0ff;font-weight:bold">                {{- printf &#34;%v %v %v %v\n&#34; $metadata.namespace $metadata.name $name $key }}
+</span><span style="color:#0ff;font-weight:bold">              {{ end }}
+</span><span style="color:#0ff;font-weight:bold">            {{ end }}
+</span><span style="color:#0ff;font-weight:bold">          {{ end }}
+</span><span style="color:#0ff;font-weight:bold">        {{ end }}
+</span><span style="color:#0ff;font-weight:bold">      {{ end }}&#39;</span> | column -t | sed <span style="color:#0ff;font-weight:bold">&#39;1d&#39;</span> | <span style="color:#0ff;font-weight:bold">\
+</span><span style="color:#0ff;font-weight:bold"></span>        fzf -x -e +s --reverse --no-mouse | awk <span style="color:#0ff;font-weight:bold">&#39;{print $1&#34;,&#34;$2&#34;,&#34;$3}&#39;</span><span style="color:#fff;font-weight:bold">)</span>;
+    <span style="color:#fff;font-weight:bold">if</span> [[ $pods != <span style="color:#0ff;font-weight:bold">&#34;&#34;</span> ]]; <span style="color:#fff;font-weight:bold">then</span>
+        namespace=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">${</span>pods<span style="color:#0ff;font-weight:bold">}</span> | cut -d<span style="color:#0ff;font-weight:bold">&#39;,&#39;</span> -f1<span style="color:#fff;font-weight:bold">)</span>;
+        name=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">${</span>pods<span style="color:#0ff;font-weight:bold">}</span> | cut -d<span style="color:#0ff;font-weight:bold">&#39;,&#39;</span> -f2<span style="color:#fff;font-weight:bold">)</span>;
+        container=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">${</span>pods<span style="color:#0ff;font-weight:bold">}</span> | cut -d<span style="color:#0ff;font-weight:bold">&#39;,&#39;</span> -f3<span style="color:#fff;font-weight:bold">)</span>;
+        debugdead.py <span style="color:#0ff;font-weight:bold">${</span>name<span style="color:#0ff;font-weight:bold">}</span> -n <span style="color:#0ff;font-weight:bold">${</span>namespace<span style="color:#0ff;font-weight:bold">}</span> -c <span style="color:#0ff;font-weight:bold">${</span>container<span style="color:#0ff;font-weight:bold">}</span> $@;
+    <span style="color:#fff;font-weight:bold">fi</span>
 }
-</code></pre>
-
-<p>이후 아래처럼 입력해서 디버깅할 pod을 찾으면 아래처럼 출력됩니다.</p>
-
+</code></pre></div><p>이후 아래처럼 입력해서 디버깅할 pod을 찾으면 아래처럼 출력됩니다.</p>
 <pre><code>$ kdd
 To debug heapster-heapster-65489b24b5-kjlk4, wait some second and run:
     kubectl exec -ti debug-heapster-heapster-65489b24b5-2fea7 -n kube-system -c heapster -- /tmp/mydebug/sh -c &quot;PATH=\$PATH:/tmp/mydebug/ sh&quot;
@@ -536,49 +444,39 @@ If you want to run heapster-heapster-65489b24b5-kjlk4 container's command then c
 
 After finish debuggin4 please delete debugging container:
     kubectl delete pods debug-heapster-heapster-65489b24b5-2fea7 -n kube-system
-</code></pre>
-
-<p>우선은 잠깐 생성이 안됐을때는 아래처럼 실패할겁니다.
+</code></pre><p>우선은 잠깐 생성이 안됐을때는 아래처럼 실패할겁니다.
 debugging pod이 뜰 수 있도록 조금 기다려 준 후에 접근 합니다.</p>
-
 <pre><code>$ kubectl exec -ti debug-heapster-heapster-65489b24b5-2fea7 -n kube-system -c heapster -- /tmp/mydebug/sh -c &quot;PATH=\$PATH:/tmp/mydebug/ sh&quot;
 error: unable to upgrade connection: container not found (&quot;heapster&quot;)
 $ kubectl exec -ti debug-heapster-heapster-65489b24b5-2fea7 -n kube-system -c heapster -- /tmp/mydebug/sh -c &quot;PATH=\$PATH:/tmp/mydebug/ sh&quot;
 / $
-</code></pre>
-
-<p>이후 원하는 커맨드를 실행해서 기존 죽은 팟의 문제점을 찾도록 합니다.</p>
-
+</code></pre><p>이후 원하는 커맨드를 실행해서 기존 죽은 팟의 문제점을 찾도록 합니다.</p>
 <p>자세한 과정은 아래를 참고해서 보시면 됩니다.</p>
-
-<script src="https://asciinema.org/a/rwE73RWEJdJWdv5TnJZMZmmQm.js" id="asciicast-rwE73RWEJdJWdv5TnJZMZmmQm" async></script>
-
+<!-- raw HTML omitted -->
 <h1 id="결론">결론<a href="#결론" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-
 <p>살아있는 팟을 디버깅할 수 있는 툴들도 많지만 죽은 이유를 알아내야 할때는 아래 정도로 정리하면 좋을 것 같습니다.</p>
-
 <ol>
 <li>log 확인 log가 없으면 log -p 를 사용해서 이전 컨테이너 로그까지 확인 (없으면 추가적으로 kubelet log, docker log, controller manager log 등도 확인)</li>
 <li>describe를 이용해 message, event 등을 보고 파악함</li>
 <li>debug tool이 없는 scratch image일 경우 바이너리를 인젝션 시켜서 사용할 수 있도록 함</li>
 <li>커맨드가 지속적으로 실패하는 팟은 팟을 복사해서 커맨드만 교체해서 테스트 할 수 있도록 함</li>
 </ol>
-
 <p>긴 글 읽어주셔서 감사합니다.</p>
 
 		</div>
 	</main>
 
 	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
-		<script src="/js/prism.js"></script>
-		<p>&copy; 2019 <a href="https://leoh0.github.io/"></a></p>
+		<p>&copy; 2020 <a href="https://leoh0.github.io/"></a></p>
 		<p>
-			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/post/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
 		</p>
 	</footer>
 
 
-	<script src="https://leoh0.github.io/js/main.min.784417f5847151f848c339cf0acb13a06cbb648b1483435a28ed4556c4ead69b.js" integrity="sha256-eEQX9YRxUfhIwznPCssToGy7ZIsUg0NaKO1FVsTq1ps="></script>
+
+	<script src="https://leoh0.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
 <script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {

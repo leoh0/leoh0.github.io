@@ -8,43 +8,31 @@
 	<meta name="theme-color" content="#494f5c">
 	<meta name="msapplication-TileColor" content="#494f5c">
 <meta itemprop="name" content="keystone에서 token backend로 사용하는 memcached가 unbalanced되었다..">
-<meta itemprop="description" content="해당 클러스터는 kilo 버전으로 구성 되었었고 token 을 memcached 에 저장하고 있었다.
-또한 kilo 부터 dogpile.cache 는 거의 고정으로 들어가 있가 있어서 해당 모듈을 사용했다.
-이런 상황을 디버깅 했던 경험을 정리해 본다.
-아래는 문제가 되었던 memcached host의 in/out bound 그래프이다.
-수치는 가려서 스케일만 감으로 볼 수 있게 남겼다.
+<meta itemprop="description" content="해당 클러스터는 kilo 버전으로 구성 되었었고 token 을 memcached 에 저장하고 있었다. 또한 kilo 부터 dogpile.cache 는 거의 고정으로 들어가 있가 있어서 해당 모듈을 사용했다. 이런 상황을 디버깅 했던 경험을 정리해 본다.
+아래는 문제가 되었던 memcached host의 in/out bound 그래프이다. 수치는 가려서 스케일만 감으로 볼 수 있게 남겼다.
 A 서버   A 서버   B 서버   B 서버   최초엔 keystone과 memcached connection 이 unbalance 할것이라고 생각했으나 그런 정황은 없었다.">
-
-
 <meta itemprop="datePublished" content="2016-04-27T00:00:45&#43;09:00" />
 <meta itemprop="dateModified" content="2016-04-27T00:00:45&#43;09:00" />
-<meta itemprop="wordCount" content="599">
+<meta itemprop="wordCount" content="598">
+<meta itemprop="image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 
 
 
-<meta itemprop="keywords" content="openstack,keystone,token,memcached,unbalance,skew," />
-<meta property="og:title" content="keystone에서 token backend로 사용하는 memcached가 unbalanced되었다.." />
-<meta property="og:description" content="해당 클러스터는 kilo 버전으로 구성 되었었고 token 을 memcached 에 저장하고 있었다.
-또한 kilo 부터 dogpile.cache 는 거의 고정으로 들어가 있가 있어서 해당 모듈을 사용했다.
-이런 상황을 디버깅 했던 경험을 정리해 본다.
-아래는 문제가 되었던 memcached host의 in/out bound 그래프이다.
-수치는 가려서 스케일만 감으로 볼 수 있게 남겼다.
+<meta itemprop="keywords" content="openstack,keystone,token,memcached,unbalance,skew," /><meta property="og:title" content="keystone에서 token backend로 사용하는 memcached가 unbalanced되었다.." />
+<meta property="og:description" content="해당 클러스터는 kilo 버전으로 구성 되었었고 token 을 memcached 에 저장하고 있었다. 또한 kilo 부터 dogpile.cache 는 거의 고정으로 들어가 있가 있어서 해당 모듈을 사용했다. 이런 상황을 디버깅 했던 경험을 정리해 본다.
+아래는 문제가 되었던 memcached host의 in/out bound 그래프이다. 수치는 가려서 스케일만 감으로 볼 수 있게 남겼다.
 A 서버   A 서버   B 서버   B 서버   최초엔 keystone과 memcached connection 이 unbalance 할것이라고 생각했으나 그런 정황은 없었다." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://leoh0.github.io/post/2016-04-27-keystoneeseo-token-backendro-sayonghaneun-memcachedga-unbalanceddoeeossdamyeon-dot/" />
-
-<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322" />
+<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 <meta property="article:published_time" content="2016-04-27T00:00:45+09:00" />
 <meta property="article:modified_time" content="2016-04-27T00:00:45+09:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 
 <meta name="twitter:title" content="keystone에서 token backend로 사용하는 memcached가 unbalanced되었다.."/>
-<meta name="twitter:description" content="해당 클러스터는 kilo 버전으로 구성 되었었고 token 을 memcached 에 저장하고 있었다.
-또한 kilo 부터 dogpile.cache 는 거의 고정으로 들어가 있가 있어서 해당 모듈을 사용했다.
-이런 상황을 디버깅 했던 경험을 정리해 본다.
-아래는 문제가 되었던 memcached host의 in/out bound 그래프이다.
-수치는 가려서 스케일만 감으로 볼 수 있게 남겼다.
+<meta name="twitter:description" content="해당 클러스터는 kilo 버전으로 구성 되었었고 token 을 memcached 에 저장하고 있었다. 또한 kilo 부터 dogpile.cache 는 거의 고정으로 들어가 있가 있어서 해당 모듈을 사용했다. 이런 상황을 디버깅 했던 경험을 정리해 본다.
+아래는 문제가 되었던 memcached host의 in/out bound 그래프이다. 수치는 가려서 스케일만 감으로 볼 수 있게 남겼다.
 A 서버   A 서버   B 서버   B 서버   최초엔 keystone과 memcached connection 이 unbalance 할것이라고 생각했으나 그런 정황은 없었다."/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -55,28 +43,30 @@ A 서버   A 서버   B 서버   B 서버   최초엔 keystone과 memcached conn
 	<link rel="shortcut icon" href="/favicon.ico">
 
 	<title>keystone에서 token backend로 사용하는 memcached가 unbalanced되었다..</title>
-	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.cf317e8e759e34ff58587ff7fca05f8b77531a61ee8e63c887a46eb43ebad966.css" crossorigin="anonymous" integrity="sha256-zzF+jnWeNP9YWH/3/KBfi3dTGmHujmPIh6RutD662WY=">
+	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
 	
 	<link rel="stylesheet" href="https://leoh0.github.io/css/prism.css">
 </head>
 
 <body id="page">
 	
-	<header id="site-header" class="animated slideInUp faster">
+	<header id="site-header" class="animated slideInUp">
 		<div class="hdr-wrapper section-inner">
 			<div class="hdr-left">
 				<div class="site-branding">
 					<a href="https://leoh0.github.io/">&gt; /dev/null</a>
 				</div>
 				<nav class="site-nav hide-in-mobile">
-					<a href="https://leoh0.github.io/">Home</a>
-					<a href="https://leoh0.github.io/post/">Posts</a>
-					<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
-					<a href="https://leoh0.github.io/blog/">.</a>
+					
+				<a href="https://leoh0.github.io/">Home</a>
+				<a href="https://leoh0.github.io/post/">Posts</a>
+				<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
+				<a href="https://leoh0.github.io/blog/">.</a>
+
 				</nav>
 			</div>
 			<div class="hdr-right hdr-icons">
-				<span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+				<span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
 			</div>
 		</div>
 	</header>
@@ -93,13 +83,11 @@ A 서버   A 서버   B 서버   B 서버   최초엔 keystone과 memcached conn
 	<main class="site-main section-inner thin animated fadeIn faster">
 		<h1>keystone에서 token backend로 사용하는 memcached가 unbalanced되었다..</h1>
 		<div class="content">
-			<p>해당 클러스터는 kilo 버전으로 구성 되었었고 token 을 memcached 에 저장하고 있었다.<br />
-또한 kilo 부터 dogpile.cache 는 거의 고정으로 들어가 있가 있어서 해당 모듈을 사용했다.<br />
+			<p>해당 클러스터는 kilo 버전으로 구성 되었었고 token 을 memcached 에 저장하고 있었다. <br>
+또한 kilo 부터 dogpile.cache 는 거의 고정으로 들어가 있가 있어서 해당 모듈을 사용했다. <br>
 이런 상황을 디버깅 했던 경험을 정리해 본다.</p>
-
-<p>아래는 문제가 되었던 memcached host의 in/out bound 그래프이다.<br />
+<p>아래는 문제가 되었던 memcached host의 in/out bound 그래프이다. <br>
 수치는 가려서 스케일만 감으로 볼 수 있게 남겼다.</p>
-
 <p><strong>A 서버</strong>
 <figure>
     <img src="/images/2016-04-26_23-50-30.png"/> <figcaption>
@@ -107,7 +95,6 @@ A 서버   A 서버   B 서버   B 서버   최초엔 keystone과 memcached conn
         </figcaption>
 </figure>
 </p>
-
 <p><strong>B 서버</strong>
 <figure>
     <img src="/images/2016-04-26_23-50-41.png"/> <figcaption>
@@ -115,76 +102,64 @@ A 서버   A 서버   B 서버   B 서버   최초엔 keystone과 memcached conn
         </figcaption>
 </figure>
 </p>
-
-<p>최초엔 keystone과 memcached connection 이 unbalance 할것이라고 생각했으나 그런 정황은 없었다.    (connection 개수가 일정) 그리고 특별히 keystone 로그에도 별다른 문제가 보이지 않았다.<br />
+<p>최초엔 keystone과 memcached connection 이 unbalance 할것이라고 생각했으나 그런 정황은 없었다.    (connection 개수가 일정) 그리고 특별히 keystone 로그에도 별다른 문제가 보이지 않았다. <br>
 memcache key 개수는 심지어 <strong>A 서버</strong>가 많았다.</p>
-
-<p>이 외에도 온갖 삽질을 했지만 관련이 없었다.<br />
+<p>이 외에도 온갖 삽질을 했지만 관련이 없었다. <br>
 그 후 결국 아래와 같은 방법으로 디버깅 할 수 있었다.</p>
-
-<p>각 호스트에서 아래 같이 memcache slab id 별로 dump를 떠보니 <code>bf81985d70a6416897edbade7a8bfc0a5a579af4</code> 와 같이 유독 큰 (578966 b) 키가 <strong>B 서버</strong>에만 존재 하고 있었다.</p>
-
+<p>각 호스트에서 아래 같이 memcache slab id 별로 dump를 떠보니 <code>bf81985d70a6416897edbade7a8bfc0a5a579af4 </code> 와 같이 유독 큰 (578966 b) 키가 <strong>B 서버</strong>에만 존재 하고 있었다.</p>
 <p>대부분의 token 데이터는 <code>3f786850e387550fdab836ed7e6dc881de23001b</code> 정도와 같이 PKI가 아닌 UUID token data여서 10000 b 정도를 구성하고 있었기 때문에 <code>크기</code>가 더 눈에 띈다.</p>
-
-<pre><code class="language-bash">$ for i in $(echo 'stats items' | nc localhost 11211 | cut -d':' -f2 | sort -u | grep -v END); do
-    echo &quot;stats cachedump $i 1&quot; | nc localhost 11211
-done
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ <span style="color:#fff;font-weight:bold">for</span> i in <span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#39;stats items&#39;</span> | nc localhost <span style="color:#ff0;font-weight:bold">11211</span> | cut -d<span style="color:#0ff;font-weight:bold">&#39;:&#39;</span> -f2 | sort -u | grep -v END<span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
+    <span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;stats cachedump </span>$i<span style="color:#0ff;font-weight:bold"> 1&#34;</span> | nc localhost <span style="color:#ff0;font-weight:bold">11211</span>
+<span style="color:#fff;font-weight:bold">done</span>
 ...
-ITEM 3f786850e387550fdab836ed7e6dc881de23001b [11651 b; 1461686308 s]
+ITEM 3f786850e387550fdab836ed7e6dc881de23001b [<span style="color:#ff0;font-weight:bold">11651</span> b; <span style="color:#ff0;font-weight:bold">1461686308</span> s]
 END
-ITEM 6e49b86a7502dae881f3b9466ecbdfa4743c7eb9 [578966 b; 1461688011 s]
+ITEM 6e49b86a7502dae881f3b9466ecbdfa4743c7eb9 [<span style="color:#ff0;font-weight:bold">578966</span> b; <span style="color:#ff0;font-weight:bold">1461688011</span> s]
 END
 ...
-</code></pre>
-
-<p>그렇다면 이 키를 열어 보면 아래와 같다.<br />
+</code></pre></div><p>그렇다면 이 키를 열어 보면 아래와 같다. <br>
 ( 참고로 아래 커맨드를 쓰기위해선 <code>dogpile.cache</code> 가 인스톨 되어 있어야 한다. )</p>
-
-<pre><code class="language-bash">$ echo get 6e49b86a7502dae881f3b9466ecbdfa4743c7eb9 | nc localhost 11211 | python -c '
-import sys
-import cPickle
-import json
-try:
-    data=cPickle.load(sys.stdin)
-    print json.dumps(data)
-except (cPickle.UnpicklingError, EOFError):
-    print &quot;&quot;
-' | python -mjson.tool
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ <span style="color:#fff;font-weight:bold">echo</span> get 6e49b86a7502dae881f3b9466ecbdfa4743c7eb9 | nc localhost <span style="color:#ff0;font-weight:bold">11211</span> | python -c <span style="color:#0ff;font-weight:bold">&#39;
+</span><span style="color:#0ff;font-weight:bold">import sys
+</span><span style="color:#0ff;font-weight:bold">import cPickle
+</span><span style="color:#0ff;font-weight:bold">import json
+</span><span style="color:#0ff;font-weight:bold">try:
+</span><span style="color:#0ff;font-weight:bold">    data=cPickle.load(sys.stdin)
+</span><span style="color:#0ff;font-weight:bold">    print json.dumps(data)
+</span><span style="color:#0ff;font-weight:bold">except (cPickle.UnpicklingError, EOFError):
+</span><span style="color:#0ff;font-weight:bold">    print &#34;&#34;
+</span><span style="color:#0ff;font-weight:bold">&#39;</span> | python -mjson.tool
 [
     [
         [
-            &quot;386c0e0a01bb4069904d9c11771516a2&quot;,
-            &quot;2016-04-26T15:41:25.000000Z&quot;
+            <span style="color:#0ff;font-weight:bold">&#34;386c0e0a01bb4069904d9c11771516a2&#34;</span>,
+            <span style="color:#0ff;font-weight:bold">&#34;2016-04-26T15:41:25.000000Z&#34;</span>
         ],
         [
-            &quot;9ba06233d0894aa4a06d4302800035c1&quot;,
-            &quot;2016-04-26T15:41:24.000000Z&quot;
+            <span style="color:#0ff;font-weight:bold">&#34;9ba06233d0894aa4a06d4302800035c1&#34;</span>,
+            <span style="color:#0ff;font-weight:bold">&#34;2016-04-26T15:41:24.000000Z&#34;</span>
         ],
         [
-            &quot;1510940842f943b798f4bb9f7964aa67&quot;,
-            &quot;2016-04-26T15:41:24.000000Z&quot;
+            <span style="color:#0ff;font-weight:bold">&#34;1510940842f943b798f4bb9f7964aa67&#34;</span>,
+            <span style="color:#0ff;font-weight:bold">&#34;2016-04-26T15:41:24.000000Z&#34;</span>
         ],
    
         ...
    
         [
-            &quot;d57b2946174c4a4391496a7f9af7e0c5&quot;,
-            &quot;2016-04-26T16:41:18.000000Z&quot;
+            <span style="color:#0ff;font-weight:bold">&#34;d57b2946174c4a4391496a7f9af7e0c5&#34;</span>,
+            <span style="color:#0ff;font-weight:bold">&#34;2016-04-26T16:41:18.000000Z&#34;</span>
         ]
     ],
     {
-        &quot;ct&quot;: 1461685284.976144,
-        &quot;v&quot;: 1
+        <span style="color:#0ff;font-weight:bold">&#34;ct&#34;</span>: 1461685284.976144,
+        <span style="color:#0ff;font-weight:bold">&#34;v&#34;</span>: <span style="color:#ff0;font-weight:bold">1</span>
     }
 ]
-</code></pre>
-
-<p>위와 같이 되어 있고 알고 보면 특정 토큰들과 그 토큰이 issue 된 시간이 적혀 있는 <a href="https://github.com/openstack/keystone/blob/stable/kilo/keystone/token/persistence/backends/kvs.py#L155-L188">리스트</a> 이다.<br />
-이 키의 리스트는 유저별로 token의 expire time을 관리하는 값으로 해당 user에게 token이 발급 되거나 expire 될때마다 해당 리스트를 memcache로 부터 가져와서(<code>get</code>) 다시 업로드(<code>set</code>) 한다.<br />
+</code></pre></div><p>위와 같이 되어 있고 알고 보면 특정 토큰들과 그 토큰이 issue 된 시간이 적혀 있는 <a href="https://github.com/openstack/keystone/blob/stable/kilo/keystone/token/persistence/backends/kvs.py#L155-L188">리스트</a> 이다. <br>
+이 키의 리스트는 유저별로 token의 expire time을 관리하는 값으로 해당 user에게 token이 발급 되거나 expire 될때마다 해당 리스트를 memcache로 부터 가져와서(<code>get</code>) 다시 업로드(<code>set</code>) 한다. <br>
 그렇기 때문에 해당 키값이 결국 유저와 관계 있다는 것을 추측할 수 있었다.</p>
-
 <p>예를 들어 아래 처럼 특정 유저를 본다면 아래 처럼 <code>id</code>를 갖고 있을 것이다.</p>
-
 <pre><code>$ openstack user show ceilometer
 +----------+----------------------------------+
 | Field    | Value                            |
@@ -194,56 +169,42 @@ except (cPickle.UnpicklingError, EOFError):
 | name     | ceilometer                       |
 | username | ceilometer                       |
 +----------+----------------------------------+
-</code></pre>
-
-<p>eef939600bc111e69aeb57d4fa849231 이값은 아래와 같이 prefix가 붙고 hash 되서 key 값으로 사용된다.</p>
-
-<pre><code class="language-bash">$ echo -n 'usertokens-eef939600bc111e69aeb57d4fa849231' | sha1sum
+</code></pre><p>eef939600bc111e69aeb57d4fa849231 이값은 아래와 같이 prefix가 붙고 hash 되서 key 값으로 사용된다.</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ <span style="color:#fff;font-weight:bold">echo</span> -n <span style="color:#0ff;font-weight:bold">&#39;usertokens-eef939600bc111e69aeb57d4fa849231&#39;</span> | sha1sum
 6e49b86a7502dae881f3b9466ecbdfa4743c7eb9  -
-</code></pre>
-
-<p>즉, <code>6e49b86a7502dae881f3b9466ecbdfa4743c7eb9</code>은 가 key이 기때문에 위의 토큰 리스트는 ceilometer의 토큰 리스트인걸 알 수 있다.</p>
-
-<p>마지막으로 아래와 같이 계산해 보면 어떤 멤캐쉬에 들어갈 지 알수 있다. (<a href="https://github.com/linsomniac/python-memcached/blob/master/memcache.py#L63-L66">cmemcache_hash</a> 참고)<br />
+</code></pre></div><p>즉, <code>6e49b86a7502dae881f3b9466ecbdfa4743c7eb9</code>은 가 key이 기때문에 위의 토큰 리스트는 ceilometer의 토큰 리스트인걸 알 수 있다.</p>
+<p>마지막으로 아래와 같이 계산해 보면 어떤 멤캐쉬에 들어갈 지 알수 있다. (<a href="https://github.com/linsomniac/python-memcached/blob/master/memcache.py#L63-L66">cmemcache_hash</a> 참고) <br>
 여기에서는 <code>3065</code> 가 나왔기 때문에 멤캐쉬 서버가 두대이면 두번째(<code>3016%2=1</code>) 서버로 들어가게 된다.</p>
-
-<pre><code class="language-bash">$ echo -n '6e49b86a7502dae881f3b9466ecbdfa4743c7eb9' | python -c '
-import sys,binascii
-print (
-    (((binascii.crc32(sys.stdin.read()) &amp; 0xffffffff)
-       &gt;&gt; 16) &amp; 0x7fff) or 1)
-'
-3065
-</code></pre>
-
-<p>나의 케이스는 불운 하게도 이런 많은 토큰을 같은 유저(ceilometer, neutron, nova 등)가 전부 해쉬값이 홀수가 나와서 한 memcached host에 할당되었고, 이때문에 한쪽으로 skew 가 있었다.</p>
-
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ <span style="color:#fff;font-weight:bold">echo</span> -n <span style="color:#0ff;font-weight:bold">&#39;6e49b86a7502dae881f3b9466ecbdfa4743c7eb9&#39;</span> | python -c <span style="color:#0ff;font-weight:bold">&#39;
+</span><span style="color:#0ff;font-weight:bold">import sys,binascii
+</span><span style="color:#0ff;font-weight:bold">print (
+</span><span style="color:#0ff;font-weight:bold">    (((binascii.crc32(sys.stdin.read()) &amp; 0xffffffff)
+</span><span style="color:#0ff;font-weight:bold">       &gt;&gt; 16) &amp; 0x7fff) or 1)
+</span><span style="color:#0ff;font-weight:bold">&#39;</span>
+<span style="color:#ff0;font-weight:bold">3065</span>
+</code></pre></div><p>나의 케이스는 불운 하게도 이런 많은 토큰을 같은 유저(ceilometer, neutron, nova 등)가 전부 해쉬값이 홀수가 나와서 한 memcached host에 할당되었고, 이때문에 한쪽으로 skew 가 있었다.</p>
 <p>이런걸 피할려면 결국 memcached 개수를 늘이던가 토큰이 많은 유저의 uuid를 분배시킬 수 있도록 해야 할것같다.
 물론 저런 거대한 토큰 리스트를 관리 안하는 것이 더 나아 보이지만 이 코드는 현재 master(mitaka 이후)까지도 유지되어 있는 상태이다.</p>
-
-<p>우리도 ceilometer 를 쓰기 전까지는 이런 문제가 없었으나 ceilometer를 추가하면서 문제가 발생하기 시작했다.<br />
+<p>우리도 ceilometer 를 쓰기 전까지는 이런 문제가 없었으나 ceilometer를 추가하면서 문제가 발생하기 시작했다. <br>
 아무래도 ceilometer 상위 버전쪽에서는 토큰의 재활용을 높이는 부분들이 있어야 할것이다.</p>
-
 <p>사족으로 토큰이 어떤 내용을 담고 있는지는 아래 같은 스크립트로 찾으면 편하다.</p>
-
-<pre><code class="language-bash">MEMCACHES='serverA serverB'
-for h in $MEMCACHES; do
-  echo $h
-  sha=$(echo -n &quot;token-$1&quot; | sha1sum | cut -d' ' -f1)
-  echo get $sha | nc $h 11211 | python -c '
-import sys
-import cPickle
-import json
-try:
-    data=cPickle.load(sys.stdin)
-    data[0][&quot;expires&quot;] = data[0][&quot;expires&quot;].strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)
-    print json.dumps(data[0])
-except (cPickle.UnpicklingError, EOFError):
-    print ''
-' | python -mjson.tool
-done
-</code></pre>
-
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">MEMCACHES=<span style="color:#0ff;font-weight:bold">&#39;serverA serverB&#39;</span>
+<span style="color:#fff;font-weight:bold">for</span> h in $MEMCACHES; <span style="color:#fff;font-weight:bold">do</span>
+  <span style="color:#fff;font-weight:bold">echo</span> $h
+  sha=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> -n <span style="color:#0ff;font-weight:bold">&#34;token-</span>$1<span style="color:#0ff;font-weight:bold">&#34;</span> | sha1sum | cut -d<span style="color:#0ff;font-weight:bold">&#39; &#39;</span> -f1<span style="color:#fff;font-weight:bold">)</span>
+  <span style="color:#fff;font-weight:bold">echo</span> get $sha | nc $h <span style="color:#ff0;font-weight:bold">11211</span> | python -c <span style="color:#0ff;font-weight:bold">&#39;
+</span><span style="color:#0ff;font-weight:bold">import sys
+</span><span style="color:#0ff;font-weight:bold">import cPickle
+</span><span style="color:#0ff;font-weight:bold">import json
+</span><span style="color:#0ff;font-weight:bold">try:
+</span><span style="color:#0ff;font-weight:bold">    data=cPickle.load(sys.stdin)
+</span><span style="color:#0ff;font-weight:bold">    data[0][&#34;expires&#34;] = data[0][&#34;expires&#34;].strftime(&#34;%Y-%m-%d %H:%M:%S&#34;)
+</span><span style="color:#0ff;font-weight:bold">    print json.dumps(data[0])
+</span><span style="color:#0ff;font-weight:bold">except (cPickle.UnpicklingError, EOFError):
+</span><span style="color:#0ff;font-weight:bold">    print &#39;&#39;
+</span><span style="color:#0ff;font-weight:bold">&#39;</span> | python -mjson.tool
+<span style="color:#fff;font-weight:bold">done</span>
+</code></pre></div>
 		</div>
 		<div id="comments" class="thin">
 			
@@ -272,15 +233,16 @@ done
 	</main>
 
 	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
-		<script src="/js/prism.js"></script>
-		<p>&copy; 2019 <a href="https://leoh0.github.io/"></a></p>
+		<p>&copy; 2020 <a href="https://leoh0.github.io/"></a></p>
 		<p>
-			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/post/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
 		</p>
 	</footer>
 
 
-	<script src="https://leoh0.github.io/js/main.min.784417f5847151f848c339cf0acb13a06cbb648b1483435a28ed4556c4ead69b.js" integrity="sha256-eEQX9YRxUfhIwznPCssToGy7ZIsUg0NaKO1FVsTq1ps="></script>
+
+	<script src="https://leoh0.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
 <script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {

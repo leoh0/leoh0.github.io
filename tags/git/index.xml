@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Git on &gt; /dev/null</title>
+    <title>git on &gt; /dev/null</title>
     <link>https://leoh0.github.io/tags/git/</link>
-    <description>Recent content in Git on &gt; /dev/null</description>
+    <description>Recent content in git on &gt; /dev/null</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 24 Apr 2019 08:55:44 +0900</lastBuildDate>

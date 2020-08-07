@@ -9,31 +9,24 @@
 	<meta name="msapplication-TileColor" content="#494f5c">
 <meta itemprop="name" content="k8s tools for watching log and login to multiple containers">
 <meta itemprop="description" content="k8s 사용하면서 개인 취향에 맞게 작성한 자작 스크립트 몇가지 소개해 드리려고 합니다.
-watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일일치다보니 불편했는데 kubetail이란 프로젝트가 있었습니다.
-덕분에 잘 쓰고 있었는데 인터페이스가 개인취향에 안맞아서 약간 수정해서 쓰고 있습니다.
-전반적으로 pod 선택 방법의 변경과 비슷한 이름으로 auto tailing 기능을 추가 했습니다.
+watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일일치다보니 불편했는데 kubetail이란 프로젝트가 있었습니다. 덕분에 잘 쓰고 있었는데 인터페이스가 개인취향에 안맞아서 약간 수정해서 쓰고 있습니다. 전반적으로 pod 선택 방법의 변경과 비슷한 이름으로 auto tailing 기능을 추가 했습니다.
 아래들이 대표적인 기능 입니다.
- 선택된것과 같은 pod들을 전체 log tailing 하고 변화가 있을시 auto reload 함">
-
-
+  선택된것과 같은 pod들을 전체 log tailing 하고 변화가 있을시 auto reload 함 (다만 예외적으로 안되는 케이스 들이 아직 있긴 합니다.">
 <meta itemprop="datePublished" content="2017-07-27T00:58:28&#43;09:00" />
 <meta itemprop="dateModified" content="2017-07-27T00:58:28&#43;09:00" />
-<meta itemprop="wordCount" content="385">
+<meta itemprop="wordCount" content="380">
+<meta itemprop="image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 
 
 
-<meta itemprop="keywords" content="kubernetes,k8s,tools,container," />
-<meta property="og:title" content="k8s tools for watching log and login to multiple containers" />
+<meta itemprop="keywords" content="kubernetes,k8s,tools,container," /><meta property="og:title" content="k8s tools for watching log and login to multiple containers" />
 <meta property="og:description" content="k8s 사용하면서 개인 취향에 맞게 작성한 자작 스크립트 몇가지 소개해 드리려고 합니다.
-watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일일치다보니 불편했는데 kubetail이란 프로젝트가 있었습니다.
-덕분에 잘 쓰고 있었는데 인터페이스가 개인취향에 안맞아서 약간 수정해서 쓰고 있습니다.
-전반적으로 pod 선택 방법의 변경과 비슷한 이름으로 auto tailing 기능을 추가 했습니다.
+watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일일치다보니 불편했는데 kubetail이란 프로젝트가 있었습니다. 덕분에 잘 쓰고 있었는데 인터페이스가 개인취향에 안맞아서 약간 수정해서 쓰고 있습니다. 전반적으로 pod 선택 방법의 변경과 비슷한 이름으로 auto tailing 기능을 추가 했습니다.
 아래들이 대표적인 기능 입니다.
- 선택된것과 같은 pod들을 전체 log tailing 하고 변화가 있을시 auto reload 함" />
+  선택된것과 같은 pod들을 전체 log tailing 하고 변화가 있을시 auto reload 함 (다만 예외적으로 안되는 케이스 들이 아직 있긴 합니다." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://leoh0.github.io/post/2017-07-27-k8s-tools-for-watching-log-and-login-multiple-containers/" />
-
-<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322" />
+<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 <meta property="article:published_time" content="2017-07-27T00:58:28+09:00" />
 <meta property="article:modified_time" content="2017-07-27T00:58:28+09:00" />
 <meta name="twitter:card" content="summary_large_image"/>
@@ -41,11 +34,9 @@ watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일�
 
 <meta name="twitter:title" content="k8s tools for watching log and login to multiple containers"/>
 <meta name="twitter:description" content="k8s 사용하면서 개인 취향에 맞게 작성한 자작 스크립트 몇가지 소개해 드리려고 합니다.
-watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일일치다보니 불편했는데 kubetail이란 프로젝트가 있었습니다.
-덕분에 잘 쓰고 있었는데 인터페이스가 개인취향에 안맞아서 약간 수정해서 쓰고 있습니다.
-전반적으로 pod 선택 방법의 변경과 비슷한 이름으로 auto tailing 기능을 추가 했습니다.
+watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일일치다보니 불편했는데 kubetail이란 프로젝트가 있었습니다. 덕분에 잘 쓰고 있었는데 인터페이스가 개인취향에 안맞아서 약간 수정해서 쓰고 있습니다. 전반적으로 pod 선택 방법의 변경과 비슷한 이름으로 auto tailing 기능을 추가 했습니다.
 아래들이 대표적인 기능 입니다.
- 선택된것과 같은 pod들을 전체 log tailing 하고 변화가 있을시 auto reload 함"/>
+  선택된것과 같은 pod들을 전체 log tailing 하고 변화가 있을시 auto reload 함 (다만 예외적으로 안되는 케이스 들이 아직 있긴 합니다."/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -55,28 +46,30 @@ watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일�
 	<link rel="shortcut icon" href="/favicon.ico">
 
 	<title>k8s tools for watching log and login to multiple containers</title>
-	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.cf317e8e759e34ff58587ff7fca05f8b77531a61ee8e63c887a46eb43ebad966.css" crossorigin="anonymous" integrity="sha256-zzF+jnWeNP9YWH/3/KBfi3dTGmHujmPIh6RutD662WY=">
+	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
 	
 	<link rel="stylesheet" href="https://leoh0.github.io/css/prism.css">
 </head>
 
 <body id="page">
 	
-	<header id="site-header" class="animated slideInUp faster">
+	<header id="site-header" class="animated slideInUp">
 		<div class="hdr-wrapper section-inner">
 			<div class="hdr-left">
 				<div class="site-branding">
 					<a href="https://leoh0.github.io/">&gt; /dev/null</a>
 				</div>
 				<nav class="site-nav hide-in-mobile">
-					<a href="https://leoh0.github.io/">Home</a>
-					<a href="https://leoh0.github.io/post/">Posts</a>
-					<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
-					<a href="https://leoh0.github.io/blog/">.</a>
+					
+				<a href="https://leoh0.github.io/">Home</a>
+				<a href="https://leoh0.github.io/post/">Posts</a>
+				<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
+				<a href="https://leoh0.github.io/blog/">.</a>
+
 				</nav>
 			</div>
 			<div class="hdr-right hdr-icons">
-				<span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+				<span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
 			</div>
 		</div>
 	</header>
@@ -93,94 +86,72 @@ watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일�
 	<main class="site-main section-inner thin animated fadeIn faster">
 		<h1>k8s tools for watching log and login to multiple containers</h1>
 		<div class="content">
-			
-
-<figure>
+			<figure>
     <img src="/images/showterm-2017-07-27-01-10-29.png"/> 
 </figure>
 
-
 <p>k8s 사용하면서 개인 취향에 맞게 작성한 자작 스크립트 몇가지 소개해 드리려고 합니다.</p>
-
 <h1 id="watching-log">watching log<a href="#watching-log" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-
-<p>k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일일치다보니 불편했는데 <code>kubetail</code>이란 프로젝트가 있었습니다.<br />
-덕분에 잘 쓰고 있었는데 인터페이스가 개인취향에 안맞아서 약간 수정해서 쓰고 있습니다.<br />
+<p>k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일일치다보니 불편했는데 <code>kubetail</code>이란 프로젝트가 있었습니다. <br>
+덕분에 잘 쓰고 있었는데 인터페이스가 개인취향에 안맞아서 약간 수정해서 쓰고 있습니다. <br>
 전반적으로 pod 선택 방법의 변경과 비슷한 이름으로 auto tailing 기능을 추가 했습니다.</p>
-
 <p>아래들이 대표적인 기능 입니다.</p>
-
 <ul>
-<li><p>선택된것과 같은 pod들을 전체 log tailing 하고 변화가 있을시 auto reload 함<br />
+<li>
+<p>선택된것과 같은 pod들을 전체 log tailing 하고 변화가 있을시 auto reload 함 <br>
 (다만 예외적으로 안되는 케이스 들이 아직 있긴 합니다..)</p>
-
-<pre><code class="language-bash">$ kt
-</code></pre>
-
-<ul>
-<li>자세한 영상은 <a href="http://showterm.io/df8a9f96e761012d3bb2c">여기</a>를 참고하시면 됩니다.<br />
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kt
+</code></pre></div><ul>
+<li>자세한 영상은 <a href="http://showterm.io/df8a9f96e761012d3bb2c">여기</a>를 참고하시면 됩니다. <br>
 <figure>
     <img src="/images/kt.gif"/> 
 </figure>
 </li>
-</ul></li>
-
-<li><p><code>-m</code> 옵션시 자신이 원하는 pod들을 선택해서 log tailing 함. 다만, auto reload는 지원 하지 않음</p>
-
-<pre><code class="language-bash">$ kt -m
-</code></pre>
-
-<ul>
-<li>자세한 영상은 <a href="http://showterm.io/f4ab6a8ed080700ece976">여기</a>를 참고하시면 됩니다.<br />
+</ul>
+</li>
+<li>
+<p><code>-m</code> 옵션시 자신이 원하는 pod들을 선택해서 log tailing 함. 다만, auto reload는 지원 하지 않음</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kt -m
+</code></pre></div><ul>
+<li>자세한 영상은 <a href="http://showterm.io/f4ab6a8ed080700ece976">여기</a>를 참고하시면 됩니다. <br>
 <figure>
     <img src="/images/ktm.gif"/> 
 </figure>
 </li>
-</ul></li>
-
-<li><p><code>-l</code> 옵션시 선택한 pod의 전체 로그를 본다. fzf를 이용해서 log를 탐색 한다.</p>
-
-<pre><code class="language-bash">$ kt -l
-</code></pre>
-
-<ul>
-<li>자세한 영상은 <a href="http://showterm.io/6381c317d2e42920c0227">여기</a>를 참고하시면 됩니다.<br />
+</ul>
+</li>
+<li>
+<p><code>-l</code> 옵션시 선택한 pod의 전체 로그를 본다. fzf를 이용해서 log를 탐색 한다.</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ kt -l
+</code></pre></div><ul>
+<li>자세한 영상은 <a href="http://showterm.io/6381c317d2e42920c0227">여기</a>를 참고하시면 됩니다. <br>
 <figure>
     <img src="/images/ktl.gif"/> 
 </figure>
 </li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p>준비물은 아래와 같습니다.</p>
-
 <ul>
-<li><p><strong>fzf</strong></p>
-
-<pre><code class="language-bash">$ brew install fzf
-</code></pre></li>
-
-<li><p><strong>kubectl</strong></p>
-
+<li>
+<p><strong>fzf</strong></p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ brew install fzf
+</code></pre></div></li>
+<li>
+<p><strong>kubectl</strong></p>
 <ul>
 <li><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">https://kubernetes.io/docs/tasks/tools/install-kubectl/</a></li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p>설치 방법은 아래와 같습니다.</p>
-
-<pre><code class="language-bash">$ brew tap leoh0/kt &amp;&amp; brew install kt
-</code></pre>
-
-<p>code는 아래에서 확인 가능합니다.</p>
-
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ brew tap leoh0/kt &amp;&amp; brew install kt
+</code></pre></div><p>code는 아래에서 확인 가능합니다.</p>
 <p><a href="https://github.com/leoh0/kt">https://github.com/leoh0/kt</a></p>
-
 <h1 id="login-container">login container<a href="#login-container" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-
 <p>pod들 여러개에 동시에 login(bash, sh등) 하여 shell command를 사용하고 싶어서
 기존의 cssh 같은 비슷한 메커니즘으로 스크립트 작성해서 사용하고 있습니다.</p>
-
 <ul>
 <li>아래는 사용 영상입니다. 자세한 영상은 <a href="http://showterm.io/c58f9999d3ee6db03aa81">여기</a>를 참고하시면 됩니다.
 <figure>
@@ -188,52 +159,45 @@ watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일�
 </figure>
 </li>
 </ul>
-
 <p>설치 방법은 아래와 같이 rc나 profile에 등록해서 사용하시면 됩니다.</p>
-
-<pre><code class="language-bash">curl -s 'https://gist.githubusercontent.com/leoh0/'\
-'c47dca1c98f998f0d0884c3560afac54/raw/'\
-'1e1e9fb085d2c1a94293ae87e3922519d8342adb/k8s_login.sh' | \
-    tee -a ~/.bash_profile &amp;&amp; source ~/.bash_profile
-</code></pre>
-
-<p>아래는 전체 소스입니다.
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -s <span style="color:#0ff;font-weight:bold">&#39;https://gist.githubusercontent.com/leoh0/&#39;</span><span style="color:#0ff;font-weight:bold">\
+</span><span style="color:#0ff;font-weight:bold"></span><span style="color:#0ff;font-weight:bold">&#39;c47dca1c98f998f0d0884c3560afac54/raw/&#39;</span><span style="color:#0ff;font-weight:bold">\
+</span><span style="color:#0ff;font-weight:bold"></span><span style="color:#0ff;font-weight:bold">&#39;1e1e9fb085d2c1a94293ae87e3922519d8342adb/k8s_login.sh&#39;</span> | <span style="color:#0ff;font-weight:bold">\
+</span><span style="color:#0ff;font-weight:bold"></span>    tee -a ~/.bash_profile &amp;&amp; <span style="color:#fff;font-weight:bold">source</span> ~/.bash_profile
+</code></pre></div><p>아래는 전체 소스입니다.
 <a href="https://gist.github.com/leoh0/c47dca1c98f998f0d0884c3560afac54">https://gist.github.com/leoh0/c47dca1c98f998f0d0884c3560afac54</a></p>
-
-<pre><code class="language-bash">function kl() {
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#fff;font-weight:bold">function</span> kl() {
   chkcommand() {
-    command -v $1 &gt;/dev/null 2&gt;&amp;1 || { echo &gt;&amp;2 &quot;Plz install $1 first. Aborting.&quot;; return 1; }
+    <span style="color:#fff;font-weight:bold">command</span> -v $1 &gt;/dev/null 2&gt;&amp;<span style="color:#ff0;font-weight:bold">1</span> || { <span style="color:#fff;font-weight:bold">echo</span> &gt;&amp;<span style="color:#ff0;font-weight:bold">2</span> <span style="color:#0ff;font-weight:bold">&#34;Plz install </span>$1<span style="color:#0ff;font-weight:bold"> first. Aborting.&#34;</span>; <span style="color:#fff;font-weight:bold">return</span> 1; }
   }
-  chkcommand fzf || return 1
-  chkcommand tmux || return 1
-  chkcommand kubectl || return 1
+  chkcommand fzf || <span style="color:#fff;font-weight:bold">return</span> <span style="color:#ff0;font-weight:bold">1</span>
+  chkcommand tmux || <span style="color:#fff;font-weight:bold">return</span> <span style="color:#ff0;font-weight:bold">1</span>
+  chkcommand kubectl || <span style="color:#fff;font-weight:bold">return</span> <span style="color:#ff0;font-weight:bold">1</span>
 
-  pods=$(kubectl get pods --all-namespaces | sed '1d' | fzf -x -m -e +s --reverse --bind=left:page-up,right:page-down --no-mouse | awk '{print $1&quot;,&quot;$2}');
-  if [[ $pods != &quot;&quot; ]]; then
-      init=&quot;true&quot;
-      tmuxname=k8s-ns-$(date +%s)
-      tmux kill-session -t $tmuxname &gt; /dev/null 2&gt; /dev/null || true
-      while read line ;do
-        NS=$(echo $line | cut -d',' -f1)
-        NAME=$(echo $line | cut -d',' -f2)
-        connect=&quot;kubectl exec -ti $NAME -n $NS -- bash || kubectl exec -ti $NAME -n $NS -- sh &quot;
-        tmux new-session -d -s $tmuxname &quot;export KUBECONFIG=${KUBECONFIG}; $connect&quot;
-        if [ &quot;${init}&quot; == &quot;true&quot; ]; then
-          if (( $(tmux ls 2&gt; /dev/null | grep &quot;${tmuxname}&quot; | wc -l) &gt; 0 )) ; then
-            init=&quot;false&quot;
-          fi
-        else
-          tmux split-window -t &quot;${tmuxname}&quot; &quot;${connect}&quot; &amp;&amp; \
-          tmux select-layout -t &quot;${tmuxname}&quot; &quot;tiled&quot;
-        fi
-      done &lt;&lt;&lt; &quot;$pods&quot;
-      tmux set-window-option -t &quot;${tmuxname}&quot; synchronize-panes on
+  pods=<span style="color:#fff;font-weight:bold">$(</span>kubectl get pods --all-namespaces | sed <span style="color:#0ff;font-weight:bold">&#39;1d&#39;</span> | fzf -x -m -e +s --reverse --bind=left:page-up,right:page-down --no-mouse | awk <span style="color:#0ff;font-weight:bold">&#39;{print $1&#34;,&#34;$2}&#39;</span><span style="color:#fff;font-weight:bold">)</span>;
+  <span style="color:#fff;font-weight:bold">if</span> [[ $pods != <span style="color:#0ff;font-weight:bold">&#34;&#34;</span> ]]; <span style="color:#fff;font-weight:bold">then</span>
+      init=<span style="color:#0ff;font-weight:bold">&#34;true&#34;</span>
+      tmuxname=k8s-ns-<span style="color:#fff;font-weight:bold">$(</span>date +%s<span style="color:#fff;font-weight:bold">)</span>
+      tmux kill-session -t $tmuxname &gt; /dev/null 2&gt; /dev/null || <span style="color:#fff;font-weight:bold">true</span>
+      <span style="color:#fff;font-weight:bold">while</span> <span style="color:#fff;font-weight:bold">read</span> line ;<span style="color:#fff;font-weight:bold">do</span>
+        NS=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> $line | cut -d<span style="color:#0ff;font-weight:bold">&#39;,&#39;</span> -f1<span style="color:#fff;font-weight:bold">)</span>
+        NAME=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> $line | cut -d<span style="color:#0ff;font-weight:bold">&#39;,&#39;</span> -f2<span style="color:#fff;font-weight:bold">)</span>
+        connect=<span style="color:#0ff;font-weight:bold">&#34;kubectl exec -ti </span>$NAME<span style="color:#0ff;font-weight:bold"> -n </span>$NS<span style="color:#0ff;font-weight:bold"> -- bash || kubectl exec -ti </span>$NAME<span style="color:#0ff;font-weight:bold"> -n </span>$NS<span style="color:#0ff;font-weight:bold"> -- sh &#34;</span>
+        tmux new-session -d -s $tmuxname <span style="color:#0ff;font-weight:bold">&#34;export KUBECONFIG=</span><span style="color:#0ff;font-weight:bold">${</span>KUBECONFIG<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">; </span>$connect<span style="color:#0ff;font-weight:bold">&#34;</span>
+        <span style="color:#fff;font-weight:bold">if</span> [ <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>init<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span> == <span style="color:#0ff;font-weight:bold">&#34;true&#34;</span> ]; <span style="color:#fff;font-weight:bold">then</span>
+          <span style="color:#fff;font-weight:bold">if</span> (( <span style="color:#fff;font-weight:bold">$(</span>tmux ls 2&gt; /dev/null | grep <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>tmuxname<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span> | wc -l<span style="color:#fff;font-weight:bold">)</span> &gt; <span style="color:#ff0;font-weight:bold">0</span> )) ; <span style="color:#fff;font-weight:bold">then</span>
+            init=<span style="color:#0ff;font-weight:bold">&#34;false&#34;</span>
+          <span style="color:#fff;font-weight:bold">fi</span>
+        <span style="color:#fff;font-weight:bold">else</span>
+          tmux split-window -t <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>tmuxname<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span> <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>connect<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span> &amp;&amp; <span style="color:#0ff;font-weight:bold">\
+</span><span style="color:#0ff;font-weight:bold"></span>          tmux <span style="color:#fff;font-weight:bold">select</span>-layout -t <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>tmuxname<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span> <span style="color:#0ff;font-weight:bold">&#34;tiled&#34;</span>
+        <span style="color:#fff;font-weight:bold">fi</span>
+      <span style="color:#fff;font-weight:bold">done</span> &lt;&lt;&lt; <span style="color:#0ff;font-weight:bold">&#34;</span>$pods<span style="color:#0ff;font-weight:bold">&#34;</span>
+      tmux set-window-option -t <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#0ff;font-weight:bold">${</span>tmuxname<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">&#34;</span> synchronize-panes on
       tmux -2 a -t $tmuxname
-  fi
+  <span style="color:#fff;font-weight:bold">fi</span>
 }
-</code></pre>
-
-<p>참고: <a href="https://github.com/johanhaleby/kubetail">original kubetail</a></p>
+</code></pre></div><p>참고: <a href="https://github.com/johanhaleby/kubetail">original kubetail</a></p>
 
 		</div>
 		<div id="comments" class="thin">
@@ -263,15 +227,16 @@ watching log k8s 에서 pod들의 로그 볼일 들이 많다보니 command 일�
 	</main>
 
 	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
-		<script src="/js/prism.js"></script>
-		<p>&copy; 2019 <a href="https://leoh0.github.io/"></a></p>
+		<p>&copy; 2020 <a href="https://leoh0.github.io/"></a></p>
 		<p>
-			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/post/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
 		</p>
 	</footer>
 
 
-	<script src="https://leoh0.github.io/js/main.min.784417f5847151f848c339cf0acb13a06cbb648b1483435a28ed4556c4ead69b.js" integrity="sha256-eEQX9YRxUfhIwznPCssToGy7ZIsUg0NaKO1FVsTq1ps="></script>
+
+	<script src="https://leoh0.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
 <script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {

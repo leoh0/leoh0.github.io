@@ -8,35 +8,32 @@
 	<meta name="theme-color" content="#494f5c">
 	<meta name="msapplication-TileColor" content="#494f5c">
 <meta itemprop="name" content="how to make unofficial kubernetes pdf documents">
-<meta itemprop="description" content="kubernetes   download pdf 왜? 밖에서 심심할때 종이로 출력해서 문서를 좀 더 봐야겠다는 생각에 pdf 버전을 구해보려고 했으나. 우선 k8s webpage를 관리하는 website프로젝트에서 아래와 같이 지원을 안한다고 딱잘라서 이야기 하는것을 찾았다.
+<meta itemprop="description" content="kubernetes   download pdf  왜? 밖에서 심심할때 종이로 출력해서 문서를 좀 더 봐야겠다는 생각에 pdf 버전을 구해보려고 했으나. 우선 k8s webpage를 관리하는 website프로젝트에서 아래와 같이 지원을 안한다고 딱잘라서 이야기 하는것을 찾았다.
  &hellip; we don&rsquo;t plan to make PDFs available.
  그리고 마땅히 검색했을때 방법이 없기에 만들어야 겠다고 생각했다.
 어떻게 할까? 외부의 웹사이트를 pdf 로 출력하는 방법들은 여러가지가 있다 그냥 웹 주소를 넣으면 바로 pdf 로 변환해 주는 솔루션이나 사이트들도 많다.">
-
-
 <meta itemprop="datePublished" content="2017-10-23T21:21:47&#43;09:00" />
 <meta itemprop="dateModified" content="2017-10-23T21:21:47&#43;09:00" />
 <meta itemprop="wordCount" content="435">
+<meta itemprop="image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 
 
 
-<meta itemprop="keywords" content="kubernetes,k8s,document,1.8,pdfmerge,jekyll,chrome,headless,pdf,unofficial," />
-<meta property="og:title" content="how to make unofficial kubernetes pdf documents" />
-<meta property="og:description" content="kubernetes   download pdf 왜? 밖에서 심심할때 종이로 출력해서 문서를 좀 더 봐야겠다는 생각에 pdf 버전을 구해보려고 했으나. 우선 k8s webpage를 관리하는 website프로젝트에서 아래와 같이 지원을 안한다고 딱잘라서 이야기 하는것을 찾았다.
+<meta itemprop="keywords" content="kubernetes,k8s,document,1.8,pdfmerge,jekyll,chrome,headless,pdf,unofficial," /><meta property="og:title" content="how to make unofficial kubernetes pdf documents" />
+<meta property="og:description" content="kubernetes   download pdf  왜? 밖에서 심심할때 종이로 출력해서 문서를 좀 더 봐야겠다는 생각에 pdf 버전을 구해보려고 했으나. 우선 k8s webpage를 관리하는 website프로젝트에서 아래와 같이 지원을 안한다고 딱잘라서 이야기 하는것을 찾았다.
  &hellip; we don&rsquo;t plan to make PDFs available.
  그리고 마땅히 검색했을때 방법이 없기에 만들어야 겠다고 생각했다.
 어떻게 할까? 외부의 웹사이트를 pdf 로 출력하는 방법들은 여러가지가 있다 그냥 웹 주소를 넣으면 바로 pdf 로 변환해 주는 솔루션이나 사이트들도 많다." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://leoh0.github.io/post/2017-10-23-how-to-make-unofficial-kubernetes-pdf-documents/" />
-
-<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322" />
+<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 <meta property="article:published_time" content="2017-10-23T21:21:47+09:00" />
 <meta property="article:modified_time" content="2017-10-23T21:21:47+09:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 
 <meta name="twitter:title" content="how to make unofficial kubernetes pdf documents"/>
-<meta name="twitter:description" content="kubernetes   download pdf 왜? 밖에서 심심할때 종이로 출력해서 문서를 좀 더 봐야겠다는 생각에 pdf 버전을 구해보려고 했으나. 우선 k8s webpage를 관리하는 website프로젝트에서 아래와 같이 지원을 안한다고 딱잘라서 이야기 하는것을 찾았다.
+<meta name="twitter:description" content="kubernetes   download pdf  왜? 밖에서 심심할때 종이로 출력해서 문서를 좀 더 봐야겠다는 생각에 pdf 버전을 구해보려고 했으나. 우선 k8s webpage를 관리하는 website프로젝트에서 아래와 같이 지원을 안한다고 딱잘라서 이야기 하는것을 찾았다.
  &hellip; we don&rsquo;t plan to make PDFs available.
  그리고 마땅히 검색했을때 방법이 없기에 만들어야 겠다고 생각했다.
 어떻게 할까? 외부의 웹사이트를 pdf 로 출력하는 방법들은 여러가지가 있다 그냥 웹 주소를 넣으면 바로 pdf 로 변환해 주는 솔루션이나 사이트들도 많다."/>
@@ -49,28 +46,30 @@
 	<link rel="shortcut icon" href="/favicon.ico">
 
 	<title>how to make unofficial kubernetes pdf documents</title>
-	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.cf317e8e759e34ff58587ff7fca05f8b77531a61ee8e63c887a46eb43ebad966.css" crossorigin="anonymous" integrity="sha256-zzF+jnWeNP9YWH/3/KBfi3dTGmHujmPIh6RutD662WY=">
+	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
 	
 	<link rel="stylesheet" href="https://leoh0.github.io/css/prism.css">
 </head>
 
 <body id="page">
 	
-	<header id="site-header" class="animated slideInUp faster">
+	<header id="site-header" class="animated slideInUp">
 		<div class="hdr-wrapper section-inner">
 			<div class="hdr-left">
 				<div class="site-branding">
 					<a href="https://leoh0.github.io/">&gt; /dev/null</a>
 				</div>
 				<nav class="site-nav hide-in-mobile">
-					<a href="https://leoh0.github.io/">Home</a>
-					<a href="https://leoh0.github.io/post/">Posts</a>
-					<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
-					<a href="https://leoh0.github.io/blog/">.</a>
+					
+				<a href="https://leoh0.github.io/">Home</a>
+				<a href="https://leoh0.github.io/post/">Posts</a>
+				<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
+				<a href="https://leoh0.github.io/blog/">.</a>
+
 				</nav>
 			</div>
 			<div class="hdr-right hdr-icons">
-				<span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+				<span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
 			</div>
 		</div>
 	</header>
@@ -87,65 +86,39 @@
 	<main class="site-main section-inner thin animated fadeIn faster">
 		<h1>how to make unofficial kubernetes pdf documents</h1>
 		<div class="content">
-			
-
-<figure>
+			<figure>
     <img src="/images/kubernetes-production-grade-container-orchestration.png"/> <figcaption>
             <h4>kubernetes</h4>
         </figcaption>
 </figure>
 
-
-<h3 id="download-pdf-images-kubernetes-documents-pdf"><a href="/images/kubernetes-documents.pdf">download pdf</a><a href="#download-pdf-images-kubernetes-documents-pdf" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
-<hr />
-
+<h3 id="download-pdfimageskubernetes-documentspdf"><a href="/images/kubernetes-documents.pdf">download pdf</a><a href="#download-pdfimageskubernetes-documentspdf" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<hr>
 <h3 id="왜">왜?<a href="#왜" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
 <p>밖에서 심심할때 종이로 출력해서 문서를 좀 더 봐야겠다는 생각에 <code>pdf</code> 버전을 구해보려고 했으나. 우선 k8s webpage를 관리하는 <a href="https://github.com/kubernetes/website">website</a>프로젝트에서 아래와 같이 <a href="https://github.com/kubernetes/website/issues/666#issuecomment-271741289">지원을 안한다고 딱잘라서 이야기</a> 하는것을 찾았다.</p>
-
 <blockquote>
 <p>&hellip; we don&rsquo;t plan to make PDFs available.</p>
 </blockquote>
-
 <p>그리고 마땅히 검색했을때 방법이 없기에 만들어야 겠다고 생각했다.</p>
-
 <h3 id="어떻게-할까">어떻게 할까?<a href="#어떻게-할까" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
 <p>외부의 웹사이트를 pdf 로 출력하는 방법들은 여러가지가 있다 그냥 웹 주소를 넣으면 바로 pdf 로 변환해 주는 솔루션이나 사이트들도 많다.(물론 단일 페이지만 렌더링 한다.)</p>
-
 <p>하지만 이럴 경우 footer 와 같이 pdf 로 볼때 불 필요한 부분들이 너무 많아서 좋지 않다. 그래서 이번에 진행할때는 그냥 실제 코드에서 필요없는 부분들을 제거해서 렌더링 시키는 방법으로 하기로 했다.</p>
-
 <p><em>물론 web client를 패치하는 방법이나 adblock 등으로 특정 구문들을 제거하는 방법들도 있으나 지금 방법보다 더 손이 많이 갈것 같았다..</em></p>
-
 <h3 id="준비-환경">준비 환경<a href="#준비-환경" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
 <p>우선 레포지토리를 받아서 stable중 가장 최신인 1.8버전으로 체크아웃 한다.</p>
-
 <pre><code>$ git clone https://github.com/kubernetes/website
 $ cd website
 $ git checkout release-1.8
-</code></pre>
-
-<p>jekyll project이니 Gemfile로 디펜던시를 인스톨한다.</p>
-
+</code></pre><p>jekyll project이니 Gemfile로 디펜던시를 인스톨한다.</p>
 <pre><code>$ bundle install
-</code></pre>
-
-<p>이후 build 해서 md 파일들을 html 로 빌드 한다.</p>
-
+</code></pre><p>이후 build 해서 md 파일들을 html 로 빌드 한다.</p>
 <pre><code>$ make build
-</code></pre>
-
-<h3 id="어떤-페이지들을-pdf로-출력할까">어떤 페이지들을 pdf로 출력할까?<a href="#어떤-페이지들을-pdf로-출력할까" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
+</code></pre><h3 id="어떤-페이지들을-pdf로-출력할까">어떤 페이지들을 pdf로 출력할까?<a href="#어떤-페이지들을-pdf로-출력할까" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p>아래와 같이 왼쪽 도큐먼트 리스트들 기준으로 출력하고자 해당 페이지만 아래와 같은 스크립트로 추출했다.
 여기에 아무래도 api spec과 같은 양이 많은 reference 를 제외하고, 또 포맷이 안맞는 외부링크 제외한 페이지를 필터링 했다.</p>
-
 <figure>
     <img src="/images/k8sdocstoc.png"/> 
 </figure>
-
 
 <pre><code>$ cd _site/docs/
 $ cat home/index.html setup/index.html concepts/index.html \
@@ -167,23 +140,13 @@ uniq | cut -d'&quot;' -f6
 /docs/setup/independent/create-cluster-kubeadm/
 /docs/getting-started-guides/scratch/
 ...
-</code></pre>
-
-<h3 id="출력시키지-않을-부분들을-지우기">출력시키지 않을 부분들을 지우기<a href="#출력시키지-않을-부분들을-지우기" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
+</code></pre><h3 id="출력시키지-않을-부분들을-지우기">출력시키지 않을 부분들을 지우기<a href="#출력시키지-않을-부분들을-지우기" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p>아래와 같이 layout에서 출력시키기 싫은 부분들을 다 지웠다. 기존코드와 비교해 보면 한눈에 알 수 있을 것이다.</p>
-
 <p><a href="https://github.com/leoh0/website/commit/6bde83fce7174f106eb63bbf98af6aacf2a2b0c4">변경된 코드</a></p>
-
 <p>물론 이후에 다시 빌드 한다.</p>
-
 <pre><code>$ make build
-</code></pre>
-
-<h3 id="여기에-웹페이지-들을-pdf-화-하기">여기에 웹페이지 들을 pdf 화 하기<a href="#여기에-웹페이지-들을-pdf-화-하기" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
+</code></pre><h3 id="여기에-웹페이지-들을-pdf-화-하기">여기에 웹페이지 들을 pdf 화 하기<a href="#여기에-웹페이지-들을-pdf-화-하기" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p>우선 출력을 위해서 서버를 띄운다.</p>
-
 <pre><code>$ make serve
 bundle exec jekyll serve
 Configuration file: /Users/al/Projects/k8s/website/_config.yml
@@ -198,10 +161,7 @@ Configuration file: /Users/al/Projects/k8s/website/_config.yml
     Server address: http://127.0.0.1:4000/
   Server running... press ctrl-c to stop.
 ...
-</code></pre>
-
-<p>그리고 여러가지 방법이 있겠지만 chrome이 깔려있으면 가장 간단할 headless로 pdf 로 출력 시킨다. 아래의 list는 위의 url들 리스트 이다.</p>
-
+</code></pre><p>그리고 여러가지 방법이 있겠지만 chrome이 깔려있으면 가장 간단할 headless로 pdf 로 출력 시킨다. 아래의 list는 위의 url들 리스트 이다.</p>
 <pre><code>$ alias chrome=&quot;/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome&quot;
 
 $ for url in $(cat list); do
@@ -211,28 +171,18 @@ $ for url in $(cat list); do
   chrome --headless --disable-gpu --print-to-pdf=$file http://localhost:4000$url
 done
 
-</code></pre>
-
-<p>위와 같이하면 각 항목들의 url들이 pdf 화 된다.</p>
-
+</code></pre><p>위와 같이하면 각 항목들의 url들이 pdf 화 된다.</p>
 <h3 id="pdf-는-어떻게-합치지">pdf 는 어떻게 합치지?<a href="#pdf-는-어떻게-합치지" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
 <p>py27 기준으로 pdfmerge 를 쓰면 간편하다.
 아래와 같이 커맨드로 합치면 된다.</p>
-
 <pre><code>$ pip install pdfmerge
 $ pdfmerge -o output.pdf home-.pdf \
 tasks-debug-application-cluster-troubleshooting-.pdf \
 home-contribute-create-pull-request-.pdf \
 ...
-</code></pre>
-
-<h3 id="결론">결론<a href="#결론" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
+</code></pre><h3 id="결론">결론<a href="#결론" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p>이 과정을 거쳐서 pdf를 만들어 보면 왜 pdf를 지원하지 않는지 알게된다.</p>
-
 <p>왜냐하면 나온결과가 1818 페이지의 pdf 이기 때문이다.</p>
-
 <p>그래서 결론적으로 그냥 website에서 보는게 나은 것 같다.</p>
 
 		</div>
@@ -263,15 +213,16 @@ home-contribute-create-pull-request-.pdf \
 	</main>
 
 	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
-		<script src="/js/prism.js"></script>
-		<p>&copy; 2019 <a href="https://leoh0.github.io/"></a></p>
+		<p>&copy; 2020 <a href="https://leoh0.github.io/"></a></p>
 		<p>
-			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/post/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
 		</p>
 	</footer>
 
 
-	<script src="https://leoh0.github.io/js/main.min.784417f5847151f848c339cf0acb13a06cbb648b1483435a28ed4556c4ead69b.js" integrity="sha256-eEQX9YRxUfhIwznPCssToGy7ZIsUg0NaKO1FVsTq1ps="></script>
+
+	<script src="https://leoh0.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
 <script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {

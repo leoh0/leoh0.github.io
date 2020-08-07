@@ -10,24 +10,21 @@
 <meta itemprop="name" content="make l2 network for vm without neutron">
 <meta itemprop="description" content="우선 아래와 같은 컨피그를 이용할때..
 nova  linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver  neutron  type_drivers = vlan mechanism_drivers = openvswitch firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver  1. 기본 상태: 우선 실제 물리 머신에 아래와 같이 vm을 위한 ethernet인 eth1이 존재한다.
-  변수 생성 vmuuid=9ee8db25-6a13-4ca8-8a4e-495db24492ca vlan=2001 localvlan=1 ip=$(nova show $vmuuid | grep &#39; network&#39; | awk &#39;{print $5}&#39;) interfaceid=$(neutron port-list | grep &quot;\&quot;$ip\&quot;&quot; | awk &#39;{print $2}&#39;) mac=$(neutron port-list | grep &quot;\&quot;$ip\&quot;&quot; | awk &#39;{print $5}&#39;) ovsid=${interfaceid:0:11}  2.">
-
-
+  변수 생성 vmuuid=9ee8db25-6a13-4ca8-8a4e-495db24492ca vlan=2001 localvlan=1 ip=$(nova show $vmuuid | grep &#39; network&#39; | awk &#39;{print $5}&#39;) interfaceid=$(neutron port-list | grep &#34;\&#34;$ip\&#34;&#34; | awk &#39;{print $2}&#39;) mac=$(neutron port-list | grep &#34;\&#34;$ip\&#34;&#34; | awk &#39;{print $5}&#39;) ovsid=${interfaceid:0:11} 2.">
 <meta itemprop="datePublished" content="2015-02-02T09:20:23&#43;09:00" />
 <meta itemprop="dateModified" content="2015-02-02T09:20:23&#43;09:00" />
 <meta itemprop="wordCount" content="441">
+<meta itemprop="image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 
 
 
-<meta itemprop="keywords" content="openstack,neutron,ovs,openvswitch," />
-<meta property="og:title" content="make l2 network for vm without neutron" />
+<meta itemprop="keywords" content="openstack,neutron,ovs,openvswitch," /><meta property="og:title" content="make l2 network for vm without neutron" />
 <meta property="og:description" content="우선 아래와 같은 컨피그를 이용할때..
 nova  linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver  neutron  type_drivers = vlan mechanism_drivers = openvswitch firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver  1. 기본 상태: 우선 실제 물리 머신에 아래와 같이 vm을 위한 ethernet인 eth1이 존재한다.
-  변수 생성 vmuuid=9ee8db25-6a13-4ca8-8a4e-495db24492ca vlan=2001 localvlan=1 ip=$(nova show $vmuuid | grep &#39; network&#39; | awk &#39;{print $5}&#39;) interfaceid=$(neutron port-list | grep &quot;\&quot;$ip\&quot;&quot; | awk &#39;{print $2}&#39;) mac=$(neutron port-list | grep &quot;\&quot;$ip\&quot;&quot; | awk &#39;{print $5}&#39;) ovsid=${interfaceid:0:11}  2." />
+  변수 생성 vmuuid=9ee8db25-6a13-4ca8-8a4e-495db24492ca vlan=2001 localvlan=1 ip=$(nova show $vmuuid | grep &#39; network&#39; | awk &#39;{print $5}&#39;) interfaceid=$(neutron port-list | grep &#34;\&#34;$ip\&#34;&#34; | awk &#39;{print $2}&#39;) mac=$(neutron port-list | grep &#34;\&#34;$ip\&#34;&#34; | awk &#39;{print $5}&#39;) ovsid=${interfaceid:0:11} 2." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://leoh0.github.io/post/2015-02-02-make-l2-network-for-vm-without-neutron/" />
-
-<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322" />
+<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 <meta property="article:published_time" content="2015-02-02T09:20:23+09:00" />
 <meta property="article:modified_time" content="2015-02-02T09:20:23+09:00" />
 <meta name="twitter:card" content="summary_large_image"/>
@@ -36,7 +33,7 @@ nova  linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver
 <meta name="twitter:title" content="make l2 network for vm without neutron"/>
 <meta name="twitter:description" content="우선 아래와 같은 컨피그를 이용할때..
 nova  linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver  neutron  type_drivers = vlan mechanism_drivers = openvswitch firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver  1. 기본 상태: 우선 실제 물리 머신에 아래와 같이 vm을 위한 ethernet인 eth1이 존재한다.
-  변수 생성 vmuuid=9ee8db25-6a13-4ca8-8a4e-495db24492ca vlan=2001 localvlan=1 ip=$(nova show $vmuuid | grep &#39; network&#39; | awk &#39;{print $5}&#39;) interfaceid=$(neutron port-list | grep &quot;\&quot;$ip\&quot;&quot; | awk &#39;{print $2}&#39;) mac=$(neutron port-list | grep &quot;\&quot;$ip\&quot;&quot; | awk &#39;{print $5}&#39;) ovsid=${interfaceid:0:11}  2."/>
+  변수 생성 vmuuid=9ee8db25-6a13-4ca8-8a4e-495db24492ca vlan=2001 localvlan=1 ip=$(nova show $vmuuid | grep &#39; network&#39; | awk &#39;{print $5}&#39;) interfaceid=$(neutron port-list | grep &#34;\&#34;$ip\&#34;&#34; | awk &#39;{print $2}&#39;) mac=$(neutron port-list | grep &#34;\&#34;$ip\&#34;&#34; | awk &#39;{print $5}&#39;) ovsid=${interfaceid:0:11} 2."/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -46,28 +43,30 @@ nova  linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver
 	<link rel="shortcut icon" href="/favicon.ico">
 
 	<title>make l2 network for vm without neutron</title>
-	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.cf317e8e759e34ff58587ff7fca05f8b77531a61ee8e63c887a46eb43ebad966.css" crossorigin="anonymous" integrity="sha256-zzF+jnWeNP9YWH/3/KBfi3dTGmHujmPIh6RutD662WY=">
+	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
 	
 	<link rel="stylesheet" href="https://leoh0.github.io/css/prism.css">
 </head>
 
 <body id="page">
 	
-	<header id="site-header" class="animated slideInUp faster">
+	<header id="site-header" class="animated slideInUp">
 		<div class="hdr-wrapper section-inner">
 			<div class="hdr-left">
 				<div class="site-branding">
 					<a href="https://leoh0.github.io/">&gt; /dev/null</a>
 				</div>
 				<nav class="site-nav hide-in-mobile">
-					<a href="https://leoh0.github.io/">Home</a>
-					<a href="https://leoh0.github.io/post/">Posts</a>
-					<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
-					<a href="https://leoh0.github.io/blog/">.</a>
+					
+				<a href="https://leoh0.github.io/">Home</a>
+				<a href="https://leoh0.github.io/post/">Posts</a>
+				<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
+				<a href="https://leoh0.github.io/blog/">.</a>
+
 				</nav>
 			</div>
 			<div class="hdr-right hdr-icons">
-				<span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+				<span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
 			</div>
 		</div>
 	</header>
@@ -84,151 +83,106 @@ nova  linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver
 	<main class="site-main section-inner thin animated fadeIn faster">
 		<h1>make l2 network for vm without neutron</h1>
 		<div class="content">
-			
-
-<p>우선 아래와 같은 컨피그를 이용할때..</p>
-
-<h2 id="nova">nova<a href="#nova" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
+			<p>우선 아래와 같은 컨피그를 이용할때..</p>
+<h2 id="nova-">nova<a href="#nova-" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <ul>
 <li>linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver</li>
 </ul>
-
-<h2 id="neutron">neutron<a href="#neutron" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
+<h2 id="neutron-">neutron<a href="#neutron-" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <ul>
 <li>type_drivers = vlan</li>
 <li>mechanism_drivers = openvswitch</li>
 <li>firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</li>
 </ul>
-
 <h2 id="1-기본-상태">1. 기본 상태:<a href="#1-기본-상태" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
 <p>우선 실제 물리 머신에 아래와 같이 vm을 위한 ethernet인 eth1이 존재한다.</p>
-
 <figure>
     <img src="/images/neutron-nova-network-1.jpg"/> 
 </figure>
 
-
 <h3 id="변수-생성">변수 생성<a href="#변수-생성" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
-<pre><code class="language-bash">vmuuid=9ee8db25-6a13-4ca8-8a4e-495db24492ca
-vlan=2001
-localvlan=1
-ip=$(nova show $vmuuid | grep ' network' | awk '{print $5}')
-interfaceid=$(neutron port-list | grep &quot;\&quot;$ip\&quot;&quot; | awk '{print $2}')
-mac=$(neutron port-list | grep &quot;\&quot;$ip\&quot;&quot; | awk '{print $5}')
-ovsid=${interfaceid:0:11}
-</code></pre>
-
-<h2 id="2-유저-생성-단계">2. 유저 생성 단계:<a href="#2-유저-생성-단계" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vmuuid=9ee8db25-6a13-4ca8-8a4e-495db24492ca
+vlan=<span style="color:#ff0;font-weight:bold">2001</span>
+localvlan=<span style="color:#ff0;font-weight:bold">1</span>
+ip=<span style="color:#fff;font-weight:bold">$(</span>nova show $vmuuid | grep <span style="color:#0ff;font-weight:bold">&#39; network&#39;</span> | awk <span style="color:#0ff;font-weight:bold">&#39;{print $5}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
+interfaceid=<span style="color:#fff;font-weight:bold">$(</span>neutron port-list | grep <span style="color:#0ff;font-weight:bold">&#34;\&#34;</span>$ip<span style="color:#0ff;font-weight:bold">\&#34;&#34;</span> | awk <span style="color:#0ff;font-weight:bold">&#39;{print $2}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
+mac=<span style="color:#fff;font-weight:bold">$(</span>neutron port-list | grep <span style="color:#0ff;font-weight:bold">&#34;\&#34;</span>$ip<span style="color:#0ff;font-weight:bold">\&#34;&#34;</span> | awk <span style="color:#0ff;font-weight:bold">&#39;{print $5}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
+ovsid=<span style="color:#0ff;font-weight:bold">${</span>interfaceid:0:11<span style="color:#0ff;font-weight:bold">}</span>
+</code></pre></div><h2 id="2-유저-생성-단계">2. 유저 생성 단계:<a href="#2-유저-생성-단계" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <p>eth1에 연결된 br-eth1 bridge를 생성한다.
 또한 gre, vlan등의 다양한 type들의 네트워크를 연결시켜 줄 수 있는 br-int bridge를 생성한다.</p>
-
 <figure>
     <img src="/images/neutron-nova-network-2.jpg"/> 
 </figure>
 
-
 <h3 id="user가-생성-필요">user가 생성 필요<a href="#user가-생성-필요" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
-<pre><code class="language-bash">ovs-vsctl --timeout=10 -- --may-exist add-br br-eth1
-ovs-vsctl --timeout=10 -- --may-exist add-port br-eth1 eth1
-</code></pre>
-
-<h2 id="3-neutron-openvswitch-plugin-시작">3. neutron openvswitch plugin 시작:<a href="#3-neutron-openvswitch-plugin-시작" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ovs-vsctl --timeout=<span style="color:#ff0;font-weight:bold">10</span> -- --may-exist add-br br-eth1
+ovs-vsctl --timeout=<span style="color:#ff0;font-weight:bold">10</span> -- --may-exist add-port br-eth1 eth1
+</code></pre></div><h2 id="3-neutron-openvswitch-plugin-시작">3. neutron openvswitch plugin 시작:<a href="#3-neutron-openvswitch-plugin-시작" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <p>br-eth1과 br-int간의 bridge 연결을 위한 port를 생성하며 veth로 해당 port를 연결하고 해당 bridge에 기본적인 flow를 추가해 준다.</p>
-
 <figure>
     <img src="/images/neutron-nova-network-3.jpg"/> 
 </figure>
 
-
-<h3 id="neutron-br-int-setup">neutron - br-int setup<a href="#neutron-br-int-setup" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
-<pre><code class="language-bash">ovs-vsctl --timeout=10 -- --may-exist add-br br-int
-ovs-vsctl --timeout=10 -- set-fail-mode br-int secure
-ovs-vsctl --timeout=10 -- --if-exists del-port br-int patch-tun
+<h3 id="neutron---br-int-setup">neutron - br-int setup<a href="#neutron---br-int-setup" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ovs-vsctl --timeout=<span style="color:#ff0;font-weight:bold">10</span> -- --may-exist add-br br-int
+ovs-vsctl --timeout=<span style="color:#ff0;font-weight:bold">10</span> -- set-fail-mode br-int secure
+ovs-vsctl --timeout=<span style="color:#ff0;font-weight:bold">10</span> -- --if-exists del-port br-int patch-tun
 ovs-ofctl del-flows br-int
 ovs-ofctl add-flow br-int hard_timeout=0,idle_timeout=0,priority=1,actions=normal
 ovs-ofctl add-flow br-int hard_timeout=0,idle_timeout=0,priority=0,table=22,actions=drop
-</code></pre>
-
-<h3 id="neutron-physical-bridge-setup">neutron - physical bridge setup<a href="#neutron-physical-bridge-setup" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
-<pre><code class="language-bash">ovs-ofctl del-flows br-eth1
+</code></pre></div><h3 id="neutron---physical-bridge-setup">neutron - physical bridge setup<a href="#neutron---physical-bridge-setup" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ovs-ofctl del-flows br-eth1
 ovs-ofctl add-flow br-eth1 hard_timeout=0,idle_timeout=0,priority=1,actions=normal
-</code></pre>
-
-<h3 id="neutron-int-phy-setup">neutron - int &lt;-&gt; phy setup<a href="#neutron-int-phy-setup" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
-<pre><code class="language-bash">ovs-vsctl --timeout=10 -- --if-exists del-port br-int int-br-eth1
-ovs-vsctl --timeout=10 -- --if-exists del-port br-eth1 phy-br-eth1
+</code></pre></div><h3 id="neutron---int---phy-setup">neutron - int &lt;-&gt; phy setup<a href="#neutron---int---phy-setup" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ovs-vsctl --timeout=<span style="color:#ff0;font-weight:bold">10</span> -- --if-exists del-port br-int int-br-eth1
+ovs-vsctl --timeout=<span style="color:#ff0;font-weight:bold">10</span> -- --if-exists del-port br-eth1 phy-br-eth1
 ip link delete int-br-eth1
 ip link delete phy-br-eth1
-udevadm settle --timeout=10
-ip link add int-br-eth1 type veth peer name phy-br-eth1
-ovs-vsctl --timeout=10 -- --may-exist add-port br-int int-br-eth1
-ovs-vsctl --timeout=10 -- --may-exist add-port br-eth1 phy-br-eth1
-intport=$(ovs-ofctl show br-int | grep int-br-eth1 | awk '{print $1}' | cut -d'(' -f1)
-phyport=$(ovs-ofctl show br-eth1 | grep phy-br-eth1 | awk '{print $1}' | cut -d'(' -f1)
-ovs-ofctl add-flow br-int hard_timeout=0,idle_timeout=0,priority=2,in_port=${intport},actions=drop
-ovs-ofctl add-flow br-eth1 hard_timeout=0,idle_timeout=0,priority=2,in_port=${phyport},actions=drop
-ip link set int-br-eth1 up
-ip link set phy-br-eth1 up
-</code></pre>
-
-<h2 id="4-nova에서-인스턴스-생성">4. nova에서 인스턴스 생성:<a href="#4-nova에서-인스턴스-생성" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
+udevadm settle --timeout=<span style="color:#ff0;font-weight:bold">10</span>
+ip link add int-br-eth1 <span style="color:#fff;font-weight:bold">type</span> veth peer name phy-br-eth1
+ovs-vsctl --timeout=<span style="color:#ff0;font-weight:bold">10</span> -- --may-exist add-port br-int int-br-eth1
+ovs-vsctl --timeout=<span style="color:#ff0;font-weight:bold">10</span> -- --may-exist add-port br-eth1 phy-br-eth1
+intport=<span style="color:#fff;font-weight:bold">$(</span>ovs-ofctl show br-int | grep int-br-eth1 | awk <span style="color:#0ff;font-weight:bold">&#39;{print $1}&#39;</span> | cut -d<span style="color:#0ff;font-weight:bold">&#39;(&#39;</span> -f1<span style="color:#fff;font-weight:bold">)</span>
+phyport=<span style="color:#fff;font-weight:bold">$(</span>ovs-ofctl show br-eth1 | grep phy-br-eth1 | awk <span style="color:#0ff;font-weight:bold">&#39;{print $1}&#39;</span> | cut -d<span style="color:#0ff;font-weight:bold">&#39;(&#39;</span> -f1<span style="color:#fff;font-weight:bold">)</span>
+ovs-ofctl add-flow br-int hard_timeout=0,idle_timeout=0,priority=2,in_port=<span style="color:#0ff;font-weight:bold">${</span>intport<span style="color:#0ff;font-weight:bold">}</span>,actions=drop
+ovs-ofctl add-flow br-eth1 hard_timeout=0,idle_timeout=0,priority=2,in_port=<span style="color:#0ff;font-weight:bold">${</span>phyport<span style="color:#0ff;font-weight:bold">}</span>,actions=drop
+ip link <span style="color:#fff;font-weight:bold">set</span> int-br-eth1 up
+ip link <span style="color:#fff;font-weight:bold">set</span> phy-br-eth1 up
+</code></pre></div><h2 id="4-nova에서-인스턴스-생성">4. nova에서 인스턴스 생성:<a href="#4-nova에서-인스턴스-생성" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <p>nova에서는 qbr bridge를 생성하며 해당 bridge에 qvb port를 생성하고 br-int에 qvo port를 생성하여 두 port를 veth로 연결한다.(xml에 관련해서 여기에서 생성된다.)</p>
-
 <figure>
     <img src="/images/neutron-nova-network-4.jpg"/> 
 </figure>
 
+<h3 id="nova---instance-up">nova - instance up<a href="#nova---instance-up" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">brctl addbr qbr<span style="color:#0ff;font-weight:bold">${</span>ovsid<span style="color:#0ff;font-weight:bold">}</span>
+brctl setfd qbr<span style="color:#0ff;font-weight:bold">${</span>ovsid<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#ff0;font-weight:bold">0</span>
+brctl stp qbr<span style="color:#0ff;font-weight:bold">${</span>ovsid<span style="color:#0ff;font-weight:bold">}</span> off
+<span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#39;0&#39;</span> &gt; /sys/class/net/qbr<span style="color:#0ff;font-weight:bold">${</span>ovsid<span style="color:#0ff;font-weight:bold">}</span>/bridge/multicast_snooping
 
-<h3 id="nova-instance-up">nova - instance up<a href="#nova-instance-up" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+ip link add qvb<span style="color:#0ff;font-weight:bold">${</span>ovsid<span style="color:#0ff;font-weight:bold">}</span> <span style="color:#fff;font-weight:bold">type</span> veth peer name qvo<span style="color:#0ff;font-weight:bold">${</span>ovsid<span style="color:#0ff;font-weight:bold">}</span>
+ip link <span style="color:#fff;font-weight:bold">set</span> qvb<span style="color:#0ff;font-weight:bold">${</span>ovsid<span style="color:#0ff;font-weight:bold">}</span> up
+ip link <span style="color:#fff;font-weight:bold">set</span> qvb<span style="color:#0ff;font-weight:bold">${</span>ovsid<span style="color:#0ff;font-weight:bold">}</span> promisc on
+ip link <span style="color:#fff;font-weight:bold">set</span> qvo<span style="color:#0ff;font-weight:bold">${</span>ovsid<span style="color:#0ff;font-weight:bold">}</span> up
+ip link <span style="color:#fff;font-weight:bold">set</span> qvo<span style="color:#0ff;font-weight:bold">${</span>ovsid<span style="color:#0ff;font-weight:bold">}</span> promisc on
 
-<pre><code class="language-bash">brctl addbr qbr${ovsid}
-brctl setfd qbr${ovsid} 0
-brctl stp qbr${ovsid} off
-echo '0' &gt; /sys/class/net/qbr${ovsid}/bridge/multicast_snooping
-
-ip link add qvb${ovsid} type veth peer name qvo${ovsid}
-ip link set qvb${ovsid} up
-ip link set qvb${ovsid} promisc on
-ip link set qvo${ovsid} up
-ip link set qvo${ovsid} promisc on
-
-ip link set qbr${ovsid} up
-brctl addif qbr${ovsid} qvb${ovsid}
-ovs-vsctl --timeout=120 -- --if-exists del-port qvo${ovsid} -- add-port br-int qvo${ovsid} -- set Interface qvo${ovsid} external-ids:iface-id=${interfaceid} external-ids:iface-status=active external-ids:attached-mac=${mac} external-ids:vm-uuid=${vmuuid}
-</code></pre>
-
-<h2 id="5-neutron-openvswitch-plugin에서-ovsdb-client-monitoring을-통한-풀링">5. neutron openvswitch plugin에서 ovsdb-client monitoring을 통한 풀링:<a href="#5-neutron-openvswitch-plugin에서-ovsdb-client-monitoring을-통한-풀링" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
+ip link <span style="color:#fff;font-weight:bold">set</span> qbr<span style="color:#0ff;font-weight:bold">${</span>ovsid<span style="color:#0ff;font-weight:bold">}</span> up
+brctl addif qbr<span style="color:#0ff;font-weight:bold">${</span>ovsid<span style="color:#0ff;font-weight:bold">}</span> qvb<span style="color:#0ff;font-weight:bold">${</span>ovsid<span style="color:#0ff;font-weight:bold">}</span>
+ovs-vsctl --timeout=<span style="color:#ff0;font-weight:bold">120</span> -- --if-exists del-port qvo<span style="color:#0ff;font-weight:bold">${</span>ovsid<span style="color:#0ff;font-weight:bold">}</span> -- add-port br-int qvo<span style="color:#0ff;font-weight:bold">${</span>ovsid<span style="color:#0ff;font-weight:bold">}</span> -- <span style="color:#fff;font-weight:bold">set</span> Interface qvo<span style="color:#0ff;font-weight:bold">${</span>ovsid<span style="color:#0ff;font-weight:bold">}</span> external-ids:iface-id=<span style="color:#0ff;font-weight:bold">${</span>interfaceid<span style="color:#0ff;font-weight:bold">}</span> external-ids:iface-status=active external-ids:attached-mac=<span style="color:#0ff;font-weight:bold">${</span>mac<span style="color:#0ff;font-weight:bold">}</span> external-ids:vm-uuid=<span style="color:#0ff;font-weight:bold">${</span>vmuuid<span style="color:#0ff;font-weight:bold">}</span>
+</code></pre></div><h2 id="5-neutron-openvswitch-plugin에서-ovsdb-client-monitoring을-통한-풀링">5. neutron openvswitch plugin에서 ovsdb-client monitoring을 통한 풀링:<a href="#5-neutron-openvswitch-plugin에서-ovsdb-client-monitoring을-통한-풀링" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <p>br-int의 변화를 감지하여 해당 qvo port를 위한 vlan tagging을 해주며 이를 위한 flow를 br-int와 br-eth1에 추가한다.</p>
-
 <figure>
     <img src="/images/neutron-nova-network-5.jpg"/> 
 </figure>
 
+<h3 id="neutron---instance-up">neutron - instance up<a href="#neutron---instance-up" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ovs-ofctl add-flow br-int hard_timeout=0,idle_timeout=0,priority=3,in_port=<span style="color:#0ff;font-weight:bold">${</span>intport<span style="color:#0ff;font-weight:bold">}</span>,dl_vlan=<span style="color:#0ff;font-weight:bold">${</span>vlan<span style="color:#0ff;font-weight:bold">}</span>,actions=mod_vlan_vid:<span style="color:#0ff;font-weight:bold">${</span>localvlan<span style="color:#0ff;font-weight:bold">}</span>,normal
+ovs-ofctl add-flow br-eth1 hard_timeout=0,idle_timeout=0,priority=4,in_port=<span style="color:#0ff;font-weight:bold">${</span>phyport<span style="color:#0ff;font-weight:bold">}</span>,dl_vlan=<span style="color:#0ff;font-weight:bold">${</span>localvlan<span style="color:#0ff;font-weight:bold">}</span>,actions=mod_vlan_vid:<span style="color:#0ff;font-weight:bold">${</span>vlan<span style="color:#0ff;font-weight:bold">}</span>,normal
 
-<h3 id="neutron-instance-up">neutron - instance up<a href="#neutron-instance-up" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
-<pre><code class="language-bash">ovs-ofctl add-flow br-int hard_timeout=0,idle_timeout=0,priority=3,in_port=${intport},dl_vlan=${vlan},actions=mod_vlan_vid:${localvlan},normal
-ovs-ofctl add-flow br-eth1 hard_timeout=0,idle_timeout=0,priority=4,in_port=${phyport},dl_vlan=${localvlan},actions=mod_vlan_vid:${vlan},normal
-
-ovs-vsctl --timeout=10 set Port qvo${ovsid} tag=${localvlan}
-</code></pre>
-
-<h2 id="6-vm-부팅">6. vm 부팅:<a href="#6-vm-부팅" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
+ovs-vsctl --timeout=<span style="color:#ff0;font-weight:bold">10</span> <span style="color:#fff;font-weight:bold">set</span> Port qvo<span style="color:#0ff;font-weight:bold">${</span>ovsid<span style="color:#0ff;font-weight:bold">}</span> tag=<span style="color:#0ff;font-weight:bold">${</span>localvlan<span style="color:#0ff;font-weight:bold">}</span>
+</code></pre></div><h2 id="6-vm-부팅">6. vm 부팅:<a href="#6-vm-부팅" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <p>vm이 시작하면서  libvirt의 xml파일안에 정의 되어 있는 qbr bridge에 tap port가 생성되어서 vm까지 네트워크가 완성된다.(이 xml은 이미 4번 단계에서 완성되어 있다.)</p>
-
 <figure>
     <img src="/images/neutron-nova-network-6.jpg"/> 
 </figure>
@@ -262,15 +216,16 @@ ovs-vsctl --timeout=10 set Port qvo${ovsid} tag=${localvlan}
 	</main>
 
 	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
-		<script src="/js/prism.js"></script>
-		<p>&copy; 2019 <a href="https://leoh0.github.io/"></a></p>
+		<p>&copy; 2020 <a href="https://leoh0.github.io/"></a></p>
 		<p>
-			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/post/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
 		</p>
 	</footer>
 
 
-	<script src="https://leoh0.github.io/js/main.min.784417f5847151f848c339cf0acb13a06cbb648b1483435a28ed4556c4ead69b.js" integrity="sha256-eEQX9YRxUfhIwznPCssToGy7ZIsUg0NaKO1FVsTq1ps="></script>
+
+	<script src="https://leoh0.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
 <script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {

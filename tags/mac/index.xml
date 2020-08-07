@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Mac on &gt; /dev/null</title>
+    <title>mac on &gt; /dev/null</title>
     <link>https://leoh0.github.io/tags/mac/</link>
-    <description>Recent content in Mac on &gt; /dev/null</description>
+    <description>Recent content in mac on &gt; /dev/null</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 May 2016 02:24:09 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 13 Oct 2016 00:02:06 +0900</lastBuildDate>
     
 	<atom:link href="https://leoh0.github.io/tags/mac/index.xml" rel="self" type="application/rss+xml" />
     
@@ -20,7 +20,7 @@
       <description>Mac os x 는 linux와 다른 resolving을 제공한다.
 간단하게만 이야기 하면 /etc/resolv.conf 외에도 /etc/resolver/* 에 원하는 dns명을 기록해 놓으면 해당 domain name을 갖을시 해당하는 nameserver로 쿼리를 할 수가 있다.
 예를 들어 아래와 같이 설정했다면 *.local 과 같은 도메인은 10.10.1.65로 dns 서버를 사용가능하다.
-$ cat /etc/resolver/local nameserver 10.10.1.65  다만 이건 nslookup, host, dig 와 같은 dns lookup command 들에서는 나타나지 않는다. 이런 커맨드는 linux와 같이 /etc/resolv.conf 의 dns 서버를 이용해서 lookup을 하게 된다.</description>
+$ cat /etc/resolver/local nameserver 10.10.1.65 다만 이건 nslookup, host, dig 와 같은 dns lookup command 들에서는 나타나지 않는다. 이런 커맨드는 linux와 같이 /etc/resolv.conf 의 dns 서버를 이용해서 lookup을 하게 된다.</description>
     </item>
     
     <item>
@@ -30,7 +30,7 @@ $ cat /etc/resolver/local nameserver 10.10.1.65  다만 이건 nslookup, host, d
       
       <guid>https://leoh0.github.io/post/2015-11-03-maceseo-ntfs-diske-write-hagi/</guid>
       <description>GPT 일때 가능
-#!/usr/bin/env bash if mount | grep -q &#39;ntfs&#39; ; then if ! mount | grep -q &#39;read-only&#39; ; then echo -e &amp;quot;\033[01;36mExist already in /etc/fstab.\033[00m&amp;quot; VOLUME=$(mount | grep &amp;quot;(ntfs, &amp;quot; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(.*\) (ntfs,.*$|\1|g&#39;) open &amp;quot;$VOLUME&amp;quot; exit fi DISK=$(mount | grep &#39;read-only&#39; | awk &#39;{print $1}&#39;) UUID=$(diskutil info $DISK | grep UUID | awk &#39;{print $3}&#39;) echo -e &amp;quot;\033[01;36mRegistry into /etc/fstab.\033[00m&amp;quot; echo &amp;quot;UUID=$UUID none ntfs rw,auto,nobrowse&amp;quot; | sudo tee -a /etc/fstab &amp;gt; /dev/null diskutil umount $DISK diskutil mount $DISK VOLUME=$(mount | grep &amp;quot;(ntfs, &amp;quot; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(.</description>
+#!/usr/bin/env bash  if mount | grep -q &amp;#39;ntfs&amp;#39; ; then if ! mount | grep -q &amp;#39;read-only&amp;#39; ; then echo -e &amp;#34;\033[01;36mExist already in /etc/fstab.\033[00m&amp;#34; VOLUME=$(mount | grep &amp;#34;(ntfs, &amp;#34; | sed &amp;#39;s|/dev/disk[0-9]s[0-9] on \(.*\) (ntfs,.*$|\1|g&amp;#39;) open &amp;#34;$VOLUME&amp;#34; exit fi DISK=$(mount | grep &amp;#39;read-only&amp;#39; | awk &amp;#39;{print $1}&amp;#39;) UUID=$(diskutil info $DISK | grep UUID | awk &amp;#39;{print $3}&amp;#39;) echo -e &amp;#34;\033[01;36mRegistry into /etc/fstab.\033[00m&amp;#34; echo &amp;#34;UUID=$UUIDnone ntfs rw,auto,nobrowse&amp;#34; | sudo tee -a /etc/fstab &amp;gt; /dev/null diskutil umount $DISK diskutil mount $DISK VOLUME=$(mount | grep &amp;#34;(ntfs, &amp;#34; | sed &amp;#39;s|/dev/disk[0-9]s[0-9] on \(.</description>
     </item>
     
   </channel>

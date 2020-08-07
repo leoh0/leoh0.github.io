@@ -8,43 +8,28 @@
 	<meta name="theme-color" content="#494f5c">
 	<meta name="msapplication-TileColor" content="#494f5c">
 <meta itemprop="name" content="Management multiple openstack cluster with automatic openstack rc file loader script">
-<meta itemprop="description" content="openstack rc file 여러 openstack 클러스터를 관리하려면 openstack rc file(이하 openrc file)을 잘 관리해야한다.
-이런 관리를 위해서 supernova 와 같은 rc file 관리해주는 툴들을 사용하게 된다.
-(개인적으로 비슷한 시기에 bash로 비슷한 아이디어로 구현해서 써서 사용하진 않았지만 이러한 관리 툴이 필요하다면 supernova를 참고하면 좋을것같다.)
-이런 툴들은 기본적으로 shell에 환경변수를 추가하는 방식이기에 폴더가 변경된다고 자동으로 로딩된다기 보다는
-유저가 어떤 rc file을 사용할지 로딩하여(트리거링하여) 써야한다.
+<meta itemprop="description" content="openstack rc file 여러 openstack 클러스터를 관리하려면 openstack rc file(이하 openrc file)을 잘 관리해야한다. 이런 관리를 위해서 supernova 와 같은 rc file 관리해주는 툴들을 사용하게 된다. (개인적으로 비슷한 시기에 bash로 비슷한 아이디어로 구현해서 써서 사용하진 않았지만 이러한 관리 툴이 필요하다면 supernova를 참고하면 좋을것같다.) 이런 툴들은 기본적으로 shell에 환경변수를 추가하는 방식이기에 폴더가 변경된다고 자동으로 로딩된다기 보다는 유저가 어떤 rc file을 사용할지 로딩하여(트리거링하여) 써야한다.
 openstack rc file (normal version) 예를 들면 아래는 일반적으로 사용하는 익숙 한 예이다.">
-
-
 <meta itemprop="datePublished" content="2016-05-10T01:08:56&#43;09:00" />
 <meta itemprop="dateModified" content="2016-05-10T01:08:56&#43;09:00" />
 <meta itemprop="wordCount" content="733">
+<meta itemprop="image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 
 
 
-<meta itemprop="keywords" content="openstack,rc,openrc,automatic,multiple cluster," />
-<meta property="og:title" content="Management multiple openstack cluster with automatic openstack rc file loader script" />
-<meta property="og:description" content="openstack rc file 여러 openstack 클러스터를 관리하려면 openstack rc file(이하 openrc file)을 잘 관리해야한다.
-이런 관리를 위해서 supernova 와 같은 rc file 관리해주는 툴들을 사용하게 된다.
-(개인적으로 비슷한 시기에 bash로 비슷한 아이디어로 구현해서 써서 사용하진 않았지만 이러한 관리 툴이 필요하다면 supernova를 참고하면 좋을것같다.)
-이런 툴들은 기본적으로 shell에 환경변수를 추가하는 방식이기에 폴더가 변경된다고 자동으로 로딩된다기 보다는
-유저가 어떤 rc file을 사용할지 로딩하여(트리거링하여) 써야한다.
+<meta itemprop="keywords" content="openstack,rc,openrc,automatic,multiple cluster," /><meta property="og:title" content="Management multiple openstack cluster with automatic openstack rc file loader script" />
+<meta property="og:description" content="openstack rc file 여러 openstack 클러스터를 관리하려면 openstack rc file(이하 openrc file)을 잘 관리해야한다. 이런 관리를 위해서 supernova 와 같은 rc file 관리해주는 툴들을 사용하게 된다. (개인적으로 비슷한 시기에 bash로 비슷한 아이디어로 구현해서 써서 사용하진 않았지만 이러한 관리 툴이 필요하다면 supernova를 참고하면 좋을것같다.) 이런 툴들은 기본적으로 shell에 환경변수를 추가하는 방식이기에 폴더가 변경된다고 자동으로 로딩된다기 보다는 유저가 어떤 rc file을 사용할지 로딩하여(트리거링하여) 써야한다.
 openstack rc file (normal version) 예를 들면 아래는 일반적으로 사용하는 익숙 한 예이다." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://leoh0.github.io/post/2016-05-10-management-multiple-openstack-cluster-with-automatic-openstack-rc-file-loader-script/" />
-
-<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322" />
+<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 <meta property="article:published_time" content="2016-05-10T01:08:56+09:00" />
 <meta property="article:modified_time" content="2016-05-10T01:08:56+09:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 
 <meta name="twitter:title" content="Management multiple openstack cluster with automatic openstack rc file loader script"/>
-<meta name="twitter:description" content="openstack rc file 여러 openstack 클러스터를 관리하려면 openstack rc file(이하 openrc file)을 잘 관리해야한다.
-이런 관리를 위해서 supernova 와 같은 rc file 관리해주는 툴들을 사용하게 된다.
-(개인적으로 비슷한 시기에 bash로 비슷한 아이디어로 구현해서 써서 사용하진 않았지만 이러한 관리 툴이 필요하다면 supernova를 참고하면 좋을것같다.)
-이런 툴들은 기본적으로 shell에 환경변수를 추가하는 방식이기에 폴더가 변경된다고 자동으로 로딩된다기 보다는
-유저가 어떤 rc file을 사용할지 로딩하여(트리거링하여) 써야한다.
+<meta name="twitter:description" content="openstack rc file 여러 openstack 클러스터를 관리하려면 openstack rc file(이하 openrc file)을 잘 관리해야한다. 이런 관리를 위해서 supernova 와 같은 rc file 관리해주는 툴들을 사용하게 된다. (개인적으로 비슷한 시기에 bash로 비슷한 아이디어로 구현해서 써서 사용하진 않았지만 이러한 관리 툴이 필요하다면 supernova를 참고하면 좋을것같다.) 이런 툴들은 기본적으로 shell에 환경변수를 추가하는 방식이기에 폴더가 변경된다고 자동으로 로딩된다기 보다는 유저가 어떤 rc file을 사용할지 로딩하여(트리거링하여) 써야한다.
 openstack rc file (normal version) 예를 들면 아래는 일반적으로 사용하는 익숙 한 예이다."/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -55,28 +40,30 @@ openstack rc file (normal version) 예를 들면 아래는 일반적으로 사�
 	<link rel="shortcut icon" href="/favicon.ico">
 
 	<title>Management multiple openstack cluster with automatic openstack rc file loader script</title>
-	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.cf317e8e759e34ff58587ff7fca05f8b77531a61ee8e63c887a46eb43ebad966.css" crossorigin="anonymous" integrity="sha256-zzF+jnWeNP9YWH/3/KBfi3dTGmHujmPIh6RutD662WY=">
+	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
 	
 	<link rel="stylesheet" href="https://leoh0.github.io/css/prism.css">
 </head>
 
 <body id="page">
 	
-	<header id="site-header" class="animated slideInUp faster">
+	<header id="site-header" class="animated slideInUp">
 		<div class="hdr-wrapper section-inner">
 			<div class="hdr-left">
 				<div class="site-branding">
 					<a href="https://leoh0.github.io/">&gt; /dev/null</a>
 				</div>
 				<nav class="site-nav hide-in-mobile">
-					<a href="https://leoh0.github.io/">Home</a>
-					<a href="https://leoh0.github.io/post/">Posts</a>
-					<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
-					<a href="https://leoh0.github.io/blog/">.</a>
+					
+				<a href="https://leoh0.github.io/">Home</a>
+				<a href="https://leoh0.github.io/post/">Posts</a>
+				<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
+				<a href="https://leoh0.github.io/blog/">.</a>
+
 				</nav>
 			</div>
 			<div class="hdr-right hdr-icons">
-				<span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+				<span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
 			</div>
 		</div>
 	</header>
@@ -93,27 +80,20 @@ openstack rc file (normal version) 예를 들면 아래는 일반적으로 사�
 	<main class="site-main section-inner thin animated fadeIn faster">
 		<h1>Management multiple openstack cluster with automatic openstack rc file loader script</h1>
 		<div class="content">
-			
-
-<figure>
+			<figure>
     <img src="/images/2016-05-10_03-40-27.jpg"/> 
 </figure>
 
-
-<h2 id="openstack-rc-file">openstack rc file<a href="#openstack-rc-file" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
-<p>여러 openstack 클러스터를 관리하려면 <a href="http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html">openstack rc file</a>(이하 openrc file)을 잘 관리해야한다.<br />
-이런 관리를 위해서 <a href="http://supernova.readthedocs.io/en/latest/">supernova</a> 와 같은 rc file 관리해주는 툴들을 사용하게 된다.<br />
-(개인적으로 비슷한 시기에 bash로 비슷한 아이디어로 구현해서 써서 사용하진 않았지만 이러한 관리 툴이 필요하다면 supernova를 참고하면 좋을것같다.)<br />
-이런 툴들은 기본적으로 shell에 환경변수를 추가하는 방식이기에 폴더가 변경된다고 자동으로 로딩된다기 보다는<br />
+<h2 id="openstack-rc-file-">openstack rc file<a href="#openstack-rc-file-" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>여러 openstack 클러스터를 관리하려면 <a href="http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html">openstack rc file</a>(이하 openrc file)을 잘 관리해야한다. <br>
+이런 관리를 위해서 <a href="http://supernova.readthedocs.io/en/latest/">supernova</a> 와 같은 rc file 관리해주는 툴들을 사용하게 된다. <br>
+(개인적으로 비슷한 시기에 bash로 비슷한 아이디어로 구현해서 써서 사용하진 않았지만 이러한 관리 툴이 필요하다면 supernova를 참고하면 좋을것같다.) <br>
+이런 툴들은 기본적으로 shell에 환경변수를 추가하는 방식이기에 폴더가 변경된다고 자동으로 로딩된다기 보다는 <br>
 유저가 어떤 rc file을 사용할지 로딩하여(트리거링하여) 써야한다.</p>
-
-<h2 id="openstack-rc-file-normal-version">openstack rc file (normal version)<a href="#openstack-rc-file-normal-version" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
+<h2 id="openstack-rc-file-normal-version-">openstack rc file (normal version)<a href="#openstack-rc-file-normal-version-" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <p>예를 들면 아래는 일반적으로 사용하는 익숙 한 예이다.</p>
-
-<pre><code class="language-bash">al@MacBook-Pro-2:~
-$ source stage_v1_openrc
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">al@MacBook-Pro-2:~
+$ <span style="color:#fff;font-weight:bold">source</span> stage_v1_openrc
 
 al@MacBook-Pro-2:~
 $ env | grep OS_
@@ -126,7 +106,7 @@ OS_USERNAME=admin-v1
 OS_TENANT_NAME=admin-v1
 
 al@MacBook-Pro-2:~
-$ source stage_v2_openrc
+$ <span style="color:#fff;font-weight:bold">source</span> stage_v2_openrc
 
 al@MacBook-Pro-2:~
 $ env | grep OS_
@@ -137,16 +117,11 @@ OS_PASSWORD=password4admin4v2
 OS_AUTH_URL=https://stage-v2.example.com/v2.0/
 OS_USERNAME=admin-v2
 OS_TENANT_NAME=admin-v2
-</code></pre>
-
-<p>위와 같이 <code>source</code>(혹은 <code>.</code>) 을 이용해서 미리 기록해둔 파일(stage_v1_openrc, stage_v2_openrc)를 export 해서 환경변수에 기록해서 사용한다.<br />
+</code></pre></div><p>위와 같이 <code>source</code>(혹은 <code>.</code>) 을 이용해서 미리 기록해둔 파일(stage_v1_openrc, stage_v2_openrc)를 export 해서 환경변수에 기록해서 사용한다. <br>
 이런방식은 어째뜬 파일을 관리해야 하고 파일을 항상 사용해야 하기때문에 다른 디렉토리에서 사용하기에 불편함이 있다.</p>
-
-<h2 id="openstack-rc-file-advanced-version">openstack rc file (advanced version)<a href="#openstack-rc-file-advanced-version" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
+<h2 id="openstack-rc-file-advanced-version-">openstack rc file (advanced version)<a href="#openstack-rc-file-advanced-version-" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <p>그래서 내가 만들었던 툴은 아래와 같이 사용했다.</p>
-
-<pre><code class="language-bash">al@MacBook-Pro-2:~ O:stage_v2
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">al@MacBook-Pro-2:~ O:stage_v2
 $ rcvm stage_v1
 OPENRC: stage_v1
 
@@ -173,137 +148,101 @@ OS_PASSWORD=password4admin4v2
 OS_AUTH_URL=https://stage-v2.example.com/v2.0/
 OS_USERNAME=admin-v2
 OS_TENANT_NAME=admin-v2
-</code></pre>
-
-<p>사실 source 같은 커맨드와 지정한 파일을 사용하는거 외에 사용방식은 비슷하다.<br />
+</code></pre></div><p>사실 source 같은 커맨드와 지정한 파일을 사용하는거 외에 사용방식은 비슷하다. <br>
 <code>&lt;커맨드&gt; &lt;구성&gt;</code> 이런 호출을 통해서 rc를 변경한다. (위 보다 디렉토리 제약과 파일 관리의 부담이 조금 줄었다.)</p>
-
-<h2 id="기존-방법의-불편한-점">기존 방법의 불편한 점<a href="#기존-방법의-불편한-점" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
+<h2 id="기존-방법의-불편한-점-">기존 방법의 불편한 점<a href="#기존-방법의-불편한-점-" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <p>위의 두가지 방법들은 한 클러스터를 집중적으로 관리할때 편리하다.</p>
-
 <p>여기서 만약 다른 클러스터 작업이 필요하면 대략 아래 같은 방법의 옵션들을 사용하게 된다.</p>
-
 <pre><code>1. shell을 추가적으로 띄워서 다른 환경변수를 로딩한다.
 2. supernova의 사용법중 하나인매번 `supernova &lt;environment&gt; &lt;command&gt;` 와 같은 형태로 환경변수를 로딩하여 호출해야 한다.
 </code></pre>
-
 <p>하지만 이렇게 관리하다보면 여러 클러스터에 간단한 작업을 할때마다 여러창을 띄우던지 아니면 의식적으로 환경을 변경하면서 작업해야한다.</p>
-
 <p><em>그래서 아래 같은 방법을 생각하게 되었다.</em></p>
-
-<h2 id="디렉토리-기반-openrc-자동-로딩-방법">디렉토리 기반 openrc 자동 로딩 방법<a href="#디렉토리-기반-openrc-자동-로딩-방법" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
-<p>그래서 생각한 아이디어는 git 이나 chef 등과 같이 parent directory 에 특정 구성 파일이 있으면<br />
-이하 디렉토리에서 해당 환경을 자동으로 로딩할 수 있으면 편하겠다고 생각했다.<br />
-가장 간단한 방법은 아마 nova 와 같은 커맨드에 <code>pwd</code> 등을 확인해서 파일을 로딩하는식으로 구현할까 했었다.<br />
+<h2 id="디렉토리-기반-openrc-자동-로딩-방법-">디렉토리 기반 openrc 자동 로딩 방법<a href="#디렉토리-기반-openrc-자동-로딩-방법-" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>그래서 생각한 아이디어는 git 이나 chef 등과 같이 parent directory 에 특정 구성 파일이 있으면 <br>
+이하 디렉토리에서 해당 환경을 자동으로 로딩할 수 있으면 편하겠다고 생각했다. <br>
+가장 간단한 방법은 아마 nova 와 같은 커맨드에 <code>pwd</code> 등을 확인해서 파일을 로딩하는식으로 구현할까 했었다. <br>
 하지만 이건 새로운 커맨드가 나올때마다 등 관리가 잘 안될게 뻔하기 때문에 이런 방법을 쓰지않고 있었다.</p>
-
-<p>그러던 와중에 <a href="https://github.com/yyuu/pyenv">pyenv</a>를 잘 쓰고 있었는데 여기에서 python command 들을 사용할때 hook을 걸 수 있는것을 알았다.<br />
+<p>그러던 와중에 <a href="https://github.com/yyuu/pyenv">pyenv</a>를 잘 쓰고 있었는데 여기에서 python command 들을 사용할때 hook을 걸 수 있는것을 알았다. <br>
 그리고 해당 hook에 부모 디렉토리에 원하는 파일(openrc)이 있으면 로딩하는 식으로 구성하니 아주 말끔히 원하는식으로 작동하게 되었다.</p>
-
 <p>hook 위치는 아래를 참고하면 된다.</p>
-
 <p>mac에서 brew 로 pyenv를 설치했다면 아래와 같다.</p>
-
-<pre><code class="language-bash"># mac os x
-$ cat $(brew --prefix pyenv)/pyenv.d/exec/openstack.bash
-</code></pre>
-
-<p>ubuntu는 아래와 같다. (non root user시)</p>
-
-<pre><code class="language-bash"># ubuntu
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007f7f"># mac os x</span>
+$ cat <span style="color:#fff;font-weight:bold">$(</span>brew --prefix pyenv<span style="color:#fff;font-weight:bold">)</span>/pyenv.d/exec/openstack.bash
+</code></pre></div><p>ubuntu는 아래와 같다. (non root user시)</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#007f7f"># ubuntu</span>
 $ cat ~/.pyenv/pyenv.d/exec/openstack.bash
-</code></pre>
+</code></pre></div><p>해당 파일내용은 아래와 같다.</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">openstack_root=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">pwd</span> -P 2&gt;/dev/null || <span style="color:#fff;font-weight:bold">command</span> <span style="color:#fff;font-weight:bold">pwd</span><span style="color:#fff;font-weight:bold">)</span>
+<span style="color:#fff;font-weight:bold">while</span> [ ! -e <span style="color:#0ff;font-weight:bold">&#34;</span>$openstack_root<span style="color:#0ff;font-weight:bold">/openrc&#34;</span> ];
+<span style="color:#fff;font-weight:bold">do</span>
+  openstack_root=<span style="color:#0ff;font-weight:bold">${</span>openstack_root%/*<span style="color:#0ff;font-weight:bold">}</span>
+  <span style="color:#fff;font-weight:bold">if</span> [ <span style="color:#0ff;font-weight:bold">&#34;</span>$openstack_root<span style="color:#0ff;font-weight:bold">&#34;</span> == <span style="color:#0ff;font-weight:bold">&#34;&#34;</span> ]; <span style="color:#fff;font-weight:bold">then</span>
+    <span style="color:#fff;font-weight:bold">break</span>
+  <span style="color:#fff;font-weight:bold">fi</span>
+<span style="color:#fff;font-weight:bold">done</span>
 
-<p>해당 파일내용은 아래와 같다.</p>
+<span style="color:#fff;font-weight:bold">if</span> [ <span style="color:#0ff;font-weight:bold">&#34;</span>$openstack_root<span style="color:#0ff;font-weight:bold">&#34;</span> != <span style="color:#0ff;font-weight:bold">&#34;&#34;</span> ]; <span style="color:#fff;font-weight:bold">then</span>
+  <span style="color:#fff;font-weight:bold">while</span> <span style="color:#fff;font-weight:bold">read</span> var; <span style="color:#fff;font-weight:bold">do</span> <span style="color:#fff;font-weight:bold">unset</span> <span style="color:#0ff;font-weight:bold">&#34;</span>$var<span style="color:#0ff;font-weight:bold">&#34;</span>; <span style="color:#fff;font-weight:bold">done</span>&lt; &lt;(env | awk -F= <span style="color:#0ff;font-weight:bold">&#39;/^OS_/{print $1}&#39;</span>)
 
-<pre><code class="language-bash">openstack_root=$(pwd -P 2&gt;/dev/null || command pwd)
-while [ ! -e &quot;$openstack_root/openrc&quot; ];
-do
-  openstack_root=${openstack_root%/*}
-  if [ &quot;$openstack_root&quot; == &quot;&quot; ]; then
-    break
-  fi
-done
-
-if [ &quot;$openstack_root&quot; != &quot;&quot; ]; then
-  while read var; do unset &quot;$var&quot;; done&lt; &lt;(env | awk -F= '/^OS_/{print $1}')
-
-  . &quot;$openstack_root/openrc&quot;
-fi
-</code></pre>
-
-<p>약간에 설명을 하자면 해당 커맨드를 실행하는 해당 디렉토리에 <code>openrc</code> 파일이 있으면 <code>OS_</code>로 시작하는 모든 환경 변수를 초기화(unset)하고 openrc 를 export 한다.<br />
+  . <span style="color:#0ff;font-weight:bold">&#34;</span>$openstack_root<span style="color:#0ff;font-weight:bold">/openrc&#34;</span>
+<span style="color:#fff;font-weight:bold">fi</span>
+</code></pre></div><p>약간에 설명을 하자면 해당 커맨드를 실행하는 해당 디렉토리에 <code>openrc</code> 파일이 있으면 <code>OS_</code>로 시작하는 모든 환경 변수를 초기화(unset)하고 openrc 를 export 한다. <br>
 만약 해당 디렉토리에 해당 파일(openrc)가 없으면 상위 디렉토리가 존재할때까지 recursive 하게 올라간다.</p>
-
-<h2 id="디렉토리-기반-openrc-자동-로딩-데모">디렉토리 기반 openrc 자동 로딩 데모<a href="#디렉토리-기반-openrc-자동-로딩-데모" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
-<p>아래는 데모이다.<br />
+<h2 id="디렉토리-기반-openrc-자동-로딩-데모-">디렉토리 기반 openrc 자동 로딩 데모<a href="#디렉토리-기반-openrc-자동-로딩-데모-" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>아래는 데모이다. <br>
 천천히 보려면 이 링크에서 커맨드를 확인하면서 볼 수 있다. (<a href="http://showterm.io/112d21ab5f83d5843f7b2">http://showterm.io/112d21ab5f83d5843f7b2</a>)
 {% youtube r_Hgitz0Tn0 560 315 %}</p>
-
-<p>중간에 보이는바와 같이 <code>env | grep OS_</code> 로 환경변수가 비어 있으나<br />
-<code>python</code> 커맨드 실행시 안에 환경변수들이 채워져 있는 것을 확인 할 수 있다.<br />
+<p>중간에 보이는바와 같이 <code>env | grep OS_</code> 로 환경변수가 비어 있으나 <br>
+<code>python</code> 커맨드 실행시 안에 환경변수들이 채워져 있는 것을 확인 할 수 있다. <br>
 아래 커맨드로 python 실행시 해당 환경변수중 <code>OS_</code> 시작하는 변수들의 값을 출력해 본것이다.</p>
-
-<pre><code class="language-bash">python -c &quot;import os; print('\n'.join([str(\&quot;%s=%s\&quot; %(i,j)) for i,j in os.environ.iteritems() if i.startswith('OS_')]))&quot;
-</code></pre>
-
-<p>이런식으로 앞서 말한 방법과 함께 두가지 방법을 이용하면 보다 쾌적한 클러스터 관리를 할 수 있게 된다.</p>
-
-<h2 id="diy">DIY<a href="#diy" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python -c <span style="color:#0ff;font-weight:bold">&#34;import os; print(&#39;\n&#39;.join([str(\&#34;%s=%s\&#34; %(i,j)) for i,j in os.environ.iteritems() if i.startswith(&#39;OS_&#39;)]))&#34;</span>
+</code></pre></div><p>이런식으로 앞서 말한 방법과 함께 두가지 방법을 이용하면 보다 쾌적한 클러스터 관리를 할 수 있게 된다.</p>
+<h2 id="diy-">DIY<a href="#diy-" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <p>아래 스크립트를 이용하면 ubuntu에서 테스트 설치해서 테스트 가능하다.</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#0f0;font-weight:bold">#!/usr/bin/env bash
+</span><span style="color:#0f0;font-weight:bold"></span>
+sudo apt-get install -qqy git make build-essential libssl-dev zlib1g-dev libbz2-dev <span style="color:#0ff;font-weight:bold">\
+</span><span style="color:#0ff;font-weight:bold"></span>  libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev <span style="color:#0ff;font-weight:bold">\
+</span><span style="color:#0ff;font-weight:bold"></span>  libncursesw5-dev libxml2-dev libxslt1-dev libffi-dev
 
-<pre><code class="language-bash">#!/usr/bin/env bash
+curl -sL https://raw.github.com/yyuu/pyenv-installer/master/bin/pyenv-installer | <span style="color:#0ff;font-weight:bold">\
+</span><span style="color:#0ff;font-weight:bold"></span>  bash
 
-sudo apt-get install -qqy git make build-essential libssl-dev zlib1g-dev libbz2-dev \
-  libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
-  libncursesw5-dev libxml2-dev libxslt1-dev libffi-dev
+<span style="color:#fff;font-weight:bold">export</span> PATH=<span style="color:#0ff;font-weight:bold">&#34;~/.pyenv/bin:</span>$PATH<span style="color:#0ff;font-weight:bold">&#34;</span>
+<span style="color:#fff;font-weight:bold">eval</span> <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#fff;font-weight:bold">$(</span>pyenv init -<span style="color:#fff;font-weight:bold">)</span><span style="color:#0ff;font-weight:bold">&#34;</span>
+<span style="color:#fff;font-weight:bold">eval</span> <span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#fff;font-weight:bold">$(</span>pyenv virtualenv-init -<span style="color:#fff;font-weight:bold">)</span><span style="color:#0ff;font-weight:bold">&#34;</span>
 
-curl -sL https://raw.github.com/yyuu/pyenv-installer/master/bin/pyenv-installer | \
-  bash
+<span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#39;export PATH=&#34;~/.pyenv/bin:$PATH&#34;&#39;</span> &gt;&gt; ~/.bashrc
+<span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#39;eval &#34;$(pyenv init -)&#34;&#39;</span> &gt;&gt; ~/.bashrc
+<span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#39;eval &#34;$(pyenv virtualenv-init -)&#34;&#39;</span> &gt;&gt; ~/.bashrc
 
-export PATH=&quot;~/.pyenv/bin:$PATH&quot;
-eval &quot;$(pyenv init -)&quot;
-eval &quot;$(pyenv virtualenv-init -)&quot;
-
-echo 'export PATH=&quot;~/.pyenv/bin:$PATH&quot;' &gt;&gt; ~/.bashrc
-echo 'eval &quot;$(pyenv init -)&quot;' &gt;&gt; ~/.bashrc
-echo 'eval &quot;$(pyenv virtualenv-init -)&quot;' &gt;&gt; ~/.bashrc
-
-PYTHON_CONFIGURE_OPTS=&quot;--enable-unicode=ucs4&quot; ~/.pyenv/bin/pyenv install 2.7.9
+PYTHON_CONFIGURE_OPTS=<span style="color:#0ff;font-weight:bold">&#34;--enable-unicode=ucs4&#34;</span> ~/.pyenv/bin/pyenv install 2.7.9
 
 ~/.pyenv/bin/pyenv global 2.7.9
 
-cat &lt;&lt; OPENRC_CHOOSER &gt; ~/.pyenv/pyenv.d/exec/openstack.bash
-openstack_root=\$(pwd -P 2&gt;/dev/null || command pwd)
-while [ ! -e &quot;\$openstack_root/openrc&quot; ];
-do
-  openstack_root=\${openstack_root%/*}
-  if [ &quot;\$openstack_root&quot; == &quot;&quot; ]; then
-    break
-  fi
-done
+cat <span style="color:#0ff;font-weight:bold">&lt;&lt; OPENRC_CHOOSER &gt; ~/.pyenv/pyenv.d/exec/openstack.bash
+</span><span style="color:#0ff;font-weight:bold">openstack_root=\$(pwd -P 2&gt;/dev/null || command pwd)
+</span><span style="color:#0ff;font-weight:bold">while [ ! -e &#34;\$openstack_root/openrc&#34; ];
+</span><span style="color:#0ff;font-weight:bold">do
+</span><span style="color:#0ff;font-weight:bold">  openstack_root=\${openstack_root%/*}
+</span><span style="color:#0ff;font-weight:bold">  if [ &#34;\$openstack_root&#34; == &#34;&#34; ]; then
+</span><span style="color:#0ff;font-weight:bold">    break
+</span><span style="color:#0ff;font-weight:bold">  fi
+</span><span style="color:#0ff;font-weight:bold">done
+</span><span style="color:#0ff;font-weight:bold">
+</span><span style="color:#0ff;font-weight:bold">if [ &#34;\$openstack_root&#34; != &#34;&#34; ]; then
+</span><span style="color:#0ff;font-weight:bold">  while read var; do unset &#34;\$var&#34;; done&lt; &lt;(env | awk -F= &#39;/^OS_/{print \$1}&#39;)
+</span><span style="color:#0ff;font-weight:bold">
+</span><span style="color:#0ff;font-weight:bold">  . &#34;\$openstack_root/openrc&#34;
+</span><span style="color:#0ff;font-weight:bold">fi
+</span><span style="color:#0ff;font-weight:bold">OPENRC_CHOOSER</span>
 
-if [ &quot;\$openstack_root&quot; != &quot;&quot; ]; then
-  while read var; do unset &quot;\$var&quot;; done&lt; &lt;(env | awk -F= '/^OS_/{print \$1}')
-
-  . &quot;\$openstack_root/openrc&quot;
-fi
-OPENRC_CHOOSER
-
-echo 'need relogin'
-exit
-</code></pre>
-
-<h2 id="결론">결론<a href="#결론" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
+<span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#39;need relogin&#39;</span>
+<span style="color:#fff;font-weight:bold">exit</span>
+</code></pre></div><h2 id="결론-">결론<a href="#결론-" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <p>pyenv + 스크립트 한개 = 디렉토리 기반 자동 openrc file loader 제작 가능</p>
-
-<h3 id="ps">ps<a href="#ps" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
-
+<h3 id="ps-">ps<a href="#ps-" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p>더 좋은 방법은 언제든지 환영합니다.</p>
 
 		</div>
@@ -334,15 +273,16 @@ exit
 	</main>
 
 	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
-		<script src="/js/prism.js"></script>
-		<p>&copy; 2019 <a href="https://leoh0.github.io/"></a></p>
+		<p>&copy; 2020 <a href="https://leoh0.github.io/"></a></p>
 		<p>
-			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/post/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
 		</p>
 	</footer>
 
 
-	<script src="https://leoh0.github.io/js/main.min.784417f5847151f848c339cf0acb13a06cbb648b1483435a28ed4556c4ead69b.js" integrity="sha256-eEQX9YRxUfhIwznPCssToGy7ZIsUg0NaKO1FVsTq1ps="></script>
+
+	<script src="https://leoh0.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
 <script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {

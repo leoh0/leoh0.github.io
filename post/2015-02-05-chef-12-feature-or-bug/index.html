@@ -11,25 +11,22 @@
 <meta itemprop="description" content="chef 12 client를 이용하면서 기존 recipe 들을 사용중 갑자기 작동 안하는 문제가 있었다.
 chef 12로 변화되며 추가된 기능인가 싶어 chef 12 release note를 뒤져보았지만 사실 관련된 부분을 찾지 못했다.
 대략 현상은 아래와 같다..
-chef &gt; attributes_mode chef:attributes &gt; default[&#39;haproxy&#39;][&#39;conf_dir&#39;] = &#39;aa&#39; chef:attributes &gt; puts node[&#39;haproxy&#39;][&#39;conf_dir&#39;] aa chef:attributes &gt; puts node[:haproxy][:conf_dir] aa chef:attributes &gt; node.set[&#39;haproxy&#39;][&#39;conf_dir&#39;] = &#39;bb&#39; chef:attributes &gt; puts node[&#39;haproxy&#39;][&#39;conf_dir&#39;] bb chef:attributes &gt; puts node[:haproxy][:conf_dir] aa  위와 같이 string으로 된 hash와 symbol로 된 hash의 값이 merge가 안되는 문제이다.">
-
-
+chef &gt; attributes_mode chef:attributes &gt; default[&#39;haproxy&#39;][&#39;conf_dir&#39;] = &#39;aa&#39; chef:attributes &gt; puts node[&#39;haproxy&#39;][&#39;conf_dir&#39;] aa chef:attributes &gt; puts node[:haproxy][:conf_dir] aa chef:attributes &gt; node.set[&#39;haproxy&#39;][&#39;conf_dir&#39;] = &#39;bb&#39; chef:attributes &gt; puts node[&#39;haproxy&#39;][&#39;conf_dir&#39;] bb chef:attributes &gt; puts node[:haproxy][:conf_dir] aa 위와 같이 string으로 된 hash와 symbol로 된 hash의 값이 merge가 안되는 문제이다.">
 <meta itemprop="datePublished" content="2015-02-05T17:21:56&#43;09:00" />
 <meta itemprop="dateModified" content="2015-02-05T17:21:56&#43;09:00" />
 <meta itemprop="wordCount" content="313">
+<meta itemprop="image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 
 
 
-<meta itemprop="keywords" content="chef 12,attribute,symbol,string,hash," />
-<meta property="og:title" content="chef 12: node attribute style problem - feature or bug?" />
+<meta itemprop="keywords" content="chef 12,attribute,symbol,string,hash," /><meta property="og:title" content="chef 12: node attribute style problem - feature or bug?" />
 <meta property="og:description" content="chef 12 client를 이용하면서 기존 recipe 들을 사용중 갑자기 작동 안하는 문제가 있었다.
 chef 12로 변화되며 추가된 기능인가 싶어 chef 12 release note를 뒤져보았지만 사실 관련된 부분을 찾지 못했다.
 대략 현상은 아래와 같다..
-chef &gt; attributes_mode chef:attributes &gt; default[&#39;haproxy&#39;][&#39;conf_dir&#39;] = &#39;aa&#39; chef:attributes &gt; puts node[&#39;haproxy&#39;][&#39;conf_dir&#39;] aa chef:attributes &gt; puts node[:haproxy][:conf_dir] aa chef:attributes &gt; node.set[&#39;haproxy&#39;][&#39;conf_dir&#39;] = &#39;bb&#39; chef:attributes &gt; puts node[&#39;haproxy&#39;][&#39;conf_dir&#39;] bb chef:attributes &gt; puts node[:haproxy][:conf_dir] aa  위와 같이 string으로 된 hash와 symbol로 된 hash의 값이 merge가 안되는 문제이다." />
+chef &gt; attributes_mode chef:attributes &gt; default[&#39;haproxy&#39;][&#39;conf_dir&#39;] = &#39;aa&#39; chef:attributes &gt; puts node[&#39;haproxy&#39;][&#39;conf_dir&#39;] aa chef:attributes &gt; puts node[:haproxy][:conf_dir] aa chef:attributes &gt; node.set[&#39;haproxy&#39;][&#39;conf_dir&#39;] = &#39;bb&#39; chef:attributes &gt; puts node[&#39;haproxy&#39;][&#39;conf_dir&#39;] bb chef:attributes &gt; puts node[:haproxy][:conf_dir] aa 위와 같이 string으로 된 hash와 symbol로 된 hash의 값이 merge가 안되는 문제이다." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://leoh0.github.io/post/2015-02-05-chef-12-feature-or-bug/" />
-
-<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322" />
+<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 <meta property="article:published_time" content="2015-02-05T17:21:56+09:00" />
 <meta property="article:modified_time" content="2015-02-05T17:21:56+09:00" />
 <meta name="twitter:card" content="summary_large_image"/>
@@ -39,7 +36,7 @@ chef &gt; attributes_mode chef:attributes &gt; default[&#39;haproxy&#39;][&#39;c
 <meta name="twitter:description" content="chef 12 client를 이용하면서 기존 recipe 들을 사용중 갑자기 작동 안하는 문제가 있었다.
 chef 12로 변화되며 추가된 기능인가 싶어 chef 12 release note를 뒤져보았지만 사실 관련된 부분을 찾지 못했다.
 대략 현상은 아래와 같다..
-chef &gt; attributes_mode chef:attributes &gt; default[&#39;haproxy&#39;][&#39;conf_dir&#39;] = &#39;aa&#39; chef:attributes &gt; puts node[&#39;haproxy&#39;][&#39;conf_dir&#39;] aa chef:attributes &gt; puts node[:haproxy][:conf_dir] aa chef:attributes &gt; node.set[&#39;haproxy&#39;][&#39;conf_dir&#39;] = &#39;bb&#39; chef:attributes &gt; puts node[&#39;haproxy&#39;][&#39;conf_dir&#39;] bb chef:attributes &gt; puts node[:haproxy][:conf_dir] aa  위와 같이 string으로 된 hash와 symbol로 된 hash의 값이 merge가 안되는 문제이다."/>
+chef &gt; attributes_mode chef:attributes &gt; default[&#39;haproxy&#39;][&#39;conf_dir&#39;] = &#39;aa&#39; chef:attributes &gt; puts node[&#39;haproxy&#39;][&#39;conf_dir&#39;] aa chef:attributes &gt; puts node[:haproxy][:conf_dir] aa chef:attributes &gt; node.set[&#39;haproxy&#39;][&#39;conf_dir&#39;] = &#39;bb&#39; chef:attributes &gt; puts node[&#39;haproxy&#39;][&#39;conf_dir&#39;] bb chef:attributes &gt; puts node[:haproxy][:conf_dir] aa 위와 같이 string으로 된 hash와 symbol로 된 hash의 값이 merge가 안되는 문제이다."/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -49,28 +46,30 @@ chef &gt; attributes_mode chef:attributes &gt; default[&#39;haproxy&#39;][&#39;c
 	<link rel="shortcut icon" href="/favicon.ico">
 
 	<title>chef 12: node attribute style problem - feature or bug?</title>
-	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.cf317e8e759e34ff58587ff7fca05f8b77531a61ee8e63c887a46eb43ebad966.css" crossorigin="anonymous" integrity="sha256-zzF+jnWeNP9YWH/3/KBfi3dTGmHujmPIh6RutD662WY=">
+	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
 	
 	<link rel="stylesheet" href="https://leoh0.github.io/css/prism.css">
 </head>
 
 <body id="page">
 	
-	<header id="site-header" class="animated slideInUp faster">
+	<header id="site-header" class="animated slideInUp">
 		<div class="hdr-wrapper section-inner">
 			<div class="hdr-left">
 				<div class="site-branding">
 					<a href="https://leoh0.github.io/">&gt; /dev/null</a>
 				</div>
 				<nav class="site-nav hide-in-mobile">
-					<a href="https://leoh0.github.io/">Home</a>
-					<a href="https://leoh0.github.io/post/">Posts</a>
-					<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
-					<a href="https://leoh0.github.io/blog/">.</a>
+					
+				<a href="https://leoh0.github.io/">Home</a>
+				<a href="https://leoh0.github.io/post/">Posts</a>
+				<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
+				<a href="https://leoh0.github.io/blog/">.</a>
+
 				</nav>
 			</div>
 			<div class="hdr-right hdr-icons">
-				<span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+				<span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
 			</div>
 		</div>
 	</header>
@@ -87,89 +86,64 @@ chef &gt; attributes_mode chef:attributes &gt; default[&#39;haproxy&#39;][&#39;c
 	<main class="site-main section-inner thin animated fadeIn faster">
 		<h1>chef 12: node attribute style problem - feature or bug?</h1>
 		<div class="content">
-			
-
-<p>chef 12 client를 이용하면서 기존 recipe 들을 사용중 갑자기 작동 안하는 문제가 있었다.<br />
+			<p>chef 12 client를 이용하면서 기존 recipe 들을 사용중 갑자기 작동 안하는 문제가 있었다.<br>
 chef 12로 변화되며 추가된 기능인가 싶어 <a href="https://docs.chef.io/release_notes.html">chef 12 release note</a>를 뒤져보았지만 사실 관련된 부분을 찾지 못했다.</p>
-
 <p>대략 현상은 아래와 같다..</p>
-
-<pre><code class="language-ruby">chef &gt; attributes_mode
-chef:attributes &gt; default['haproxy']['conf_dir'] = 'aa'
-chef:attributes &gt; puts node['haproxy']['conf_dir']
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">chef &gt; attributes_mode
+<span style="color:#0ff;font-weight:bold">chef</span>:attributes &gt; default[<span style="color:#0ff;font-weight:bold">&#39;haproxy&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;conf_dir&#39;</span>] = <span style="color:#0ff;font-weight:bold">&#39;aa&#39;</span>
+<span style="color:#0ff;font-weight:bold">chef</span>:attributes &gt; <span style="color:#fff;font-weight:bold">puts</span> node[<span style="color:#0ff;font-weight:bold">&#39;haproxy&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;conf_dir&#39;</span>]
 aa
-chef:attributes &gt; puts node[:haproxy][:conf_dir]
+<span style="color:#0ff;font-weight:bold">chef</span>:attributes &gt; <span style="color:#fff;font-weight:bold">puts</span> node[<span style="color:#0ff;font-weight:bold">:haproxy</span>][<span style="color:#0ff;font-weight:bold">:conf_dir</span>]
 aa
 
-chef:attributes &gt; node.set['haproxy']['conf_dir'] = 'bb'
+<span style="color:#0ff;font-weight:bold">chef</span>:attributes &gt; node.set[<span style="color:#0ff;font-weight:bold">&#39;haproxy&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;conf_dir&#39;</span>] = <span style="color:#0ff;font-weight:bold">&#39;bb&#39;</span>
 
-chef:attributes &gt; puts node['haproxy']['conf_dir']
+<span style="color:#0ff;font-weight:bold">chef</span>:attributes &gt; <span style="color:#fff;font-weight:bold">puts</span> node[<span style="color:#0ff;font-weight:bold">&#39;haproxy&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;conf_dir&#39;</span>]
 bb
-chef:attributes &gt; puts node[:haproxy][:conf_dir]
+<span style="color:#0ff;font-weight:bold">chef</span>:attributes &gt; <span style="color:#fff;font-weight:bold">puts</span> node[<span style="color:#0ff;font-weight:bold">:haproxy</span>][<span style="color:#0ff;font-weight:bold">:conf_dir</span>]
 aa
-</code></pre>
-
-<p>위와 같이 <code>string</code>으로 된 hash와 <code>symbol</code>로 된 hash의 값이 merge가 안되는 문제이다.</p>
-
+</code></pre></div><p>위와 같이 <code>string</code>으로 된 hash와 <code>symbol</code>로 된 hash의 값이 merge가 안되는 문제이다.</p>
 <p>chef 11까지는 아래와 같이 둘중 어떤 것을 사용해도 같은 변수로 관리됐다.</p>
-
-<pre><code class="language-ruby">chef &gt; attributes_mode
-chef:attributes &gt; default['haproxy']['conf_dir'] = 'aa'
-chef:attributes &gt; puts node['haproxy']['conf_dir']
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">chef &gt; attributes_mode
+<span style="color:#0ff;font-weight:bold">chef</span>:attributes &gt; default[<span style="color:#0ff;font-weight:bold">&#39;haproxy&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;conf_dir&#39;</span>] = <span style="color:#0ff;font-weight:bold">&#39;aa&#39;</span>
+<span style="color:#0ff;font-weight:bold">chef</span>:attributes &gt; <span style="color:#fff;font-weight:bold">puts</span> node[<span style="color:#0ff;font-weight:bold">&#39;haproxy&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;conf_dir&#39;</span>]
 aa
-chef:attributes &gt; puts node[:haproxy][:conf_dir]
+<span style="color:#0ff;font-weight:bold">chef</span>:attributes &gt; <span style="color:#fff;font-weight:bold">puts</span> node[<span style="color:#0ff;font-weight:bold">:haproxy</span>][<span style="color:#0ff;font-weight:bold">:conf_dir</span>]
 aa
 
-chef:attributes &gt; node.set['haproxy']['conf_dir'] = 'bb'
+<span style="color:#0ff;font-weight:bold">chef</span>:attributes &gt; node.set[<span style="color:#0ff;font-weight:bold">&#39;haproxy&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;conf_dir&#39;</span>] = <span style="color:#0ff;font-weight:bold">&#39;bb&#39;</span>
 
-chef:attributes &gt; puts node['haproxy']['conf_dir']
+<span style="color:#0ff;font-weight:bold">chef</span>:attributes &gt; <span style="color:#fff;font-weight:bold">puts</span> node[<span style="color:#0ff;font-weight:bold">&#39;haproxy&#39;</span>][<span style="color:#0ff;font-weight:bold">&#39;conf_dir&#39;</span>]
 bb
-chef:attributes &gt; puts node[:haproxy][:conf_dir]
+<span style="color:#0ff;font-weight:bold">chef</span>:attributes &gt; <span style="color:#fff;font-weight:bold">puts</span> node[<span style="color:#0ff;font-weight:bold">:haproxy</span>][<span style="color:#0ff;font-weight:bold">:conf_dir</span>]
 bb
-</code></pre>
-
-<p>옛날 부터 <a href="http://www.foodcritic.io/#FC019">foodcritic에서도 둘중에 한 포맷으로 정해서 사용하라는 룰</a>이 있었지만 정리를 안했더니 이런 일이 생긴건가 라고 반성을 하면서..
+</code></pre></div><p>옛날 부터 <a href="http://www.foodcritic.io/#FC019">foodcritic에서도 둘중에 한 포맷으로 정해서 사용하라는 룰</a>이 있었지만 정리를 안했더니 이런 일이 생긴건가 라고 반성을 하면서..
 (사실 현재도 안돌리고 있긴한.. 안돌리다 돌리려니 너무 고칠게 많아서 차라리 리팩토링 하고 돌려야지 하다보니&hellip;.. ㅠㅠ)</p>
-
 <p>그렇다면 어느쪽으로 style을 모는게 좋을까&hellip;??</p>
-
 <h2 id="string-vs-symbol-for-node-attribute-style">string vs symbol (for node attribute style)<a href="#string-vs-symbol-for-node-attribute-style" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
 <blockquote>
 <p>개인적으로나 chef에서는 string을 선호</p>
 </blockquote>
-
 <p>물론 사실 개인적인 생각엔 아직까지도 어느정도 취향(?)의 영역이 있다.
 foodcritic(chef lint tool)에서는 <a href="http://www.foodcritic.io/#FC001">string을 사용을 규정</a>하고는 있긴하다.
 하지만 아래와 같이 빼고 사용하면 그만인 부분이다.</p>
-
-<pre><code class="language-bash">foodcritic -t ~FC001 .
-</code></pre>
-
-<p>그렇다면 사용자들이 선호하는 것은 어떨까?<br />
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">foodcritic -t ~FC001 .
+</code></pre></div><p>그렇다면 사용자들이 선호하는 것은 어떨까?<br>
 아래와 같이 3종류의 attribute 사용법에 대한 <a href="https://www.evernote.com/shard/s5/sh/1fc5a0c9-bdd0-44f4-8f5a-ed2ddc9d2cfd/a13f36acd7cfa2a468f7829e5549209f">user survey</a>에 대한 조사는 아래와 같이 symbol이 우세하다.</p>
-
 <figure>
     <img src="/images/fc001-survey-20121029-144804.jpg"/> 
 </figure>
 
-
-<p>그리고 실제 <a href="https://github.com/bbatsov/ruby-style-guide">ruby style guide</a>에서도 물론 특정한 규정은 없어서..<br />
+<p>그리고 실제 <a href="https://github.com/bbatsov/ruby-style-guide">ruby style guide</a>에서도 물론 특정한 규정은 없어서..<br>
 그렇다고 괜히 <code>string</code>을 선호하는 건 아니다. 자세한 이유는 <a href="https://github.com/acrmp/foodcritic/issues/1">여기1</a> <a href="https://github.com/acrmp/foodcritic/issues/86">여기2</a> 를 읽어 보면 도움이 될듯 하다.</p>
-
 <h2 id="그래서-내-recipe를-지금이라도-당장-다-뜯어-고쳐야-하는건가요">그래서 내 recipe를 지금이라도 당장 다 뜯어 고쳐야 하는건가요?<a href="#그래서-내-recipe를-지금이라도-당장-다-뜯어-고쳐야-하는건가요" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
 <blockquote>
 <p>아니요</p>
 </blockquote>
-
 <p>위의 style 문제는 사실 feature가 아닌 bug 이다. (<a href="https://github.com/chef/chef/commit/097d5eb1bf4b3cbcc9bfc937c5e3441dee5c9f5c">이때 추가된..</a>)</p>
-
 <p><a href="https://github.com/chef/chef/pull/2753">deep_merge_cache fixes for bugs in 12.0.0</a></p>
-
-<p>22일 전에 이미 패치는 된 상태이나 chef 11에 대해 followup하느라 12.1.0이 나오질 않고 있는것 같다.<br />
+<p>22일 전에 이미 패치는 된 상태이나 chef 11에 대해 followup하느라 12.1.0이 나오질 않고 있는것 같다.<br>
 그렇기 때문에 chef-client를 12.0.0 이상으로 쓸 생각이라면 잠깐 보류하는게 좋을듯 하다.</p>
-
 <p>하지만 이번 기회에 이런 문제를 야기 할 수 있는 <code>symbol</code>을 <code>string</code>으로 바꿔야 하지 않을까하는 교훈(?)을 주는 일이지 않을까 싶다.</p>
 
 		</div>
@@ -200,15 +174,16 @@ foodcritic(chef lint tool)에서는 <a href="http://www.foodcritic.io/#FC001">st
 	</main>
 
 	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
-		<script src="/js/prism.js"></script>
-		<p>&copy; 2019 <a href="https://leoh0.github.io/"></a></p>
+		<p>&copy; 2020 <a href="https://leoh0.github.io/"></a></p>
 		<p>
-			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/post/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
 		</p>
 	</footer>
 
 
-	<script src="https://leoh0.github.io/js/main.min.784417f5847151f848c339cf0acb13a06cbb648b1483435a28ed4556c4ead69b.js" integrity="sha256-eEQX9YRxUfhIwznPCssToGy7ZIsUg0NaKO1FVsTq1ps="></script>
+
+	<script src="https://leoh0.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
 <script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {

@@ -9,23 +9,20 @@
 	<meta name="msapplication-TileColor" content="#494f5c">
 <meta itemprop="name" content="mac에서 ntfs disk에 write 하기">
 <meta itemprop="description" content="GPT 일때 가능
-#!/usr/bin/env bash if mount | grep -q &#39;ntfs&#39; ; then if ! mount | grep -q &#39;read-only&#39; ; then echo -e &quot;\033[01;36mExist already in /etc/fstab.\033[00m&quot; VOLUME=$(mount | grep &quot;(ntfs, &quot; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(.*\) (ntfs,.*$|\1|g&#39;) open &quot;$VOLUME&quot; exit fi DISK=$(mount | grep &#39;read-only&#39; | awk &#39;{print $1}&#39;) UUID=$(diskutil info $DISK | grep UUID | awk &#39;{print $3}&#39;) echo -e &quot;\033[01;36mRegistry into /etc/fstab.\033[00m&quot; echo &quot;UUID=$UUID none ntfs rw,auto,nobrowse&quot; | sudo tee -a /etc/fstab &gt; /dev/null diskutil umount $DISK diskutil mount $DISK VOLUME=$(mount | grep &quot;(ntfs, &quot; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(.">
-
-
+#!/usr/bin/env bash  if mount | grep -q &#39;ntfs&#39; ; then if ! mount | grep -q &#39;read-only&#39; ; then echo -e &#34;\033[01;36mExist already in /etc/fstab.\033[00m&#34; VOLUME=$(mount | grep &#34;(ntfs, &#34; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(.*\) (ntfs,.*$|\1|g&#39;) open &#34;$VOLUME&#34; exit fi DISK=$(mount | grep &#39;read-only&#39; | awk &#39;{print $1}&#39;) UUID=$(diskutil info $DISK | grep UUID | awk &#39;{print $3}&#39;) echo -e &#34;\033[01;36mRegistry into /etc/fstab.\033[00m&#34; echo &#34;UUID=$UUIDnone ntfs rw,auto,nobrowse&#34; | sudo tee -a /etc/fstab &gt; /dev/null diskutil umount $DISK diskutil mount $DISK VOLUME=$(mount | grep &#34;(ntfs, &#34; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(.">
 <meta itemprop="datePublished" content="2015-11-03T09:38:22&#43;09:00" />
 <meta itemprop="dateModified" content="2015-11-03T09:38:22&#43;09:00" />
-<meta itemprop="wordCount" content="108">
+<meta itemprop="wordCount" content="107">
+<meta itemprop="image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 
 
 
-<meta itemprop="keywords" content="mac,ntfs," />
-<meta property="og:title" content="mac에서 ntfs disk에 write 하기" />
+<meta itemprop="keywords" content="mac,ntfs," /><meta property="og:title" content="mac에서 ntfs disk에 write 하기" />
 <meta property="og:description" content="GPT 일때 가능
-#!/usr/bin/env bash if mount | grep -q &#39;ntfs&#39; ; then if ! mount | grep -q &#39;read-only&#39; ; then echo -e &quot;\033[01;36mExist already in /etc/fstab.\033[00m&quot; VOLUME=$(mount | grep &quot;(ntfs, &quot; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(.*\) (ntfs,.*$|\1|g&#39;) open &quot;$VOLUME&quot; exit fi DISK=$(mount | grep &#39;read-only&#39; | awk &#39;{print $1}&#39;) UUID=$(diskutil info $DISK | grep UUID | awk &#39;{print $3}&#39;) echo -e &quot;\033[01;36mRegistry into /etc/fstab.\033[00m&quot; echo &quot;UUID=$UUID none ntfs rw,auto,nobrowse&quot; | sudo tee -a /etc/fstab &gt; /dev/null diskutil umount $DISK diskutil mount $DISK VOLUME=$(mount | grep &quot;(ntfs, &quot; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(." />
+#!/usr/bin/env bash  if mount | grep -q &#39;ntfs&#39; ; then if ! mount | grep -q &#39;read-only&#39; ; then echo -e &#34;\033[01;36mExist already in /etc/fstab.\033[00m&#34; VOLUME=$(mount | grep &#34;(ntfs, &#34; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(.*\) (ntfs,.*$|\1|g&#39;) open &#34;$VOLUME&#34; exit fi DISK=$(mount | grep &#39;read-only&#39; | awk &#39;{print $1}&#39;) UUID=$(diskutil info $DISK | grep UUID | awk &#39;{print $3}&#39;) echo -e &#34;\033[01;36mRegistry into /etc/fstab.\033[00m&#34; echo &#34;UUID=$UUIDnone ntfs rw,auto,nobrowse&#34; | sudo tee -a /etc/fstab &gt; /dev/null diskutil umount $DISK diskutil mount $DISK VOLUME=$(mount | grep &#34;(ntfs, &#34; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://leoh0.github.io/post/2015-11-03-maceseo-ntfs-diske-write-hagi/" />
-
-<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322" />
+<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 <meta property="article:published_time" content="2015-11-03T09:38:22+09:00" />
 <meta property="article:modified_time" content="2015-11-03T09:38:22+09:00" />
 <meta name="twitter:card" content="summary_large_image"/>
@@ -33,7 +30,7 @@
 
 <meta name="twitter:title" content="mac에서 ntfs disk에 write 하기"/>
 <meta name="twitter:description" content="GPT 일때 가능
-#!/usr/bin/env bash if mount | grep -q &#39;ntfs&#39; ; then if ! mount | grep -q &#39;read-only&#39; ; then echo -e &quot;\033[01;36mExist already in /etc/fstab.\033[00m&quot; VOLUME=$(mount | grep &quot;(ntfs, &quot; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(.*\) (ntfs,.*$|\1|g&#39;) open &quot;$VOLUME&quot; exit fi DISK=$(mount | grep &#39;read-only&#39; | awk &#39;{print $1}&#39;) UUID=$(diskutil info $DISK | grep UUID | awk &#39;{print $3}&#39;) echo -e &quot;\033[01;36mRegistry into /etc/fstab.\033[00m&quot; echo &quot;UUID=$UUID none ntfs rw,auto,nobrowse&quot; | sudo tee -a /etc/fstab &gt; /dev/null diskutil umount $DISK diskutil mount $DISK VOLUME=$(mount | grep &quot;(ntfs, &quot; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(."/>
+#!/usr/bin/env bash  if mount | grep -q &#39;ntfs&#39; ; then if ! mount | grep -q &#39;read-only&#39; ; then echo -e &#34;\033[01;36mExist already in /etc/fstab.\033[00m&#34; VOLUME=$(mount | grep &#34;(ntfs, &#34; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(.*\) (ntfs,.*$|\1|g&#39;) open &#34;$VOLUME&#34; exit fi DISK=$(mount | grep &#39;read-only&#39; | awk &#39;{print $1}&#39;) UUID=$(diskutil info $DISK | grep UUID | awk &#39;{print $3}&#39;) echo -e &#34;\033[01;36mRegistry into /etc/fstab.\033[00m&#34; echo &#34;UUID=$UUIDnone ntfs rw,auto,nobrowse&#34; | sudo tee -a /etc/fstab &gt; /dev/null diskutil umount $DISK diskutil mount $DISK VOLUME=$(mount | grep &#34;(ntfs, &#34; | sed &#39;s|/dev/disk[0-9]s[0-9] on \(."/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -43,28 +40,30 @@
 	<link rel="shortcut icon" href="/favicon.ico">
 
 	<title>mac에서 ntfs disk에 write 하기</title>
-	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.cf317e8e759e34ff58587ff7fca05f8b77531a61ee8e63c887a46eb43ebad966.css" crossorigin="anonymous" integrity="sha256-zzF+jnWeNP9YWH/3/KBfi3dTGmHujmPIh6RutD662WY=">
+	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
 	
 	<link rel="stylesheet" href="https://leoh0.github.io/css/prism.css">
 </head>
 
 <body id="page">
 	
-	<header id="site-header" class="animated slideInUp faster">
+	<header id="site-header" class="animated slideInUp">
 		<div class="hdr-wrapper section-inner">
 			<div class="hdr-left">
 				<div class="site-branding">
 					<a href="https://leoh0.github.io/">&gt; /dev/null</a>
 				</div>
 				<nav class="site-nav hide-in-mobile">
-					<a href="https://leoh0.github.io/">Home</a>
-					<a href="https://leoh0.github.io/post/">Posts</a>
-					<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
-					<a href="https://leoh0.github.io/blog/">.</a>
+					
+				<a href="https://leoh0.github.io/">Home</a>
+				<a href="https://leoh0.github.io/post/">Posts</a>
+				<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
+				<a href="https://leoh0.github.io/blog/">.</a>
+
 				</nav>
 			</div>
 			<div class="hdr-right hdr-icons">
-				<span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+				<span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
 			</div>
 		</div>
 	</header>
@@ -82,30 +81,28 @@
 		<h1>mac에서 ntfs disk에 write 하기</h1>
 		<div class="content">
 			<p>GPT 일때 가능</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#0f0;font-weight:bold">#!/usr/bin/env bash
+</span><span style="color:#0f0;font-weight:bold"></span>
+<span style="color:#fff;font-weight:bold">if</span> mount | grep -q <span style="color:#0ff;font-weight:bold">&#39;ntfs&#39;</span> ; <span style="color:#fff;font-weight:bold">then</span>
+  <span style="color:#fff;font-weight:bold">if</span> ! mount | grep -q <span style="color:#0ff;font-weight:bold">&#39;read-only&#39;</span> ; <span style="color:#fff;font-weight:bold">then</span>
+    <span style="color:#fff;font-weight:bold">echo</span> -e <span style="color:#0ff;font-weight:bold">&#34;\033[01;36mExist already in /etc/fstab.\033[00m&#34;</span>
+    VOLUME=<span style="color:#fff;font-weight:bold">$(</span>mount | grep <span style="color:#0ff;font-weight:bold">&#34;(ntfs, &#34;</span> | sed <span style="color:#0ff;font-weight:bold">&#39;s|/dev/disk[0-9]s[0-9] on \(.*\) (ntfs,.*$|\1|g&#39;</span><span style="color:#fff;font-weight:bold">)</span>
+    open <span style="color:#0ff;font-weight:bold">&#34;</span>$VOLUME<span style="color:#0ff;font-weight:bold">&#34;</span>
+    <span style="color:#fff;font-weight:bold">exit</span>
+  <span style="color:#fff;font-weight:bold">fi</span>
 
-<pre><code class="language-bash">#!/usr/bin/env bash
-
-if mount | grep -q 'ntfs' ; then
-  if ! mount | grep -q 'read-only' ; then
-    echo -e &quot;\033[01;36mExist already in /etc/fstab.\033[00m&quot;
-    VOLUME=$(mount | grep &quot;(ntfs, &quot; | sed 's|/dev/disk[0-9]s[0-9] on \(.*\) (ntfs,.*$|\1|g')
-    open &quot;$VOLUME&quot;
-    exit
-  fi
-
-  DISK=$(mount | grep 'read-only' | awk '{print $1}')
-  UUID=$(diskutil info $DISK | grep UUID | awk '{print $3}')
-  echo -e &quot;\033[01;36mRegistry into /etc/fstab.\033[00m&quot;
-  echo &quot;UUID=$UUID none ntfs rw,auto,nobrowse&quot; | sudo tee -a /etc/fstab &gt; /dev/null
+  DISK=<span style="color:#fff;font-weight:bold">$(</span>mount | grep <span style="color:#0ff;font-weight:bold">&#39;read-only&#39;</span> | awk <span style="color:#0ff;font-weight:bold">&#39;{print $1}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
+  UUID=<span style="color:#fff;font-weight:bold">$(</span>diskutil info $DISK | grep UUID | awk <span style="color:#0ff;font-weight:bold">&#39;{print $3}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
+  <span style="color:#fff;font-weight:bold">echo</span> -e <span style="color:#0ff;font-weight:bold">&#34;\033[01;36mRegistry into /etc/fstab.\033[00m&#34;</span>
+  <span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;UUID=</span>$UUID<span style="color:#0ff;font-weight:bold"> none ntfs rw,auto,nobrowse&#34;</span> | sudo tee -a /etc/fstab &gt; /dev/null
   diskutil umount $DISK
   diskutil mount $DISK
-  VOLUME=$(mount | grep &quot;(ntfs, &quot; | sed 's|/dev/disk[0-9]s[0-9] on \(.*\) (ntfs,.*$|\1|g')
-  open &quot;$VOLUME&quot;
-else
-  echo -e &quot;\033[01;36mThere is no ntfs disk in here.\033[00m&quot;
-fi
-</code></pre>
-
+  VOLUME=<span style="color:#fff;font-weight:bold">$(</span>mount | grep <span style="color:#0ff;font-weight:bold">&#34;(ntfs, &#34;</span> | sed <span style="color:#0ff;font-weight:bold">&#39;s|/dev/disk[0-9]s[0-9] on \(.*\) (ntfs,.*$|\1|g&#39;</span><span style="color:#fff;font-weight:bold">)</span>
+  open <span style="color:#0ff;font-weight:bold">&#34;</span>$VOLUME<span style="color:#0ff;font-weight:bold">&#34;</span>
+<span style="color:#fff;font-weight:bold">else</span>
+  <span style="color:#fff;font-weight:bold">echo</span> -e <span style="color:#0ff;font-weight:bold">&#34;\033[01;36mThere is no ntfs disk in here.\033[00m&#34;</span>
+<span style="color:#fff;font-weight:bold">fi</span>
+</code></pre></div>
 		</div>
 		<div id="comments" class="thin">
 			
@@ -134,15 +131,16 @@ fi
 	</main>
 
 	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
-		<script src="/js/prism.js"></script>
-		<p>&copy; 2019 <a href="https://leoh0.github.io/"></a></p>
+		<p>&copy; 2020 <a href="https://leoh0.github.io/"></a></p>
 		<p>
-			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/post/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
 		</p>
 	</footer>
 
 
-	<script src="https://leoh0.github.io/js/main.min.784417f5847151f848c339cf0acb13a06cbb648b1483435a28ed4556c4ead69b.js" integrity="sha256-eEQX9YRxUfhIwznPCssToGy7ZIsUg0NaKO1FVsTq1ps="></script>
+
+	<script src="https://leoh0.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
 <script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {

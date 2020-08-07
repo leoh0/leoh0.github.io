@@ -1,15 +1,26 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Ip on &gt; /dev/null</title>
+    <title>ip on &gt; /dev/null</title>
     <link>https://leoh0.github.io/tags/ip/</link>
-    <description>Recent content in Ip on &gt; /dev/null</description>
+    <description>Recent content in ip on &gt; /dev/null</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Sep 2019 20:55:44 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 08 Aug 2020 01:12:11 +0900</lastBuildDate>
     
 	<atom:link href="https://leoh0.github.io/tags/ip/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>One hidden feature and one hidden problem in kubernetes</title>
+      <link>https://leoh0.github.io/post/2020-08-08-one-hidden-feature-and-one-hidden-problem-in-kubernetes/</link>
+      <pubDate>Sat, 08 Aug 2020 01:12:11 +0900</pubDate>
+      
+      <guid>https://leoh0.github.io/post/2020-08-08-one-hidden-feature-and-one-hidden-problem-in-kubernetes/</guid>
+      <description>kubernetes에 다양한 외부 네트워크 연동 방법 kubernetes 는 어플리케이션을 외부에 연계하기 위해 ingress, service 등의 기능들을 제공합니다. 각각 ingress 는 L7 에 가까운 기능 그리고 service 는 L4 에 가까운 기능을 제공합니다.
+일반적인 외부에 연동하는 방법들을 살펴보면 아래와 같습니다.
+ingress는 보통 LB의 ip는 지정되어 있고 특정한 포트들을 지정해서 서비스 합니다. 80, 443과 같은 http, https 와 같은 포트를 서비스 하고 물론 tcp, udp등을 지원 하나 포트가 변경될때마다 ingress 의 controller 들이 다시 로딩되야 하여 포트를 추가하기는 번거롭습니다.</description>
+    </item>
     
     <item>
       <title>How to use static ip in kubernetes nginx ingress without default backend</title>
@@ -32,7 +43,7 @@
       
       <guid>https://leoh0.github.io/post/2015-04-24-gajang-byeontaejeogin-linux-command/</guid>
       <description>ip command 는 linux network 쪽을 위해 굉장히 많이 사용되는 커맨드 이다.
-Usage: ip [ OPTIONS ] OBJECT { COMMAND | help } ip [ -force ] -batch filename where OBJECT := { link | addr | addrlabel | route | rule | neigh | ntable | tunnel | tuntap | maddr | mroute | mrule | monitor | xfrm | netns | l2tp | tcp_metrics | token } OPTIONS := { -V[ersion] | -s[tatistics] | -d[etails] | -r[esolve] | -f[amily] { inet | inet6 | ipx | dnet | bridge | link } | -4 | -6 | -I | -D | -B | -0 | -l[oops] { maximum-addr-flush-attempts } | -o[neline] | -t[imestamp] | -b[atch] [filename] | -rc[vbuf] [size]}  이 커맨드의 가장 변태적이라고 생각한 부분은 다음이다.</description>
+Usage: ip [ OPTIONS ] OBJECT { COMMAND | help } ip [ -force ] -batch filename where OBJECT := { link | addr | addrlabel | route | rule | neigh | ntable | tunnel | tuntap | maddr | mroute | mrule | monitor | xfrm | netns | l2tp | tcp_metrics | token } OPTIONS := { -V[ersion] | -s[tatistics] | -d[etails] | -r[esolve] | -f[amily] { inet | inet6 | ipx | dnet | bridge | link } | -4 | -6 | -I | -D | -B | -0 | -l[oops] { maximum-addr-flush-attempts } | -o[neline] | -t[imestamp] | -b[atch] [filename] | -rc[vbuf] [size]} 이 커맨드의 가장 변태적이라고 생각한 부분은 다음이다.</description>
     </item>
     
   </channel>

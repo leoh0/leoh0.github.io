@@ -14,16 +14,14 @@
 지금 tunnel architecture를 가진건 없어서 br-tun 쪽은 그리려고 테스트 하진 않았다. 다만 ovs 나 bridge 모드에서 대략적인 그림은 맘에 들게 그려지는 것 같다.
 ascii 로 그린 architecture 들이다.
 bridge-vlan   openvswitch-flat   openvswitch-vlan   이걸 graphviz 로 그리면 다음과 같다.">
-
-
 <meta itemprop="datePublished" content="2015-04-03T02:29:52&#43;09:00" />
 <meta itemprop="dateModified" content="2015-04-03T02:29:52&#43;09:00" />
-<meta itemprop="wordCount" content="462">
+<meta itemprop="wordCount" content="453">
+<meta itemprop="image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 
 
 
-<meta itemprop="keywords" content="openstack,openvswitch,bridge,graph-easy,graphviz,network architecture,neutron," />
-<meta property="og:title" content="draw openstack L2 network architecture automatically" />
+<meta itemprop="keywords" content="openstack,openvswitch,bridge,graph-easy,graphviz,network architecture,neutron," /><meta property="og:title" content="draw openstack L2 network architecture automatically" />
 <meta property="og:description" content="iptables를 좀 보기 편하게 할 수 없는가를 이야기하다가 여기사이트를 보게되었다.
 그래서 감동을 받아서 이에 뭔가 남기고자 삽질을 했다. (어짜피 요새 deploy 테스트 하다보면 남는게 시간이다 보니..)
 대략 openstack neutron의 L2 architecture 에 구성요소들을 좀 보기 편하게 그린것이다.
@@ -32,8 +30,7 @@ ascii 로 그린 architecture 들이다.
 bridge-vlan   openvswitch-flat   openvswitch-vlan   이걸 graphviz 로 그리면 다음과 같다." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://leoh0.github.io/blog/2015/04/03/draw-openstack-l2-network-architecture-automatically/" />
-
-<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322" />
+<meta property="og:image" content="https://source.unsplash.com/collection/983219/2000x1322"/>
 <meta property="article:published_time" content="2015-04-03T02:29:52+09:00" />
 <meta property="article:modified_time" content="2015-04-03T02:29:52+09:00" />
 <meta name="twitter:card" content="summary_large_image"/>
@@ -55,28 +52,30 @@ bridge-vlan   openvswitch-flat   openvswitch-vlan   이걸 graphviz 로 그리�
 	<link rel="shortcut icon" href="/favicon.ico">
 
 	<title>draw openstack L2 network architecture automatically</title>
-	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.cf317e8e759e34ff58587ff7fca05f8b77531a61ee8e63c887a46eb43ebad966.css" crossorigin="anonymous" integrity="sha256-zzF+jnWeNP9YWH/3/KBfi3dTGmHujmPIh6RutD662WY=">
+	<link rel="stylesheet" href="https://leoh0.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
 	
 	<link rel="stylesheet" href="https://leoh0.github.io/css/prism.css">
 </head>
 
 <body id="page">
 	
-	<header id="site-header" class="animated slideInUp faster">
+	<header id="site-header" class="animated slideInUp">
 		<div class="hdr-wrapper section-inner">
 			<div class="hdr-left">
 				<div class="site-branding">
 					<a href="https://leoh0.github.io/">&gt; /dev/null</a>
 				</div>
 				<nav class="site-nav hide-in-mobile">
-					<a href="https://leoh0.github.io/">Home</a>
-					<a href="https://leoh0.github.io/post/">Posts</a>
-					<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
-					<a href="https://leoh0.github.io/blog/">.</a>
+					
+				<a href="https://leoh0.github.io/">Home</a>
+				<a href="https://leoh0.github.io/post/">Posts</a>
+				<a href="https://leoh0.github.io/about/aboutme">AboutMe</a>
+				<a href="https://leoh0.github.io/blog/">.</a>
+
 				</nav>
 			</div>
 			<div class="hdr-right hdr-icons">
-				<span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+				<span class="hdr-social hide-in-mobile"><a href="https://github.com/leoh0" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
 			</div>
 		</div>
 	</header>
@@ -93,174 +92,131 @@ bridge-vlan   openvswitch-flat   openvswitch-vlan   이걸 graphviz 로 그리�
 	<main class="site-main section-inner thin animated fadeIn faster">
 		<h1>draw openstack L2 network architecture automatically</h1>
 		<div class="content">
-			
-
-<p>iptables를 좀 보기 편하게 할 수 없는가를 이야기하다가 <a href="http://atoato88.hatenablog.com/entry/2014/01/25/133852">여기</a>사이트를 보게되었다.<br />
-그래서 감동을 받아서 이에 뭔가 남기고자 삽질을 했다. (어짜피 요새 deploy 테스트 하다보면 남는게 시간이다 보니..)<br />
-대략 openstack neutron의 L2 architecture 에 구성요소들을 좀 보기 편하게 그린것이다.<br />
+			<p>iptables를 좀 보기 편하게 할 수 없는가를 이야기하다가 <a href="http://atoato88.hatenablog.com/entry/2014/01/25/133852">여기</a>사이트를 보게되었다.<br>
+그래서 감동을 받아서 이에 뭔가 남기고자 삽질을 했다. (어짜피 요새 deploy 테스트 하다보면 남는게 시간이다 보니..)<br>
+대략 openstack neutron의 L2 architecture 에 구성요소들을 좀 보기 편하게 그린것이다.<br>
 지금 tunnel architecture를 가진건 없어서 br-tun 쪽은 그리려고 테스트 하진 않았다. 다만 ovs 나 bridge 모드에서 대략적인 그림은 맘에 들게 그려지는 것 같다.</p>
-
 <p>ascii 로 그린 architecture 들이다.</p>
-
 <h1 id="bridge-vlan">bridge-vlan<a href="#bridge-vlan" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-
 <figure>
     <img src="/images/draw-bridge-vlan.png"/> 
 </figure>
 
-
 <h1 id="openvswitch-flat">openvswitch-flat<a href="#openvswitch-flat" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-
 <figure>
     <img src="/images/draw-ovs-flat.png"/> 
 </figure>
 
-
 <h1 id="openvswitch-vlan">openvswitch-vlan<a href="#openvswitch-vlan" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-
 <figure>
     <img src="/images/draw-ovs-vlan.png"/> 
 </figure>
 
-
 <p>이걸 graphviz 로 그리면 다음과 같다.</p>
-
 <h1 id="bridge-vlan-1">bridge-vlan<a href="#bridge-vlan-1" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-
 <figure>
     <img src="/images/draw-bridge-vlan-g.png"/> 
 </figure>
 
-
 <h1 id="openvswitch-flat-1">openvswitch-flat<a href="#openvswitch-flat-1" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-
 <figure>
     <img src="/images/draw-ovs-flat-g.png"/> 
 </figure>
 
-
 <h1 id="openvswitch-vlan-1">openvswitch-vlan<a href="#openvswitch-vlan-1" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-
 <figure>
     <img src="/images/draw-ovs-vlan-g.png"/> 
 </figure>
 
-
 <p>이걸 3D 로 그리면 다음과 같다.</p>
-
 <h1 id="bridge-vlan-2">bridge-vlan<a href="#bridge-vlan-2" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-
 <figure>
     <img src="/images/draw-bridge-vlan-3d.png"/> 
 </figure>
 
-
 <h1 id="openvswitch-flat-2">openvswitch-flat<a href="#openvswitch-flat-2" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-
 <figure>
     <img src="/images/draw-ovs-flat-3d.png"/> 
 </figure>
 
-
 <h1 id="openvswitch-vlan-2">openvswitch-vlan<a href="#openvswitch-vlan-2" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-
 <figure>
     <img src="/images/draw-ovs-vlan-3d.png"/> 
 </figure>
 
-
 <p>는 사실 그냥 이전에 그려논 그림이다..</p>
-
-<p>아무튼 해당 그림을 그리기 위해 제작한 스크립트 이다.<br />
-아래 스크립트를 컴퓨트 노드에서 돌리면 해당 정보를 수집해서 그리게 된다. (물론 네트워크 노드도 가능..)<br />
+<p>아무튼 해당 그림을 그리기 위해 제작한 스크립트 이다.<br>
+아래 스크립트를 컴퓨트 노드에서 돌리면 해당 정보를 수집해서 그리게 된다. (물론 네트워크 노드도 가능..)<br>
 귀찮아서 하드코딩한 부분들은 편하게 고쳐쓰시길..</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#0f0;font-weight:bold">#!/bin/bash
+</span><span style="color:#0f0;font-weight:bold"></span>
+sudo apt-get install -qqy ethtool libgraph-easy-perl graphviz &gt; /dev/null
 
-<p>```bash
-#!/bin/bash</p>
+EXCEPT=/tmp/exceptlist
+<span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#39;&#39;</span> &gt; $EXCEPT
+result=<span style="color:#0ff;font-weight:bold">&#34;&#34;</span>
 
-<p>sudo apt-get install -qqy ethtool libgraph-easy-perl graphviz &gt; /dev/null</p>
-
-<p>EXCEPT=/tmp/exceptlist
-echo &ldquo; &gt; $EXCEPT
-result=&ldquo;&rdquo;</p>
-
-<p>function on_exit() {
+<span style="color:#fff;font-weight:bold">function</span> on_exit() {
   rm -f $EXCEPT
-}</p>
+}
 
-<p>trap &ldquo;on_exit&rdquo; EXIT</p>
+<span style="color:#fff;font-weight:bold">trap</span> <span style="color:#0ff;font-weight:bold">&#34;on_exit&#34;</span> EXIT
 
-<h1 id="find-ovs-br-port">find ovs br &lt;-&gt; port<a href="#find-ovs-br-port" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
+<span style="color:#007f7f"># find ovs br &lt;-&gt; port</span>
+<span style="color:#fff;font-weight:bold">if</span> [ <span style="color:#0ff;font-weight:bold">&#34;x</span><span style="color:#fff;font-weight:bold">$(</span>which ovs-vsctl<span style="color:#fff;font-weight:bold">)</span><span style="color:#0ff;font-weight:bold">&#34;</span> != <span style="color:#0ff;font-weight:bold">&#34;x&#34;</span> ]; <span style="color:#fff;font-weight:bold">then</span>
+  <span style="color:#fff;font-weight:bold">for</span> br in <span style="color:#fff;font-weight:bold">$(</span>sudo ovs-vsctl list-br<span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
+    <span style="color:#fff;font-weight:bold">for</span> port in <span style="color:#fff;font-weight:bold">$(</span>sudo ovs-vsctl list-ports $br<span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
+      result=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;</span>$result<span style="color:#0ff;font-weight:bold"> [</span>$port<span style="color:#0ff;font-weight:bold">]----&gt;[</span>$br<span style="color:#0ff;font-weight:bold">] [</span>$br<span style="color:#0ff;font-weight:bold">]----&gt;[</span>$port<span style="color:#0ff;font-weight:bold">] &#34;</span><span style="color:#fff;font-weight:bold">)</span>
+    <span style="color:#fff;font-weight:bold">done</span>
+  <span style="color:#fff;font-weight:bold">done</span>
+<span style="color:#fff;font-weight:bold">fi</span>
 
-<p>if [ &ldquo;x$(which ovs-vsctl)&rdquo; != &ldquo;x&rdquo; ]; then
-  for br in $(sudo ovs-vsctl list-br); do
-    for port in $(sudo ovs-vsctl list-ports $br); do
-      result=$(echo &ldquo;$result [$port]&mdash;-&gt;[$br] [$br]&mdash;-&gt;[$port] &ldquo;)
-    done
-  done
-fi</p>
+<span style="color:#007f7f"># find br &lt;-&gt; port</span>
+<span style="color:#fff;font-weight:bold">for</span> br in <span style="color:#fff;font-weight:bold">$(</span>brctl show | sed <span style="color:#0ff;font-weight:bold">&#39;1d&#39;</span> | grep <span style="color:#0ff;font-weight:bold">&#39;^[a-z]&#39;</span> | awk <span style="color:#0ff;font-weight:bold">&#39;{print $1}&#39;</span><span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
+  <span style="color:#fff;font-weight:bold">for</span> port in <span style="color:#fff;font-weight:bold">$(</span>brctl show $br | sed <span style="color:#0ff;font-weight:bold">&#39;1d&#39;</span> | sed <span style="color:#0ff;font-weight:bold">&#39;s/.*\t.*\t.*\t\(.*\)/\1/g&#39;</span><span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
+    result=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;</span>$result<span style="color:#0ff;font-weight:bold"> [</span>$port<span style="color:#0ff;font-weight:bold">]----&gt;[</span>$br<span style="color:#0ff;font-weight:bold">] [</span>$br<span style="color:#0ff;font-weight:bold">]----&gt;[</span>$port<span style="color:#0ff;font-weight:bold">] &#34;</span><span style="color:#fff;font-weight:bold">)</span>
+  <span style="color:#fff;font-weight:bold">done</span>
+<span style="color:#fff;font-weight:bold">done</span>
 
-<h1 id="find-br-port">find br &lt;-&gt; port<a href="#find-br-port" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
+<span style="color:#007f7f"># ip namespace veth</span>
+<span style="color:#fff;font-weight:bold">for</span> ns in <span style="color:#fff;font-weight:bold">$(</span>ip netns<span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
+  <span style="color:#fff;font-weight:bold">for</span> interface in <span style="color:#fff;font-weight:bold">$(</span>ip netns <span style="color:#fff;font-weight:bold">exec</span> $ns ip a | cut -d<span style="color:#0ff;font-weight:bold">&#39;:&#39;</span> -f-2 | grep ^[1-9]<span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
+    index=<span style="color:#fff;font-weight:bold">$(</span>ip netns <span style="color:#fff;font-weight:bold">exec</span> $ns ethtool -S $interface 2&gt; /dev/null | grep peer_ifindex | awk <span style="color:#0ff;font-weight:bold">&#39;{print $2}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
+    ifname=<span style="color:#fff;font-weight:bold">$(</span>ip netns <span style="color:#fff;font-weight:bold">exec</span> $ns ip a | grep <span style="color:#0ff;font-weight:bold">&#34;^</span>$index<span style="color:#0ff;font-weight:bold">:&#34;</span> | awk <span style="color:#0ff;font-weight:bold">&#39;{print $2}&#39;</span> | cut -d<span style="color:#0ff;font-weight:bold">&#39;:&#39;</span> -f1<span style="color:#fff;font-weight:bold">)</span>
+    <span style="color:#fff;font-weight:bold">if</span> [ <span style="color:#0ff;font-weight:bold">&#34;x</span>$ifname<span style="color:#0ff;font-weight:bold">&#34;</span> == <span style="color:#0ff;font-weight:bold">&#34;x&#34;</span> ]; <span style="color:#fff;font-weight:bold">then</span>
+      ifname=<span style="color:#fff;font-weight:bold">$(</span>ip a | grep <span style="color:#0ff;font-weight:bold">&#34;^</span>$index<span style="color:#0ff;font-weight:bold">:&#34;</span> | awk <span style="color:#0ff;font-weight:bold">&#39;{print $2}&#39;</span> | cut -d<span style="color:#0ff;font-weight:bold">&#39;:&#39;</span> -f1<span style="color:#fff;font-weight:bold">)</span>
+      <span style="color:#fff;font-weight:bold">if</span> [ <span style="color:#0ff;font-weight:bold">&#34;x</span>$ifname<span style="color:#0ff;font-weight:bold">&#34;</span> != <span style="color:#0ff;font-weight:bold">&#34;x&#34;</span> ]; <span style="color:#fff;font-weight:bold">then</span>
+        <span style="color:#fff;font-weight:bold">echo</span> $ifname &gt;&gt; $EXCEPT
+        result=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;</span>$result<span style="color:#0ff;font-weight:bold"> [</span>$interface<span style="color:#0ff;font-weight:bold">]----&gt;[</span>$ifname<span style="color:#0ff;font-weight:bold">] [</span>$ifname<span style="color:#0ff;font-weight:bold">]----&gt;[</span>$interface<span style="color:#0ff;font-weight:bold">] &#34;</span><span style="color:#fff;font-weight:bold">)</span>
+      <span style="color:#fff;font-weight:bold">fi</span>
+    <span style="color:#fff;font-weight:bold">fi</span>
+  <span style="color:#fff;font-weight:bold">done</span>
+<span style="color:#fff;font-weight:bold">done</span>
 
-<p>for br in $(brctl show | sed &lsquo;1d&rsquo; | grep &lsquo;<sup class="footnote-ref" id="fnref:a-z"><a href="#fn:a-z">1</a></sup>&rsquo; | awk &lsquo;{print $1}&rsquo;); do
-  for port in $(brctl show $br | sed &lsquo;1d&rsquo; | sed &rsquo;s/.<em>\t.</em>\t.<em>\t(.</em>)/\1/g&rsquo;); do
-    result=$(echo &ldquo;$result [$port]&mdash;-&gt;[$br] [$br]&mdash;-&gt;[$port] &ldquo;)
-  done
-done</p>
+<span style="color:#007f7f"># ip veth</span>
+<span style="color:#fff;font-weight:bold">for</span> interface in <span style="color:#fff;font-weight:bold">$(</span>ip a | cut -d<span style="color:#0ff;font-weight:bold">&#39;:&#39;</span> -f-2 | grep ^[1-9]<span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
+  <span style="color:#fff;font-weight:bold">if</span> cat $EXCEPT | grep -q <span style="color:#0ff;font-weight:bold">&#34;^</span>$interface$<span style="color:#0ff;font-weight:bold">&#34;</span> ; <span style="color:#fff;font-weight:bold">then</span> <span style="color:#fff;font-weight:bold">continue</span> ; <span style="color:#fff;font-weight:bold">fi</span>
+  index=<span style="color:#fff;font-weight:bold">$(</span>ethtool -S $interface 2&gt; /dev/null | grep peer_ifindex | awk <span style="color:#0ff;font-weight:bold">&#39;{print $2}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
+  ifname=<span style="color:#fff;font-weight:bold">$(</span>ip a | grep <span style="color:#0ff;font-weight:bold">&#34;^</span>$index<span style="color:#0ff;font-weight:bold">:&#34;</span> | awk <span style="color:#0ff;font-weight:bold">&#39;{print $2}&#39;</span> | cut -d<span style="color:#0ff;font-weight:bold">&#39;:&#39;</span> -f1<span style="color:#fff;font-weight:bold">)</span>
+  <span style="color:#fff;font-weight:bold">if</span> [ <span style="color:#0ff;font-weight:bold">&#34;x</span>$ifname<span style="color:#0ff;font-weight:bold">&#34;</span> != <span style="color:#0ff;font-weight:bold">&#34;x&#34;</span> ]; <span style="color:#fff;font-weight:bold">then</span>
+    <span style="color:#fff;font-weight:bold">echo</span> $ifname &gt;&gt; $EXCEPT
+    result=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;</span>$result<span style="color:#0ff;font-weight:bold"> [</span>$interface<span style="color:#0ff;font-weight:bold">]----&gt;[</span>$ifname<span style="color:#0ff;font-weight:bold">] [</span>$ifname<span style="color:#0ff;font-weight:bold">]----&gt;[</span>$interface<span style="color:#0ff;font-weight:bold">] &#34;</span><span style="color:#fff;font-weight:bold">)</span>
+  <span style="color:#fff;font-weight:bold">fi</span>
+<span style="color:#fff;font-weight:bold">done</span>
 
-<h1 id="ip-namespace-veth">ip namespace veth<a href="#ip-namespace-veth" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
+<span style="color:#007f7f"># vm tap</span>
+<span style="color:#fff;font-weight:bold">for</span> tap in <span style="color:#fff;font-weight:bold">$(</span>ip a | cut -d<span style="color:#0ff;font-weight:bold">&#39;:&#39;</span> -f-2 | grep ^[1-9]  | cut -d<span style="color:#0ff;font-weight:bold">&#39; &#39;</span> -f2 | grep <span style="color:#0ff;font-weight:bold">&#39;^tap&#39;</span><span style="color:#fff;font-weight:bold">)</span>; <span style="color:#fff;font-weight:bold">do</span>
+  vmuuid=<span style="color:#fff;font-weight:bold">$(</span>grep -rl <span style="color:#0ff;font-weight:bold">&#34;</span>$tap<span style="color:#0ff;font-weight:bold">&#34;</span> /var/lib/nova/instances/*/libvirt.xml | cut -d<span style="color:#0ff;font-weight:bold">&#39;/&#39;</span> -f6<span style="color:#fff;font-weight:bold">)</span>
+  <span style="color:#fff;font-weight:bold">if</span> [ <span style="color:#0ff;font-weight:bold">&#34;x</span>$vmuuid<span style="color:#0ff;font-weight:bold">&#34;</span> != <span style="color:#0ff;font-weight:bold">&#34;x&#34;</span> ]; <span style="color:#fff;font-weight:bold">then</span>
+    result=<span style="color:#fff;font-weight:bold">$(</span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;</span>$result<span style="color:#0ff;font-weight:bold"> [</span>$tap<span style="color:#0ff;font-weight:bold">]----&gt;[VM-</span>$vmuuid<span style="color:#0ff;font-weight:bold">] [VM-</span>$vmuuid<span style="color:#0ff;font-weight:bold">]----&gt;[</span>$tap<span style="color:#0ff;font-weight:bold">] &#34;</span><span style="color:#fff;font-weight:bold">)</span>
+  <span style="color:#fff;font-weight:bold">fi</span>
+<span style="color:#fff;font-weight:bold">done</span>
 
-<p>for ns in $(ip netns); do
-  for interface in $(ip netns exec $ns ip a | cut -d&rsquo;:&rsquo; -f-2 | grep <sup class="footnote-ref" id="fnref:1-9"><a href="#fn:1-9">2</a></sup>); do
-    index=$(ip netns exec $ns ethtool -S $interface 2&gt; /dev/null | grep peer_ifindex | awk &lsquo;{print $2}&rsquo;)
-    ifname=$(ip netns exec $ns ip a | grep &ldquo;^$index:&rdquo; | awk &lsquo;{print $2}&rsquo; | cut -d&rsquo;:&rsquo; -f1)
-    if [ &ldquo;x$ifname&rdquo; == &ldquo;x&rdquo; ]; then
-      ifname=$(ip a | grep &ldquo;^$index:&rdquo; | awk &lsquo;{print $2}&rsquo; | cut -d&rsquo;:&rsquo; -f1)
-      if [ &ldquo;x$ifname&rdquo; != &ldquo;x&rdquo; ]; then
-        echo $ifname &gt;&gt; $EXCEPT
-        result=$(echo &ldquo;$result [$interface]&mdash;-&gt;[$ifname] [$ifname]&mdash;-&gt;[$interface] &ldquo;)
-      fi
-    fi
-  done
-done</p>
+rm -f $EXCEPT
 
-<h1 id="ip-veth">ip veth<a href="#ip-veth" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-
-<p>for interface in $(ip a | cut -d&rsquo;:&rsquo; -f-2 | grep <sup class="footnote-ref" id="fnref:1-9"><a href="#fn:1-9">3</a></sup>); do
-  if cat $EXCEPT | grep -q &ldquo;^$interface$&rdquo; ; then continue ; fi
-  index=$(ethtool -S $interface 2&gt; /dev/null | grep peer_ifindex | awk &lsquo;{print $2}&rsquo;)
-  ifname=$(ip a | grep &ldquo;^$index:&rdquo; | awk &lsquo;{print $2}&rsquo; | cut -d&rsquo;:&rsquo; -f1)
-  if [ &ldquo;x$ifname&rdquo; != &ldquo;x&rdquo; ]; then
-    echo $ifname &gt;&gt; $EXCEPT
-    result=$(echo &ldquo;$result [$interface]&mdash;-&gt;[$ifname] [$ifname]&mdash;-&gt;[$interface] &ldquo;)
-  fi
-done</p>
-
-<h1 id="vm-tap">vm tap<a href="#vm-tap" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
-
-<p>for tap in $(ip a | cut -d&rsquo;:&rsquo; -f-2 | grep <sup class="footnote-ref" id="fnref:1-9"><a href="#fn:1-9">4</a></sup>  | cut -d&rsquo; &lsquo; -f2 | grep &lsquo;^tap&rsquo;); do
-  vmuuid=$(grep -rl &ldquo;$tap&rdquo; /var/lib/nova/instances/*/libvirt.xml | cut -d&rsquo;/&rsquo; -f6)
-  if [ &ldquo;x$vmuuid&rdquo; != &ldquo;x&rdquo; ]; then
-    result=$(echo &ldquo;$result [$tap]&mdash;-&gt;[VM-$vmuuid] [VM-$vmuuid]&mdash;-&gt;[$tap] &ldquo;)
-  fi
-done</p>
-
-<p>rm -f $EXCEPT</p>
-
-<p>echo $result | graph-easy
-echo $result | graph-easy -as dot | dot -Tpng -o l2path.png```</p>
-<div class="footnotes">
-
-<hr />
-
-<ol>
-<li id="fn:a-z">a-z <a class="footnote-return" href="#fnref:a-z">↩</a></li>
-<li id="fn:1-9">1-9 <a class="footnote-return" href="#fnref:1-9">↩</a></li>
-<li id="fn:1-9">1-9 <a class="footnote-return" href="#fnref:1-9">↩</a></li>
-<li id="fn:1-9">1-9 <a class="footnote-return" href="#fnref:1-9">↩</a></li>
-</ol>
-</div>
-
+<span style="color:#fff;font-weight:bold">echo</span> $result | graph-easy
+<span style="color:#fff;font-weight:bold">echo</span> $result | graph-easy -as dot | dot -Tpng -o l2path.png<span style="color:#0ff;font-weight:bold">```</span>
+</code></pre></div>
 		</div>
 		<div id="comments" class="thin">
 			
@@ -289,15 +245,16 @@ echo $result | graph-easy -as dot | dot -Tpng -o l2path.png```</p>
 	</main>
 
 	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
-		<script src="/js/prism.js"></script>
-		<p>&copy; 2019 <a href="https://leoh0.github.io/"></a></p>
+		<p>&copy; 2020 <a href="https://leoh0.github.io/"></a></p>
 		<p>
-			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/post/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://leoh0.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
 		</p>
 	</footer>
 
 
-	<script src="https://leoh0.github.io/js/main.min.784417f5847151f848c339cf0acb13a06cbb648b1483435a28ed4556c4ead69b.js" integrity="sha256-eEQX9YRxUfhIwznPCssToGy7ZIsUg0NaKO1FVsTq1ps="></script>
+
+	<script src="https://leoh0.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
 <script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {

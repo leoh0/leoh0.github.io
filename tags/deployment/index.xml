@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Deployment on &gt; /dev/null</title>
+    <title>deployment on &gt; /dev/null</title>
     <link>https://leoh0.github.io/tags/deployment/</link>
-    <description>Recent content in Deployment on &gt; /dev/null</description>
+    <description>Recent content in deployment on &gt; /dev/null</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 09 Oct 2018 01:42:33 +0900</lastBuildDate>
@@ -17,7 +17,8 @@
       <pubDate>Tue, 09 Oct 2018 01:42:33 +0900</pubDate>
       
       <guid>https://leoh0.github.io/post/2018-10-09-kubernetes-prometheus-metric-aggregation-by-daemonset-statefulset-deployment-walkthrough/</guid>
-      <description>Kubernetes Aggregation Metrics   kubernetes and prometheus 최근 kubernetes에서 metric을 관리하는 것중 가장 유명한 것은 prometheus라고 할 수 있습니다. metric 관리방법으로 heapster를 사용할때 까지는 influxdb를 많이 사용하는 추세 였으나 앞으로 대채될 metrics-server는 현재 in-memory sink밖에 없어서 우선 기존에 influxdb를 사용하던것을 많이 안쓰게 될것 같습니다. 더욱이 custom metric들에 대한 예제들이 prometheus로 제공되고 있어서 prometheus로 metric관리가 통합될것으로 기대하고 있습니다.
+      <description>Kubernetes Aggregation Metrics
+  kubernetes and prometheus 최근 kubernetes에서 metric을 관리하는 것중 가장 유명한 것은 prometheus라고 할 수 있습니다. metric 관리방법으로 heapster를 사용할때 까지는 influxdb를 많이 사용하는 추세 였으나 앞으로 대채될 metrics-server는 현재 in-memory sink밖에 없어서 우선 기존에 influxdb를 사용하던것을 많이 안쓰게 될것 같습니다. 더욱이 custom metric들에 대한 예제들이 prometheus로 제공되고 있어서 prometheus로 metric관리가 통합될것으로 기대하고 있습니다.
 이러한 prometheus로 kubernetes metric들을 수집하는 것은 대체로 크게 2가지 케이스 입니다.</description>
     </item>
     
